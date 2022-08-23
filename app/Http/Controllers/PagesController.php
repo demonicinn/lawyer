@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Litigation;
+use App\Models\Contract;
+
 
 class PagesController extends Controller
 {
@@ -36,8 +39,9 @@ class PagesController extends Controller
 			'title' => 'Narrow Down Litigations',
 			'active' => 'litigations',
 		);
-		
-        return view('pages.litigations', compact('title'));
+
+        $litigations=Litigation::where('status','1')->get();
+       return view('pages.litigations', compact('title','litigations'));
     }
 
     //
@@ -47,8 +51,8 @@ class PagesController extends Controller
 			'title' => 'Narrow Down Contracts',
 			'active' => 'contracts',
 		);
-		
-        return view('pages.contracts', compact('title'));
+		$contracts=Contract::where('status','1')->get();
+        return view('pages.contracts', compact('title','contracts'));
     }
 
 }

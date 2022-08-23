@@ -50,26 +50,40 @@ Route::get('/narrow-down-contracts', [PagesController::class, 'contracts'])->nam
 
 
 
-//change password
-
-//
-
-Route::get('/change/password', function () {
-    $title = array(
-        'title' => 'Change Password',
-        'active' => 'change.password',
-    );
-    return view('common.change-password', compact('title'));
-})->name('change.password');
-
-Route::post('/update/password', [CommonController::class, 'updatePasssword'])->name('update.password');
-
 
 
 //------------------------------------------------------
 //------------------------After Login-------------------
 //------------------------------------------------------
 Route::middleware(['auth', 'verified'])->group(function () {
+
+    //change password
+
+    Route::get('/change/password', function () {
+        $title = array(
+            'title' => 'Change Password',
+            'active' => 'change.password',
+        );
+        return view('common.change-password', compact('title'));
+    })->name('change.password');
+
+    Route::post('/update/password', [CommonController::class, 'updatePasssword'])->name('update.password');
+
+
+
+    //support
+
+    Route::get('/support', function () {
+        $title = array(
+            'title' => 'Support',
+            'active' => 'support',
+        );
+       
+        return view('common.support', compact('title'));
+    })->name('support');
+
+     Route::post('/support/store', [CommonController::class, 'SupportStore'])->name('support.store');
+
 
     //admin
     Route::group(['prefix' => 'admin', 'middleware' => ['role:admin']], function () {
