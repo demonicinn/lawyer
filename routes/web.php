@@ -147,7 +147,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         })->name('lawyer.subscription');
 
         //subscription middleware
-        // Route::group(['middleware' => 'subscription'], function () {
+        Route::group(['middleware' => 'subscription'], function () {
 
             //...profile
             Route::get('/profile', [Lawyer\ProfileController::class, 'index'])->name('lawyer.profile');
@@ -163,6 +163,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
                 //...
             });
-        // });
+        });
     });
 });
