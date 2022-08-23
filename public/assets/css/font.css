@@ -1,0 +1,17 @@
+@font-face {
+    font-family: 'P22 Mackinac';
+    src: url('../fonts/P22Mackinac-Bold.eot');
+    src: url('../fonts/P22Mackinac-Bold.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/P22Mackinac-Bold.woff2') format('woff2'),
+        url('../fonts/P22Mackinac-Bold.woff') format('woff'),
+        url('../fonts/P22Mackinac-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+p,a,button,span,label,input,select,textarea{
+    font-family: 'Lato', sans-serif;
+}
+h1,h2,h3,h4,h5,h6{
+    font-family: 'P22 Mackinac';
+}
