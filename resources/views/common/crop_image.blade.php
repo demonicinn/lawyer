@@ -22,6 +22,7 @@
 
 <link href="{{ asset('assets/css/croppie.css') }}" rel="stylesheet" />
 <script src="{{ asset('assets/js/croppie.js') }}"></script>
+
 <style>
     .croppie-container {
         width: 100% !important;
