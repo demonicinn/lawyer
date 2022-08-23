@@ -11,7 +11,12 @@
             <form class="form-design" method="post" action="{{route('update.password')}}" enctype="multipart/form-data">
                 @csrf
                 <div class="white-shadow-scnd-box">
-                    <div class="form-flex">
+                    <div class="form">
+                        <div class="form-grouph input-design">
+                            <label>Old Password*</label>
+                            <input class="@error('old_password') is-invalid @enderror" type="password" name="old_password" placeholder="*********">
+                            @error('old_password')<div class="help-block">{{ $message }}</div>@enderror
+                        </div>
                         <div class="form-grouph input-design">
                             <label>New Password*</label>
                             <input class="@error('password') is-invalid @enderror" type="password" name="password" placeholder="*********">

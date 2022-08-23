@@ -22,10 +22,10 @@
 
   @include('layouts.includes.header')
 
-
-  @if(Session::has('success'))
+  @include('layouts.includes.alerts')
+  <!-- @if(Session::has('success'))
   <p class="alert alert-info">{{ Session::get('success') }}</p>
-  @endif
+  @endif -->
   
   <main id="main-content">
     @yield('content')

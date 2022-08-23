@@ -36,7 +36,7 @@
             <li><a href="">Blog</a></li>
             <li><a href="">FAQ</a></li>
             <li><a href="">Community</a></li>
-            <li><a href="">Support</a></li>
+            <li><a href="{{route('support')}}">Support</a></li>
             <li><a href="">Client Portal</a></li>
             <li><a href="">Lawyer Sign Up</a></li>
             <li><a href="">Lawyer Portal</a></li>
