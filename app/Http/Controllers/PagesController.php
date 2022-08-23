@@ -51,10 +51,4 @@ class PagesController extends Controller
         return view('pages.contracts', compact('title'));
     }
 
-
-
-
-
-
-
 }

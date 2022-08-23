@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 //...folders
 use App\Http\Controllers\Admin;
+use App\Http\Controllers\CommonController;
 use App\Http\Controllers\Lawyer;
 
 use App\Http\Controllers\PagesController;
@@ -24,19 +25,19 @@ use App\Http\Controllers\PagesController;
 
 
 //flush cache
-Route::get('/cache-clear', function() {
-	Artisan::call('optimize:clear');
-	return "Cache is cleared";
+Route::get('/cache-clear', function () {
+    Artisan::call('optimize:clear');
+    return "Cache is cleared";
 });
 
-Route::get('/migrate', function() {
-	Artisan::call('migrate');
-	return "Migrate";
+Route::get('/migrate', function () {
+    Artisan::call('migrate');
+    return "Migrate";
 });
 
-Route::get('/storage-link', function() {
-	Artisan::call('storage:link');
-	return "storage:link";
+Route::get('/storage-link', function () {
+    Artisan::call('storage:link');
+    return "storage:link";
 });
 
 
@@ -49,18 +50,42 @@ Route::get('/narrow-down-contracts', [PagesController::class, 'contracts'])->nam
 
 
 
+//change password
+
+//
+
+Route::get('/change/password', function () {
+    $title = array(
+        'title' => 'Change Password',
+        'active' => 'change.password',
+    );
+    return view('common.change-password', compact('title'));
+})->name('change.password');
+
+Route::post('/update/password', [CommonController::class, 'updatePasssword'])->name('update.password');
+
+
 
 //------------------------------------------------------
 //------------------------After Login-------------------
 //------------------------------------------------------
 Route::middleware(['auth', 'verified'])->group(function () {
-	
-	//admin
-	Route::group(['prefix'=>'admin', 'middleware' => ['role:admin']], function () {
+
+    //admin
+    Route::group(['prefix' => 'admin', 'middleware' => ['role:admin']], function () {
 
         //...dashboard
         Route::get('/', [Admin\DashboardController::class, 'index'])->name('admin');
         Route::get('/dashboard', [Admin\DashboardController::class, 'index'])->name('admin.dashboard');
+
+
+        //...profile 
+        Route::get('/profile', [Admin\ProfileControlller::class, 'index'])->name('admin.profile');
+        Route::post('/profile/update', [Admin\ProfileControlller::class, 'update'])->name('admin.profile.update');
+
+
+
+
 
         //...lawyers
         Route::get('/lawyers', function () {
@@ -97,7 +122,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             );
             return view('admin.states.index', compact('title'));
         })->name('admin.states.index');
-        
+
         //...subscription
         Route::get('/subscriptions', function () {
             $title = array(
@@ -106,12 +131,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
             );
             return view('admin.subscriptions.index', compact('title'));
         })->name('admin.subscriptions.index');
-
     });
 
 
     //lawyer
-    Route::group(['prefix'=>'lawyer', 'middleware' => ['role:lawyer']], function () {
+    Route::group(['prefix' => 'lawyer', 'middleware' => ['role:lawyer']], function () {
 
         //...subscription
         Route::get('/subscription', function () {
@@ -121,9 +145,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
             );
             return view('lawyer.subscription.index', compact('title'));
         })->name('lawyer.subscription');
-        
+
         //subscription middleware
-        Route::group(['middleware' => 'subscription'], function () {
+        // Route::group(['middleware' => 'subscription'], function () {
 
             //...profile
             Route::get('/profile', [Lawyer\ProfileController::class, 'index'])->name('lawyer.profile');
@@ -139,9 +163,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
                 //...
             });
-
-        });
-
+        // });
     });
-
 });

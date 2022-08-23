@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('city', 100);
             $table->string('zip_code', 20);
 
-            $table->text('bio');
+            $table->text('bio')->nullable();
             $table->enum('contingency_cases', ['yes', 'no'])->default('no');
             $table->enum('is_consultation_fee', ['yes', 'no'])->default('no');
             $table->decimal('hourly_fee', 8,2)->nullable();

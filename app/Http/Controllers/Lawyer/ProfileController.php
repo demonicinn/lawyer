@@ -23,6 +23,7 @@ class ProfileController extends Controller
 		
 		$user = auth()->user();
 		$states = State::whereStatus('1')->pluck('name', 'id');
+        // dd($user);
 
         return view('lawyer.profile.index', compact('user', 'title', 'states'));
     }
