@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class UserDetails extends Model
 {
     use HasFactory;
+
+    public function states()
+    {
+        return $this->belongsTo(State::class, 'states_id', 'id');
+    }
+
 }
