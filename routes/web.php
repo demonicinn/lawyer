@@ -49,6 +49,7 @@ Route::get('/narrow-down-litigations', [PagesController::class, 'litigations'])-
 Route::get('/narrow-down-contracts', [PagesController::class, 'contracts'])->name('narrow.contracts');
 
 Route::get('/lawyers', [PagesController::class, 'lawyers'])->name('lawyers');
+Route::get('/lawyer/{user}', [PagesController::class, 'lawyerShow'])->name('lawyer.show');
 
 
 
