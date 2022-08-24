@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\Litigation;
 use App\Models\Contract;
 
-
 class PagesController extends Controller
 {
     //
@@ -40,8 +39,8 @@ class PagesController extends Controller
 			'active' => 'litigations',
 		);
 
-        $litigations=Litigation::where('status','1')->get();
-       return view('pages.litigations', compact('title','litigations'));
+        $litigations = Litigation::whereStatus('1')->get();
+        return view('pages.litigations', compact('title','litigations'));
     }
 
     //
@@ -51,8 +50,18 @@ class PagesController extends Controller
 			'title' => 'Narrow Down Contracts',
 			'active' => 'contracts',
 		);
-		$contracts=Contract::where('status','1')->get();
+		$contracts = Contract::whereStatus('1')->get();
         return view('pages.contracts', compact('title','contracts'));
+    }
+
+    //
+    public function lawyers(Request $request)
+    {
+        $route = "narrow.litigations";
+        if(@$request->contracts){
+            $route = "narrow.contracts";
+        }
+        return view('pages.lawyers', compact('route'));
     }
 
 }
