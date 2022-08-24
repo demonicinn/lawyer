@@ -10,6 +10,8 @@
             @php
             $details = $user->details;
             $hoursCount = $user->lawyerHours->count();
+            $litigationsCount = $user->lawyerLitigations->count();
+            $contractsCount = $user->lawyerContracts->count();
             @endphp
             <div class="lawyer_profile-wrapper">
 
@@ -25,7 +27,7 @@
                 </div>
                 @endif
 
-                @if($details->address && $details->review_request=='0' && $hoursCount > 0)
+                @if($details->address && $details->review_request=='0' && $hoursCount > 0 && ($litigationsCount > 0 || $contractsCount > 0))
                 <div class="alert alert-success">
                     Submit Your Profile for Review <a href="{{ route('lawyer.profile.submit') }}" onclick="event.preventDefault(); document.getElementById('profile-submit-form').submit();" class="btn btn-sm btn-success">Submit</a>
                 </div>

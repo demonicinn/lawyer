@@ -40,12 +40,12 @@ $details = $user->details;
                         {!! Form::label('contingency_cases','Do you accept contingency cases?*', ['class' => 'form-label']) !!}
                         <div class="d-flex align-items-center">
                             <div class="checkbox-design position-relative">
-                                <input type="radio" name="contingency_cases" value="yes" {{ $details->contingency_cases=='yes'?'checked':'' }}>
+                                <input type="radio" name="contingency_cases" value="yes" {{ @$details->contingency_cases=='yes'?'checked':'' }}>
                                 <button class="checkbox-btn"></button>
                                 <label>Yes</label>
                             </div>
                             <div class="checkbox-design position-relative">
-                                <input type="radio" name="contingency_cases" value="no" {{ $details->contingency_cases=='no'?'checked':'' }}>
+                                <input type="radio" name="contingency_cases" value="no" {{ @$details->contingency_cases=='no'?'checked':'' }}>
                                 <button class="checkbox-btn"></button>
                                 <label>No</label>
                             </div>
@@ -57,12 +57,12 @@ $details = $user->details;
                         {!! Form::label('is_consultation_fee','Do you want to charge a consultation fee?*', ['class' => 'form-label']) !!}
                         <div class="d-flex align-items-center">
                             <div class="checkbox-design position-relative">
-                                <input type="radio" name="is_consultation_fee" value="yes" {{ $details->is_consultation_fee=='yes'?'checked':'' }}>
+                                <input type="radio" name="is_consultation_fee" value="yes" {{ @$details->is_consultation_fee=='yes'?'checked':'' }}>
                                 <button class="checkbox-btn"></button>
                                 <label>Yes</label>
                             </div>
                             <div class="checkbox-design position-relative">
-                                <input type="radio" name="is_consultation_fee" value="no" {{ $details->is_consultation_fee=='no'?'checked':'' }}>
+                                <input type="radio" name="is_consultation_fee" value="no" {{ @$details->is_consultation_fee=='no'?'checked':'' }}>
                                 <button class="checkbox-btn"></button>
                                 <label>No</label>
                             </div>
@@ -188,11 +188,6 @@ $details = $user->details;
 
         @include('lawyer.profile.hours')
 
-        <div class="form-grouph input-design">
-            <a href="{{route('change.password')}}">
-                Click to change password
-            </a>
-        </div>
 
 
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 text-center mt-5">

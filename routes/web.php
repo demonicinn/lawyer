@@ -48,6 +48,8 @@ Route::get('/narrow-down-candidates', [PagesController::class, 'narrowDown'])->n
 Route::get('/narrow-down-litigations', [PagesController::class, 'litigations'])->name('narrow.litigations');
 Route::get('/narrow-down-contracts', [PagesController::class, 'contracts'])->name('narrow.contracts');
 
+Route::get('/lawyers', [PagesController::class, 'lawyers'])->name('lawyers');
+
 
 
 

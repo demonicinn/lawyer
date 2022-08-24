@@ -33,6 +33,7 @@ $user = auth()->user();
             <li><a class="dropdown-item" href="#">My profile</a></li>
             @endif
 
+            <li><a class="dropdown-item" href="{{route('change.password')}}">Change password</a></li>
 
             <li>
               <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
