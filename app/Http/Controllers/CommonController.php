@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Notifications\SupportNotification;
+use Illuminate\Support\Facades\Notification;
 use App\Models\Supports;
+
 use Session;
 
 
@@ -50,7 +53,8 @@ class CommonController extends Controller
                 'reason' => ['required', 'string', 'max:255', 'not_regex:/(' . implode("|", $banned) . ')/i'],
                 'message' => ['required', 'string', 'not_regex:/(' . implode("|", $banned) . ')/i'],
 
-            ]);
+            ]
+        );
 
         $contact = new Supports;
         $contact->user_id = auth()->user()->id;
@@ -61,9 +65,7 @@ class CommonController extends Controller
         $contact->message = $request->message;
         $contact->save();
 
-        // // info@theahap.com 
-        // \Mail::to('adminsingh@yopmail.com')->send(new ContactMessage($contact));
-
+        Notification::route('mail', env('MAIL_FROM_ADDRESS'))->notify(new SupportNotification($contact));
         session()->flash('success', 'Support added successfully');
         return back();
     }

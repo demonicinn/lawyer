@@ -8,6 +8,8 @@ use Jantinnerezo\LivewireAlert\LivewireAlert;
 use App\Models\UserDetails;
 use App\Models\State;
 use App\Models\LawyerHours;
+use App\Notifications\MailToAdminForLawyerStatus;
+use Illuminate\Support\Facades\Notification;
 
 class ProfileController extends Controller
 {
@@ -31,6 +33,7 @@ class ProfileController extends Controller
     //
     public function update(Request $request)
     {
+        // dd($request->all());
         $request->validate([
 			'bio' => 'required',
 			'contingency_cases' => 'required',
@@ -132,8 +135,10 @@ class ProfileController extends Controller
 
     public function submit(Request $request)
     {
+       
         $user = auth()->user();
         $details = $user->details;
+       
         $hoursCount = $user->lawyerHours->count();
 
         if($details->is_verified=='no' && $details->address && $details->review_request=='0' && $hoursCount>0){
@@ -143,7 +148,8 @@ class ProfileController extends Controller
 
             //...send mail
 
-
+            Notification::route('mail', env('MAIL_FROM_ADDRESS'))->notify(new MailToAdminForLawyerStatus($user));
+           
             $this->flash('success', 'Request Send');
             return redirect()->back();
         }
