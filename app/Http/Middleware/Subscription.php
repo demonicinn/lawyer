@@ -16,6 +16,7 @@ class Subscription
      */
     public function handle(Request $request, Closure $next)
     {
+       
         $date = date('Y-m-d');
         $user = auth()->user();
         

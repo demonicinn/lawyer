@@ -48,8 +48,8 @@ Route::get('/narrow-down-candidates', [PagesController::class, 'narrowDown'])->n
 Route::get('/narrow-down-litigations', [PagesController::class, 'litigations'])->name('narrow.litigations');
 Route::get('/narrow-down-contracts', [PagesController::class, 'contracts'])->name('narrow.contracts');
 
-Route::get('/lawyers', [PagesController::class, 'lawyers'])->name('lawyers');
-Route::get('/lawyer/{user}', [PagesController::class, 'lawyerShow'])->name('lawyer.show');
+Route::get('/narrow-lawyers', [PagesController::class, 'lawyers'])->name('lawyers');
+Route::get('/narrow-lawyers/{user}', [PagesController::class, 'lawyerShow'])->name('lawyer.show');
 
 
 
@@ -81,11 +81,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
             'title' => 'Support',
             'active' => 'support',
         );
-       
+
         return view('common.support', compact('title'));
     })->name('support');
 
-     Route::post('/support/store', [CommonController::class, 'SupportStore'])->name('support.store');
+    Route::post('/support/store', [CommonController::class, 'SupportStore'])->name('support.store');
 
 
     //admin
@@ -148,6 +148,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
             );
             return view('admin.subscriptions.index', compact('title'));
         })->name('admin.subscriptions.index');
+
+        //...categories
+        Route::get('/categories', function () {
+            $title = array(
+                'title' => 'Categories',
+                'active' => 'categories',
+            );
+            return view('admin.categories.index', compact('title'));
+        })->name('admin.categories.index');
     });
 
 

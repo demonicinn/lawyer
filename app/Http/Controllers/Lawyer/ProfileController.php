@@ -18,6 +18,7 @@ class ProfileController extends Controller
     //
     public function index()
     {
+    
 		$title = array(
 			'title' => 'Profile',
 			'active' => 'profile',

@@ -7,36 +7,36 @@
         </div>
 
         @if(@$user->details && $user->details->is_verified=='no')
-            @php
-            $details = $user->details;
-            $hoursCount = $user->lawyerHours->count();
-            $litigationsCount = $user->lawyerLitigations->count();
-            $contractsCount = $user->lawyerContracts->count();
-            @endphp
-            <div class="lawyer_profile-wrapper">
+        @php
+        $details = $user->details;
+        $hoursCount = $user->lawyerHours->count();
+        $litigationsCount = $user->lawyerLitigations->count();
+        $contractsCount = $user->lawyerContracts->count();
+        @endphp
+        <div class="lawyer_profile-wrapper">
 
-                @if($details->review_request=='1')
-                <div class="alert alert-info">
-                    Your Profile under Review.
-                </div>
-                @endif
-
-                @if($details->is_admin_review=='2' && $details->review_request=='0')
-                <div class="alert alert-warning">
-                    Your Profile is Declined.
-                </div>
-                @endif
-
-                @if($details->address && $details->review_request=='0' && $hoursCount > 0 && ($litigationsCount > 0 || $contractsCount > 0))
-                <div class="alert alert-success">
-                    Submit Your Profile for Review <a href="{{ route('lawyer.profile.submit') }}" onclick="event.preventDefault(); document.getElementById('profile-submit-form').submit();" class="btn btn-sm btn-success">Submit</a>
-                </div>
-                <form id="profile-submit-form" action="{{ route('lawyer.profile.submit') }}" method="POST" class="d-none">
-                @csrf
-                </form>
-                @endif
-
+            @if($details->review_request=='1')
+            <div class="alert alert-info">
+                Your Profile under Review.
             </div>
+            @endif
+
+            @if($details->is_admin_review=='2' && $details->review_request=='0')
+            <div class="alert alert-warning">
+                Your Profile is Declined.
+            </div>
+            @endif
+
+            @if($details->address && $details->review_request=='0' && $hoursCount > 0 && ($litigationsCount > 0 || $contractsCount > 0))
+            <div class="alert alert-success">
+                Submit Your Profile for Review <a href="{{ route('lawyer.profile.submit') }}" onclick="event.preventDefault(); document.getElementById('profile-submit-form').submit();" class="btn btn-sm btn-success">Submit</a>
+            </div>
+            <form id="profile-submit-form" action="{{ route('lawyer.profile.submit') }}" method="POST" class="d-none">
+                @csrf
+            </form>
+            @endif
+
+        </div>
         @endif
 
         @include('lawyer.profile.form')
@@ -57,7 +57,7 @@
         }
     });
 
-    @if(@$user->details->is_consultation_fee == 'no')
+    @if(@$user -> details -> is_consultation_fee == 'no')
     $('#consultation_fee').hide();
     @endif
 
