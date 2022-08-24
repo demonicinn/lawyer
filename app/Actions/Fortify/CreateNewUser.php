@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
+use App\Notifications\WelcomeNotification;
+use App\Notifications\MailToAdminNewRegistration;
+
+use Illuminate\Support\Facades\Notification;
 
 class CreateNewUser implements CreatesNewUsers
 {
@@ -43,7 +47,7 @@ class CreateNewUser implements CreatesNewUsers
         $user->email = $input['email'];
         $user->password = Hash::make($input['password']);
         $user->save();
-        
+
         $detail = new UserDetails;
         $detail->users_id = $user->id;
         $detail->city = $input['city'];
@@ -51,6 +55,13 @@ class CreateNewUser implements CreatesNewUsers
         $detail->zip_code = $input['zip_code'];
         $detail->save();
 
+        //send notification to lawyer
+        Notification::route('mail', $user->email)->notify(new WelcomeNotification($user));
+
+        //send notification to admin
+        Notification::route('mail', env('MAIL_FROM_ADDRESS'))->notify(new MailToAdminNewRegistration($user));
+
+        
         return $user;
     }
 }

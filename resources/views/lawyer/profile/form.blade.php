@@ -2,6 +2,7 @@
 $details = $user->details;
 @endphp
 
+
 <div class="lawyer_profile-wrapper">
     {!! Form::open(['route' => 'lawyer.profile.update', 'class'=>'lawyer_profile-information form-design']) !!}
     <div class="row">
@@ -31,8 +32,12 @@ $details = $user->details;
 
                 <div class="form-grouph select-design">
                     <label>School Attended*</label>
-                    <select>
-                        <option>Harvard Law School</option>
+                    <select name="">
+                        <option value="" selected disabled>Select school</option>
+                        <option value="Harvard Law School1">Harvard Law School1</option>
+                        <option value="Harvard Law School2">Harvard Law School2</option>
+                        <option value="Harvard Law School3">Harvard Law School3</option>
+                        <option value="Harvard Law School4">Harvard Law School4</option>
                     </select>
                 </div>
                 <div class="form-grouph checkbox-label-block">
@@ -86,7 +91,11 @@ $details = $user->details;
                 <div class="form-grouph select-design">
                     <label>Law Firm</label>
                     <select>
-                        <option>Bill Cox Law Firm</option>
+                        <option value="" selected disabled>Bill Cox Law Firm1</option>
+                        <option value="Bill Cox Law Firm1">Bill Cox Law Firm1</option>
+                        <option value="Bill Cox Law Firm3">Bill Cox Law Firm2</option>
+                        <option value="Bill Cox Law Firm4">Bill Cox Law Firm3</option>
+                        <option value="Bill Cox Law Firm5">Bill Cox Law Firm4</option>
                     </select>
                 </div>
 
@@ -151,13 +160,20 @@ $details = $user->details;
                 <div class="form-grouph select-design">
                     <label>Federal Court Admissions*</label>
                     <select>
-                        <option>Select</option>
+                        <option value="">Select</option>
+                        <option value="Select1">Select1</option>
+                        <option value="Select2">Select2</option>
+                        <option value="Select3">Select3</option>
+
                     </select>
                 </div>
                 <div class="form-grouph select-design">
                     <label>State Bar Admissions*</label>
                     <select>
-                        <option>Select</option>
+                        <option value="">Select</option>
+                        <option value="Select1">Select1</option>
+                        <option value="Select2">Select2</option>
+                        <option value="Select3">Select3</option>
                     </select>
                 </div>
                 <div class="grey-light-heading">
