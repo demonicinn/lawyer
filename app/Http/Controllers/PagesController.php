@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Litigation;
 use App\Models\Contract;
+use App\Models\User;
 
 class PagesController extends Controller
 {
@@ -62,6 +63,16 @@ class PagesController extends Controller
             $route = "narrow.contracts";
         }
         return view('pages.lawyers', compact('route'));
+    }
+
+    //
+    public function lawyerShow(Request $request, User $user)
+    {
+        if(@$user->status=='1' && @$user->details->is_verified=='yes'){
+            return view('pages.lawyers-show', compact('user'));
+        }
+
+        abort(404);
     }
 
 }
