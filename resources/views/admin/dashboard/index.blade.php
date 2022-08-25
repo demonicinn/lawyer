@@ -116,6 +116,15 @@
                     </div>
                 </div>
 
+                <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12">
+                    <div class="data-white-box position-relative">
+                        <a class="data-content-box" href="{{ route('admin.categories.index') }}">
+                            <h4>CATEGORIES</h4>
+                            <h2 class="number-value">23</h2>
+                        </a>
+                    </div>
+                </div>
+
             </div>
 
 

@@ -1,5 +1,7 @@
 @php
 $details = $user->details;
+$lawyer_details = $user->lawyerInfo;
+
 @endphp
 
 
@@ -31,15 +33,21 @@ $details = $user->details;
                 </div>
 
                 <div class="form-grouph select-design">
-                    <label>School Attended*</label>
-                    <select name="">
-                        <option value="" selected disabled>Select school</option>
-                        <option value="Harvard Law School1">Harvard Law School1</option>
-                        <option value="Harvard Law School2">Harvard Law School2</option>
-                        <option value="Harvard Law School3">Harvard Law School3</option>
-                        <option value="Harvard Law School4">Harvard Law School4</option>
+                    @foreach ($categories as $category)
+                    <div class="form-grouph input-design">
+                        <label> {{ $category->name }}*</label>
+                    </div>
+                    <select name="lawyer_info[{{$category->id}}]" id="lawyer_info-{{$category->id}}" required>
+                        @foreach($category->items as $i => $list)
+                        <option value="{{$list->id}}"  @foreach ($lawyer_details as $i=> $item) {{ ( $list->id== $item->item_id) ? 'selected' : '' }} @endforeach >
+                            {{$list->name}}
+                        </option>
+                        @endforeach
                     </select>
+                    @endforeach
                 </div>
+
+
                 <div class="form-grouph checkbox-label-block">
                     <div class="d-flex align-items-center justify-content-spacebw">
                         {!! Form::label('contingency_cases','Do you accept contingency cases?*', ['class' => 'form-label']) !!}
@@ -88,7 +96,7 @@ $details = $user->details;
                         {!! $errors->first('consultation_fee', '<span class="help-block">:message</span>') !!}
                     </div>
                 </div>
-                <div class="form-grouph select-design">
+                <!-- <div class="form-grouph select-design">
                     <label>Law Firm</label>
                     <select>
                         <option value="" selected disabled>Bill Cox Law Firm1</option>
@@ -97,7 +105,7 @@ $details = $user->details;
                         <option value="Bill Cox Law Firm4">Bill Cox Law Firm3</option>
                         <option value="Bill Cox Law Firm5">Bill Cox Law Firm4</option>
                     </select>
-                </div>
+                </div> -->
 
                 <div class="form-grouph input-design{!! ($errors->has('website_url') ? ' has-error' : '') !!}">
                     {!! Form::label('website_url','Website URL', ['class' => 'form-label']) !!}
@@ -157,7 +165,7 @@ $details = $user->details;
 
                 @livewire('lawyer.practice-areas')
 
-                <div class="form-grouph select-design">
+                <!-- <div class="form-grouph select-design">
                     <label>Federal Court Admissions*</label>
                     <select>
                         <option value="">Select</option>
@@ -175,7 +183,7 @@ $details = $user->details;
                         <option value="Select2">Select2</option>
                         <option value="Select3">Select3</option>
                     </select>
-                </div>
+                </div> -->
                 <div class="grey-light-heading">
                     <h4>Texas</h4>
                 </div>

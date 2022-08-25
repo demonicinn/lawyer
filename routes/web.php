@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\CommonController;
 use App\Http\Controllers\Lawyer;
-
 use App\Http\Controllers\PagesController;
 
 
@@ -48,8 +47,8 @@ Route::get('/narrow-down-candidates', [PagesController::class, 'narrowDown'])->n
 Route::get('/narrow-down-litigations', [PagesController::class, 'litigations'])->name('narrow.litigations');
 Route::get('/narrow-down-contracts', [PagesController::class, 'contracts'])->name('narrow.contracts');
 
-Route::get('/lawyers', [PagesController::class, 'lawyers'])->name('lawyers');
-Route::get('/lawyer/{user}', [PagesController::class, 'lawyerShow'])->name('lawyer.show');
+Route::get('/narrow-lawyers', [PagesController::class, 'lawyers'])->name('lawyers');
+Route::get('/narrow-lawyers/{user}', [PagesController::class, 'lawyerShow'])->name('lawyer.show');
 
 
 
@@ -81,11 +80,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
             'title' => 'Support',
             'active' => 'support',
         );
-       
+
         return view('common.support', compact('title'));
     })->name('support');
 
-     Route::post('/support/store', [CommonController::class, 'SupportStore'])->name('support.store');
+    Route::post('/support/store', [CommonController::class, 'SupportStore'])->name('support.store');
 
 
     //admin
@@ -99,10 +98,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         //...profile 
         Route::get('/profile', [Admin\ProfileControlller::class, 'index'])->name('admin.profile');
         Route::post('/profile/update', [Admin\ProfileControlller::class, 'update'])->name('admin.profile.update');
-
-
-
-
 
         //...lawyers
         Route::get('/lawyers', function () {
@@ -148,6 +143,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
             );
             return view('admin.subscriptions.index', compact('title'));
         })->name('admin.subscriptions.index');
+
+        //...categories
+        Route::get('/categories', function () {
+            $title = array(
+                'title' => 'Categories',
+                'active' => 'categories',
+            );
+            return view('admin.categories.index', compact('title'));
+        })->name('admin.categories.index');
     });
 
 

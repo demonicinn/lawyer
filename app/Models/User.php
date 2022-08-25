@@ -91,4 +91,9 @@ class User extends Authenticatable
         return ['Monday'=>'Monday', 'Tuesday'=>'Tuesday', 'Wednesday'=>'Wednesday', 'Thursday'=>'Thursday', 'Friday'=>'Friday', 'Saturday'=>'Saturday', 'Sunday'=>'Sunday'];
     }
 
+    public function lawyerInfo()
+    {
+        return $this->hasMany(Lawyer_info::class, 'user_id', 'id');
+    }
+
 }

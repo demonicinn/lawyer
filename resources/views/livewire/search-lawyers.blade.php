@@ -40,11 +40,32 @@
                             <p class="max-value">20+</p>
                         </div>
                     </div>
+
+
                     <div class="form-group select-design form-grouph mb-4">
-                        <select>
-                            <option>Law School Attended</option>
-                            <option>Law School Attended</option>
+
+                        @foreach ($categories as $category)
+                        @if ($category->items_count)
+                        <div class="form-grouph input-design">
+                            
+                            <label> {{ $category->name }}*</label>
+                          
+                        </div>
+                        <select name="lawyer_info[{{$category->id}}]" required>
+
+                            @foreach($category->items as $i => $list)
+
+                            <option value="{{$list->id}}">
+                                {{$list->name}}
+                            </option>
+                          
+                            @endforeach
+
                         </select>
+                        @endif
+                        @endforeach
+
+
                     </div>
                     <div class="distance-within-design range-design form-grouph mb-5">
                         <h5 class="h5-design">Within Distance</h5>
@@ -68,7 +89,7 @@
 
         <div class="lawyers-list-sec">
             <div class="list-wrapper list-service">
-                
+
                 @foreach($lawyers as $lawyer)
                 <div class="list-item list-service-item">
                     <div class="lawyer-hire-block">
@@ -110,7 +131,7 @@
 
 
 
-            <div id="pagination-container" class="pagination-container-service"></div>
+                <div id="pagination-container" class="pagination-container-service"></div>
+            </div>
         </div>
     </div>
-</div>
