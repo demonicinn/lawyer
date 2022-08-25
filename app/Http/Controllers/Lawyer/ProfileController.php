@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Lawyer;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
+use App\Models\Lawyer_info;
 use Illuminate\Http\Request;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use App\Models\UserDetails;
@@ -13,22 +15,24 @@ use Illuminate\Support\Facades\Notification;
 
 class ProfileController extends Controller
 {
-	use LivewireAlert;
+    use LivewireAlert;
 
     //
     public function index()
     {
-    
-		$title = array(
-			'title' => 'Profile',
-			'active' => 'profile',
-		);
-		
-		$user = auth()->user();
-		$states = State::whereStatus('1')->pluck('name', 'id');
+
+        $title = array(
+            'title' => 'Profile',
+            'active' => 'profile',
+        );
+
+        $user = auth()->user();
+        $states = State::whereStatus('1')->pluck('name', 'id');
         // dd($user);
 
-        return view('lawyer.profile.index', compact('user', 'title', 'states'));
+        $categories = Category::where('status', '1')->with('items')->get();
+        //    dd($categories);
+        return view('lawyer.profile.index', compact('user', 'title', 'states', 'categories'));
     }
 
     //
@@ -36,29 +40,29 @@ class ProfileController extends Controller
     {
         // dd($request->all());
         $request->validate([
-			'bio' => 'required',
-			'contingency_cases' => 'required',
-			'is_consultation_fee' => 'required',
-			'hourly_fee' => 'required',
-			'website_url' => 'nullable|url',
-			'first_name' => 'required|max:50',
-			'last_name' => 'required|max:50',
-			'contact_number' => 'required|numeric|digits_between:10,12',
-			'address' => 'required',
-			'city' => 'required|max:100',
-			'state' => 'required',
-			'zip_code' => 'required|max:20',
-			'bar_number' => 'required|numeric',
-			'year_admitted' => 'required|numeric',
-			'year_experience' => 'required|numeric',
+            'bio' => 'required',
+            'contingency_cases' => 'required',
+            'is_consultation_fee' => 'required',
+            'hourly_fee' => 'required',
+            'website_url' => 'nullable|url',
+            'first_name' => 'required|max:50',
+            'last_name' => 'required|max:50',
+            'contact_number' => 'required|numeric|digits_between:10,12',
+            'address' => 'required',
+            'city' => 'required|max:100',
+            'state' => 'required',
+            'zip_code' => 'required|max:20',
+            'bar_number' => 'required|numeric',
+            'year_admitted' => 'required|numeric',
+            'year_experience' => 'required|numeric',
         ]);
-        
-        
-		$user = auth()->user();
 
-        if($request->image && strpos($request->image, "data:") !== false) {
-			$image = $request->image;
-			
+
+        $user = auth()->user();
+
+        if ($request->image && strpos($request->image, "data:") !== false) {
+            $image = $request->image;
+
             $folderPath = ('storage/images/');
             if (!is_dir($folderPath)) {
                 mkdir($folderPath, 0775, true);
@@ -67,13 +71,13 @@ class ProfileController extends Controller
 
             $image_parts = explode(";base64,", $image);
             $image_type_aux = explode("image/", $image_parts[0]);
-            $image_base64 = base64_decode($image_parts[1]?? null) ?? null;
+            $image_base64 = base64_decode($image_parts[1] ?? null) ?? null;
             $file_name = $user->id . '-' . md5(uniqid() . time()) . '.png';
-            $imageFullPath = $folderPath.$file_name;
+            $imageFullPath = $folderPath . $file_name;
             file_put_contents($imageFullPath, $image_base64);
-            
-			//...
-			$user->image = $file_name;
+
+            //...
+            $user->image = $file_name;
         }
 
         $user->first_name = $request->first_name;
@@ -81,14 +85,13 @@ class ProfileController extends Controller
         $user->contact_number = $request->contact_number;
         $user->save();
 
-        
+
         //...
         $details = new UserDetails;
-        if(@$user->details){
+        if (@$user->details) {
             $details->id = $user->details->id;
             $details->exists = true;
-        }
-        else {
+        } else {
             $details->users_id = $user->id;
         }
         $details->bio = $request->bio;
@@ -108,14 +111,14 @@ class ProfileController extends Controller
 
 
         //...Working Hours
-        if($request->day){
-            foreach($request->day as $day => $data){
-                if(@$data['from_time'] && $data['to_time']){
+        if ($request->day) {
+            foreach ($request->day as $day => $data) {
+                if (@$data['from_time'] && $data['to_time']) {
 
-                    $checkHour = LawyerHours::where(['users_id'=>$user->id, 'day'=>$day])->first();
+                    $checkHour = LawyerHours::where(['users_id' => $user->id, 'day' => $day])->first();
 
                     $hour = new LawyerHours;
-                    if(@$checkHour){
+                    if (@$checkHour) {
                         $hour->id = $checkHour->id;
                         $hour->exists = true;
                     }
@@ -128,6 +131,22 @@ class ProfileController extends Controller
             }
         }
 
+        //...save category and items id's
+
+        if ($request->lawyer_info) {
+            // on update
+            $delete_info = Lawyer_info::where('user_id', auth()->user()->id)->delete();
+
+            foreach ($request->lawyer_info as $cat_id => $item_id) {
+                $storeInfo = new Lawyer_info();
+                $storeInfo->user_id = auth()->user()->id;
+                $storeInfo->category_id = $cat_id;
+                $storeInfo->item_id = $item_id;
+                $storeInfo->save();
+            }
+        }
+
+
 
         //...
         $this->flash('success', 'Profile updated successfully');
@@ -136,13 +155,13 @@ class ProfileController extends Controller
 
     public function submit(Request $request)
     {
-       
+
         $user = auth()->user();
         $details = $user->details;
-       
+
         $hoursCount = $user->lawyerHours->count();
 
-        if($details->is_verified=='no' && $details->address && $details->review_request=='0' && $hoursCount>0){
+        if ($details->is_verified == 'no' && $details->address && $details->review_request == '0' && $hoursCount > 0) {
 
             $details->review_request = '1';
             $details->save();
@@ -150,7 +169,7 @@ class ProfileController extends Controller
             //...send mail
 
             Notification::route('mail', env('MAIL_FROM_ADDRESS'))->notify(new MailToAdminForLawyerStatus($user));
-           
+
             $this->flash('success', 'Request Send');
             return redirect()->back();
         }
@@ -159,5 +178,4 @@ class ProfileController extends Controller
         $this->flash('error', 'Invalid Request');
         return redirect()->back();
     }
-
 }

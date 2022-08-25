@@ -22,6 +22,7 @@
 
   @include('layouts.includes.header')
 
+
   @include('layouts.includes.alerts')
   <!-- @if(Session::has('success'))
   <p class="alert alert-info">{{ Session::get('success') }}</p>

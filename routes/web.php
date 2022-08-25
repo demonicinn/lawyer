@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\CommonController;
 use App\Http\Controllers\Lawyer;
-
 use App\Http\Controllers\PagesController;
 
 
@@ -99,10 +98,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         //...profile 
         Route::get('/profile', [Admin\ProfileControlller::class, 'index'])->name('admin.profile');
         Route::post('/profile/update', [Admin\ProfileControlller::class, 'update'])->name('admin.profile.update');
-
-
-
-
 
         //...lawyers
         Route::get('/lawyers', function () {
