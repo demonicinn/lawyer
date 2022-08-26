@@ -12,15 +12,15 @@ $user = auth()->user();
       </div>
       <div class="login-right-column">
         @guest
-        <div class="dropdown">
-          <a class="dropdown-toggle login-header-btn" href="{{ route('register') }}">Sign Up</a>
-          <a class="dropdown-toggle login-header-btn" href="{{ route('login') }}">Login</a>
+        <div class="login_signup-btns">
+          <a class="login-header-btn" href="{{ route('register') }}">Sign Up</a>
+          <a class="login-header-btn" href="{{ route('login') }}">Login</a>
         </div>
         @else
         <div class="dropdown">
           <button type="button" class="dropdown-toggle login-header-btn" data-bs-toggle="dropdown">
             <span class="drop-icon"><i class="fa-solid fa-angle-down"></i></span>
-            {{ $user->name }}
+            <span class="user-span">{{ $user->name }}</span>
             <span class="user-icon"><img class="header-pic" src="{{ $user->profile_pic}}"></span>
           </button>
           <ul class="dropdown-menu">
