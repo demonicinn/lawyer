@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class LawyerContracts extends Model
 {
     use HasFactory;
+
+    public function contracts()
+    {
+        return $this->hasOne(Litigation::class, 'id', 'contracts_id');
+    }
 }

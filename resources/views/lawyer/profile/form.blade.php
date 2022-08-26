@@ -37,15 +37,17 @@ $lawyer_details = $user->lawyerInfo;
                     <div class="form-grouph input-design">
                         <label> {{ $category->name }}*</label>
                     </div>
-                    <select name="lawyer_info[{{$category->id}}]" id="lawyer_info-{{$category->id}}" required>
-                        <option value="" selected disabled>Select {{ $category->name }}</option>
+                    <select name="lawyer_info[{{$category->id}}]" id="lawyer_info-{{$category->id}}">
+                        <option value=""  >Select {{ $category->name }}</option>
                     @foreach($category->items as $i => $list)
                         <option value="{{$list->id}}"  @foreach ($lawyer_details as $i=> $item) {{ ( $list->id== $item->item_id) ? 'selected' : '' }} @endforeach >
                             {{$list->name}}
                         </option>
                         @endforeach
                     </select>
+                    {!! $errors->first('lawyer_info.'.$category->id, '<span class="help-block">:message</span>') !!}
                     @endforeach
+                  
                 </div>
 
 
@@ -166,25 +168,7 @@ $lawyer_details = $user->lawyerInfo;
 
                 @livewire('lawyer.practice-areas')
 
-                <!-- <div class="form-grouph select-design">
-                    <label>Federal Court Admissions*</label>
-                    <select>
-                        <option value="">Select</option>
-                        <option value="Select1">Select1</option>
-                        <option value="Select2">Select2</option>
-                        <option value="Select3">Select3</option>
-
-                    </select>
-                </div>
-                <div class="form-grouph select-design">
-                    <label>State Bar Admissions*</label>
-                    <select>
-                        <option value="">Select</option>
-                        <option value="Select1">Select1</option>
-                        <option value="Select2">Select2</option>
-                        <option value="Select3">Select3</option>
-                    </select>
-                </div> -->
+             
                 <div class="grey-light-heading">
                     <h4>Texas</h4>
                 </div>

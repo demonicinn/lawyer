@@ -1893,3 +1893,9 @@ label.second-label-design {
     position: relative;
     border-radius: 50%;
 }
+
+.lawyer_status {
+    display: flex;
+    justify-content: space-between;
+}
+

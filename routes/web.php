@@ -99,6 +99,27 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/profile', [Admin\ProfileControlller::class, 'index'])->name('admin.profile');
         Route::post('/profile/update', [Admin\ProfileControlller::class, 'update'])->name('admin.profile.update');
 
+
+
+        //...common view details
+
+        Route::get('/laywer/view/{id}', [CommonController::class, 'viewlawyerDetails'])->name('admin.laywer.view');
+
+
+
+
+        //...update lawyer status
+
+        Route::post('/laywer/block/{id}', [CommonController::class, 'blockLawyer'])->name('admin.block.lawyer');
+
+        Route::post('/laywer/deactive/{id}', [CommonController::class, 'deActiveLawyer'])->name('admin.deactive.lawyer');
+
+        Route::post('/accept/lawyer/{id}', [CommonController::class, 'acceptLawyer'])->name('admin.accept.lawyer');
+
+        Route::post('/declined/lawyer/{id}', [CommonController::class, 'declinedLawyer'])->name('admin.declined.lawyer');
+
+        
+
         //...lawyers
         Route::get('/lawyers', function () {
             $title = array(
