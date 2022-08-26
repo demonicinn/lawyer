@@ -6,8 +6,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Notifications\SupportNotification;
+use App\Notifications\ResponseToLawyerRequest;
+
+
 use Illuminate\Support\Facades\Notification;
 use App\Models\Supports;
+use App\Models\User;
+use App\Models\Category;
+
 
 use Session;
 
@@ -67,6 +73,88 @@ class CommonController extends Controller
 
         Notification::route('mail', env('MAIL_FROM_ADDRESS'))->notify(new SupportNotification($contact));
         session()->flash('success', 'Support added successfully');
+        return back();
+    }
+
+    public function viewlawyerDetails($id)
+    {
+
+        $title = array(
+            'title' => 'View Lawyer Details',
+            'active' => 'lawyers',
+        );
+
+        $user = User::where('id', $id)->with('details', function ($query) {
+            $query->with('states');
+        })->with('lawyerInfo', function ($query1) {
+            $query1->with('categories', 'items');
+        })->with('lawyerLitigations', function ($query2) {
+            $query2->with('litigations');
+        })->with('lawyerContracts', function ($query3) {
+            $query3->with('contracts');
+        })->first();
+
+        // dd($user );
+        $categories = Category::with('items')->get();
+
+        return view('admin.lawyers.view-details', compact('title', 'user', 'categories'));
+    }
+
+
+    public function blockLawyer(Request $request, $id)
+    {
+
+        $user = User::findOrFail($id);
+        $user->status = '2';
+        $user->save();
+        $action = "blocked";
+
+        //...send mail
+
+        Notification::route('mail', $user->email)->notify(new ResponseToLawyerRequest($user, $action));
+        session()->flash('success', 'Lawyer block successfully');
+        return back();
+    }
+
+    public function deActiveLawyer(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $user->status = '0';
+        $user->save();
+        $action = "deactivated";
+
+        //...send mail
+
+        Notification::route('mail', $user->email)->notify(new ResponseToLawyerRequest($user, $action));
+        session()->flash('success', 'Lawyer de-active  successfully');
+        return back();
+    }
+
+    public function acceptLawyer(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $user->details->is_admin_review = '1';
+        $user->details->is_verified = 'yes';
+        $user->details->save();
+        $action = "accept";
+        //...send mail
+
+        Notification::route('mail', $user->email)->notify(new ResponseToLawyerRequest($user, $action));
+        session()->flash('success', 'Lawyer accept successfully');
+        return back();
+    }
+    public function declinedLawyer(Request $request, $id)
+    {
+
+        $user = User::findOrFail($id);
+        $user->details->is_admin_review = '2';
+        $user->details->review_request = '0';
+        $user->details->save();
+        $action = "declined";
+        //...send mail
+
+        Notification::route('mail', $user->email)->notify(new ResponseToLawyerRequest($user, $action));
+        session()->flash('success', 'Lawyer declined successfully');
         return back();
     }
 }

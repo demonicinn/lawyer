@@ -7,18 +7,20 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class WelcomeNotification extends Notification
+class ResponseToLawyerRequest extends Notification
 {
     use Queueable;
     public $user;
+    public $action;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct($user, $action)
     {
         $this->user = $user;
+        $this->action = $action;
     }
 
     /**
@@ -41,9 +43,9 @@ class WelcomeNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('Welcome Notification')
-            ->greeting('Welcome ,' .$this->user->first_name)
-            ->line('Thank you for using our application!');
+            ->subject('Your account is ' . $this->action)
+            ->greeting('Hello ,' .$this->user->first_name)
+            ->line('Your account has been ' . $this->action . ' by admin.');
     }
 
     /**

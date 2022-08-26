@@ -43,7 +43,7 @@ class MailToLawyerForStatus extends Notification
     {
         return (new MailMessage)
             ->subject('Your request has been ' . $this->action)
-            ->greeting('Hello', $this->lawyer->first_name)
+            ->greeting('Hello ,'. $this->lawyer->first_name)
             ->line('Your request has been ' . $this->action . ' by admin');
     }
 

@@ -8,8 +8,8 @@ use App\Models\User;
 
 class SearchLawyers extends Component
 {
-    public $lawyers,$categories;
-    
+    public $lawyers, $categories;
+
 
     public function searchFilter()
     {
@@ -20,6 +20,8 @@ class SearchLawyers extends Component
             ->whereHas('details', function ($query) {
                 $query->where('is_verified', 'yes');
             });
+
+
         if (request()->litigations) {
             $user = $user->whereHas('lawyerLitigations', function ($query) {
                 $query->whereIn('litigations_id', request()->litigations);
@@ -32,7 +34,6 @@ class SearchLawyers extends Component
         }
 
         $user = $user->get();
-
         $this->lawyers = $user;
     }
 
@@ -41,8 +42,6 @@ class SearchLawyers extends Component
         $this->searchFilter();
 
         $this->categories = Category::where('is_search', '=', '1')->withCount('items')->with('items')->get();
-
-       
         return view('livewire.search-lawyers');
     }
 }

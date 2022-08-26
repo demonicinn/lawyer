@@ -55,6 +55,7 @@ class ProfileController extends Controller
             'bar_number' => 'required|numeric',
             'year_admitted' => 'required|numeric',
             'year_experience' => 'required|numeric',
+            // 'lawyer_info.*'=>'required|array',
         ]);
 
 
