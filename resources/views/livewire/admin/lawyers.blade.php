@@ -22,9 +22,11 @@
                         @else
                         <button type="button" class="decline-btn">De-active</button>
                         @endif
+                        <button type="button" class="btn btn-sm btn-success "><i class="fa fa-eye" aria-hidden="true"></i></button>
                     </td>
                     <td>
                         @if(@$lawyer->details->review_request=='1' && $lawyer->details->is_verified=='no')
+                        
                         <button type="button" class="btn btn-sm btn-success" wire:click="review('{{$lawyer->id}}', 'accept')">Accept</button>
                         <button type="button" class="btn btn-sm btn-danger" wire:click="review('{{$lawyer->id}}', 'declined')">Declined</button>
                         @endif

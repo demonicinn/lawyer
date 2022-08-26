@@ -38,7 +38,8 @@ $lawyer_details = $user->lawyerInfo;
                         <label> {{ $category->name }}*</label>
                     </div>
                     <select name="lawyer_info[{{$category->id}}]" id="lawyer_info-{{$category->id}}" required>
-                        @foreach($category->items as $i => $list)
+                        <option value="" selected disabled>Select {{ $category->name }}</option>
+                    @foreach($category->items as $i => $list)
                         <option value="{{$list->id}}"  @foreach ($lawyer_details as $i=> $item) {{ ( $list->id== $item->item_id) ? 'selected' : '' }} @endforeach >
                             {{$list->name}}
                         </option>
