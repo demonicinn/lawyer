@@ -18,14 +18,14 @@
                     <div class="toggle-design-wrapper d-flex flex-wrap align-items-center mb-4 justify-content-spacebw">
                         <h5 class="h5-design">Free Consultation</h5>
                         <div class="toggle-design_div">
-                            <input id="free-consultation" type="checkbox" name="free-consultation" value="Free Consultation">
+                            <input id="free-consultation" type="checkbox" wire:model="free_consultation" name="free-consultation">
                             <button class="cstm-toggle-btn"></button>
                         </div>
                     </div>
                     <div class="toggle-design-wrapper d-flex flex-wrap align-items-center mb-4 justify-content-spacebw">
                         <h5 class="h5-design">Contingency Cases</h5>
                         <div class="toggle-design_div">
-                            <input id="contingency-cases" type="checkbox" name="contingency-cases" value="Contingency Cases">
+                            <input id="contingency-cases" type="checkbox" wire:model="contingency_cases" name="contingency-cases" >
                             <button class="cstm-toggle-btn"></button>
                         </div>
                     </div>
@@ -35,7 +35,7 @@
                             <p class="min-value">1</p>
                             <div id="years-experience-slider" class="range-slider">
                                 <div id="experience-range-tooltip" class="tooltip-range"></div>
-                                <input id="experience-range" class="range_design-input" type="range" step="1" value="15" min="1" max="50">
+                                <input id="experience-range" wire:model="year_exp" class="range_design-input" type="range" step="1" value="15" min="1" max="50">
                             </div>
                             <p class="max-value">20+</p>
                         </div>
@@ -120,8 +120,10 @@
                                 <address><i class="fa-solid fa-location-dot"></i> {{ @$lawyer->details->city }}, {{ @$lawyer->details->states->code }}</address>
                                 <a href="{{ route('lawyer.show', $lawyer->id) }}">See Profile</a>
                             </div>
+
+                            @php $lawyerID= Crypt::encrypt($lawyer->id); @endphp
                             <div class="schedular_consultation">
-                                <a href="#" class="schule_consultation-btn">Schedule Consultation</a>
+                                <a href="{{route('schedule.consultation',$lawyerID)}}" class="schule_consultation-btn">Schedule Consultation</a>
                             </div>
                         </div>
                     </div>

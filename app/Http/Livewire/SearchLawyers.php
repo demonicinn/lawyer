@@ -9,20 +9,18 @@ use App\Models\User;
 class SearchLawyers extends Component
 {
     public $lawyers, $categories;
+    public $free_consultation, $contingency_cases, $year_exp;
 
 
     public function searchFilter()
     {
-
-        //  dd($this->lawyers);
-
         $user = User::where('status', '1')
             ->whereHas('details', function ($query) {
                 $query->where('is_verified', 'yes');
             });
 
-
         if (request()->litigations) {
+
             $user = $user->whereHas('lawyerLitigations', function ($query) {
                 $query->whereIn('litigations_id', request()->litigations);
             });
@@ -32,6 +30,32 @@ class SearchLawyers extends Component
                 $query->whereIn('contracts_id', request()->contracts);
             });
         }
+
+        //search filter
+
+        // if ($this->free_consultation == true) {
+        //     $user = $user->whereHas('details', function ($query) {
+        //         $query->where('is_consultation_fee', 'yes');
+        //     });
+        // }
+
+        // if ($this->contingency_cases == true) {
+
+        //     $user = $user->whereHas('details', function ($query) {
+        //         $query->where('contingency_cases', 'yes');
+        //     });
+        // }
+
+        // if ($this->year_exp) {
+        //     $from='1';
+        //     $to=$this->year_exp;
+
+        //     // dd( $from,$to);
+        //     $user = $user->whereHas('details', function ($query) {
+        //         $query->whereBetween('year_experience', ['1', $this->year_exp]);
+        //     });
+        // }
+
 
         $user = $user->get();
         $this->lawyers = $user;

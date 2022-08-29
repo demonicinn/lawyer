@@ -27,7 +27,12 @@
                         <a href="{{route('admin.laywer.view',$lawyer->id)}}">
                             <button type="button" class="btn btn-sm btn-info "><i class="fa fa-eye" aria-hidden="true"></i></button>
                         </a>
+
                         @endif
+
+                        <a href="{{route('admin.laywer.view',$lawyer->id)}}">
+                            <button type="button" class="btn btn-sm btn-info "><i class="fa fa-eye" aria-hidden="true"></i></button>
+                        </a>
                     </td>
                     <td>
                         @if(@$lawyer->details->review_request=='1' && $lawyer->details->is_verified=='no')
