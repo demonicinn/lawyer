@@ -120,8 +120,10 @@
                                 <address><i class="fa-solid fa-location-dot"></i> {{ @$lawyer->details->city }}, {{ @$lawyer->details->states->code }}</address>
                                 <a href="{{ route('lawyer.show', $lawyer->id) }}">See Profile</a>
                             </div>
+
+                            @php $lawyerID= Crypt::encrypt($lawyer->id); @endphp
                             <div class="schedular_consultation">
-                                <a href="#" class="schule_consultation-btn">Schedule Consultation</a>
+                                <a href="{{route('schedule.consultation',$lawyerID)}}" class="schule_consultation-btn">Schedule Consultation</a>
                             </div>
                         </div>
                     </div>

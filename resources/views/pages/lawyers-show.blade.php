@@ -39,7 +39,7 @@
                                         <address><i class="fa-solid fa-location-dot"></i> {{ @$user->details->city }}, {{ @$user->details->states->code }}</address>
                                     </div>
                                     <div class="schedular_consultation">
-                                        <a href="#" class="schule_consultation-btn">Schedule Consultation</a>
+                                        <a href="{{route('schedule.consultation',$user->id)}}" class="schule_consultation-btn">Schedule Consultation</a>
                                     </div>
                                 </div>
                             </div>

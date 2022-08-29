@@ -8,6 +8,8 @@ use App\Http\Controllers\Admin;
 use App\Http\Controllers\CommonController;
 use App\Http\Controllers\Lawyer;
 use App\Http\Controllers\PagesController;
+use App\Http\Controllers\ScheduleConsultationController;
+
 
 
 /*
@@ -50,7 +52,9 @@ Route::get('/narrow-down-contracts', [PagesController::class, 'contracts'])->nam
 Route::get('/narrow-lawyers', [PagesController::class, 'lawyers'])->name('lawyers');
 Route::get('/narrow-lawyers/{user}', [PagesController::class, 'lawyerShow'])->name('lawyer.show');
 
-
+ 
+// schedule consultation
+Route::get('/schedule/consultation/{id}', [ScheduleConsultationController::class, 'index'])->name('schedule.consultation');
 
 
 
@@ -118,7 +122,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         Route::post('/declined/lawyer/{id}', [CommonController::class, 'declinedLawyer'])->name('admin.declined.lawyer');
 
-        
+
 
         //...lawyers
         Route::get('/lawyers', function () {
@@ -209,5 +213,5 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
 
-    
+ 
 });

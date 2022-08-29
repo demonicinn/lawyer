@@ -14,9 +14,6 @@ class SearchLawyers extends Component
 
     public function searchFilter()
     {
-
-
-
         $user = User::where('status', '1')
             ->whereHas('details', function ($query) {
                 $query->where('is_verified', 'yes');
@@ -43,7 +40,7 @@ class SearchLawyers extends Component
         // }
 
         // if ($this->contingency_cases == true) {
-          
+
         //     $user = $user->whereHas('details', function ($query) {
         //         $query->where('contingency_cases', 'yes');
         //     });
