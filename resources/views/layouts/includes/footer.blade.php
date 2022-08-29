@@ -1,6 +1,6 @@
 <footer id="footer">
   <div class="footer-container">
-    <div class="footer-row d-flex flex-wrap">
+    <div class="footer-row d-flex">
       <div class="footer-column footer-column-1">
         <div class="footer-widget footer-widget-first">
           <div class="footer-logo">
