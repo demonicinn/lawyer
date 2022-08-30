@@ -38,16 +38,15 @@ $lawyer_details = $user->lawyerInfo;
                         <label> {{ $category->name }}*</label>
                     </div>
                     <select name="lawyer_info[{{$category->id}}]" id="lawyer_info-{{$category->id}}">
-                        <option value=""  >Select {{ $category->name }}</option>
-                    @foreach($category->items as $i => $list)
-                        <option value="{{$list->id}}"  @foreach ($lawyer_details as $i=> $item) {{ ( $list->id== $item->item_id) ? 'selected' : '' }} @endforeach >
-                            {{$list->name}}
-                        </option>
+                        <option value="">Select {{ $category->name }}</option>
+                        @foreach($category->items as $i => $list)
+                            <option value="{{$list->id}}"  @foreach ($lawyer_details as $i=> $item) {{ ( $list->id== $item->item_id) ? 'selected' : '' }} @endforeach >
+                                {{$list->name}}
+                            </option>
                         @endforeach
                     </select>
                     {!! $errors->first('lawyer_info.'.$category->id, '<span class="help-block">:message</span>') !!}
                     @endforeach
-                  
                 </div>
 
 
@@ -99,16 +98,6 @@ $lawyer_details = $user->lawyerInfo;
                         {!! $errors->first('consultation_fee', '<span class="help-block">:message</span>') !!}
                     </div>
                 </div>
-                <!-- <div class="form-grouph select-design">
-                    <label>Law Firm</label>
-                    <select>
-                        <option value="" selected disabled>Bill Cox Law Firm1</option>
-                        <option value="Bill Cox Law Firm1">Bill Cox Law Firm1</option>
-                        <option value="Bill Cox Law Firm3">Bill Cox Law Firm2</option>
-                        <option value="Bill Cox Law Firm4">Bill Cox Law Firm3</option>
-                        <option value="Bill Cox Law Firm5">Bill Cox Law Firm4</option>
-                    </select>
-                </div> -->
 
                 <div class="form-grouph input-design{!! ($errors->has('website_url') ? ' has-error' : '') !!}">
                     {!! Form::label('website_url','Website URL', ['class' => 'form-label']) !!}
@@ -168,22 +157,28 @@ $lawyer_details = $user->lawyerInfo;
 
                 @livewire('lawyer.practice-areas')
 
-             
-                <div class="grey-light-heading">
-                    <h4>Texas</h4>
-                </div>
-                <div class="form-flex">
-                    <div class="form-grouph input-design{!! ($errors->has('bar_number') ? ' has-error' : '') !!}">
-                        {!! Form::label('bar_number','Bar Number*', ['class' => 'form-label']) !!}
-                        {!! Form::text('bar_number', $details->bar_number ?? null, ['class' => ($errors->has('bar_number') ? ' is-invalid' : ''), 'maxlength'=>'20']) !!}
-                        {!! $errors->first('bar_number', '<span class="help-block">:message</span>') !!}
+                
+                
+
+
+                <div class="form-grouph select-design">
+                    @foreach ($categoriesMulti as $category)
+                    <div class="form-grouph input-design">
+                        <label> {{ $category->name }}*</label>
                     </div>
-                    <div class="form-grouph input-design{!! ($errors->has('year_admitted') ? ' has-error' : '') !!}">
-                        {!! Form::label('year_admitted','Year Admitted*', ['class' => 'form-label']) !!}
-                        {!! Form::text('year_admitted', $details->year_admitted ?? null, ['class' => ($errors->has('year_admitted') ? ' is-invalid' : ''), 'maxlength'=>'4']) !!}
-                        {!! $errors->first('year_admitted', '<span class="help-block">:message</span>') !!}
-                    </div>
+                    <select class="select-block multiBoxes" multiple>
+                        @foreach($category->items as $i => $list)
+                            <option value="{{$list->id}}" data-cat="{{$category->id}}" data-name="{{$list->name}}" @foreach ($lawyer_details as $i=> $item) {{ ( $list->id== $item->item_id) ? 'selected' : '' }} @endforeach >
+                                {{$list->name}}
+                            </option>
+                        @endforeach
+                    </select>
+                    {!! $errors->first('lawyer_info.'.$category->id, '<span class="help-block">:message</span>') !!}
+                    @endforeach
                 </div>
+
+
+                <div class="admissionHtml"></div>
 
                 <div class="form-grouph input-design{!! ($errors->has('year_experience') ? ' has-error' : '') !!}">
                     <label>Years of Experience <span class="label_color">?</span></label>
@@ -193,9 +188,10 @@ $lawyer_details = $user->lawyerInfo;
 
             </div>
         </div>
-
-
+        
+        
         @include('lawyer.profile.hours')
+        
 
 
 

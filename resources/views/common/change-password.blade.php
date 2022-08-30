@@ -14,17 +14,17 @@
                     <div class="form">
                         <div class="form-grouph input-design">
                             <label>Old Password*</label>
-                            <input class="@error('old_password') is-invalid @enderror" type="password" name="old_password" placeholder="*********">
+                            <input class="@error('old_password') is-invalid @enderror" type="password" name="old_password">
                             @error('old_password')<div class="help-block">{{ $message }}</div>@enderror
                         </div>
                         <div class="form-grouph input-design">
                             <label>New Password*</label>
-                            <input class="@error('password') is-invalid @enderror" type="password" name="password" placeholder="*********">
+                            <input class="@error('password') is-invalid @enderror" type="password" name="password">
                             @error('password')<div class="help-block">{{ $message }}</div>@enderror
                         </div>
                         <div class="form-grouph input-design">
                             <label>Confirm Password*</label>
-                            <input class="@error('password_confirmation') is-invalid @enderror" type="password" name="password_confirmation" placeholder="*********">
+                            <input class="@error('password_confirmation') is-invalid @enderror" type="password" name="password_confirmation">
                             @error('password_confirmation')<div class="help-block">{{ $message }}</div>@enderror
                         </div>
 

@@ -22,6 +22,8 @@ class Categories extends Component
 
     public $cat_search = '1';
 
+    public $is_multiselect = '0';
+
     public $categoryId;
     public $itemId;
 
@@ -35,6 +37,7 @@ class Categories extends Component
         $this->cat_status = '1';
         $this->cat_search='1';
         $this->categoryId = '';
+        $this->is_multiselect = '0';
     }
 
 
@@ -44,7 +47,6 @@ class Categories extends Component
         $this->validate([
             'category_name' => 'required|max:255',
             'cat_status' => 'required',
-            'cat_search' => 'required',
         ]);
 
         $store = new Category();
@@ -55,6 +57,7 @@ class Categories extends Component
         $store->name = $this->category_name;
         $store->status = $this->cat_status;
         $store->is_search = $this->cat_search;
+        $store->is_multiselect = $this->is_multiselect;
         $store->save();
 
         $this->alert('success', 'Category added');
@@ -72,6 +75,7 @@ class Categories extends Component
         $this->category_name = $data->name;
         $this->cat_status = $data->status;
         $this->cat_search = $data->is_search;
+        $this->is_multiselect = $data->is_multiselect;
 
         $this->emit('categoryFormShow');
     }
