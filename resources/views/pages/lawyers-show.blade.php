@@ -38,9 +38,12 @@
                                     <div class="location_profile-divs">
                                         <address><i class="fa-solid fa-location-dot"></i> {{ @$user->details->city }}, {{ @$user->details->states->code }}</address>
                                     </div>
+                                    @php $lawyerID= Crypt::encrypt($user->id); @endphp
                                     <div class="schedular_consultation">
-                                        <a href="{{route('schedule.consultation',$user->id)}}" class="schule_consultation-btn">Schedule Consultation</a>
+                                        <a href="{{route('schedule.consultation',$lawyerID)}}" class="schule_consultation-btn">Schedule Consultation</a>
                                     </div>
+
+
                                 </div>
                             </div>
                         </div>
