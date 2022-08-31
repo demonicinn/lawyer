@@ -1,17 +1,6 @@
 <div>
     <button type="button" class="accept_btn showModal">Add Category</button>
 
-    <!-- @if($errors->any())
-<div class="alert alert-danger">
-    <p><strong>Opps Something went wrong</strong></p>
-    <ul>
-        @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-</div>
-@endif -->
-
     <div class="table-responsive table-design">
         <table style="width:100%">
             <thead>
@@ -93,18 +82,24 @@
                                 
                             </div>
                             <div class="status_search">
-                            <div class="form-group">
-                                <label>Status</label></br>
-                                <input type="radio" name="cat_status" wire:model="cat_status" value="1"> Active
-                                <input type="radio" name="cat_status" wire:model="cat_status" value="0"> De-active
-                                {!! $errors->first('cat_status', '<span class="help-block">:message</span>') !!}
-                            </div>
-                            <div class="form-group">
-                                <label>Is Search</label></br>
-                                <input type="radio" name="cat_search" wire:model="cat_search" value="1"> Yes
-                                <input type="radio" name="cat_search" wire:model="cat_search" value="0"> No
-                                {!! $errors->first('cat_search', '<span class="help-block">:message</span>') !!}
-                            </div>
+                                <div class="form-group">
+                                    <label>Is Multiselect</label></br>
+                                    <input type="radio" name="is_multiselect" wire:model="is_multiselect" value="1"> Yes
+                                    <input type="radio" name="is_multiselect" wire:model="is_multiselect" value="0"> No
+                                    {!! $errors->first('is_multiselect', '<span class="help-block">:message</span>') !!}
+                                </div>
+                                <div class="form-group">
+                                    <label>Is Search</label></br>
+                                    <input type="radio" name="cat_search" wire:model="cat_search" value="1"> Yes
+                                    <input type="radio" name="cat_search" wire:model="cat_search" value="0"> No
+                                    {!! $errors->first('cat_search', '<span class="help-block">:message</span>') !!}
+                                </div>
+                                <div class="form-group">
+                                    <label>Status</label></br>
+                                    <input type="radio" name="cat_status" wire:model="cat_status" value="1"> Active
+                                    <input type="radio" name="cat_status" wire:model="cat_status" value="0"> De-active
+                                    {!! $errors->first('cat_status', '<span class="help-block">:message</span>') !!}
+                                </div>
                             </div>
 
                         </div>

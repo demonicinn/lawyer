@@ -12,7 +12,7 @@
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                     <div class="portal-div-design position-relative">
                         <div class="portal-div-img">
-                            <img src="assets/images/schedule.svg">
+                            <img src="{{ asset('assets/images/schedule.svg') }}">
                         </div>
                         <div class="portal-cntnt-wrapper">
                             <a href="#">Schedule</a>
@@ -33,7 +33,7 @@
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                     <div class="portal-div-design position-relative">
                         <div class="portal-div-img">
-                            <img src="assets/images/services-portal.svg">
+                            <img src="{{ asset('assets/images/services-portal.svg') }}">
                         </div>
                         <div class="portal-cntnt-wrapper">
                             <a href="#">Services</a>
@@ -54,7 +54,7 @@
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                     <div class="portal-div-design position-relative">
                         <div class="portal-div-img">
-                            <img src="assets/images/account-portal.svg">
+                            <img src="{{ asset('assets/images/account-portal.svg') }}">
                         </div>
                         <div class="portal-cntnt-wrapper">
                             <a href="#">Account</a>
@@ -75,7 +75,7 @@
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                     <div class="portal-div-design position-relative">
                         <div class="portal-div-img">
-                            <img src="assets/images/saved-lawyers.svg">
+                            <img src="{{ asset('assets/images/saved-lawyers.svg') }}">
                         </div>
                         <div class="portal-cntnt-wrapper">
                             <a href="#">Saved Lawyers</a>

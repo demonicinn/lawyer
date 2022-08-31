@@ -11,10 +11,10 @@ class Lawyer_info extends Model
 
     public function categories()
     {
-        return $this->hasMany(Category::class, 'id', 'category_id');
+        return $this->belongsTo(Category::class, 'category_id');
     }
     public function items()
     {
-        return $this->hasMany(Item::class, 'id', 'item_id');
+        return $this->belongsTo(Item::class, 'item_id');
     }
 }

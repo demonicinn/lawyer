@@ -43,18 +43,35 @@
 
   <script src="{{ asset('assets/js/jquery-3.6.0.js') }}"></script>
   <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
-  <script src="{{ asset('assets/js/custom.js') }}"></script>
   <script src="{{ asset('assets/js/slick.js') }}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="{{asset('assets/js/jquery.simple-calendar.js')}}"></script>
+  <script src="{{ asset('assets/js/custom.js') }}"></script>
   <x-livewire-alert::scripts />
 
   @livewireScripts
   @yield('script')
   @stack('scripts')
+
+
+  <script>
+    function getLocation(){
+      if ("geolocation" in navigator){ //check geolocation available 
+        //try to get user current location using getCurrentPosition() method
+        navigator.geolocation.getCurrentPosition(function(position){
+            $('input[name=latitude]').val(position.coords.latitude);
+            $('input[name=longitude]').val(position.coords.longitude);
+          });
+      }else{
+        console.log("Browser doesn't support geolocation!");
+      }
+    }
+
+    getLocation();
+  </script>
 
 </body>
 

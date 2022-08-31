@@ -9,6 +9,7 @@
         </div>
         <div class="narrow-selection-box">
             {!! Form::open(['route' => 'lawyers', 'method'=>'get', 'class'=>'form-design']) !!}
+
                 <div class="white-shadow-box">
                     <div class="form-flex">
                         @foreach ($litigations as $litigation)
@@ -21,6 +22,11 @@
 
                     </div>
                 </div>
+
+
+                <input type="hidden" name="latitude">
+                <input type="hidden" name="longitude">
+                
                 <div class="form-confim-div">
                     <div class="form-grouph submit-design text-center">
                         <button class="btn-design-first" type="submit">{{__ ('Confirm') }}</button>
