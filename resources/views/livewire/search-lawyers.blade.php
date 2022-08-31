@@ -10,18 +10,20 @@
                             <p class="min-value">$0</p>
                             <div id="hourly-rate-slider" class="range-slider">
                                 <div id="hourly-range" class="tooltip-range"></div>
-                                <input id="range" class="range_design-input" type="range" step="10" value="200" min="0" max="500">
+                                <input class="range_design-input" type="range" step="10" wire:model="rate" min="0" max="500">
                             </div>
                             <p class="max-value">$500</p>
                         </div>
                     </div>
+
                     <div class="toggle-design-wrapper d-flex flex-wrap align-items-center mb-4 justify-content-spacebw">
                         <h5 class="h5-design">Free Consultation</h5>
                         <div class="toggle-design_div">
-                            <input id="free-consultation" type="checkbox" wire:model="free_consultation" name="free-consultation">
+                            <input type="checkbox" wire:model="free_consultation" name="free-consultation">
                             <button class="cstm-toggle-btn"></button>
                         </div>
                     </div>
+
                     <div class="toggle-design-wrapper d-flex flex-wrap align-items-center mb-4 justify-content-spacebw">
                         <h5 class="h5-design">Contingency Cases</h5>
                         <div class="toggle-design_div">
@@ -29,55 +31,49 @@
                             <button class="cstm-toggle-btn"></button>
                         </div>
                     </div>
+
                     <div class="year-exp-design range-design mb-5">
                         <h5 class="h5-design">Years Experience</h5>
                         <div class="range-wrapper position-relative">
                             <p class="min-value">1</p>
                             <div id="years-experience-slider" class="range-slider">
                                 <div id="experience-range-tooltip" class="tooltip-range"></div>
-                                <input id="experience-range" wire:model="year_exp" class="range_design-input" type="range" step="1" value="15" min="1" max="50">
+                                <input wire:model="year_exp" class="range_design-input" type="range" step="1" min="1" max="20">
                             </div>
                             <p class="max-value">20+</p>
                         </div>
                     </div>
 
-
                     <div class="form-group select-design form-grouph mb-4">
-
                         @foreach ($categories as $category)
                         @if ($category->items_count)
                         <div class="form-grouph input-design">
-                            
                             <label> {{ $category->name }}*</label>
-                          
                         </div>
-                        <select name="lawyer_info[{{$category->id}}]" required>
-
+                        <select wire:model="category.{{$category->id}}">
+                            <option value="">Select {{ $category->name }}</option>
                             @foreach($category->items as $i => $list)
-
                             <option value="{{$list->id}}">
                                 {{$list->name}}
                             </option>
-                          
                             @endforeach
-
                         </select>
                         @endif
                         @endforeach
-
-
                     </div>
+
                     <div class="distance-within-design range-design form-grouph mb-5">
                         <h5 class="h5-design">Within Distance</h5>
                         <div class="range-wrapper position-relative">
                             <p class="min-value">1 mi</p>
                             <div id="distance-range-slides" class="range-slider">
-                                <div id="distance-range-tooltip" class="tooltip-range"></div>
-                                <input id="distance-range" class="range_design-input" type="range" step="1" value="15" min="1" max="200">
+                                <div class="tooltip-range"></div>
+                                <input class="range_design-input" wire:model="distance" type="range" step="1" min="1" max="10000">
                             </div>
                             <p class="max-value">100+ mi</p>
                         </div>
                     </div>
+
                     <div class="form-group input-design form-grouph icon-input-design dark-placehiolder">
                         <input type="search" placeholder="Location">
                         <span class="input_icn"><i class="fa-solid fa-magnifying-glass"></i></span>

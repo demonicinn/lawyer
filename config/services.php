@@ -36,4 +36,12 @@ return [
 		'secret' => env('STRIPE_SECRET'),
 	],
 
+    'admin' => [
+        'email' => env('ADMIN_EMAIL'),
+    ],
+    
+    'google' => [
+        'api' => env('GOOGLE_MAPS_API_KEY'),
+    ]
+
 ];

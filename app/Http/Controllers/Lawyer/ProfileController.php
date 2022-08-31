@@ -65,6 +65,13 @@ class ProfileController extends Controller
 
         $user = auth()->user();
 
+        $state = State::findOrFail($request->state);
+        $address = $request->address.', '.$request->city.', '.$state->name.', '.$request->zip_code;
+        
+        //dd($query);
+        $res = getLatLong($address);
+
+
         if ($request->image && strpos($request->image, "data:") !== false) {
             $image = $request->image;
 
@@ -109,9 +116,14 @@ class ProfileController extends Controller
         $details->city = $request->city;
         $details->states_id = $request->state;
         $details->zip_code = $request->zip_code;
-        $details->bar_number = $request->bar_number;
-        $details->year_admitted = $request->year_admitted;
+        //$details->bar_number = $request->bar_number;
+        //$details->year_admitted = $request->year_admitted;
         $details->year_experience = $request->year_experience;
+
+        $details->latitude = @$res['latitude'];
+        $details->longitude = @$res['longitude'];
+        $details->full_address = @$res['address'];
+
         $details->save();
 
 
@@ -139,33 +151,43 @@ class ProfileController extends Controller
         //...save category and items id's
         if ($request->lawyer_info) {
             // on update
-            Lawyer_info::where('user_id', auth()->user()->id)->delete();
+            Lawyer_info::where('user_id', auth()->user()->id)
+                        ->whereHas('categories', function ($query) {
+                            $query->where('is_multiselect', '0');
+                        })
+                        ->delete();
 
             foreach ($request->lawyer_info as $cat_id => $item_id) {
-                $storeInfo = new Lawyer_info();
-                $storeInfo->user_id = auth()->user()->id;
-                $storeInfo->category_id = $cat_id;
-                $storeInfo->item_id = $item_id;
-                $storeInfo->save();
+                if(@$item_id){
+                    $storeInfo = new Lawyer_info();
+                    $storeInfo->user_id = auth()->user()->id;
+                    $storeInfo->category_id = $cat_id;
+                    $storeInfo->item_id = $item_id;
+                    $storeInfo->save();
+                }
             }
         }
 
         //.........
         if ($request->lawyer_address) {
             // on update
-            Lawyer_info::where('user_id', auth()->user()->id)->delete();
+            Lawyer_info::where('user_id', auth()->user()->id)
+                        ->whereHas('categories', function ($query) {
+                            $query->where('is_multiselect', '1');
+                        })
+                        ->delete();
 
             foreach ($request->lawyer_address as $cat_id => $items) {
-                
                 foreach ($items['data'] as $itemId => $item) {
-
-                    $storeInfo = new Lawyer_info();
-                    $storeInfo->user_id = auth()->user()->id;
-                    $storeInfo->category_id = $cat_id;
-                    $storeInfo->item_id = $itemId;
-                    $storeInfo->year_admitted = @$item['year_admitted'];
-                    $storeInfo->bar_number = @$item['bar_number'];
-                    $storeInfo->save();
+                    if(@$item['year_admitted'] && @$item['bar_number']){
+                        $storeInfo = new Lawyer_info();
+                        $storeInfo->user_id = auth()->user()->id;
+                        $storeInfo->category_id = $cat_id;
+                        $storeInfo->item_id = $itemId;
+                        $storeInfo->year_admitted = @$item['year_admitted'];
+                        $storeInfo->bar_number = @$item['bar_number'];
+                        $storeInfo->save();
+                    }
                 }
             }
         }

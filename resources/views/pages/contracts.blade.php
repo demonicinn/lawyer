@@ -21,6 +21,10 @@
                         @endforeach
                         
                 </div>
+
+                <input type="hidden" name="latitude">
+                <input type="hidden" name="longitude">
+                
                 <div class="form-confim-div">
                     <div class="form-grouph submit-design text-center">
                         <button class="btn-design-first" type="submit">{{__ ('Confirm') }}</button>

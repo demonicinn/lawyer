@@ -29,9 +29,7 @@ return new class extends Migration
             $table->decimal('consultation_fee', 8,2)->nullable();
             $table->string('website_url')->nullable();
             $table->text('address')->nullable();
-            $table->string('bar_number')->nullable();
-            $table->string('year_admitted')->nullable();
-            $table->string('year_experience')->nullable();
+            $table->integer('year_experience')->nullable();
 
             $table->enum('is_verified', ['yes', 'no'])->default('no');
             $table->enum('is_admin_review', ['0', '1', '2'])->default('0');

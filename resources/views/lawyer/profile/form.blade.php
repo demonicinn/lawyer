@@ -168,7 +168,18 @@ $lawyer_details = $user->lawyerInfo;
                     </div>
                     <select class="select-block multiBoxes" multiple>
                         @foreach($category->items as $i => $list)
-                            <option value="{{$list->id}}" data-cat="{{$category->id}}" data-name="{{$list->name}}" @foreach ($lawyer_details as $i=> $item) {{ ( $list->id== $item->item_id) ? 'selected' : '' }} @endforeach >
+                            <option value="{{$list->id}}" 
+                                    data-cat="{{$category->id}}" 
+                                    data-name="{{$list->name}}"  
+                                    
+                                    @foreach ($lawyer_details as $i=> $item)
+                                    @if($list->id==$item->item_id)
+                                    data-year="{{$item->year_admitted}}" 
+                                    data-bar="{{$item->bar_number}}"
+                                    selected
+                                    @endif
+                                    @endforeach
+                                    >
                                 {{$list->name}}
                             </option>
                         @endforeach

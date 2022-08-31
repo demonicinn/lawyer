@@ -56,6 +56,23 @@
   @yield('script')
   @stack('scripts')
 
+
+  <script>
+    function getLocation(){
+      if ("geolocation" in navigator){ //check geolocation available 
+        //try to get user current location using getCurrentPosition() method
+        navigator.geolocation.getCurrentPosition(function(position){
+            $('input[name=latitude]').val(position.coords.latitude);
+            $('input[name=longitude]').val(position.coords.longitude);
+          });
+      }else{
+        console.log("Browser doesn't support geolocation!");
+      }
+    }
+
+    getLocation();
+  </script>
+
 </body>
 
 </html>

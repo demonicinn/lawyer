@@ -50,20 +50,19 @@
 
 <div class="layoutHtml">
     <div>
-        <div class="layout">
+        <div class="layout layout_0id0">
             <div class="grey-light-heading">
                 <h4>0itemTitle0</h4>
             </div>
             <div class="form-flex">
                 <div class="form-grouph input-design">
-                    {!! Form::label('bar_number','Bar Number*', ['class' => 'form-label']) !!}
-                    {!! Form::text('lawyer_address[0key0][data][0key1][bar_number]', null, ['maxlength'=>'20', 'required'=>'required']) !!}
-                    {!! $errors->first('bar_number', '<span class="help-block">:message</span>') !!}
+                    <label for="bar_number" class="form-label">Bar Number*</label>
+                    <input maxlength="20" required="required" name="lawyer_address[0key0][data][0key1][bar_number]" type="text" value="0bar0">
+                    
                 </div>
                 <div class="form-grouph input-design">
-                    {!! Form::label('year_admitted','Year Admitted*', ['class' => 'form-label']) !!}
-                    {!! Form::text('lawyer_address[0key0][data][0key1][year_admitted]', null, ['maxlength'=>'4', 'required'=>'required']) !!}
-                    {!! $errors->first('year_admitted', '<span class="help-block">:message</span>') !!}
+                    <label for="year_admitted" class="form-label">Year Admitted*</label>
+                    <input maxlength="4" required="required" name="lawyer_address[0key0][data][0key1][year_admitted]" type="text" value="0year0">
                 </div>
             </div>
         </div>
@@ -98,6 +97,11 @@
 
     //multiBoxes
     $('.multiBoxes').on('change', function (){
+        callAdmission();
+    });
+
+    function callAdmission(){
+
         let newHtml = '';
         var html = $('.layoutHtml').html();
 
@@ -105,11 +109,20 @@
             let id = $(item).attr("data-cat");
             let itemId = $(item).attr("value");
             let name = $(item).attr("data-name");
+            let year = $(item).attr("data-year");
+            let bar = $(item).attr("data-bar");
+
+            console.log(item)
+            console.log('year', year)
+            console.log('bar', bar)
 
             //...
             let html1 = html.replace(/0key0/g, id);
+            html1 = html1.replace(/0id0/g, id);
             html1 = html1.replace(/0key1/g, itemId);
             html1 = html1.replace(/0itemTitle0/g, name);
+            html1 = html1.replace(/0year0/g, year ?? '');
+            html1 = html1.replace(/0bar0/g, bar ?? '');
 
             newHtml += html1;
         });
@@ -117,8 +130,9 @@
         //...
         $('.admissionHtml').html(newHtml);
 
-    });
-
+    }
+    //...
+    callAdmission();
 
 </script>
 @endsection
