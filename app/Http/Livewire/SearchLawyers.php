@@ -72,8 +72,8 @@ class SearchLawyers extends Component
 
                 if ($this->distance && $this->latitude && $this->longitude) {
 
-                    $query->selectRaw('(((acos(sin(('.$this->latitude.'*pi()/180)) * sin((`latitude`*pi()/180))+cos(('.$this->latitude.'*pi()/180)) * cos((`latitude`*pi()/180)) * cos((('.$this->longitude.'- `longitude`)*pi()/180))))*180/pi())*60*1.1515) AS distance')
-                        ->havingRaw("distance < ?", [$this->distance]);
+                    $query->selectRaw('(((acos(sin(('.$this->latitude.'*pi()/180)) * sin((`latitude`*pi()/180))+cos(('.$this->latitude.'*pi()/180)) * cos((`latitude`*pi()/180)) * cos((('.$this->longitude.'- `longitude`)*pi()/180))))*180/pi())*60*1.1515) AS distance');
+                        //->havingRaw("distance < ?", [$this->distance]);
                 }
 
 

@@ -112,9 +112,9 @@
             let year = $(item).attr("data-year");
             let bar = $(item).attr("data-bar");
 
-            console.log(item)
-            console.log('year', year)
-            console.log('bar', bar)
+            //console.log(item)
+            //console.log('year', year)
+            //console.log('bar', bar)
 
             //...
             let html1 = html.replace(/0key0/g, id);

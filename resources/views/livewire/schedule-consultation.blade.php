@@ -127,6 +127,8 @@
                                 <h4 class="event-date">
                                     <p>{{$avaibleTime}}</p>
                                 </h4>
+
+
                                 @if ($lawyer !=null)
                                 <ul class="list-unstyled">
 
@@ -166,51 +168,69 @@
 
     @push('scripts')
     <script>
-        var $calendar;
+        let workingDates = @json(@$workingDates);
+
         $(document).ready(function() {
 
-            let container = $("#celender").simpleCalendar({
-                fixedStartDay: 0, // begin weeks by sunday
+            getDates(workingDates);
+            
+            window.livewire.on('fireCalender', (dates) => {
+                getDates(dates);
+            });
+        });
+
+
+        function getDates(workingDates){
+            let newEvents = [];
+
+            $.each(workingDates, function (i, date) { 
+                var map = [];
+                map['startDate'] = date;
+                map['endDate'] = date;
+
+                //...
+                newEvents.push(map);
+            });
+
+            //...
+            initCalender(newEvents)
+        }
+
+        function initCalender(eventArray){
+
+            var container = $("#celender").simpleCalendar({
+                //fixedStartDay: 0, // begin weeks by sunday
                 disableEmptyDetails: true,
                 disableEventDetails: true,
-
-
-                events: [
-                    // generate new event after tomorrow for one hour
-                    {
-                        startDate: new Date(new Date().setHours(new Date().getHours() + 24)).toDateString(),
-                        endDate: new Date(new Date().setHours(new Date().getHours() + 25)).toISOString(),
-                        summary: 'Visit of the Eiffel Tower'
-                    },
-                    // generate new event for yesterday at noon
-                    {
-                        startDate: new Date(new Date().setHours(new Date().getHours() - new Date().getHours() - 12, 0)).toISOString(),
-                        endDate: new Date(new Date().setHours(new Date().getHours() - new Date().getHours() - 11)).getTime(),
-                        summary: 'Restaurant'
-                    },
-                    // generate new event for the last two days
-                    {
-                        startDate: new Date(new Date().setHours(new Date().getHours() - 48)).toISOString(),
-                        endDate: new Date(new Date().setHours(new Date().getHours() - 24)).getTime(),
-                        summary: 'Visit of the Louvre'
-                    }
-                ],
+                enableOnlyEventDays: true,
+                onMonthChange: function (month, year) {
+                    @this.set('month', month + 1);
+                    @this.set('year', year);
+                    @this.monthChange;
+                },
 
                 onDateSelect: function(date, events) {
-                    // alert(date);
-                    // $t = date('d-m-Y', strtotime(date))
-                    // alert($t);
                     @this.set('selDate', date);
                 },
 
             });
 
 
-            $calendar = container.data('plugin_simpleCalendar')
+            let $calendar = container.data('plugin_simpleCalendar')
+            //reinit events
+            $calendar.setEvents(eventArray)
+        }
+            
 
 
 
-        });
+        
     </script>
+
+    <style>
+        .day.wrong-month {
+            display: none;
+        }
+    </style>
     @endpush
 </div>

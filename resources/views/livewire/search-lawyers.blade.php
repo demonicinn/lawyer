@@ -75,7 +75,7 @@
                     </div>
 
                     <div class="form-group input-design form-grouph icon-input-design dark-placehiolder">
-                        <input type="search" wire:model.debounce.500ms="search">
+                        <input type="search" wire:model.debounce.500ms="search" placeholder="Search">
                         <span class="input_icn"><i class="fa-solid fa-magnifying-glass"></i></span>
                     </div>
                 </div>
