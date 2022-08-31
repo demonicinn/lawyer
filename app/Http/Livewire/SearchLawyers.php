@@ -12,7 +12,7 @@ class SearchLawyers extends Component
 
     public $latitude, $longitude;
 
-    public $free_consultation, $contingency_cases, $year_exp='20', $category, $distance='20', $rate='20';
+    public $free_consultation, $contingency_cases, $year_exp='20', $category, $distance='20', $rate='20', $search;
 
     public function mount()
     {
@@ -29,6 +29,15 @@ class SearchLawyers extends Component
         $user = User::where('status', '1');
 
             //search filter
+            if ($this->search) {
+                $user->where(function ($query) {
+                    $query->where('id', $this->search);
+                    $query->orWhere('first_name', $this->search);
+                    $query->orWhere('last_name', $this->search);
+                    $query->orWhere('contact_number', $this->search);
+                });
+            }
+
 
             if (request()->litigations) {
                 $user = $user->whereHas('lawyerLitigations', function ($query) {
@@ -66,6 +75,16 @@ class SearchLawyers extends Component
                     $query->selectRaw('(((acos(sin(('.$this->latitude.'*pi()/180)) * sin((`latitude`*pi()/180))+cos(('.$this->latitude.'*pi()/180)) * cos((`latitude`*pi()/180)) * cos((('.$this->longitude.'- `longitude`)*pi()/180))))*180/pi())*60*1.1515) AS distance')
                         ->havingRaw("distance < ?", [$this->distance]);
                 }
+
+
+                if ($this->search) {
+                    $query->where(function ($que) {
+                        $que->orWhere('city', $this->search);
+                        $que->orWhere('zip_code', $this->zip_code);
+                        $que->orWhere('address', $this->address);
+                    });
+                }
+                
 
 
             });
