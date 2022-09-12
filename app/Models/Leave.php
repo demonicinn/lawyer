@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class LawyerHours extends Model
+class Leave extends Model
 {
     use HasFactory;
 
-    public function leaves()
+    public function users()
     {
-        return $this->hasMany(Leave::class, 'user_id', 'users_id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }

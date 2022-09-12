@@ -52,7 +52,7 @@ Route::get('/narrow-down-contracts', [PagesController::class, 'contracts'])->nam
 Route::get('/narrow-lawyers', [PagesController::class, 'lawyers'])->name('lawyers');
 Route::get('/narrow-lawyers/{user}', [PagesController::class, 'lawyerShow'])->name('lawyer.show');
 
- 
+
 // schedule consultation
 Route::get('/schedule/consultation/{id}', [ScheduleConsultationController::class, 'index'])->name('schedule.consultation');
 
@@ -192,6 +192,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
             return view('lawyer.subscription.index', compact('title'));
         })->name('lawyer.subscription');
 
+
+        //...leaves
+
+        Route::get('/leave', function () {
+            $title = array(
+                'title' => 'Leaves',
+                'active' => 'leaves',
+            );
+            return view('lawyer.leave.index', compact('title'));
+        })->name('lawyer.leave');
+
         //subscription middleware
         Route::group(['middleware' => 'subscription'], function () {
 
@@ -211,7 +222,4 @@ Route::middleware(['auth', 'verified'])->group(function () {
             });
         });
     });
-
-
- 
 });

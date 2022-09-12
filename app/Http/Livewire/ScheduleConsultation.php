@@ -6,10 +6,11 @@ use Livewire\Component;
 use Illuminate\Support\Carbon;
 use App\Models\User;
 use App\Models\LawyerHours;
+use App\Models\Leave;
 
 class ScheduleConsultation extends Component
 {
-    public $lawyerID, $lawyer, $day, $avaibleTime, $selDate, $lawyerDetails, $scheduletime;
+    public $lawyerID, $lawyer, $day, $avaibleTime, $selDate, $lawyerDetails, $scheduletime,$leaves;
     public $timeSlots = [];
     public $shedulePage = true;
     public $clickConfirm = false;
@@ -21,7 +22,9 @@ class ScheduleConsultation extends Component
         $this->day = Carbon::now()->format("l");
 
         $this->avaibleTime = Carbon::now()->format("l, F j ");
-
+        $this->leaves=Leave::where('user_id',$this->lawyerID)->get();
+      
+    
 
         if ($this->selDate) {
 
@@ -29,8 +32,16 @@ class ScheduleConsultation extends Component
             $this->avaibleTime = $seleted_date;
             $this->day  = date('l', strtotime($this->selDate . ' +1 day'));
         }
-        $user = LawyerHours::where('users_id', $this->lawyerID)->where('day', $this->day)->first();
+        $user = LawyerHours::where('users_id', $this->lawyerID)->where('day', $this->day)->with('leaves')->first();
         $this->lawyer = $user;
+
+        $holiday= [];
+        if(!empty($this->lawyer->leaves) ){
+            foreach($this->lawyer->leaves as $special_date){
+                $holiday[] = $special_date['date'];
+            }
+        }
+        // dd($holiday);
 
         if ($this->lawyer != null) {
             $starttime = $user->from_time; // your start time
@@ -62,7 +73,7 @@ class ScheduleConsultation extends Component
             'scheduletime.required' => 'please select time.'
         ]);
 
-       
+
 
         $this->clickConfirm = true;
         $this->shedulePage = false;
@@ -79,7 +90,6 @@ class ScheduleConsultation extends Component
     public function render()
     {
         $this->availability();
-
         return view('livewire.schedule-consultation');
     }
 }

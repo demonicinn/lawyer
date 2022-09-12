@@ -3,7 +3,7 @@
 
     @if(@$clickConfirm)
     <section class="body-banner per-info-page-sec min-height-100vh">
-        <div  class="container">
+        <div class="container">
             <div class="heading-paragraph-design text-center position-relative go-back-wrap mb-5">
                 <h2>Booking Information</h2>
             </div>
@@ -110,7 +110,7 @@
 
 
     <section class="body-banner schdule-consultation-page-sec min-height-100vh">
-        <div  class="container">
+        <div class="container">
             <div class="heading-paragraph-design text-center position-relative go-back-wrap mb-4">
                 <h2>Schedule a Consultation</h2>
             </div>
@@ -120,7 +120,7 @@
                     <div class="row">
 
                         <div wire:ignore class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-                            <div  id="celender" class="calendar-container"></div>
+                            <div id="celender" class="calendar-container"></div>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                             <div id="events-data">
@@ -168,7 +168,8 @@
     <script>
         var $calendar;
         $(document).ready(function() {
-
+            var leave = @json(@$lawyer->leaves);
+            console.log(leave, '------------------------------>');
             let container = $("#celender").simpleCalendar({
                 fixedStartDay: 0, // begin weeks by sunday
                 disableEmptyDetails: true,
@@ -188,18 +189,13 @@
                         endDate: new Date(new Date().setHours(new Date().getHours() - new Date().getHours() - 11)).getTime(),
                         summary: 'Restaurant'
                     },
-                    // generate new event for the last two days
-                    {
-                        startDate: new Date(new Date().setHours(new Date().getHours() - 48)).toISOString(),
-                        endDate: new Date(new Date().setHours(new Date().getHours() - 24)).getTime(),
-                        summary: 'Visit of the Louvre'
-                    }
+
+
+
+
                 ],
 
                 onDateSelect: function(date, events) {
-                    // alert(date);
-                    // $t = date('d-m-Y', strtotime(date))
-                    // alert($t);
                     @this.set('selDate', date);
                 },
 
@@ -208,7 +204,14 @@
 
             $calendar = container.data('plugin_simpleCalendar')
 
+            var start = 2022-09-15;
+            var end = 2022-09-15;
 
+            $('#celender').simpleCalendar('renderEvent', {
+                'title': 'hello11',
+                'start': start,
+                'end': end,
+            });
 
         });
     </script>
