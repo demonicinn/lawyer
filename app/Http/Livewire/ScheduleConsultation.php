@@ -11,6 +11,7 @@ use Carbon\CarbonPeriod;
 
 use App\Models\User;
 use App\Models\LawyerHours;
+use App\Models\Leave;
 
 class ScheduleConsultation extends Component
 {
@@ -112,17 +113,22 @@ class ScheduleConsultation extends Component
         $period = CarbonPeriod::create($fromDate, $toDate);
 
         $lawyerHoursDay = $this->lawyer->lawyerHours->pluck('day')->toArray();
-
+// dd($lawyerHoursDay);
+        $getLeaves=Leave::where('user_id',$this->lawyerID)->pluck('date')->toArray();
+        //  dd($getLeaves);
         foreach ($period as $date) {
             $day = $date->format('l');
             $ndate = $date->format('Y-m-d');
 
+            
             if($ndate > date('Y-m-d') && in_array($day, $lawyerHoursDay)){
                 array_push($dates, $ndate);
             }
         }
-        //dd($dates);
-        $this->workingDates = $dates;
+        // dd($dates);
+        $result = array_diff($dates, $getLeaves);
+// dd($result);
+        $this->workingDates = $result;
 
         $this->emit('fireCalender', $this->workingDates);
     }
