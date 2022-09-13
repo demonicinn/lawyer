@@ -12,7 +12,9 @@
             <tbody>
                 @foreach($leaves as $leave)
                 <tr>
-                    <td>{{ $leave->date }}</td>
+                 
+                    <td>{{ date('l,j, F, Y', strtotime($leave->date)) }}</td>
+
                     <td>
                         <a class="edit-icons" href="javascript::void(0)" wire:click="edit('{{$leave->id}}')"><i class="fas fa-pen"></i></a>
                         <a class="view-icon" href="javascript::void(0)" wire:click="delete('{{$leave->id}}')"><i class="fas fa-trash"></i></a>
