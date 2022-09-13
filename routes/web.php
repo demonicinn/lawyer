@@ -193,6 +193,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         })->name('lawyer.subscription');
 
 
+
         //...leaves
 
         Route::get('/leave', function () {

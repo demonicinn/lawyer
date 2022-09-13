@@ -63,6 +63,7 @@ class Leaves extends Component
         $data = Leave::findOrFail($this->leaveId);
 
         $this->date = $data->date;
+      
         $this->emit('LeaveFormShow');
     }
 

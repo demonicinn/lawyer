@@ -8,9 +8,4 @@ use Illuminate\Database\Eloquent\Model;
 class LawyerHours extends Model
 {
     use HasFactory;
-
-    public function leaves()
-    {
-        return $this->hasMany(Leave::class, 'user_id', 'users_id');
-    }
 }
