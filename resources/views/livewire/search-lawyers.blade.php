@@ -40,7 +40,7 @@
                                 <div id="experience-range-tooltip" class="tooltip-range"></div>
                                 <input wire:model="year_exp" class="range_design-input" type="range" step="1" min="1" max="20">
                             </div>
-                            <p class="max-value">20+</p>
+                            <p class="max-value">20</p>
                         </div>
                     </div>
 
@@ -70,12 +70,12 @@
                                 <div class="tooltip-range"></div>
                                 <input class="range_design-input" wire:model="distance" type="range" step="1" min="1" max="10000">
                             </div>
-                            <p class="max-value">100+ mi</p>
+                            <p class="max-value">100 mi</p>
                         </div>
                     </div>
 
                     <div class="form-group input-design form-grouph icon-input-design dark-placehiolder">
-                        <input type="search" wire:model.debounce.500ms="search">
+                        <input type="search" wire:model.debounce.500ms="search" placeholder="Search">
                         <span class="input_icn"><i class="fa-solid fa-magnifying-glass"></i></span>
                     </div>
                 </div>

@@ -63,8 +63,18 @@ Route::get('/schedule/consultation/{id}', [ScheduleConsultationController::class
 //------------------------------------------------------
 Route::middleware(['auth', 'verified'])->group(function () {
 
-    //change password
+    //feed
+    Route::get('/feed', function () {
+        $title = array(
+            'title' => 'Feed',
+            'active' => 'feed',
+        );
+        return view('common.zoom', compact('title'));
+    })->name('change.feed');
 
+
+
+    //change password
     Route::get('/change/password', function () {
         $title = array(
             'title' => 'Change Password',
