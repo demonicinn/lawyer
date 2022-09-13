@@ -33,6 +33,10 @@ $user = auth()->user();
             <li><a class="dropdown-item" href="#">My profile</a></li>
             @endif
 
+            @if(Auth::user()->role=="lawyer")
+            <li><a class="dropdown-item" href="{{ route('lawyer.leave') }}">Leave</a></li>
+            @endif
+
             <li><a class="dropdown-item" href="{{route('change.password')}}">Change password</a></li>
 
             <li>
