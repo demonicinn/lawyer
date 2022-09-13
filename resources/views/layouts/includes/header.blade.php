@@ -24,7 +24,7 @@ $user = auth()->user();
             <span class="user-icon"><img class="header-pic" src="{{ $user->profile_pic}}"></span>
           </button>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="{{ route($user->role) }}">Dashboard</a></li>
+         
             @if(Auth::user()->role=="admin")
             <li><a class="dropdown-item" href="{{ route('admin.profile') }}">My profile</a></li>
             @elseif(Auth::user()->role=="lawyer")

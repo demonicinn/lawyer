@@ -1,32 +1,36 @@
 <div>
 
     @if(@$currentTab=='tab1')
-        @include('livewire.consultation.time-slot')
+    @include('livewire.consultation.time-slot')
     @endif
 
     @if(@$currentTab=='tab2')
-        @include('livewire.consultation.booking')
+    @include('livewire.consultation.booking')
     @endif
-    
+
 
     @push('scripts')
+
+
+
+
     <script>
         let workingDates = @json(@$workingDates);
 
         $(document).ready(function() {
 
             getDates(workingDates);
-            
+
             window.livewire.on('fireCalender', (dates) => {
                 getDates(dates);
             });
         });
 
 
-        function getDates(workingDates){
+        function getDates(workingDates) {
             let newEvents = [];
 
-            $.each(workingDates, function (i, date) { 
+            $.each(workingDates, function(i, date) {
                 var map = [];
                 map['startDate'] = date;
                 map['endDate'] = date;
@@ -39,7 +43,7 @@
             initCalender(newEvents)
         }
 
-        function initCalender(eventArray){
+        function initCalender(eventArray) {
 
             var container = $("#celender").simpleCalendar({
                 //fixedStartDay: 0, // begin weeks by sunday
@@ -47,7 +51,7 @@
                 disableEventDetails: true,
                 enableOnlyEventDays: true,
 
-                onMonthChange: function (month, year) {
+                onMonthChange: function(month, year) {
                     @this.set('month', month + 1);
                     @this.set('year', year);
                     @this.set('selectDate', '');
@@ -56,9 +60,8 @@
                 },
 
                 onDateSelect: function(date, events) {
-
                     var dateF = new Date(date);
-                    let newDate = (dateF.getMonth() + 1) + '/' + dateF.getDate() + '/' +  dateF.getFullYear();
+                    let newDate = (dateF.getMonth() + 1) + '/' + dateF.getDate() + '/' + dateF.getFullYear();
 
                     @this.set('selectDate', newDate);
                     @this.set('selectDateTimeSlot', '');
@@ -71,11 +74,13 @@
             //reinit events
             $calendar.setEvents(eventArray)
         }
-            
 
+        $(document).ready(function() {
+            window.livewire.on('loginFormClose', () => {
+                $('#loginForm').modal('hide');
+            });
 
-
-        
+        });
     </script>
 
     <style>
