@@ -17,7 +17,7 @@
 
             @if($details->review_request=='1')
             <div class="alert alert-info">
-                Your Profile under Review.
+                Your account is created successfully, we will review your account details and will inform you on account approval status soon
             </div>
             @endif
 

@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire;
 
+use App\Http\Controllers\MeetingController;
+
 use Livewire\Component;
 
 use Carbon\Carbon;
@@ -13,10 +15,28 @@ use App\Models\LawyerHours;
 class ScheduleConsultation extends Component
 {
 
+    
+
+
+
+    //....
+
+    public $currentTab = 'tab1';
+
     public $lawyerID, $lawyer;
-    public $month, $year;
+    public $month, $year;    
     public $todayDate;
+
     public $workingDates = [];
+    public $workingDatesTimeSlot = [];
+
+    public $selectDate;
+    public $selectDateTimeSlot;
+
+    public $dateDay, $dateFormat;
+
+
+
 
     public $day, $avaibleTime, $selDate, $lawyerDetails, $scheduletime;
     public $timeSlots = [];
@@ -35,71 +55,34 @@ class ScheduleConsultation extends Component
     }
 
 
-
-    /*public function availability()
-    {
-
-        // $this->day = 'monday';
-        $this->day = Carbon::now()->format("l");
-
-        $this->avaibleTime = Carbon::now()->format("l, F j ");
-
-
-        if ($this->selDate) {
-
-            $seleted_date = date('l, F j', strtotime($this->selDate . ' +1 day'));
-            $this->avaibleTime = $seleted_date;
-            $this->day  = date('l', strtotime($this->selDate . ' +1 day'));
-        }
-
-        $user = LawyerHours::where('users_id', $this->lawyerID)->where('day', $this->day)->first();
-        $this->lawyer = $user;
-
-
-
-        if ($this->lawyer != null) {
-            $starttime = $user->from_time; // your start time
-            $endtime = $user->to_time;  // End time
-            $duration = '30';  // split by 30 mins
-            $time_slots = array();
-            $start_time    = strtotime($starttime); //change to strtotime
-            $end_time      = strtotime($endtime); //change to strtotime
-
-            $add_mins  = $duration * 60;
-
-            while ($start_time <= $end_time) // loop between time
-            {
-                $time_slots[] = date("H:i", $start_time);
-                $start_time += $add_mins; // to check endtime
-            }
-
-            $this->timeSlots = $time_slots;
-            // dd($this->timeSlots);
-        }
-    }*/
-
-
-
-    public function confirm()
+    public function confirmSlot()
     {
         $this->validate([
-            'scheduletime' => 'required|max:255',
+            'selectDate' => 'required',
+            'selectDateTimeSlot' => 'required',
 
         ], [
-            'scheduletime.required' => 'please select time.'
+            'selectDate.required' => 'Please select date.',
+            'selectDateTimeSlot.required' => 'Please select time slot.'
         ]);
 
-       
+        
+        $ndate = $this->selectDate.' '.$this->selectDateTimeSlot;
+        
 
-        $this->clickConfirm = true;
-        $this->shedulePage = false;
-        $this->lawyerDetails = User::where('id', $this->lawyerID)->first();
+        $date = Carbon::parse($ndate);
+
+        $meeting = new MeetingController;
+
+        $a = $meeting->store($date);
+
+        dd($a);
+        $this->currentTab = "tab2";
     }
 
     public function backbtn()
     {
-        $this->clickConfirm = false;
-        $this->shedulePage = true;
+        $this->currentTab = "tab1";
     }
 
     
@@ -120,11 +103,8 @@ class ScheduleConsultation extends Component
 
 
     private function getWorkingDays($today){
-        
-        
 
         $fromDate = $today->copy()->firstOfMonth()->startOfDay();
-        //$fromDate = $today->format("Y-m-d");
         $toDate = $today->copy()->endOfMonth()->startOfDay();
         
 
@@ -147,12 +127,51 @@ class ScheduleConsultation extends Component
         $this->emit('fireCalender', $this->workingDates);
     }
 
+    public function slotAvailability()
+    {
+        $selectDate = Carbon::parse($this->selectDate);
+
+        $date = $selectDate->format('Y-m-d');
+        //dd($this->selectDate);
+        $this->dateDay = $selectDate->format("l");
+        $this->dateFormat = $selectDate->format("l, F j ");
+
+        //...
+        $lawyerHours = $this->lawyer->lawyerHours()->where('day', $this->dateDay)->first();
+
+
+        if(@$lawyerHours && $date > date('Y-m-d')) {
+            $startTime = strtotime($lawyerHours->from_time);
+            $endTime = strtotime($lawyerHours->to_time);
+            $duration = '30';
+
+            //...
+            $time_slots = array();
+            $add_mins  = $duration * 60;
+
+            while ($startTime <= $endTime)
+            {
+                $time_slots[] = date("H:i", $startTime);
+                $startTime += $add_mins;
+            }
+
+            $this->workingDatesTimeSlot = $time_slots;
+        }
+
+        //dd($day);
+    }
+
     public function render()
     {
-        //$this->availability();
+        //$this->resetValidation();
+        $this->workingDatesTimeSlot = [];
+        //...
         $this->monthChange();
 
-        
+        //...
+        if($this->selectDate){
+            $this->slotAvailability();
+        }
 
         return view('livewire.schedule-consultation');
     }

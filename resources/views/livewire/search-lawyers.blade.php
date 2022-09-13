@@ -40,7 +40,7 @@
                                 <div id="experience-range-tooltip" class="tooltip-range"></div>
                                 <input wire:model="year_exp" class="range_design-input" type="range" step="1" min="1" max="20">
                             </div>
-                            <p class="max-value">20+</p>
+                            <p class="max-value">20</p>
                         </div>
                     </div>
 
@@ -70,7 +70,7 @@
                                 <div class="tooltip-range"></div>
                                 <input class="range_design-input" wire:model="distance" type="range" step="1" min="1" max="10000">
                             </div>
-                            <p class="max-value">100+ mi</p>
+                            <p class="max-value">100 mi</p>
                         </div>
                     </div>
 

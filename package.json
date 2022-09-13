@@ -10,5 +10,12 @@
         "lodash": "^4.17.19",
         "postcss": "^8.1.14",
         "vite": "^3.0.0"
+    },
+    "dependencies": {
+        "@vitejs/plugin-react": "^2.0.1",
+        "@zoomus/websdk": "^2.7.0",
+        "jsrsasign": "^10.5.27",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0"
     }
 }
