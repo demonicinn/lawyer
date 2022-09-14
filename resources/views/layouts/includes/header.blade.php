@@ -24,6 +24,10 @@ $user = auth()->user();
             <span class="user-icon"><img class="header-pic" src="{{ $user->profile_pic}}"></span>
           </button>
           <ul class="dropdown-menu">
+
+            @if(Auth::user()->role=="admin")
+            <li><a class="dropdown-item" href="{{ route($user->role) }}">Dashboard</a></li>
+            @endif
          
             @if(Auth::user()->role=="admin")
             <li><a class="dropdown-item" href="{{ route('admin.profile') }}">My profile</a></li>

@@ -96,4 +96,10 @@ class User extends Authenticatable
         return $this->hasMany(Lawyer_info::class, 'user_id', 'id');
     }
 
+    public function userCards()
+    {
+        return $this->hasMany(UserCard::class, 'user_id', 'id');
+    }
+  
+
 }
