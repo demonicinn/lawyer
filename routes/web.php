@@ -64,13 +64,13 @@ Route::get('/schedule/consultation/{id}', [ScheduleConsultationController::class
 Route::middleware(['auth', 'verified'])->group(function () {
 
     //feed
-    Route::get('/feed', function () {
+    Route::get('/zoom/{id}', function () {
         $title = array(
             'title' => 'Feed',
             'active' => 'feed',
         );
         return view('common.zoom', compact('title'));
-    })->name('change.feed');
+    })->name('zoom');
 
 
 

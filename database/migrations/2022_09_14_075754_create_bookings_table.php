@@ -17,8 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('user_id');
             $table->integer('lawyer_id');
-            $table->string('card_id')->nullable();
-            $table->string('card_number')->nullable();
+            $table->string('stripe_save_id')->nullable();
             $table->string('first_name', 100);
             $table->string('last_name', 100);
             $table->string('user_email', 100);
@@ -26,8 +25,8 @@ return new class extends Migration
             $table->string('booking_date', 100);
             $table->string('booking_time', 100);
             $table->enum('appointment_fee', ['free', 'paid']);
-            $table->integer('price')->nullable();
-            $table->string('zoom_id')->nullable();
+            $table->decimal('price',11,5)->nullable();
+            $table->bigInteger('zoom_id')->nullable();
             $table->string('zoom_password')->nullable();
             $table->enum('is_call', ['pending', 'completed'])->default('pending');
             $table->timestamps();

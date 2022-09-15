@@ -5,7 +5,6 @@ namespace App\Http\Livewire;
 use App\Http\Controllers\MeetingController;
 use App\Models\Booking;
 use App\Models\LawyerContracts;
-use App\Models\Contract;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 use Stripe\Stripe;
@@ -15,15 +14,13 @@ use Illuminate\Validation\Rule;
 use App\Models\User;
 use App\Models\LawyerHours;
 use App\Models\LawyerLitigations;
-use App\Models\Litigation;
 use App\Models\Leave;
 use App\Models\UserCard;
 use PasswordValidationRules;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
-use App\Notifications\BookingMail;
-use Illuminate\Support\Facades\Notification;
+
 
 class ScheduleConsultation extends Component
 {
@@ -44,10 +41,10 @@ class ScheduleConsultation extends Component
 
     public $dateDay, $dateFormat;
 
-    public $lawyerlitigations, $lawyerContracts, $authUser, $litigations, $contracts;
+    public $lawyerlitigations, $lawyerContracts;
 
 
-    public $day, $avaibleTime, $selDate, $lawyerDetails, $scheduletime, $bookDate,$is_booking_exits;
+    public $day, $avaibleTime, $selDate, $lawyerDetails, $scheduletime;
     public $timeSlots = [];
     public $shedulePage = true;
     public $clickConfirm = false;
@@ -119,22 +116,6 @@ class ScheduleConsultation extends Component
     {
         $this->lawyer = User::where('id', $this->lawyerID)->with('details')->first();
 
-        $lawyerLitigations = LawyerLitigations::where('users_id', $this->lawyerID)->with('litigations')->get();
-        $litigations_id = [];
-        foreach ($lawyerLitigations as $litigatinsId) {
-            array_push($litigations_id, $litigatinsId->litigations_id);
-        }
-        $this->litigations = Litigation::whereIn('id', $litigations_id)->get();
-
-
-        $lawyerContracts = LawyerContracts::where('users_id', $this->lawyerID)->with('contracts')->get();
-        $contracts_id = [];
-        foreach ($lawyerContracts as $contractsId) {
-            array_push($contracts_id, $contractsId->contracts_id);
-        }
-        $this->contracts = Contract::whereIn('id', $contracts_id)->get();
-
-        $this->authUser = auth()->user();
         $this->todayDate = Carbon::now();
         $this->getWorkingDays($this->todayDate);
     }
@@ -150,11 +131,16 @@ class ScheduleConsultation extends Component
             'selectDate.required' => 'Please select date.',
             'selectDateTimeSlot.required' => 'Please select time slot.'
         ]);
+        $ndate = $this->selectDate . ' ' . $this->selectDateTimeSlot;
 
+        // dd($ndate);
+        $date = Carbon::parse($ndate);
 
+        // $meeting = new MeetingController;
 
+        // $a = $meeting->store($date);
 
-
+        // dd($a);
         $this->currentTab = "tab2";
 
         if (auth::user()) {
@@ -177,7 +163,6 @@ class ScheduleConsultation extends Component
 
     public function monthChange()
     {
-
         if ($this->month && $this->year) {
             $ndate = date($this->year . '-' . $this->month . '-1');
             $date = Carbon::parse($ndate);
@@ -270,39 +255,18 @@ class ScheduleConsultation extends Component
                 $this->workingDatesTimeSlot = $time_slots;
             }
         }
-
-        // check booking already exits
-        $this->bookDate = $this->todayDate->format('Y-m-d');
-        $this->is_booking_exits = Booking::where('lawyer_id', $this->lawyerID)->where('booking_date', $date)->get();
-  
     }
 
     //register and save card details
     public function saveUserInfoAndBooking()
     {
 
-        $this->validate();
-
         \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
         $selectDate = Carbon::parse($this->selectDate);
         $date = $selectDate->format('Y-m-d');
 
-        try {
-            $ndate = $this->selectDate . ' ' . $this->selectDateTimeSlot;
-            $date = Carbon::parse($ndate);
-            $meeting = new MeetingController;
-            $a = $meeting->store($date);
-
-            $zoom_id = $a['data']['id'];
-            $zoom_password = $a['data']['password'];
-        } catch (\Exception $e) {
-            $error = $e->getMessage();
-        }
-
-        $authUser = '';
-        if (Auth::check()) {
-            $authUser = auth()->user();
-        } else {
+        $this->validate();
+        if (!Auth::check()) {
             $createUser = new User;
             $createUser->first_name = $this->first_name;
             $createUser->last_name = $this->last_name;
@@ -311,12 +275,7 @@ class ScheduleConsultation extends Component
             $createUser->role = "user";
             $createUser->password = Hash::make($this->password);
             $createUser->save();
-
-            $authUser = User::find($createUser->id);
         }
-
-
-        $saveCardId = '';
 
         if ($this->lawyer->details->is_consultation_fee == "yes") {
             try {
@@ -332,58 +291,44 @@ class ScheduleConsultation extends Component
 
                 $customer = \Stripe\Customer::create([
                     'source' => $token['id'],
-                    'email' => @$authUser->email,
-                    'description' => 'My name is ' . @$authUser->name,
+                    'email' => $this->email,
+                    'description' => 'My name is ' . $this->first_name,
                 ]);
 
                 $customer_id = $customer['id'];
                 //save customer id in card table
                 $saveCard = new UserCard;
-                $saveCard->user_id = $authUser->id;
+                $saveCard->user_id = $createUser->id ?? auth()->user()->id;
                 $saveCard->customer_id = $customer_id;
                 $saveCard->save();
-
-                $saveCardId = $saveCard->id;
             } catch (\Stripe\Exception\CardException $e) {
                 $error = $e->getMessage();
             }
         }
 
+        //save booking
+        $booking = new Booking;
+        $booking->user_id = $createUser->id ?? auth()->user()->id;
+        $booking->lawyer_id = $this->lawyerID;
+        $booking->stripe_save_id = $customer_id ?? null;
+        $booking->first_name = $this->first_name;
+        $booking->last_name = $this->last_name;
+        $booking->user_email = $this->email;
+        $booking->user_contact = $this->phone;
+        $booking->booking_date = $date;
+        $booking->booking_time = $this->selectDateTimeSlot;
 
-        //save booking && whenn zoom link create
-        if ($a) {
-            $booking = new Booking;
-            $booking->user_id = $authUser->id;
-            $booking->lawyer_id = $this->lawyerID;
-            $booking->stripe_save_id = $saveCardId;
-            $booking->first_name = $this->first_name;
-            $booking->last_name = $this->last_name;
-            $booking->user_email = $this->email;
-            $booking->user_contact = $this->phone;
-            $booking->booking_date = $date;
-            $booking->booking_time = $this->selectDateTimeSlot;
-
-            if ($this->lawyer->details->is_consultation_fee == "no") {
-                $booking->appointment_fee = "free";
-            } else {
-                $booking->appointment_fee = "paid";
-                $booking->price = $this->lawyer->details->consultation_fee;
-            }
-
-            $booking->zoom_id = $zoom_id;
-            $booking->zoom_password = $zoom_password;
-            $booking->save();
-
-            if ($booking) {
-
-                //send notification to User
-                Notification::route('mail', $this->email)->notify(new BookingMail($booking, $this->authUser));
-                //send notification to lawyer
-                Notification::route('mail', $this->lawyer->email)->notify(new BookingMail($booking, $this->lawyer));
-
-                $this->alert('success', 'Booking done successfully');
-            }
+        if ($this->lawyer->details->is_consultation_fee == "no") {
+            $booking->appointment_fee = "free";
+        } else {
+            $booking->appointment_fee = "paid";
+            $booking->price = $this->lawyer->details->consultation_fee;
         }
+
+        $booking->zoom_id = null;
+        $booking->zoom_password = null;
+        $booking->save();
+        $this->alert('success', 'Booking done successfully');
     }
 
     public function login()
@@ -437,8 +382,6 @@ class ScheduleConsultation extends Component
         if ($this->selectDate) {
             $this->slotAvailability();
         }
-
-
 
         return view('livewire.schedule-consultation');
     }

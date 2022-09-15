@@ -117,12 +117,7 @@
 
                         </div>
                     </div>
-<!-- 
-                    @if ($errors->any())
-                    @foreach ($errors->all() as $error)
-                    <div>{{$error}}</div>
-                    @endforeach
-                    @endif -->
+                 
                     <div class="col-xl-7 col-lg-7 col-md-12 col-sm-12">
                         <div class="white-shadow-scnd-box booking-info_profile">
                             <div class="booking-info_profile-flex">
@@ -133,7 +128,25 @@
                                 @endif
                                 <div class="booking-info-right_column">
                                     <h4 class="booking_name">{{ $lawyer->name }}</h4>
-                                    <h5 class="booking_type-text">Admiralty/Maritime</h5>
+                                    <div class="row">
+
+                                        <div class="col-md-8">
+                                            <label class="booking_type-text">Litigations </label>
+                                            @foreach ($litigations as $litigation )
+                                            <p >{{$litigation->name}}</p>
+                                            @endforeach
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <label class="booking_type-text">Contracts</label>
+                                            @foreach ($contracts as $contract )
+                                            <p >{{$contract->name}}</p>
+                                            @endforeach
+                                        </div>
+
+
+                                    </div>
+
                                     <p class="booking_date-time">{{ $selectDate }} <span class="divider-horizonatl"></span> {{ $selectDateTimeSlot }}</p>
 
                                 </div>
@@ -194,8 +207,11 @@
                             </div>
                         </div>
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 text-center mt-5">
-                            <button type="button" class="btn-design-first" wire:click="saveUserInfo" wire:loading.attr="disabled">
-                                <i wire:loading wire:target="saveUserInfo" class="fa fa-spin fa-spinner"></i> Confirm Booking
+                            <button type="button" class="btn-design-first" wire:loading.remove wire:click="saveUserInfoAndBooking" wire:loading.attr="disabled">
+                                Confirm Booking
+                            </button>
+                            <button class="btn-design-first" wire:loading wire:target="saveUserInfoAndBooking">
+                                <i class="fa fa-spin fa-spinner"></i>
                             </button>
                         </div>
 

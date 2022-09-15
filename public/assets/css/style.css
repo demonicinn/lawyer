@@ -1008,6 +1008,17 @@ input:focus, select:focus, textarea:focus{
     cursor: pointer;
     opacity: 0;
 }
+
+
+.time-selection input[type=radio][disabled]+.time-selection-btn {
+    background: rgb(197, 87, 53) !important;
+    color: white !important;
+    
+  }
+  .time-selection input[type=radio][disabled]+.time-selection-btn svg {
+    color: #fff !important;
+}
+
 #events-data .time-selection input:checked+.time-selection-btn {
     background-color: #A4CAA5;
     color: #fff;
