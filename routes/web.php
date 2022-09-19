@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\CommonController;
 use App\Http\Controllers\Lawyer;
+use App\Http\Controllers\User;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\ScheduleConsultationController;
 
@@ -63,6 +64,27 @@ Route::get('/schedule/consultation/{id}', [ScheduleConsultationController::class
 //------------------------------------------------------
 Route::middleware(['auth', 'verified'])->group(function () {
 
+    //..common consultations
+
+    //..upcoming
+    Route::get('upcoming', [CommonController::class, 'consultations'])->name('consultations.upcoming');
+
+    Route::post('/reshedule/{id}', [CommonController::class, 'resheduleConsultations'])->name('reshedule.consultation');
+    //..complete
+    Route::get('complete', [CommonController::class, 'completeConsultations'])->name('consultations.complete');
+
+    Route::post('/add/note/{id}', [CommonController::class, 'addNote'])->name('add.note');
+    Route::post('/edit/note/{id}', [CommonController::class, 'editNote'])->name('edit.note');
+
+
+    Route::post('/accept/case/{id}', [CommonController::class, 'acceptCase'])->name('accept.case');
+    Route::post('/decline/case/{id}', [CommonController::class, 'declineCase'])->name('decline.case');
+
+
+    //..accepted
+    Route::get('accepted', [CommonController::class, 'acceptedConsultations'])->name('consultations.accepted');
+
+
     //feed
     Route::get('/zoom/{id}', function () {
         $title = array(
@@ -99,6 +121,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('support');
 
     Route::post('/support/store', [CommonController::class, 'SupportStore'])->name('support.store');
+
+
 
 
     //admin
@@ -202,17 +226,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
             return view('lawyer.subscription.index', compact('title'));
         })->name('lawyer.subscription');
 
-
-           //... consultations
-           Route::get('/consultations', function () {
-            $title = array(
-                'title' => 'Consultations',
-                'active' => 'consultations',
-            );
-            return view('lawyer.consultations.index', compact('title'));
-        })->name('lawyer.consultations');
-
-
         //...leaves
 
         Route::get('/leave', function () {
@@ -241,5 +254,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 //...
             });
         });
+    });
+
+    Route::group(['prefix' => 'user', 'middleware' => ['role:user']], function () {
+
+
+
+
+        //...dashboard
+        Route::get('/', [User\DashboardController::class, 'index'])->name('user');
+        Route::get('/dashboard', [User\DashboardController::class, 'index'])->name('user.dashboard');
+
+        //...
+
     });
 });
