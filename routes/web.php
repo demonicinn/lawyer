@@ -9,6 +9,7 @@ use App\Http\Controllers\CommonController;
 use App\Http\Controllers\Lawyer;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\ScheduleConsultationController;
+use App\Http\Controllers\ZoomController;
 
 
 
@@ -63,15 +64,8 @@ Route::get('/schedule/consultation/{id}', [ScheduleConsultationController::class
 //------------------------------------------------------
 Route::middleware(['auth', 'verified'])->group(function () {
 
-    //feed
-    Route::get('/zoom/{id}', function () {
-        $title = array(
-            'title' => 'Feed',
-            'active' => 'feed',
-        );
-        return view('common.zoom', compact('title'));
-    })->name('zoom');
-
+    //zoom
+    Route::get('/zoom/{id}', [ZoomController::class, 'index'])->name('zoom');
 
 
     //change password
@@ -242,4 +236,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
             });
         });
     });
+
+
+    //client
+    Route::group(['prefix' => 'client', 'middleware' => ['role:user']], function () {
+
+        //...dashboard
+        Route::get('/', [Admin\DashboardController::class, 'index'])->name('client');
+
+
+    });
+
 });
