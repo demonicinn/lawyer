@@ -25,21 +25,21 @@ $user = auth()->user();
           </button>
           <ul class="dropdown-menu">
 
-            @if(Auth::user()->role=="admin")
-            <li><a class="dropdown-item" href="{{ route($user->role) }}">Dashboard</a></li>
-            @endif
+         
          
             @if(Auth::user()->role=="admin")
+            <li><a class="dropdown-item" href="{{ route($user->role) }}">Dashboard</a></li>
             <li><a class="dropdown-item" href="{{ route('admin.profile') }}">My profile</a></li>
             @elseif(Auth::user()->role=="lawyer")
+            <li><a class="dropdown-item" href="{{ route($user->role) }}">Dashboard</a></li>
             <li><a class="dropdown-item" href="{{ route('lawyer.profile') }}">My profile</a></li>
+            <li><a class="dropdown-item" href="{{ route('lawyer.consultations') }}">Consultations</a></li>
+            <li><a class="dropdown-item" href="{{ route('lawyer.leave') }}">Leave</a></li>
             @else
             <li><a class="dropdown-item" href="#">My profile</a></li>
             @endif
 
-            @if(Auth::user()->role=="lawyer")
-            <li><a class="dropdown-item" href="{{ route('lawyer.leave') }}">Leave</a></li>
-            @endif
+         
 
             <li><a class="dropdown-item" href="{{route('change.password')}}">Change password</a></li>
 

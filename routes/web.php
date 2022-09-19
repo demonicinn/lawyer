@@ -203,6 +203,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
         })->name('lawyer.subscription');
 
 
+           //... consultations
+           Route::get('/consultations', function () {
+            $title = array(
+                'title' => 'Consultations',
+                'active' => 'consultations',
+            );
+            return view('lawyer.consultations.index', compact('title'));
+        })->name('lawyer.consultations');
+
 
         //...leaves
 

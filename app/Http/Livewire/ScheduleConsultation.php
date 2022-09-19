@@ -47,7 +47,7 @@ class ScheduleConsultation extends Component
     public $lawyerlitigations, $lawyerContracts, $authUser, $litigations, $contracts;
 
 
-    public $day, $avaibleTime, $selDate, $lawyerDetails, $scheduletime, $bookDate,$is_booking_exits;
+    public $day, $avaibleTime, $selDate, $lawyerDetails, $scheduletime, $bookDate, $is_booking_exits;
     public $timeSlots = [];
     public $shedulePage = true;
     public $clickConfirm = false;
@@ -151,10 +151,6 @@ class ScheduleConsultation extends Component
             'selectDateTimeSlot.required' => 'Please select time slot.'
         ]);
 
-
-
-
-
         $this->currentTab = "tab2";
 
         if (auth::user()) {
@@ -208,31 +204,31 @@ class ScheduleConsultation extends Component
             ->whereMonth('date', $Month)
             ->whereYear('date', $Year)
             ->pluck('date')->toArray();
-        //  dd($getLeaves);
+        //   dd($getLeaves);
         foreach ($period as $date) {
             $day = $date->format('l');
             $ndate = $date->format('Y-m-d');
 
+            // dd($ndate );
 
             if ($ndate > date('Y-m-d') && in_array($day, $lawyerHoursDay)) {
                 array_push($dates, $ndate);
             }
         }
-        // dd($dates);
+        //  dd($dates);
         $result = array_diff($dates, $getLeaves);
         // dd($result);
         $this->workingDates = $result;
+
+        $this->checkIfBookingAlreadyExits($this->bookDate);
 
         $this->emit('fireCalender', $this->workingDates);
     }
 
     public function slotAvailability()
     {
-
         $selectDate = Carbon::parse($this->selectDate);
-
         $date = $selectDate->format('Y-m-d');
-        // dd( $date );
         $this->dateDay = $selectDate->format("l");
         $this->dateFormat = $selectDate->format("l, F j ");
 
@@ -271,10 +267,7 @@ class ScheduleConsultation extends Component
             }
         }
 
-        // check booking already exits
-        $this->bookDate = $this->todayDate->format('Y-m-d');
-        $this->is_booking_exits = Booking::where('lawyer_id', $this->lawyerID)->where('booking_date', $date)->get();
-  
+        $this->checkIfBookingAlreadyExits($date);
     }
 
     //register and save card details
@@ -425,6 +418,12 @@ class ScheduleConsultation extends Component
         $this->upassword = null;
     }
 
+    // check booking already exits
+    public function checkIfBookingAlreadyExits($date)
+    {
+        $this->is_booking_exits = Booking::where('lawyer_id', $this->lawyerID)->where('booking_date', $date)->get();
+    }
+
 
     public function render()
     {
@@ -437,9 +436,6 @@ class ScheduleConsultation extends Component
         if ($this->selectDate) {
             $this->slotAvailability();
         }
-
-
-
         return view('livewire.schedule-consultation');
     }
 }
