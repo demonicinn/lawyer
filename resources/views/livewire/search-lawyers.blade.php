@@ -27,7 +27,7 @@
                     <div class="toggle-design-wrapper d-flex flex-wrap align-items-center mb-4 justify-content-spacebw">
                         <h5 class="h5-design">Contingency Cases</h5>
                         <div class="toggle-design_div">
-                            <input id="contingency-cases" type="checkbox" wire:model="contingency_cases" name="contingency-cases" >
+                            <input id="contingency-cases" type="checkbox" wire:model="contingency_cases" name="contingency-cases">
                             <button class="cstm-toggle-btn"></button>
                         </div>
                     </div>

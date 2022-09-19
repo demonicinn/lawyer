@@ -1,5 +1,5 @@
 <section class="body-banner schdule-consultation-page-sec min-height-100vh">
-    <div  class="container">
+    <div class="container">
         <div class="heading-paragraph-design text-center position-relative go-back-wrap mb-4">
             <h2>Schedule a Consultation</h2>
         </div>
@@ -20,30 +20,23 @@
                             <h4 class="event-date">
                                 <p>{{$dateFormat}}</p>
                             </h4>
-
-
                             @if ($workingDatesTimeSlot)
                             <ul class="list-unstyled">
 
                                 @foreach($workingDatesTimeSlot as $key => $time)
                                 <li>
-                                    <div class="time-selection">
-                                        <input type="radio" 
-                                            value="{{date('h:i A', strtotime($time))}}"
-                                            wire:model="selectDateTimeSlot"
-                                            >
-                                        <button class="time-selection-btn">
+                                   
+                                    <div class="time-selection" >
+                                        <input type="radio"  @foreach ($is_booking_exits as $exit ) {{ ($exit->booking_time== date('h:i A', strtotime($time))) ? 'disabled' : '' }} @endforeach   value="{{date('h:i A', strtotime($time))}}" wire:model="selectDateTimeSlot">
+                                        <button class="time-selection-btn" @foreach ($is_booking_exits as $exit ) {{ ($exit->booking_time== date('h:i A', strtotime($time))) ? 'disabled' : '' }} @endforeach>
                                             <i class="fa-regular fa-calendar-check"></i>{{date('h:i A', strtotime($time))}}
                                         </button>
                                     </div>
 
                                 </li>
                                 @endforeach
-
-
-
                             </ul>
-                            {!! $errors->first('selectDateTimeSlot', '<span class="help-block">:message</span>') !!}
+                            {!! $errors->first('selectDateTimeSlot', '<span class="help-block">:message</span>')  !!}
                             @else
                             <h5>Oops! Slot not available.</h5>
                             @endif

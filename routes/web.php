@@ -64,13 +64,13 @@ Route::get('/schedule/consultation/{id}', [ScheduleConsultationController::class
 Route::middleware(['auth', 'verified'])->group(function () {
 
     //feed
-    Route::get('/feed', function () {
+    Route::get('/zoom/{id}', function () {
         $title = array(
             'title' => 'Feed',
             'active' => 'feed',
         );
         return view('common.zoom', compact('title'));
-    })->name('change.feed');
+    })->name('zoom');
 
 
 
@@ -202,6 +202,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
             return view('lawyer.subscription.index', compact('title'));
         })->name('lawyer.subscription');
 
+
+           //... consultations
+           Route::get('/consultations', function () {
+            $title = array(
+                'title' => 'Consultations',
+                'active' => 'consultations',
+            );
+            return view('lawyer.consultations.index', compact('title'));
+        })->name('lawyer.consultations');
 
 
         //...leaves
