@@ -15,21 +15,26 @@ return new class extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->integer('lawyer_id');
-            $table->string('stripe_save_id')->nullable();
+            
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('lawyer_id')->references('id')->on('users')->onDelete('cascade');
+
+            $table->bigInteger('user_cards_id')->nullable();
+
             $table->string('first_name', 100);
             $table->string('last_name', 100);
             $table->string('user_email', 100);
             $table->string('user_contact', 100);
-            $table->string('booking_date', 100);
-            $table->string('booking_time', 100);
+            $table->date('booking_date');
+            $table->time('booking_time');
+
             $table->enum('appointment_fee', ['free', 'paid']);
-            $table->decimal('price',11,5)->nullable();
-            $table->bigInteger('zoom_id')->nullable();
+            $table->decimal('price', 8,2)->nullable();
+            $table->string('zoom_id')->nullable();
             $table->string('zoom_password')->nullable();
-            $table->enum('is_call', ['pending', 'completed','canceled','accepted'])->default('pending');
+            $table->enum('is_call', ['pending', 'completed'])->default('pending');
             $table->enum('reschedule', ['0', '1'])->default('0');
+
             $table->timestamps();
         });
     }

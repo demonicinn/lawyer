@@ -41,10 +41,11 @@ class BookingMail extends Notification
      */
     public function toMail($notifiable)
     {
-        $zoomUrl=route('zoom',$this->booking->zoom_id);
+        $zoomUrl = route('zoom',$this->booking->zoom_id);
+        
         return (new MailMessage)
             ->subject('Booking Mail')
-            ->greeting('Hi,' . $this->user->first_name)
+            ->greeting('Hi,' . @$this->user->name)
             ->line('Your booking done successfully.')
             ->action('Zoom link', $zoomUrl)
             
