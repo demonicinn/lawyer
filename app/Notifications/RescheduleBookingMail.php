@@ -53,11 +53,13 @@ class RescheduleBookingMail extends Notification
      */
     public function toMail($notifiable)
     {
+        $zoomUrl = route('zoom',$this->bookingInfo->zoom_id);
         return (new MailMessage)
             ->subject('Booking Reschedule')
             ->greeting('Hello ,' . $this->first_name)
             ->line('Booking date :' . $this->bookingDate)
             ->line('Booking time :' . $this->bookingTime)
+            ->action('Zoom link', $zoomUrl)
             ->line($this->message1);
   
     }

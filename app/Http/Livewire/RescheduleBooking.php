@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Notifications\RescheduleBookingMail;
 use Illuminate\Support\Facades\Notification;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use App\Http\Controllers\MeetingController;
 
 class RescheduleBooking extends Component
 {
@@ -135,6 +136,7 @@ class RescheduleBooking extends Component
     public function checkIfBookingAlreadyExits($date)
     {
         $this->is_booking_exits = Booking::where('lawyer_id', $this->lawyerId)->where('booking_date', $date)->get();
+        // dd( $this->is_booking_exits);
     }
 
     public function mount($bookingId)
@@ -156,25 +158,30 @@ class RescheduleBooking extends Component
         $selectDate = Carbon::parse($this->selectDate);
         $date = $selectDate->format('Y-m-d');
         $ndate = $this->selectDate . ' ' . $this->selectDateTimeSlot;
-        $nTimeSlot = date('H:m', strtotime($ndate));
+        $nTimeSlot = date('H:i:s', strtotime($this->selectDateTimeSlot));
 
+        // $ndate = $this->selectDate . ' ' . date('H:i', strtotime($this->selectDateTimeSlot));
+     
+        // $nTimeSlot = date('H:i', strtotime($this->selectDateTimeSlot));
         // update zoom meeting
-        // try {
-        //     $dateTime = Carbon::parse($ndate);
-        //     $meeting = new MeetingController;
-        //     $a = $meeting->store($dateTime);
+        try {
+            $dateTime = Carbon::parse($ndate);
+            $meeting = new MeetingController;
+            $a = $meeting->store($dateTime);
 
-        //     $zoom_id = $a['data']['id'];
-        //     $zoom_password = $a['data']['password'];
-        // } catch (\Exception $e) {
-        //     $error = $e->getMessage();
-        // }
+            $zoom_id = $a['data']['id'];
+            $zoom_password = $a['data']['password'];
+            $zoom_start_url = $a['data']['start_url'];
+        } catch (\Exception $e) {
+            $error = $e->getMessage();
+        }
 
         $rescheduleBooking = Booking::where('id', $this->bookingId)->with('lawyer', 'user')->first();
         $rescheduleBooking->booking_date = $date;
         $rescheduleBooking->booking_time = $nTimeSlot;
-        // $rescheduleBooking->zoom_id = $zoom_id;
-        // $rescheduleBooking->zoom_password = $zoom_password;
+        $rescheduleBooking->zoom_id = $zoom_id;
+        $rescheduleBooking->zoom_password = $zoom_password;
+        $rescheduleBooking->zoom_start_url = $zoom_start_url;
         $rescheduleBooking->update();
 
         if ($rescheduleBooking) {

@@ -57,7 +57,7 @@ trait ZoomMeetingTrait
 
     public function create($date)
     {
-    	//dd($this->toZoomTimeFormat($date));
+    	// dd($this->toZoomTimeFormat($date));
 
         $path = 'users/me/meetings';
         $url = $this->retrieveZoomUrl();
