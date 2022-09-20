@@ -378,7 +378,7 @@ class ScheduleConsultation extends Component
                 Auth::login($authUser);
                 
                 $this->flash('success', 'Booking done successfully');
-                return redirect()->route('client');
+                return redirect()->route('client.dashboard');
             }
         }
     }
