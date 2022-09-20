@@ -33,7 +33,8 @@ return new class extends Migration
             $table->string('zoom_id')->nullable();
             $table->string('zoom_password')->nullable();
             $table->text('zoom_start_url')->nullable();
-            $table->enum('is_call', ['pending', 'completed','canceled','accepted'])->default('pending');
+            $table->enum('is_call', ['pending', 'completed'])->default('pending');
+            $table->enum('is_accepted', ['0', '1','2'])->default('0');
             $table->enum('reschedule', ['0', '1'])->default('0');
 
             $table->timestamps();
