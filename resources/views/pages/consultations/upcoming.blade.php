@@ -41,12 +41,12 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                     @php
-                                        $role = 'user';
-                                        if(Auth::user()->role == 'user'){
+                                            @php
+                                            $role = 'user';
+                                            if(Auth::user()->role == 'user'){
                                             $role = 'lawyer';
-                                        }
-                                     @endphp
+                                            }
+                                            @endphp
                                             @forelse ($upcomingConsultations as $upcoming)
                                             <tr>
                                                 <td>{{$upcoming->$role->first_name}}</td>
@@ -76,26 +76,15 @@
                                             <h2>No Upcoming Consultation.</h2>
 
                                             @endforelse
-
-
                                         </tbody>
                                     </table>
-
-
                                 </div>
-
                             </div>
-
-
                         </div>
                     </div>
-
-
-
                 </div>
             </div>
         </div>
-
     </div>
 </section>
 @endsection
