@@ -171,7 +171,7 @@ class ScheduleConsultation extends Component
 
     public function monthChange()
     {
-
+// dd('monthchange');
         if ($this->month && $this->year) {
             $ndate = date($this->year . '-' . $this->month . '-1');
             $date = Carbon::parse($ndate);

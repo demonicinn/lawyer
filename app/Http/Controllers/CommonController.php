@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Booking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Notifications\SupportNotification;
 use App\Notifications\ResponseToLawyerRequest;
-
-
+use App\Notifications\RescheduleMail;
 use Illuminate\Support\Facades\Notification;
 use App\Models\Supports;
 use App\Models\User;
 use App\Models\Category;
-
-
+use App\Models\Note;
+use App\Notifications\LawyerMailForCaseStatus;
+use App\Notifications\MailToAdminForLawyerStatus;
+use App\Notifications\UserMailForCaseStatus;
 use Session;
 
 
@@ -155,6 +157,158 @@ class CommonController extends Controller
 
         Notification::route('mail', $user->email)->notify(new ResponseToLawyerRequest($user, $action));
         session()->flash('success', 'Lawyer declined successfully');
+        return back();
+    }
+
+    public function consultations()
+    {
+        $title = array(
+            'title' => 'Consultations',
+            'active' => 'upcoming',
+        );
+
+        $authUser = auth()->user();
+
+        if ($authUser->role == 'lawyer') {
+            $upcomingConsultations = Booking::where('lawyer_id', $authUser->id)
+                ->where('booking_Date', '>=', date('Y-m-d'))
+                ->where('reschedule', '0')
+                ->with('user')->latest('id')->get();
+        } else {
+
+            $upcomingConsultations = Booking::where('user_id', $authUser->id)
+                ->where('reschedule', '0')
+                ->with('lawyer')->latest('id')->get();
+        }
+        return view('pages.consultations.upcoming', compact('title', 'upcomingConsultations'));
+    }
+
+    public function completeConsultations()
+    {
+        $title = array(
+            'title' => 'Consultations',
+            'active' => 'complete',
+        );
+        $authUser = auth()->user();
+
+        if ($authUser->role == 'lawyer') {
+            $completeConsultations = Booking::where('lawyer_id', $authUser->id)
+                ->where('is_call', 'completed')
+                ->with('user', 'notes')->latest('id')->get();
+            //   dd( $completeConsultations);
+        } else {
+
+            $completeConsultations = Booking::where('user_id', $authUser->id)
+                ->where('is_call', 'completed')
+                ->with('lawyer')->latest('id')->get();
+        }
+        return view('pages.consultations.completed', compact('title', 'completeConsultations'));
+    }
+
+    public function acceptedConsultations()
+    {
+        $title = array(
+            'title' => 'Consultations',
+            'active' => 'accepted',
+        );
+        $authUser = auth()->user();
+
+        if ($authUser->role == 'lawyer') {
+            $accptedConsultations = Booking::where('lawyer_id', $authUser->id)
+                ->where('is_call', 'accepted')
+                ->with('user', 'notes')->latest('id')->get();
+            // dd($accptedConsultations);
+        } else {
+
+            $accptedConsultations = Booking::where('user_id', $authUser->id)
+                ->where('is_call', 'accepted')
+                ->with('lawyer', 'notes')->latest('id')->get();
+        }
+        return view('pages.consultations.accepted', compact('title', 'accptedConsultations'));
+    }
+
+
+    public function resheduleConsultations($id)
+    {
+
+        $booking = Booking::where('id', $id)->with('user', 'lawyer')->first();
+        $booking->reschedule = '1';
+        $booking->update();
+
+
+        if ($booking) {
+            if (auth()->user()->role == 'user') {
+                //send reschedule mail to lawyer
+                $lawyerInfo = $booking->lawyer;
+                Notification::route('mail', $booking->lawyer->email)->notify(new RescheduleMail($booking, $lawyerInfo));
+            } else {
+
+                //send reschedule mail to user
+                $userInfo = $booking->user;
+                Notification::route('mail', $userInfo->email)->notify(new RescheduleMail($booking, $userInfo));
+            }
+            session()->flash('success', 'Reschedule done successfully');
+            return back();
+        }
+    }
+
+    public function addNote(Request $request, $id)
+    {
+        $request->validate([
+            'note' => 'required',
+        ]);
+        $saveNote = new Note;
+        $saveNote->note = $request->note;
+        $saveNote->booking_id = $id;
+        $saveNote->save();
+        session()->flash('success', 'Note added successfully');
+        return back();
+    }
+
+    public function editNote(Request $request, $id)
+    {
+
+        $updateNote = Note::where('id', $id)->first();
+        $updateNote->note = $request->note;
+        $updateNote->update();
+        session()->flash('success', 'Note updated successfully');
+        return back();
+    }
+
+
+    public function acceptCase($id)
+    {
+        $acceptCase = Booking::where('id', $id)->first();
+
+        $acceptCase->is_call = "accepted";
+        $acceptCase->update();
+
+        //send mail to user 
+
+        $status = 'accepted';
+
+        Notification::route('mail', $acceptCase->user_email)->notify(new UserMailForCaseStatus($acceptCase, $status));
+
+        Notification::route('mail', $acceptCase->user_email)->notify(new LawyerMailForCaseStatus($acceptCase, $status));
+
+        session()->flash('success', 'Case accepted successfully');
+        return back();
+    }
+
+    public function declineCase($id)
+    {
+        $declineCase = Booking::where('id', $id)->first();
+        $declineCase->is_call = "canceled";
+        $declineCase->update();
+
+
+        $status = 'declined';
+
+        Notification::route('mail', $declineCase->user_email)->notify(new UserMailForCaseStatus($declineCase, $status));
+
+        Notification::route('mail', $declineCase->user_email)->notify(new LawyerMailForCaseStatus($declineCase, $status));
+
+        session()->flash('success', 'Case declined successfully');
         return back();
     }
 }

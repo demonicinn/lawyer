@@ -60,6 +60,8 @@
                 },
 
                 onDateSelect: function(date, events) {
+                
+                  
                     var dateF = new Date(date);
                     let newDate = (dateF.getMonth() + 1) + '/' + dateF.getDate() + '/' + dateF.getFullYear();
 

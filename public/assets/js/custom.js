@@ -25,12 +25,22 @@ $(document).ready(function(){
         $(this).prevAll().removeClass('CollapseActive');
     });
 });
+
 $(document).ready(function(){
     $('.toggle_cstm-btn').click(function(){
     $(this).next().toggleClass('active');
     });
     $('.cancel_btn').click(function(){
         $(this).parents('.reshedule_wrap-box').removeClass('active');
+    });
+});
+
+$(document).ready(function(){
+    $('.toggle_note-btn').click(function(){
+    $(this).next().toggleClass('active');
+    });
+    $('.cancel_btn').click(function(){
+        $(this).parents('.note-box').removeClass('active');
     });
 });
 

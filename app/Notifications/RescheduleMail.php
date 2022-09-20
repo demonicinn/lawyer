@@ -7,19 +7,27 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class RescheduleMailTOUser extends Notification
+class RescheduleMail extends Notification
 {
     use Queueable;
-    public $booking, $userInfo;
+    public $booking, $info, $message1, $message2;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($booking, $userInfo)
+    public function __construct($booking, $info)
     {
         $this->booking = $booking;
-        $this->userInfo = $userInfo;
+        $this->info = $info;
+
+        if (auth()->user()->role =="lawyer") {
+            $this->message1 = 'Please accept my sincere apologies for the inconvenience caused.';
+            $this->message2 = 'I was looking forward to attending the meeting and discussing the opportunity in detail with you. I request you to kindly reschedule my booking to next week as per your preferred date and timings.';
+        } else {
+            $this->message1 = 'Please accept my sincere apologies for the inconvenience caused.';
+            $this->message2 = 'Booking canceled by user';
+        }
     }
 
     /**
@@ -43,11 +51,11 @@ class RescheduleMailTOUser extends Notification
     {
         return (new MailMessage)
             ->subject('Reschedule Mail')
-            ->greeting('Hello ,' . $this->userInfo->first_name)
+            ->greeting('Hello ,' . $this->info->first_name)
             ->line('Booking date :' . $this->booking->booking_date)
             ->line('Booking time :' . $this->booking->booking_time)
-            ->line('Please accept my sincere apologies for the inconvenience caused.')
-            ->line('I was looking forward to attending the meeting and discussing the opportunity in detail with you. I request you to kindly reschedule my booking to next week as per your preferred date and timings.');
+            ->line($this->message1)
+            ->line($this->message2);
     }
 
     /**
