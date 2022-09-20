@@ -57,6 +57,11 @@
                                                 <td>
                                                     <div class="dropdown reshedule_dropdowns">
                                                         <button class="toggle_cstm-btn" type="button">Reshedule</button>
+
+                                                        @if (Auth::user()->role == 'user')
+                                                        @livewire('reschedule-booking', ['bookingId' => $upcoming->id])
+                                                        @else
+
                                                         <div class="reshedule_wrap-box">
                                                             <span class="info_icns"><i class="fa-solid fa-circle-info"></i></span>
                                                             <p>Resheduling consultation will hurt your ratings</p>
@@ -68,6 +73,11 @@
                                                                 <a class="cancel_dropdown-btn cancel_btn">Cancel</a>
                                                             </div>
                                                         </div>
+
+                                                        @endif
+
+
+
                                                     </div>
                                                 </td>
                                             </tr>
