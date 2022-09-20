@@ -10,6 +10,7 @@ use App\Http\Controllers\Lawyer;
 use App\Http\Controllers\User;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\ScheduleConsultationController;
+use App\Http\Controllers\ZoomController;
 
 
 
@@ -94,6 +95,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return view('common.zoom', compact('title'));
     })->name('zoom');
 
+    //zoom
+    Route::get('/zoom/{id}', [ZoomController::class, 'index'])->name('zoom');
 
 
     //change password
@@ -268,4 +271,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         //...
 
     });
+
+    //client
+    Route::group(['prefix' => 'client', 'middleware' => ['role:user']], function () {
+
+        //...dashboard
+        Route::get('/', [Admin\DashboardController::class, 'index'])->name('client');
+
+
+    });
+
 });

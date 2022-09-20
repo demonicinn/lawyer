@@ -158,8 +158,6 @@ class ScheduleConsultation extends Component
             $this->last_name = auth()->user()->last_name;
             $this->email = auth()->user()->email;
             $this->phone = auth()->user()->contact_number;
-            $this->password = null;
-            $this->password_confirmation = null;
         }
     }
 
@@ -279,12 +277,14 @@ class ScheduleConsultation extends Component
         \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
         $selectDate = Carbon::parse($this->selectDate);
         $date = $selectDate->format('Y-m-d');
+        
+        $ndate = $this->selectDate . ' ' . $this->selectDateTimeSlot;
+        $nTimeSlot = date('H:m', strtotime($ndate));
 
         try {
-            $ndate = $this->selectDate . ' ' . $this->selectDateTimeSlot;
-            $date = Carbon::parse($ndate);
+            $dateTime = Carbon::parse($ndate);
             $meeting = new MeetingController;
-            $a = $meeting->store($date);
+            $a = $meeting->store($dateTime);
 
             $zoom_id = $a['data']['id'];
             $zoom_password = $a['data']['password'];
@@ -309,7 +309,7 @@ class ScheduleConsultation extends Component
         }
 
 
-        $saveCardId = '';
+        $saveCardId = null;
 
         if ($this->lawyer->details->is_consultation_fee == "yes") {
             try {
@@ -344,17 +344,17 @@ class ScheduleConsultation extends Component
 
 
         //save booking && whenn zoom link create
-        if ($a) {
+        if (@$a) {
             $booking = new Booking;
             $booking->user_id = $authUser->id;
             $booking->lawyer_id = $this->lawyerID;
-            $booking->stripe_save_id = $saveCardId;
+            $booking->user_cards_id = $saveCardId;
             $booking->first_name = $this->first_name;
             $booking->last_name = $this->last_name;
             $booking->user_email = $this->email;
             $booking->user_contact = $this->phone;
             $booking->booking_date = $date;
-            $booking->booking_time = $this->selectDateTimeSlot;
+            $booking->booking_time = $nTimeSlot;
 
             if ($this->lawyer->details->is_consultation_fee == "no") {
                 $booking->appointment_fee = "free";
@@ -370,11 +370,15 @@ class ScheduleConsultation extends Component
             if ($booking) {
 
                 //send notification to User
-                Notification::route('mail', $this->email)->notify(new BookingMail($booking, $this->authUser));
+                Notification::route('mail', $this->email)->notify(new BookingMail($booking, $authUser));
                 //send notification to lawyer
                 Notification::route('mail', $this->lawyer->email)->notify(new BookingMail($booking, $this->lawyer));
 
-                $this->alert('success', 'Booking done successfully');
+                //...
+                Auth::login($authUser);
+                
+                $this->flash('success', 'Booking done successfully');
+                return redirect()->route('client');
             }
         }
     }
