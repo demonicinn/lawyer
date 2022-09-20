@@ -31,7 +31,7 @@ class ZoomController extends Controller
 			abort(404);
 		}
 
-        return view('common.zoom', compact('title'));
+        return view('common.zoom', compact('title', 'booking', 'user'));
     }
 
 

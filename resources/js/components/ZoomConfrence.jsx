@@ -2,26 +2,42 @@ import React, { useEffect } from 'react';
 import { ZoomMtg } from '@zoomus/websdk';
 import { KJUR } from 'jsrsasign';
 
+const sdkKey = import.meta.env.VITE_ZOOM_SDK_KEY;
+const sdkSecret = import.meta.env.VITE_ZOOM_SDK_SECRET;
+const leaveUrlPath = import.meta.env.VITE_ZOOM_LEAVE_URL;
 
-const ZoomConfrence = () => {
 
-	//var apiKey = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOm51bGwsImlzcyI6IjY3Y0xDSXgwUnFhVk5uclBhSldoY3ciLCJleHAiOjE2NjMyNDExNjQsImlhdCI6MTY2MjYzNjM2M30.vph2Ald8HDA_KkjMbWFazUBi9hIsaasgis4PzVutFAg';
-	var sdkKey = 'LLarU57l8YdjKk2aqgidlm7REbmlVcb8RHSy';
-	var sdkSecret = 'QO9FC4KOBku8qNMHUFUyPsNANFVgITEC5jZG';
-	
-	var meetingNumber = '75742539373';
-	var role = 0;
-
-	var leaveUrl = 'http://localhost:8000';
-	var userName = 'React';
-	var userEmail = 'ram@yopmail.com';
-	var passWord = 'JWi9XQ';
-	//var passWord = 'bMvZbZv0ESbyZaDrzsbicpRcbR4vf2.1';
-	//var registrantToken = '';
-
+ZoomMtg.setZoomJSLib('https://source.zoom.us/2.7.0/lib', '/av');
 	ZoomMtg.preLoadWasm();
 	ZoomMtg.prepareJssdk();
-	ZoomMtg.setZoomJSLib('https://source.zoom.us/2.7.0/lib', '/av');
+	
+const ZoomConfrence = () => {
+
+	
+
+
+
+	var meetingNumber = document.getElementById("zoom_id");
+	if(meetingNumber){
+		meetingNumber = meetingNumber.value;
+	}
+
+	var userName = document.getElementById("user_name");
+	if(userName){
+		userName = userName.value;
+	}
+
+	var userEmail = document.getElementById("user_email");
+	if(userEmail){
+		userEmail = userEmail.value;
+	}
+	
+	let leaveUrl = leaveUrlPath + meetingNumber + '/leave';
+	var passWord = '';
+	var role = 0;
+	
+
+	
 	
 
 	function generateSignature(sdkKey, sdkSecret, meetingNumber, role) {
@@ -48,10 +64,13 @@ const ZoomConfrence = () => {
 		});
 	}
 
+	useEffect(() => {
+		generateSignature(sdkKey, sdkSecret, meetingNumber, role).then((res) => {
+			startMeeting(res);
+		});
+	}, [meetingNumber]);
 
-	generateSignature(sdkKey, sdkSecret, meetingNumber, role).then((res) => {
-		startMeeting(res);
-	});
+	
 
 
 	function startMeeting(signature){
@@ -60,7 +79,7 @@ const ZoomConfrence = () => {
 	    ZoomMtg.init({
 	      leaveUrl: leaveUrl,
 	      success: (success) => {
-	        console.log('called', success)
+	        //console.log('called', success)
 
 	        ZoomMtg.join({
 	          signature: signature,
@@ -71,7 +90,7 @@ const ZoomConfrence = () => {
 	          passWord: passWord,
 	          //tk: registrantToken,
 	          success: (success) => {
-	            console.log('success', success)
+	            //console.log('success', success)
 	          },
 	          error: (error) => {
 	            console.log('error', error)
@@ -81,7 +100,7 @@ const ZoomConfrence = () => {
 
 	      },
 	      error: (error) => {
-	            console.log('error', error)
+	        console.log('error', error)
 	        console.log(error)
 	      }
 	    })

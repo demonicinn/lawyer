@@ -242,7 +242,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::group(['prefix' => 'client', 'middleware' => ['role:user']], function () {
 
         //...dashboard
-        Route::get('/', [Admin\DashboardController::class, 'index'])->name('client');
+        Route::get('/', [Admin\DashboardController::class, 'index'])->name('client.dashboard');
 
 
     });
