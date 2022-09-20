@@ -15,19 +15,17 @@ class ZoomController extends Controller
 			'active' => 'zoom',
 		);
 
-		$booking = Booking::where('zoom_id', $request->id)->first();
-
 		$user = auth()->user();
 
+		$booking = Booking::where('zoom_id', $request->id)
+					->where('booking_date', '>=', date('Y-m-d'))
+					->where(function($query) use($user) {
+						$query->where('user_id', $user->id);
+						$query->orWhere('lawyer_id', $user->id);
+					})
+					->first();
+		
 		if(!$booking){
-			abort(404);
-		}
-
-		if(!($booking->user_id == $user->id || $booking->lawyer_id == $user->id)) {
-			abort(404);
-		}
-
-		if(date('Y-m-d') > $booking->booking_date) {
 			abort(404);
 		}
 
