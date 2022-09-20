@@ -27,8 +27,8 @@
                                 <li>
                                    
                                     <div class="time-selection" >
-                                        <input type="radio"  @foreach ($is_booking_exits as $exit ) {{ ($exit->booking_time== date('h:i A', strtotime($time))) ? 'disabled' : '' }} @endforeach   value="{{date('h:i A', strtotime($time))}}" wire:model="selectDateTimeSlot">
-                                        <button class="time-selection-btn" @foreach ($is_booking_exits as $exit ) {{ ($exit->booking_time== date('h:i A', strtotime($time))) ? 'disabled' : '' }} @endforeach>
+                                        <input type="radio"  @foreach ($is_booking_exits as $exit ) {{ ($exit->booking_time== date('H:i:s', strtotime($time))) ? 'disabled' : '' }} @endforeach   value="{{date('h:i A', strtotime($time))}}" wire:model="selectDateTimeSlot">
+                                        <button class="time-selection-btn" @foreach ($is_booking_exits as $exit ) {{ ($exit->booking_time== date('H:i:s', strtotime($time))) ? 'disabled' : '' }} @endforeach>
                                             <i class="fa-regular fa-calendar-check"></i>{{date('h:i A', strtotime($time))}}
                                         </button>
                                     </div>
