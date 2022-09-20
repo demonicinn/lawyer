@@ -70,7 +70,7 @@ trait ZoomMeetingTrait
                 'start_time' => $this->toZoomTimeFormat($date),
                 'duration'   => '30',
                 'agenda'     => null,
-                'timezone'     => 'Asia/Kolkata',
+                'timezone'     => env('ZOOM_TIME_ZONE', ''),
                 'settings'   => [
                     //'host_video'        => ($data['host_video'] == "1") ? true : false,
                     //'participant_video' => ($data['participant_video'] == "1") ? true : false,
@@ -102,7 +102,7 @@ trait ZoomMeetingTrait
                 'start_time' => $this->toZoomTimeFormat($data['start_time']),
                 'duration'   => $data['duration'],
                 'agenda'     => (! empty($data['agenda'])) ? $data['agenda'] : null,
-                'timezone'     => 'Asia/Kolkata',
+                'timezone'     => env('ZOOM_TIME_ZONE', ''),
                 'settings'   => [
                     'host_video'        => ($data['host_video'] == "1") ? true : false,
                     'participant_video' => ($data['participant_video'] == "1") ? true : false,

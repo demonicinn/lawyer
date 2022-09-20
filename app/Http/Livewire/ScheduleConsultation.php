@@ -288,6 +288,7 @@ class ScheduleConsultation extends Component
 
             $zoom_id = $a['data']['id'];
             $zoom_password = $a['data']['password'];
+            $zoom_start_url = $a['data']['start_url'];
         } catch (\Exception $e) {
             $error = $e->getMessage();
         }
@@ -363,8 +364,9 @@ class ScheduleConsultation extends Component
                 $booking->price = $this->lawyer->details->consultation_fee;
             }
 
-            $booking->zoom_id = $zoom_id;
-            $booking->zoom_password = $zoom_password;
+            $booking->zoom_id = @$zoom_id;
+            $booking->zoom_password = @$zoom_password;
+            $booking->zoom_start_url = @$zoom_start_url;
             $booking->save();
 
             if ($booking) {
@@ -375,7 +377,9 @@ class ScheduleConsultation extends Component
                 Notification::route('mail', $this->lawyer->email)->notify(new BookingMail($booking, $this->lawyer));
 
                 //...
-                Auth::login($authUser);
+                if(!Auth::check()){
+                    Auth::login($authUser);
+                }
                 
                 $this->flash('success', 'Booking done successfully');
                 return redirect()->route('client.dashboard');
