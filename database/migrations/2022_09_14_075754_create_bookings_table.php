@@ -32,6 +32,7 @@ return new class extends Migration
             $table->decimal('price', 8,2)->nullable();
             $table->string('zoom_id')->nullable();
             $table->string('zoom_password')->nullable();
+            $table->text('zoom_start_url')->nullable();
             $table->enum('is_call', ['pending', 'completed'])->default('pending');
             $table->enum('reschedule', ['0', '1'])->default('0');
 

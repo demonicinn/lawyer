@@ -8,15 +8,12 @@ const leaveUrlPath = import.meta.env.VITE_ZOOM_LEAVE_URL;
 
 
 ZoomMtg.setZoomJSLib('https://source.zoom.us/2.7.0/lib', '/av');
-	ZoomMtg.preLoadWasm();
-	ZoomMtg.prepareJssdk();
-	
+ZoomMtg.preLoadWasm();
+ZoomMtg.prepareJssdk();
+
 const ZoomConfrence = () => {
 
 	
-
-
-
 	var meetingNumber = document.getElementById("zoom_id");
 	if(meetingNumber){
 		meetingNumber = meetingNumber.value;
@@ -31,11 +28,15 @@ const ZoomConfrence = () => {
 	if(userEmail){
 		userEmail = userEmail.value;
 	}
+
+	var zak = document.getElementById("zoom_zak");
+	if(zak){
+		zak = zak.value;
+	}
 	
 	let leaveUrl = leaveUrlPath + meetingNumber + '/leave';
 	var passWord = '';
 	var role = 0;
-	
 
 	
 	
@@ -79,7 +80,7 @@ const ZoomConfrence = () => {
 	    ZoomMtg.init({
 	      leaveUrl: leaveUrl,
 	      success: (success) => {
-	        //console.log('called', success)
+	        console.log('called', success)
 
 	        ZoomMtg.join({
 	          signature: signature,
@@ -88,9 +89,10 @@ const ZoomConfrence = () => {
 	          sdkKey: sdkKey,
 	          userEmail: userEmail,
 	          passWord: passWord,
+	          zak: zak,
 	          //tk: registrantToken,
 	          success: (success) => {
-	            //console.log('success', success)
+	            console.log('success', success)
 	          },
 	          error: (error) => {
 	            console.log('error', error)
