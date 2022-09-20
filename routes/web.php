@@ -11,6 +11,7 @@ use App\Http\Controllers\User;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\ScheduleConsultationController;
 use App\Http\Controllers\ZoomController;
+use App\Http\Livewire\RescheduleBooking;
 
 
 
@@ -268,7 +269,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/', [User\DashboardController::class, 'index'])->name('user');
         Route::get('/dashboard', [User\DashboardController::class, 'index'])->name('user.dashboard');
 
-        //...
+        //...Reschedule booking
+
+
+        Route::get('/reschedule/booking/{id}', [User\DashboardController::class, 'reschedule'])->name('user.reschedule.booking');
 
     });
 

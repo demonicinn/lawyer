@@ -53,28 +53,38 @@
                                                 <td>{{$upcoming->$role->last_name}}</td>
                                                 <td>Car Accident</td>
                                                 <td>{{date('d-m-y', strtotime($upcoming->booking_date)) }}</td>
-                                                <td>{{$upcoming->booking_time}} - {{date('H:i:A', strtotime($upcoming->booking_time. ' +30 minutes'))}} </td>
+                                                <td>{{date('g:i A', strtotime($upcoming->booking_time))}} - {{date('g:i A', strtotime($upcoming->booking_time. ' +30 minutes'))}} </td>
                                                 <td>
                                                     <div class="dropdown reshedule_dropdowns">
                                                         <button class="toggle_cstm-btn" type="button">Reshedule</button>
 
                                                         @if (Auth::user()->role == 'user')
-                                                        @livewire('reschedule-booking', ['bookingId' => $upcoming->id])
-                                                        @else
 
                                                         <div class="reshedule_wrap-box">
                                                             <span class="info_icns"><i class="fa-solid fa-circle-info"></i></span>
                                                             <p>Resheduling consultation will hurt your ratings</p>
                                                             <div class="d-flex">
-                                                                <form method="post" action="{{route('reshedule.consultation',$upcoming->id )}}">
-                                                                    @csrf
-                                                                    <button type="submit" class="confirm_dropdown-btn">Confirm</button>
-                                                                </form>
+                                                                <a href="{{route('user.reschedule.booking',$upcoming->id)}}" class="accept_btn showModal">Confirm</a>
+
                                                                 <a class="cancel_dropdown-btn cancel_btn">Cancel</a>
                                                             </div>
                                                         </div>
+                                                        
+                                                            @else
 
-                                                        @endif
+                                                            <div class="reshedule_wrap-box">
+                                                                <span class="info_icns"><i class="fa-solid fa-circle-info"></i></span>
+                                                                <p>Resheduling consultation will hurt your ratings</p>
+                                                                <div class="d-flex">
+                                                                    <form method="post" action="{{route('reshedule.consultation',$upcoming->id )}}">
+                                                                        @csrf
+                                                                        <button type="submit" class="confirm_dropdown-btn">Confirm</button>
+                                                                    </form>
+                                                                    <a class="cancel_dropdown-btn cancel_btn">Cancel</a>
+                                                                </div>
+                                                            </div>
+
+                                                            @endif
 
 
 

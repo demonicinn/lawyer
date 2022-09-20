@@ -8,28 +8,42 @@ use Carbon\CarbonPeriod;
 use App\Models\Booking;
 use App\Models\Leave;
 use App\Models\User;
+use App\Notifications\RescheduleBookingMail;
+use Illuminate\Support\Facades\Notification;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class RescheduleBooking extends Component
 {
+
+    use LivewireAlert;
+
     public $bookingId, $lawyerId, $userId, $todayDate, $authUser,
-           $workingDates, $bookDate ,$selectDate,$selectDateTimeSlot;
+        $workingDates, $bookDate, $selectDate, $selectDateTimeSlot;
     public $workingDatesTimeSlot = [];
     public $month, $year;
 
     public $dateDay, $dateFormat;
 
-  
+    public function rules()
+    {
+        return [
+            'selectDate' => 'required',
+            'selectDateTimeSlot' => 'required',
+        ];
+    }
+
+    protected $messages = [
+        'selectDate.required' => 'Please select date.',
+        'selectDateTimeSlot.required' => 'Please select time slot.'
+    ];
+
 
 
     public function monthChange()
     {
-        // dd('monthchange');
         if ($this->month && $this->year) {
             $ndate = date($this->year . '-' . $this->month . '-1');
             $date = Carbon::parse($ndate);
-
-            //$this->workingDates = [];
-
             $this->getWorkingDays($date);
         }
     }
@@ -51,7 +65,7 @@ class RescheduleBooking extends Component
 
         $lawyerHours = $this->lawyer->lawyerHours()->where('day', $this->dateDay)->first();
 
-        $getLeaves = Leave::where('user_id',$this->lawyerId)
+        $getLeaves = Leave::where('user_id', $this->lawyerId)
             ->where('date', $date)
             ->get();
 
@@ -126,22 +140,60 @@ class RescheduleBooking extends Component
     public function mount($bookingId)
     {
         $this->bookingId = $bookingId;
-
         $bookingDetails = Booking::where('id', $bookingId)->first();
-
         $this->lawyerId = $bookingDetails->lawyer_id;
-
         $this->lawyer = User::where('id', $this->lawyerId)->with('details')->first();
         $this->authUser = auth()->user();
         $this->todayDate = Carbon::now();
-
-        $this->dateFormat=$this->todayDate->format("l, F j ");
+        $this->dateFormat = $this->todayDate->format("l, F j ");
         $this->getWorkingDays($this->todayDate);
+    }
+
+    public function confirmSlot()
+    {
+        $this->validate();
+
+        $selectDate = Carbon::parse($this->selectDate);
+        $date = $selectDate->format('Y-m-d');
+        $ndate = $this->selectDate . ' ' . $this->selectDateTimeSlot;
+        $nTimeSlot = date('H:m', strtotime($ndate));
+
+        // update zoom meeting
+        // try {
+        //     $dateTime = Carbon::parse($ndate);
+        //     $meeting = new MeetingController;
+        //     $a = $meeting->store($dateTime);
+
+        //     $zoom_id = $a['data']['id'];
+        //     $zoom_password = $a['data']['password'];
+        // } catch (\Exception $e) {
+        //     $error = $e->getMessage();
+        // }
+
+        $rescheduleBooking = Booking::where('id', $this->bookingId)->with('lawyer', 'user')->first();
+        $rescheduleBooking->booking_date = $date;
+        $rescheduleBooking->booking_time = $nTimeSlot;
+        // $rescheduleBooking->zoom_id = $zoom_id;
+        // $rescheduleBooking->zoom_password = $zoom_password;
+        $rescheduleBooking->update();
+
+        if ($rescheduleBooking) {
+            $user = 'user';
+            $lawyer = 'lawyer';
+            //send notification to User
+            Notification::route('mail', $rescheduleBooking->user_email)->notify(new RescheduleBookingMail($rescheduleBooking, $user));
+            //send notification to lawyer
+            Notification::route('mail', $rescheduleBooking->lawyer->email)->notify(new RescheduleBookingMail($rescheduleBooking, $lawyer));
+
+            //...
+            $this->flash('success', 'Booking reschedule successfully.');
+            return redirect()->route('consultations.upcoming');
+        }
     }
 
     public function render()
     {
-       
+
         // $this->workingDatesTimeSlot = [];
         //...
         $this->monthChange();
