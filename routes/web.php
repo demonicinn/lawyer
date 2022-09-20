@@ -260,27 +260,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
     });
 
-    Route::group(['prefix' => 'user', 'middleware' => ['role:user']], function () {
-
-
-
-
-        //...dashboard
-        Route::get('/', [User\DashboardController::class, 'index'])->name('user');
-        Route::get('/dashboard', [User\DashboardController::class, 'index'])->name('user.dashboard');
-
-        //...Reschedule booking
-
-
-        Route::get('/reschedule/booking/{id}', [User\DashboardController::class, 'reschedule'])->name('user.reschedule.booking');
-
-    });
-
+  
     //client
     Route::group(['prefix' => 'client', 'middleware' => ['role:user']], function () {
 
         //...dashboard
+    
         Route::get('/', [Admin\DashboardController::class, 'index'])->name('client.dashboard');
+        Route::get('/reschedule/booking/{id}', [User\DashboardController::class, 'reschedule'])->name('client.reschedule.booking');
 
 
     });

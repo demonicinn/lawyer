@@ -64,7 +64,7 @@
                                                             <span class="info_icns"><i class="fa-solid fa-circle-info"></i></span>
                                                             <p>Resheduling consultation will hurt your ratings</p>
                                                             <div class="d-flex">
-                                                                <a href="{{route('user.reschedule.booking',$upcoming->id)}}" class="accept_btn showModal">Confirm</a>
+                                                                <a href="{{route('client.reschedule.booking',$upcoming->id)}}" class="accept_btn showModal">Confirm</a>
 
                                                                 <a class="cancel_dropdown-btn cancel_btn">Cancel</a>
                                                             </div>
