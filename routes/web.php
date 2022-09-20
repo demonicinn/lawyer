@@ -46,6 +46,21 @@ Route::get('/storage-link', function () {
 
 
 
+Route::get('/3days', function () {
+    Artisan::call('case:3days');
+});
+
+Route::get('/reminder1day', function () {
+    Artisan::call('reminder:1day');
+});
+
+Route::get('/rating6months', function () {
+    Artisan::call('rating:6months');
+});
+
+
+
+
 //home
 Route::get('/', [PagesController::class, 'home'])->name('home');
 Route::get('/narrow-down-candidates', [PagesController::class, 'narrowDown'])->name('narrow.down');
