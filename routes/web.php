@@ -277,10 +277,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
     //client
-    Route::group(['prefix' => 'client', 'middleware' => ['role:user']], function () {
+
+    // i replace client to user bz page crashed when user direactly login to web. @gurpreet sir
+    Route::group(['prefix' => 'user', 'middleware' => ['role:user']], function () {
 
         //...dashboard
-        Route::get('/', [Admin\DashboardController::class, 'index'])->name('client.dashboard');
-        Route::get('/reschedule/booking/{id}', [User\DashboardController::class, 'reschedule'])->name('client.reschedule.booking');
+        Route::get('/', [Admin\DashboardController::class, 'index'])->name('user.dashboard');
+        Route::get('/reschedule/booking/{id}', [User\DashboardController::class, 'reschedule'])->name('user.reschedule.booking');
     });
 });

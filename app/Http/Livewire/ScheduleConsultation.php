@@ -24,6 +24,8 @@ use Illuminate\Support\Facades\Session;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use App\Notifications\BookingMail;
 use Illuminate\Support\Facades\Notification;
+use Exception;
+
 
 class ScheduleConsultation extends Component
 {
@@ -32,7 +34,7 @@ class ScheduleConsultation extends Component
 
     public $currentTab = 'tab1';
 
-    public $lawyerID, $lawyer;
+    public $lawyerID, $lawyer,$saveCards;
     public $month, $year;
     public $todayDate;
 
@@ -117,7 +119,17 @@ class ScheduleConsultation extends Component
 
     public function mount()
     {
+
+        $this->authUser = auth()->user();
+
         $this->lawyer = User::where('id', $this->lawyerID)->with('details')->first();
+
+        if ($this->authUser) {
+            $this->saveCards = UserCard::where('user_id', $this->authUser->id)->get();
+           
+        }
+
+
 
         $lawyerLitigations = LawyerLitigations::where('users_id', $this->lawyerID)->with('litigations')->get();
         $litigations_id = [];
@@ -134,7 +146,7 @@ class ScheduleConsultation extends Component
         }
         $this->contracts = Contract::whereIn('id', $contracts_id)->get();
 
-        $this->authUser = auth()->user();
+
         $this->todayDate = Carbon::now();
         $this->getWorkingDays($this->todayDate);
     }
@@ -171,7 +183,7 @@ class ScheduleConsultation extends Component
 
     public function monthChange()
     {
-// dd('monthchange');
+        // dd('monthchange');
         if ($this->month && $this->year) {
             $ndate = date($this->year . '-' . $this->month . '-1');
             $date = Carbon::parse($ndate);
@@ -277,9 +289,9 @@ class ScheduleConsultation extends Component
         \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
         $selectDate = Carbon::parse($this->selectDate);
         $date = $selectDate->format('Y-m-d');
-        
         $ndate = $this->selectDate . ' ' . $this->selectDateTimeSlot;
-        $nTimeSlot = date('H:m', strtotime($ndate));
+        $nTimeSlot = date('H:i:s', strtotime($this->selectDateTimeSlot));
+
 
         try {
             $dateTime = Carbon::parse($ndate);
@@ -289,40 +301,38 @@ class ScheduleConsultation extends Component
             $zoom_id = $a['data']['id'];
             $zoom_password = $a['data']['password'];
             $zoom_start_url = $a['data']['start_url'];
-        } catch (\Exception $e) {
-            $error = $e->getMessage();
-        }
 
-        $authUser = '';
-        if (Auth::check()) {
-            $authUser = auth()->user();
-        } else {
-            $createUser = new User;
-            $createUser->first_name = $this->first_name;
-            $createUser->last_name = $this->last_name;
-            $createUser->email = $this->email;
-            $createUser->contact_number = $this->phone;
-            $createUser->role = "user";
-            $createUser->password = Hash::make($this->password);
-            $createUser->save();
+            $token = \Stripe\Token::create([
+                "card" => array(
+                    "name" => $this->card_name,
+                    "number" => $this->card_number,
+                    "exp_month" => $this->expire_month,
+                    "exp_year" => $this->expire_year,
+                    "cvc" => $this->cvv
+                ),
+            ]);
+            //  dd($token->card,$token->card->brand);
 
-            $authUser = User::find($createUser->id);
-        }
+            $authUser = '';
+            if (Auth::check() && $token) {
+                $authUser = auth()->user();
+            } else {
+                $createUser = new User;
+                $createUser->first_name = $this->first_name;
+                $createUser->last_name = $this->last_name;
+                $createUser->email = $this->email;
+                $createUser->contact_number = $this->phone;
+                $createUser->role = "user";
+                $createUser->password = Hash::make($this->password);
+                $createUser->save();
+
+                $authUser = User::find($createUser->id);
+            }
 
 
-        $saveCardId = null;
+            $saveCardId = null;
 
-        if ($this->lawyer->details->is_consultation_fee == "yes") {
-            try {
-                $token = \Stripe\Token::create([
-                    "card" => array(
-                        "name" => $this->card_name,
-                        "number" => $this->card_number,
-                        "exp_month" => $this->expire_month,
-                        "exp_year" => $this->expire_year,
-                        "cvc" => $this->cvv
-                    ),
-                ]);
+            if ($this->lawyer->details->is_consultation_fee == "yes" && $token ) {
 
                 $customer = \Stripe\Customer::create([
                     'source' => $token['id'],
@@ -330,60 +340,65 @@ class ScheduleConsultation extends Component
                     'description' => 'My name is ' . @$authUser->name,
                 ]);
 
+
                 $customer_id = $customer['id'];
                 //save customer id in card table
                 $saveCard = new UserCard;
                 $saveCard->user_id = $authUser->id;
                 $saveCard->customer_id = $customer_id;
+                $saveCard->card_type=$token->card->brand;
+                $saveCard->card_number=$token->card->last4;
                 $saveCard->save();
 
                 $saveCardId = $saveCard->id;
-            } catch (\Stripe\Exception\CardException $e) {
-                $error = $e->getMessage();
-            }
-        }
 
+                if (@$a) {
+                    $booking = new Booking;
+                    $booking->user_id = $authUser->id;
+                    $booking->lawyer_id = $this->lawyerID;
+                    $booking->user_cards_id = $saveCardId;
+                    $booking->first_name = $this->first_name;
+                    $booking->last_name = $this->last_name;
+                    $booking->user_email = $this->email;
+                    $booking->user_contact = $this->phone;
+                    $booking->booking_date = $date;
+                    $booking->booking_time = $nTimeSlot;
 
-        //save booking && whenn zoom link create
-        if (@$a) {
-            $booking = new Booking;
-            $booking->user_id = $authUser->id;
-            $booking->lawyer_id = $this->lawyerID;
-            $booking->user_cards_id = $saveCardId;
-            $booking->first_name = $this->first_name;
-            $booking->last_name = $this->last_name;
-            $booking->user_email = $this->email;
-            $booking->user_contact = $this->phone;
-            $booking->booking_date = $date;
-            $booking->booking_time = $nTimeSlot;
+                    if ($this->lawyer->details->is_consultation_fee == "no") {
+                        $booking->appointment_fee = "free";
+                    } else {
+                        $booking->appointment_fee = "paid";
+                        $booking->price = $this->lawyer->details->consultation_fee;
+                    }
 
-            if ($this->lawyer->details->is_consultation_fee == "no") {
-                $booking->appointment_fee = "free";
-            } else {
-                $booking->appointment_fee = "paid";
-                $booking->price = $this->lawyer->details->consultation_fee;
-            }
+                    $booking->zoom_id = @$zoom_id;
+                    $booking->zoom_password = @$zoom_password;
+                    $booking->zoom_start_url = @$zoom_start_url;
+                    $booking->save();
 
-            $booking->zoom_id = @$zoom_id;
-            $booking->zoom_password = @$zoom_password;
-            $booking->zoom_start_url = @$zoom_start_url;
-            $booking->save();
+                    if ($booking) {
 
-            if ($booking) {
+                        //send notification to User
+                        Notification::route('mail', $this->email)->notify(new BookingMail($booking, $authUser));
+                        //send notification to lawyer
+                        Notification::route('mail', $this->lawyer->email)->notify(new BookingMail($booking, $this->lawyer));
 
-                //send notification to User
-                Notification::route('mail', $this->email)->notify(new BookingMail($booking, $authUser));
-                //send notification to lawyer
-                Notification::route('mail', $this->lawyer->email)->notify(new BookingMail($booking, $this->lawyer));
-
-                //...
-                if(!Auth::check()){
-                    Auth::login($authUser);
+                        //...
+                        if (!Auth::check()) {
+                            Auth::login($authUser);
+                        }
+                        $this->alert('success', 'Booking done successfully');
+                        return redirect()->route('user.dashboard');
+                    }
                 }
-                
-                $this->flash('success', 'Booking done successfully');
-                return redirect()->route('client.dashboard');
             }
+        } catch (\Stripe\Exception\CardException $e) {
+            // Since it's a decline, \Stripe\Exception\CardException will be caught
+            $this->alert('error', $e->getHttpStatus());
+            $this->alert('error', $e->getError()->type);
+            $this->alert('error', $e->getError()->code);
+            $this->alert('error', $e->getError()->param);
+            $this->alert('error', $e->getError()->message);
         }
     }
 

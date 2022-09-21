@@ -117,7 +117,7 @@
 
                         </div>
                     </div>
-                 
+
                     <div class="col-xl-7 col-lg-7 col-md-12 col-sm-12">
                         <div class="white-shadow-scnd-box booking-info_profile">
                             <div class="booking-info_profile-flex">
@@ -133,14 +133,14 @@
                                         <div class="col-md-8">
                                             <label class="booking_type-text">Litigations </label>
                                             @foreach ($litigations as $litigation )
-                                            <p >{{$litigation->name}}</p>
+                                            <p>{{$litigation->name}}</p>
                                             @endforeach
                                         </div>
 
                                         <div class="col-md-4">
                                             <label class="booking_type-text">Contracts</label>
                                             @foreach ($contracts as $contract )
-                                            <p >{{$contract->name}}</p>
+                                            <p>{{$contract->name}}</p>
                                             @endforeach
                                         </div>
 
@@ -154,6 +154,40 @@
 
                             <div class="white-shadow-scnd-box mt-4">
                                 @if($this->lawyer->details->is_consultation_fee == "yes")
+
+
+                                @if(Auth::check())
+                                <h3>Saved Card</h3>
+
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Cared type</th>
+                                            <th>Card number</th>
+                                            <th>Select Card</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($saveCards as $saveCard)
+                                        <a href="#">
+                                            <tr>
+                                                <td>{{$loop->iteration}}</td>
+                                                <td>{{$saveCard->card_type}}</td>
+                                                <td>xxxx xxxx xxxx {{$saveCard->card_number}}</td>
+                                                <td> <input type="radio" id="huey" name="drone" value="huey" ></td>
+                                            </tr>
+                                        </a>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+
+
+
+
+                                @endif
+
                                 <div class="form-heading">
                                     <h5 class="h5-design">Payment Details</h5>
                                 </div>

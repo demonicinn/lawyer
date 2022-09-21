@@ -172,11 +172,14 @@ class CommonController extends Controller
         if ($authUser->role == 'lawyer') {
             $upcomingConsultations = Booking::where('lawyer_id', $authUser->id)
                 ->where('booking_Date', '>=', date('Y-m-d'))
+                ->where('is_call', 'pending')
                 ->where('reschedule', '0')
                 ->with('user')->latest('id')->get();
         } else {
 
             $upcomingConsultations = Booking::where('user_id', $authUser->id)
+                ->where('booking_Date', '>=', date('Y-m-d'))
+                ->where('is_call', 'pending')
                 ->where('reschedule', '0')
                 ->with('lawyer')->latest('id')->get();
         }
@@ -194,12 +197,14 @@ class CommonController extends Controller
         if ($authUser->role == 'lawyer') {
             $completeConsultations = Booking::where('lawyer_id', $authUser->id)
                 ->where('is_call', 'completed')
+                ->where('is_accepted', '0')
                 ->with('user', 'notes')->latest('id')->get();
             //   dd( $completeConsultations);
         } else {
 
             $completeConsultations = Booking::where('user_id', $authUser->id)
                 ->where('is_call', 'completed')
+                ->where('is_accepted', '0')
                 ->with('lawyer')->latest('id')->get();
         }
         return view('pages.consultations.completed', compact('title', 'completeConsultations'));
@@ -215,13 +220,15 @@ class CommonController extends Controller
 
         if ($authUser->role == 'lawyer') {
             $accptedConsultations = Booking::where('lawyer_id', $authUser->id)
-                ->where('is_call', 'accepted')
+                ->where('is_call', 'completed')
+                ->where('is_accepted', '1')
                 ->with('user', 'notes')->latest('id')->get();
             // dd($accptedConsultations);
         } else {
 
             $accptedConsultations = Booking::where('user_id', $authUser->id)
-                ->where('is_call', 'accepted')
+                ->where('is_call', 'completed')
+                ->where('is_accepted', '1')
                 ->with('lawyer', 'notes')->latest('id')->get();
         }
         return view('pages.consultations.accepted', compact('title', 'accptedConsultations'));
@@ -260,6 +267,7 @@ class CommonController extends Controller
         $saveNote = new Note;
         $saveNote->note = $request->note;
         $saveNote->booking_id = $id;
+        $saveNote->user_id = auth()->user()->id;
         $saveNote->save();
         session()->flash('success', 'Note added successfully');
         return back();
@@ -280,16 +288,19 @@ class CommonController extends Controller
     {
         $acceptCase = Booking::where('id', $id)->first();
 
-        $acceptCase->is_call = "accepted";
+        $acceptCase->is_call = "completed";
+        $acceptCase->is_accepted ='1';
         $acceptCase->update();
 
         //send mail to user 
 
         $status = 'accepted';
 
+        // send mail to user
         Notification::route('mail', $acceptCase->user_email)->notify(new UserMailForCaseStatus($acceptCase, $status));
 
-        Notification::route('mail', $acceptCase->user_email)->notify(new LawyerMailForCaseStatus($acceptCase, $status));
+          // send mail to lawyer
+        Notification::route('mail', auth()->user()->email)->notify(new LawyerMailForCaseStatus($acceptCase, $status));
 
         session()->flash('success', 'Case accepted successfully');
         return back();
@@ -298,7 +309,8 @@ class CommonController extends Controller
     public function declineCase($id)
     {
         $declineCase = Booking::where('id', $id)->first();
-        $declineCase->is_call = "canceled";
+        $declineCase->is_call = "completed";
+        $declineCase->is_accepted ='2';
         $declineCase->update();
 
 
