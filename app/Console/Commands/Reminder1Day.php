@@ -49,7 +49,7 @@ class Reminder1Day extends Command
             try{
                 
                 $lawyer = $booking->lawyer;
-                $url = '/'
+                $url = '/';
 
                 Notification::route('mail', $lawyer->email)
                     ->notify(new Reminder1DayNotification($lawyer, $url));

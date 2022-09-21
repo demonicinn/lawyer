@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<section class="body-banner min-height-100vh">
+<section class="lawyer_conultation-wrapper-sec">
     <div class="container">
         <div class="heading-paragraph-design text-center position-relative go-back-wrap mb-5">
             <h2>{{ @$title['title'] }}</h2>
@@ -64,7 +64,7 @@
                                                         @endif
                                                     </div>
 
-                                                    @if (!Auth::user()->role=="user")
+                                                    @if (Auth::user()->role == "lawyer")
                                                     <a class="edit-icons toggle_note-btn" href="#"><i class="fas fa-pen"></i></a>
 
                                                     <div class="note-box">
@@ -93,7 +93,6 @@
                                                         </div>
                                                     </div>
                                                     @endif
-
                                                 </td>
                                                 <td>
                                                     <form method="post" action="{{route('accept.case',$complete->id)}}">

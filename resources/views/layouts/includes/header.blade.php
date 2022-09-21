@@ -36,7 +36,7 @@ $user = auth()->user();
 
             <li><a class="dropdown-item" href="{{ route('lawyer.leave') }}">Leave</a></li>
             @else
-            <li><a class="dropdown-item" href="{{ route('client.dashboard') }}">Dashboard</a></li>
+            <li><a class="dropdown-item" href="{{ route('user.dashboard') }}">Dashboard</a></li>
             <li><a class="dropdown-item" href="#">My profile</a></li>
 
             @endif

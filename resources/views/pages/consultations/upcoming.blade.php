@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<section class="body-banner min-height-100vh">
+<section class="lawyer_conultation-wrapper-sec">
     <div class="container">
         <div class="heading-paragraph-design text-center position-relative go-back-wrap mb-5">
             <h2>{{ @$title['title'] }}</h2>
@@ -64,7 +64,7 @@
                                                             <span class="info_icns"><i class="fa-solid fa-circle-info"></i></span>
                                                             <p>Resheduling consultation will hurt your ratings</p>
                                                             <div class="d-flex">
-                                                                <a href="{{route('client.reschedule.booking',$upcoming->id)}}" class="accept_btn showModal">Confirm</a>
+                                                                <a href="{{route('user.reschedule.booking',$upcoming->id)}}" class="accept_btn showModal">Confirm</a>
 
                                                                 <a class="cancel_dropdown-btn cancel_btn">Cancel</a>
                                                             </div>
