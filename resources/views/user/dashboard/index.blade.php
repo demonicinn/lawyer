@@ -5,8 +5,6 @@
         <div class="heading-paragraph-design text-center position-relative mb-5">
             <h2>{{ @$title['title'] }}</h2>
         </div>
-
-
         <div class="portal-page-wrapper">
             <div class="row">
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
@@ -78,7 +76,7 @@
                             <img src="{{ asset('assets/images/saved-lawyers.svg') }}">
                         </div>
                         <div class="portal-cntnt-wrapper">
-                            <a href="#">Saved Lawyers</a>
+                            <a href="{{route('user.saved.lawyer')}}">Saved Lawyers</a>
                             <p>Favorited Lawyers for Services</p>
                         </div>
                         <div class="dropdown">

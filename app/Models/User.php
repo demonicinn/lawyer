@@ -100,6 +100,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserCard::class, 'user_id', 'id');
     }
-  
+    public function savedLawyer()
+    {
+        return $this->hasOne(SavedLawyer::class,'lawyer_id', 'id');
+    }
 
 }

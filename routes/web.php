@@ -289,5 +289,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/profile', [User\ProfileController::class, 'index'])->name('user.profile');
         Route::post('/profile/update', [User\ProfileController::class, 'update'])->name('user.profile.update');
         Route::post('/profile/submit', [User\ProfileController::class, 'submit'])->name('user.profile.submit');
+
+        //...saved lawyer
+        Route::get('/saved/lawyer', [User\DashboardController::class, 'savedLawyer'])->name('user.saved.lawyer');
+        Route::get('/save/lawyer/{id}', [PagesController::class, 'saveLaywer'])->name('user.save.lawyer');
+        
     });
 });

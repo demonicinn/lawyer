@@ -55,9 +55,22 @@
                             </div>
                             <div class="lawyer_profile-description">
                                 {!! @$user->details->bio !!}
+
+                                @if (Auth::check())
+
+                               
+                                @if ( !empty($user->savedLawyer) && $user->savedLawyer->user_id==Auth::user()->id)
                                 <div class="save_btn text-center">
-                                    <button class="btn-design-first">Save Attorney</button>
+                                    <a href="#" class="btn-design-first" title="Already Saved">Saved Attorney</a>
                                 </div>
+                                @else
+                                <div class="save_btn text-center">
+                                    <a href="{{route('user.save.lawyer',$lawyerID)}}" class="btn-design-first">Save Attorney</a>
+                                </div>
+                                @endif
+
+                                @endif
+
                             </div>
                         </div>
                     </div>
