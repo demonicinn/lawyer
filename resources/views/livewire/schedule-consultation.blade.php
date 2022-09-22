@@ -60,8 +60,8 @@
                 },
 
                 onDateSelect: function(date, events) {
-                
-                  
+
+
                     var dateF = new Date(date);
                     let newDate = (dateF.getMonth() + 1) + '/' + dateF.getDate() + '/' + dateF.getFullYear();
 
@@ -80,6 +80,17 @@
         $(document).ready(function() {
             window.livewire.on('loginFormClose', () => {
                 $('#loginForm').modal('hide');
+            });
+
+        });
+
+
+        $(document).ready(function() {
+            window.livewire.on('unCheckRadiobtn', () => {
+
+                $('.checkedbtn').prop('checked', false);
+                @this.set('paymentDetails', true);
+               
             });
 
         });

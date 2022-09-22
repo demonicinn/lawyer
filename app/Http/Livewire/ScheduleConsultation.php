@@ -34,7 +34,9 @@ class ScheduleConsultation extends Component
 
     public $currentTab = 'tab1';
 
-    public $lawyerID, $lawyer,$saveCards;
+    public $paymentDetails = true;
+
+    public $lawyerID, $lawyer, $saveCards;
     public $month, $year;
     public $todayDate;
 
@@ -57,6 +59,8 @@ class ScheduleConsultation extends Component
     public $first_name, $last_name, $phone, $password,
         $password_confirmation, $email, $card_name, $card_number,
         $expire_month, $expire_year, $cvv, $upassword, $uemail;
+
+    public $cardId;
 
 
     public function rules()
@@ -126,7 +130,6 @@ class ScheduleConsultation extends Component
 
         if ($this->authUser) {
             $this->saveCards = UserCard::where('user_id', $this->authUser->id)->get();
-           
         }
 
 
@@ -284,7 +287,9 @@ class ScheduleConsultation extends Component
     public function saveUserInfoAndBooking()
     {
 
-        $this->validate();
+        if ($this->cardId == null) {
+            $this->validate();
+        }
 
         \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
         $selectDate = Carbon::parse($this->selectDate);
@@ -302,19 +307,22 @@ class ScheduleConsultation extends Component
             $zoom_password = $a['data']['password'];
             $zoom_start_url = $a['data']['start_url'];
 
-            $token = \Stripe\Token::create([
-                "card" => array(
-                    "name" => $this->card_name,
-                    "number" => $this->card_number,
-                    "exp_month" => $this->expire_month,
-                    "exp_year" => $this->expire_year,
-                    "cvc" => $this->cvv
-                ),
-            ]);
+            if ($this->cardId == null) {
+                $token = \Stripe\Token::create([
+                    "card" => array(
+                        "name" => $this->card_name,
+                        "number" => $this->card_number,
+                        "exp_month" => $this->expire_month,
+                        "exp_year" => $this->expire_year,
+                        "cvc" => $this->cvv
+                    ),
+                ]);
+            }
+
             //  dd($token->card,$token->card->brand);
 
             $authUser = '';
-            if (Auth::check() && $token) {
+            if (Auth::check() ) {
                 $authUser = auth()->user();
             } else {
                 $createUser = new User;
@@ -332,25 +340,31 @@ class ScheduleConsultation extends Component
 
             $saveCardId = null;
 
-            if ($this->lawyer->details->is_consultation_fee == "yes" && $token ) {
+            if ($this->lawyer->details->is_consultation_fee == "yes") {
 
-                $customer = \Stripe\Customer::create([
-                    'source' => $token['id'],
-                    'email' => @$authUser->email,
-                    'description' => 'My name is ' . @$authUser->name,
-                ]);
+                if ($this->cardId == null) {
+                    $customer = \Stripe\Customer::create([
+                        'source' => $token['id'],
+                        'email' => @$authUser->email,
+                        'description' => 'My name is ' . @$authUser->name,
+                    ]);
 
 
-                $customer_id = $customer['id'];
-                //save customer id in card table
-                $saveCard = new UserCard;
-                $saveCard->user_id = $authUser->id;
-                $saveCard->customer_id = $customer_id;
-                $saveCard->card_type=$token->card->brand;
-                $saveCard->card_number=$token->card->last4;
-                $saveCard->save();
+                    $customer_id = $customer['id'];
+                    //save customer id in card table
+                    $saveCard = new UserCard;
+                    $saveCard->user_id = $authUser->id;
+                    $saveCard->customer_id = $customer_id;
+                    $saveCard->card_type = $token->card->brand;
+                    $saveCard->card_number = $token->card->last4;
+                    $saveCard->save();
+                    $saveCardId = $saveCard->id;
+                }else{
+                    $saveCardId = $this->cardId;
+                }
 
-                $saveCardId = $saveCard->id;
+
+               
 
                 if (@$a) {
                     $booking = new Booking;
@@ -387,7 +401,7 @@ class ScheduleConsultation extends Component
                         if (!Auth::check()) {
                             Auth::login($authUser);
                         }
-                        $this->alert('success', 'Booking done successfully');
+                        $this->flash('success', 'Booking done successfully');
                         return redirect()->route('user.dashboard');
                     }
                 }
@@ -460,5 +474,19 @@ class ScheduleConsultation extends Component
             $this->slotAvailability();
         }
         return view('livewire.schedule-consultation');
+    }
+
+    public function savedCard($id)
+    {
+
+        $this->cardId = $id;
+
+        $this->paymentDetails = false;
+    }
+
+    public function unCheck()
+    {
+        $this->cardId = null;
+        $this->emit('unCheckRadiobtn');
     }
 }

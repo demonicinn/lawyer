@@ -11,7 +11,7 @@ use App\Http\Controllers\User;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\ScheduleConsultationController;
 use App\Http\Controllers\ZoomController;
-use App\Http\Livewire\RescheduleBooking;
+
 
 
 
@@ -282,7 +282,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::group(['prefix' => 'user', 'middleware' => ['role:user']], function () {
 
         //...dashboard
-        Route::get('/', [Admin\DashboardController::class, 'index'])->name('user.dashboard');
+        Route::get('/', [User\DashboardController::class, 'index'])->name('user.dashboard');
         Route::get('/reschedule/booking/{id}', [User\DashboardController::class, 'reschedule'])->name('user.reschedule.booking');
+
+        //...profile
+        Route::get('/profile', [User\ProfileController::class, 'index'])->name('user.profile');
+        Route::post('/profile/update', [User\ProfileController::class, 'update'])->name('user.profile.update');
+        Route::post('/profile/submit', [User\ProfileController::class, 'submit'])->name('user.profile.submit');
+
+        //...saved lawyer
+        Route::get('/saved/lawyer', [User\DashboardController::class, 'savedLawyer'])->name('user.saved.lawyer');
+        Route::get('/save/lawyer/{id}', [PagesController::class, 'saveLaywer'])->name('user.save.lawyer');
+        
     });
 });

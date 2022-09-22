@@ -35,4 +35,9 @@ class Booking extends Model
     {
         return $this->hasOne(Note::class);
     }
+
+    public function cardDetails()
+    {
+        return $this->belongsTo(UserCard::class, 'user_cards_id', 'id');
+    }
 }

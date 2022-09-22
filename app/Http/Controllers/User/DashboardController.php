@@ -32,4 +32,15 @@ class DashboardController extends Controller
 
         return view('user.reschedule', compact('bookingId'));
     }
+
+
+    public function savedLawyer(){
+       
+        $title = array(
+            'title' => 'Saved Lawyers',
+            'active' => 'savedlawyer',
+        );
+        
+        return view('user.saved-lawyer', compact('title'));
+    }
 }

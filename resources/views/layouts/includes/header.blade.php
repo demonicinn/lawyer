@@ -24,28 +24,19 @@ $user = auth()->user();
             <span class="user-icon"><img class="header-pic" src="{{ $user->profile_pic}}"></span>
           </button>
           <ul class="dropdown-menu">
-
-
-
             @if(Auth::user()->role=="admin")
             <li><a class="dropdown-item" href="{{ route($user->role) }}">Dashboard</a></li>
             <li><a class="dropdown-item" href="{{ route('admin.profile') }}">My profile</a></li>
             @elseif(Auth::user()->role=="lawyer")
             <li><a class="dropdown-item" href="{{ route($user->role) }}">Dashboard</a></li>
             <li><a class="dropdown-item" href="{{ route('lawyer.profile') }}">My profile</a></li>
-
             <li><a class="dropdown-item" href="{{ route('lawyer.leave') }}">Leave</a></li>
             @else
             <li><a class="dropdown-item" href="{{ route('user.dashboard') }}">Dashboard</a></li>
-            <li><a class="dropdown-item" href="#">My profile</a></li>
-
+            <li><a class="dropdown-item" href="{{ route('user.profile') }}">My profile</a></li>
             @endif
             <li><a class="dropdown-item" href="{{ route('consultations.upcoming') }}">Consultations</a></li>
-
-
-
             <li><a class="dropdown-item" href="{{route('change.password')}}">Change password</a></li>
-
             <li>
               <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
               <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

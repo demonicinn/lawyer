@@ -18,10 +18,15 @@ use App\Notifications\LawyerMailForCaseStatus;
 use App\Notifications\MailToAdminForLawyerStatus;
 use App\Notifications\UserMailForCaseStatus;
 use Session;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Stripe\Charge;
 
+\Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
 
 class CommonController extends Controller
 {
+    use LivewireAlert;
+
     public function updatePasssword(Request $request)
     {
         $request->validate([
@@ -36,14 +41,16 @@ class CommonController extends Controller
             if (!Hash::check($request->newpassword, auth()->user()->password)) {
                 $user->password = Hash::make($request->password);
                 $user->save();
-                session()->flash('success', 'password updated successfully');
+                $this->flash('success', 'password updated successfully');
+
                 return back();
             } else {
-                session()->flash('error', 'new password can not be the old password!');
+                $this->flash('error', 'new password can not be the old password!');;
                 return back();
             }
         } else {
-            session()->flash('success', 'old password doesnt matched ');
+            $this->flash('success', 'old password doesnt matched ');
+
             return back();
         }
     }
@@ -74,7 +81,7 @@ class CommonController extends Controller
         $contact->save();
 
         Notification::route('mail', env('MAIL_FROM_ADDRESS'))->notify(new SupportNotification($contact));
-        session()->flash('success', 'Support added successfully');
+        $this->flash('success', 'Support added successfully');
         return back();
     }
 
@@ -114,7 +121,7 @@ class CommonController extends Controller
         //...send mail
 
         Notification::route('mail', $user->email)->notify(new ResponseToLawyerRequest($user, $action));
-        session()->flash('success', 'Lawyer block successfully');
+        $this->flash('success', 'Lawyer block successfully');
         return back();
     }
 
@@ -128,7 +135,7 @@ class CommonController extends Controller
         //...send mail
 
         Notification::route('mail', $user->email)->notify(new ResponseToLawyerRequest($user, $action));
-        session()->flash('success', 'Lawyer de-active  successfully');
+        $this->flash('success', 'Lawyer de-active  successfully');
         return back();
     }
 
@@ -142,7 +149,7 @@ class CommonController extends Controller
         //...send mail
 
         Notification::route('mail', $user->email)->notify(new ResponseToLawyerRequest($user, $action));
-        session()->flash('success', 'Lawyer accept successfully');
+        $this->flash('success', 'Lawyer accept successfully');
         return back();
     }
     public function declinedLawyer(Request $request, $id)
@@ -156,7 +163,7 @@ class CommonController extends Controller
         //...send mail
 
         Notification::route('mail', $user->email)->notify(new ResponseToLawyerRequest($user, $action));
-        session()->flash('success', 'Lawyer declined successfully');
+        $this->flash('success', 'Lawyer declined successfully');
         return back();
     }
 
@@ -254,7 +261,7 @@ class CommonController extends Controller
                 $userInfo = $booking->user;
                 Notification::route('mail', $userInfo->email)->notify(new RescheduleMail($booking, $userInfo));
             }
-            session()->flash('success', 'Reschedule done successfully');
+            $this->flash('success', 'Reschedule done successfully');
             return back();
         }
     }
@@ -269,7 +276,7 @@ class CommonController extends Controller
         $saveNote->booking_id = $id;
         $saveNote->user_id = auth()->user()->id;
         $saveNote->save();
-        session()->flash('success', 'Note added successfully');
+        $this->flash('success', 'Note added successfully');
         return back();
     }
 
@@ -279,48 +286,67 @@ class CommonController extends Controller
         $updateNote = Note::where('id', $id)->first();
         $updateNote->note = $request->note;
         $updateNote->update();
-        session()->flash('success', 'Note updated successfully');
+        $this->flash('success', 'Note updated successfully');
         return back();
     }
 
 
     public function acceptCase($id)
     {
-        $acceptCase = Booking::where('id', $id)->first();
-
+        $acceptCase = Booking::where('id', $id)->with('cardDetails')->first();
         $acceptCase->is_call = "completed";
-        $acceptCase->is_accepted ='1';
+        $acceptCase->is_accepted = '1';
         $acceptCase->update();
 
-        //send mail to user 
+        // dd($acceptCase->cardDetails->customer_id);
+        if ($acceptCase) {
+            try {
 
-        $status = 'accepted';
+                $charge = Charge::create(array(
+                    'customer' => $acceptCase->cardDetails->customer_id,
+                    'amount'   =>  $acceptCase->price * 100,
+                    "description" => "Test payment",
+                    'currency' => 'usd'
+                ));
+                //send mail to user 
 
-        // send mail to user
-        Notification::route('mail', $acceptCase->user_email)->notify(new UserMailForCaseStatus($acceptCase, $status));
-
-          // send mail to lawyer
-        Notification::route('mail', auth()->user()->email)->notify(new LawyerMailForCaseStatus($acceptCase, $status));
-
-        session()->flash('success', 'Case accepted successfully');
-        return back();
+                if ($charge) {
+                    $status = 'accepted';
+                    // send mail to user
+                    Notification::route('mail', $acceptCase->user_email)->notify(new UserMailForCaseStatus($acceptCase, $status));
+                    // send mail to lawyer
+                    Notification::route('mail', auth()->user()->email)->notify(new LawyerMailForCaseStatus($acceptCase, $status));
+                    $this->flash('success', 'Case accepted successfully');
+                } else {
+                    $this->flash('error', 'Something went wrong');
+                }
+                return back();
+            } catch (\Stripe\Exception\CardException $e) {
+                // Since it's a decline, \Stripe\Exception\CardException will be caught
+                $this->alert('error', $e->getHttpStatus());
+                $this->alert('error', $e->getError()->type);
+                $this->alert('error', $e->getError()->code);
+                $this->alert('error', $e->getError()->param);
+                $this->alert('error', $e->getError()->message);
+            }
+        }
     }
 
     public function declineCase($id)
     {
         $declineCase = Booking::where('id', $id)->first();
         $declineCase->is_call = "completed";
-        $declineCase->is_accepted ='2';
+        $declineCase->is_accepted = '2';
         $declineCase->update();
 
-
-        $status = 'declined';
-
-        Notification::route('mail', $declineCase->user_email)->notify(new UserMailForCaseStatus($declineCase, $status));
-
-        Notification::route('mail', $declineCase->user_email)->notify(new LawyerMailForCaseStatus($declineCase, $status));
-
-        session()->flash('success', 'Case declined successfully');
+        if ($declineCase) {
+            $status = 'declined';
+            Notification::route('mail', $declineCase->user_email)->notify(new UserMailForCaseStatus($declineCase, $status));
+            Notification::route('mail', $declineCase->user_email)->notify(new LawyerMailForCaseStatus($declineCase, $status));
+            $this->flash('success', 'Case declined successfully');
+        } else {
+            $this->flash('error', 'Something went wrong');
+        }
         return back();
     }
 }

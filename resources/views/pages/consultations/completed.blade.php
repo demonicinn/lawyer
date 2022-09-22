@@ -37,7 +37,10 @@
                                                 <th>Practice Area</th>
                                                 <th>Date</th>
                                                 <th>Details</th>
+                                                @if (Auth::user()->role == "lawyer")
                                                 <th>Action</th>
+                                                @endif
+                                               
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -94,6 +97,8 @@
                                                     </div>
                                                     @endif
                                                 </td>
+
+                                                @if (Auth::user()->role == "lawyer")
                                                 <td>
                                                     <form method="post" action="{{route('accept.case',$complete->id)}}">
                                                         @csrf
@@ -104,10 +109,9 @@
                                                         @csrf
                                                         <button type="submit" class="decline-btn">Decline</button>
                                                     </form>
-
-
-
                                                 </td>
+                                                @endif
+
                                             </tr>
                                             @empty
 
