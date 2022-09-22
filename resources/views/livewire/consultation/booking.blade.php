@@ -162,10 +162,10 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
+                                            <th>Select Card</th>
                                             <th>Cared type</th>
                                             <th>Card number</th>
-                                            <th>Select Card</th>
+
 
                                         </tr>
                                     </thead>
@@ -173,21 +173,23 @@
                                         @foreach ($saveCards as $saveCard)
                                         <a href="#">
                                             <tr>
-                                                <td>{{$loop->iteration}}</td>
+                                                <td> <input type="radio" wire:click="savedCard({{$saveCard->id}})" name="cardId" class="checkedbtn"></td>
                                                 <td>{{$saveCard->card_type}}</td>
                                                 <td>xxxx xxxx xxxx {{$saveCard->card_number}}</td>
-                                                <td> <input type="radio" id="huey" name="drone" value="huey" ></td>
+
                                             </tr>
                                         </a>
                                         @endforeach
                                     </tbody>
                                 </table>
 
+                                <a class="btn btn-primary uncleck" wire:click="unCheck">UnCheck</a>
 
-
-
+                                @if ($paymentDetails)
+                                <h4>Or</h4>
                                 @endif
-
+                                @endif
+                                @if ($paymentDetails)
                                 <div class="form-heading">
                                     <h5 class="h5-design">Payment Details</h5>
                                 </div>
@@ -230,6 +232,7 @@
                                         {!! $errors->first('cvv', '<span class="help-block">:message</span>') !!}
                                     </div>
                                 </div>
+                                @endif
 
                                 @else
                                 <h4>Free Consultation</h4>
@@ -248,12 +251,8 @@
                                 <i class="fa fa-spin fa-spinner"></i>
                             </button>
                         </div>
-
-
                     </div>
             </form>
         </div>
     </div>
-
-
 </section>
