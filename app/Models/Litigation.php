@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Litigation extends Model
 {
     use HasFactory;
+
+    
 }

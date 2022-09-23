@@ -86,8 +86,9 @@ $lawyer_details = $user->lawyerInfo;
                                     <div class="location_profile-divs">
                                         <address><i class="fa-solid fa-location-dot"></i> {{ @$user->details->city }}, {{ @$user->details->states->code }}</address>
                                     </div>
+                                    @php $lawyerID= Crypt::encrypt($user->id); @endphp
                                     <div class="schedular_consultation">
-                                        <a href="{{route('schedule.consultation',$user->id)}}" class="schule_consultation-btn">Schedule Consultation</a>
+                                        <a href="{{route('schedule.consultation',$lawyerID)}}" class="schule_consultation-btn">Schedule Consultation</a>
                                     </div>
                                 </div>
                             </div>
@@ -258,6 +259,11 @@ $lawyer_details = $user->lawyerInfo;
 
                         <h4>Profile not updated by lawyer</h4>
                         @endif
+                    </div>
+                    <div class="col-md-12 col-sm-12 mt-3">
+                    <div class="white-shadow-third-box">
+                        <h1>gelllooooo</h1>
+                    </div>
                     </div>
                 </div>
             </form>

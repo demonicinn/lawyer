@@ -7,11 +7,14 @@ use Jantinnerezo\LivewireAlert\LivewireAlert;
 use App\Models\User;
 use App\Notifications\MailToLawyerForStatus;
 use Illuminate\Support\Facades\Notification;
+use Livewire\WithPagination;
 
 class Lawyers extends Component
 {
     use LivewireAlert;
 
+    use WithPagination;
+    
     public $lawyers = [];
     public $lawyerId;
     public $action;

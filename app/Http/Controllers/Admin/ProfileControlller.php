@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Session;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class ProfileControlller extends Controller
 {
-
+    use LivewireAlert;
     public function index()
     {
 
@@ -61,8 +62,8 @@ class ProfileControlller extends Controller
         $user->contact_number = $request->contact_number;
         $user->save();
 
-        Session::flash('success', 'Profile updated successfully');
-
+      
+        $this->flash('success', 'Profile updated successfully');
         return redirect()->back();
     }
 }
