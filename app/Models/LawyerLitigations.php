@@ -14,4 +14,11 @@ class LawyerLitigations extends Model
         return $this->hasOne(Litigation::class, 'id', 'litigations_id');
     }
 
+
+    public function litigation()
+    {
+        return $this->belongsTo(Litigation::class, 'litigations_id', 'id');
+    }
+
+
 }

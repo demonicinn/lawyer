@@ -95,18 +95,30 @@ class CommonController extends Controller
 
         $user = User::where('id', $id)->with('details', function ($query) {
             $query->with('states');
-        })->with('lawyerInfo', function ($query1) {
-            $query1->with('categories', 'items');
-        })->with('lawyerLitigations', function ($query2) {
-            $query2->with('litigations');
-        })->with('lawyerContracts', function ($query3) {
-            $query3->with('contracts');
+        })->with('lawyerInfo', function ($query) {
+            $query->with('categories', 'items');
+        })->with('lawyerLitigations', function ($query) {
+            $query->with('litigations');
+        })->with('lawyerContracts', function ($query) {
+            $query->with('contracts');
         })->first();
 
         // dd($user );
         $categories = Category::with('items')->get();
 
+
+
         return view('admin.lawyers.view-details', compact('title', 'user', 'categories'));
+    }
+
+    public function viewUserDetails($id)
+    {
+        $title = array(
+            'title' => 'View Client Details',
+            'active' => 'client',
+        );
+        $user = User::where('id', $id)->first();
+        return view('admin.users.view-details', compact('title', 'user'));
     }
 
 

@@ -48,11 +48,11 @@
                             @error('contact_number')<div class="help-block">{{ $message }}</div>@enderror
                         </div>
 
-                        <div class="form-grouph input-design">
+                        <!-- <div class="form-grouph input-design">
                             <a href="{{route('change.password')}}">
                                 Click to change password
                             </a>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="row mt-3">

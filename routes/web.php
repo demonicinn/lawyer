@@ -15,6 +15,7 @@ use App\Http\Controllers\ZoomController;
 
 
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -156,14 +157,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/profile', [Admin\ProfileControlller::class, 'index'])->name('admin.profile');
         Route::post('/profile/update', [Admin\ProfileControlller::class, 'update'])->name('admin.profile.update');
 
-
-
         //...common view details
 
         Route::get('/laywer/view/{id}', [CommonController::class, 'viewlawyerDetails'])->name('admin.laywer.view');
-
-
-
 
         //...update lawyer status
 
@@ -176,6 +172,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/declined/lawyer/{id}', [CommonController::class, 'declinedLawyer'])->name('admin.declined.lawyer');
 
 
+        //...users
+        Route::get('/user/view/{id}', [CommonController::class, 'viewUserDetails'])->name('admin.user.view');
 
         //...lawyers
         Route::get('/lawyers', function () {
@@ -183,8 +181,21 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 'title' => 'Lawyers',
                 'active' => 'lawyers',
             );
+
             return view('admin.lawyers.index', compact('title'));
         })->name('admin.lawyers.index');
+
+        //...clients
+
+        Route::get('/users', function () {
+            $title = array(
+                'title' => 'Clients',
+                'active' => 'clients',
+            );
+            return view('admin.users.index', compact('title'));
+        })->name('admin.users.index');
+
+
 
         //...Litigations
         Route::get('/litigations', function () {
@@ -293,6 +304,5 @@ Route::middleware(['auth', 'verified'])->group(function () {
         //...saved lawyer
         Route::get('/saved/lawyer', [User\DashboardController::class, 'savedLawyer'])->name('user.saved.lawyer');
         Route::get('/save/lawyer/{id}', [PagesController::class, 'saveLaywer'])->name('user.save.lawyer');
-        
     });
 });

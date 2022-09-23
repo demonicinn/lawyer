@@ -132,8 +132,6 @@ class ScheduleConsultation extends Component
             $this->saveCards = UserCard::where('user_id', $this->authUser->id)->get();
         }
 
-
-
         $lawyerLitigations = LawyerLitigations::where('users_id', $this->lawyerID)->with('litigations')->get();
         $litigations_id = [];
         foreach ($lawyerLitigations as $litigatinsId) {
@@ -322,7 +320,7 @@ class ScheduleConsultation extends Component
             //  dd($token->card,$token->card->brand);
 
             $authUser = '';
-            if (Auth::check() ) {
+            if (Auth::check()) {
                 $authUser = auth()->user();
             } else {
                 $createUser = new User;
@@ -359,12 +357,12 @@ class ScheduleConsultation extends Component
                     $saveCard->card_number = $token->card->last4;
                     $saveCard->save();
                     $saveCardId = $saveCard->id;
-                }else{
+                } else {
                     $saveCardId = $this->cardId;
                 }
 
 
-               
+
 
                 if (@$a) {
                     $booking = new Booking;
