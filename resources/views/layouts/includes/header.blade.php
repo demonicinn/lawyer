@@ -35,7 +35,9 @@ $user = auth()->user();
             <li><a class="dropdown-item" href="{{ route('user.dashboard') }}">Dashboard</a></li>
             <li><a class="dropdown-item" href="{{ route('user.profile') }}">My profile</a></li>
             @endif
+            @if (Auth::user()->role=="user" || Auth::user()->role=="lawyer")
             <li><a class="dropdown-item" href="{{ route('consultations.upcoming') }}">Consultations</a></li>
+            @endif
             <li><a class="dropdown-item" href="{{route('change.password')}}">Change password</a></li>
             <li>
               <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
@@ -43,6 +45,8 @@ $user = auth()->user();
                 @csrf
               </form>
             </li>
+
+
           </ul>
         </div>
         @endguest

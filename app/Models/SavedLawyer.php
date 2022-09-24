@@ -9,8 +9,8 @@ class SavedLawyer extends Model
 {
     use HasFactory;
 
-    // public function lawyer(){
-        
-    // }
-
+    public function lawyer()
+    {
+        return $this->belongsTo(User::class, 'lawyer_id', 'id');
+    }
 }
