@@ -287,9 +287,9 @@ class ScheduleConsultation extends Component
     public function saveUserInfoAndBooking()
     {
 
-        if ($this->cardId == null) {
+        //if ($this->cardId == null) {
             $this->validate();
-        }
+        //}
 
         \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
         $selectDate = Carbon::parse($this->selectDate);
@@ -298,16 +298,19 @@ class ScheduleConsultation extends Component
         $nTimeSlot = date('H:i:s', strtotime($this->selectDateTimeSlot));
 
 
-        try {
-            $dateTime = Carbon::parse($ndate);
-            $meeting = new MeetingController;
-            $a = $meeting->store($dateTime);
+        
+        $dateTime = Carbon::parse($ndate);
+        $meeting = new MeetingController;
+        $a = $meeting->store($dateTime);
 
-            $zoom_id = $a['data']['id'];
-            $zoom_password = $a['data']['password'];
-            $zoom_start_url = $a['data']['start_url'];
+        //dd($a);
+        $zoom_id = $a['data']['id'];
+        $zoom_password = $a['data']['password'];
+        $zoom_start_url = $a['data']['start_url'];
 
-            if ($this->cardId == null) {
+        if ($this->lawyer->details->is_consultation_fee == "yes") {
+
+            try {
                 $token = \Stripe\Token::create([
                     "card" => array(
                         "name" => $this->card_name,
@@ -318,102 +321,103 @@ class ScheduleConsultation extends Component
                     ),
                 ]);
             }
-
-            //  dd($token->card,$token->card->brand);
-
-            $authUser = '';
-            if (Auth::check() ) {
-                $authUser = auth()->user();
-            } else {
-                $createUser = new User;
-                $createUser->first_name = $this->first_name;
-                $createUser->last_name = $this->last_name;
-                $createUser->email = $this->email;
-                $createUser->contact_number = $this->phone;
-                $createUser->role = "user";
-                $createUser->password = Hash::make($this->password);
-                $createUser->save();
-
-                $authUser = User::find($createUser->id);
+            catch (\Stripe\Exception\CardException $e) {
+                // Since it's a decline, \Stripe\Exception\CardException will be caught
+                $this->alert('error', $e->getHttpStatus());
+                $this->alert('error', $e->getError()->type);
+                $this->alert('error', $e->getError()->code);
+                $this->alert('error', $e->getError()->param);
+                $this->alert('error', $e->getError()->message);
             }
-
-
-            $saveCardId = null;
-
-            if ($this->lawyer->details->is_consultation_fee == "yes") {
-
-                if ($this->cardId == null) {
-                    $customer = \Stripe\Customer::create([
-                        'source' => $token['id'],
-                        'email' => @$authUser->email,
-                        'description' => 'My name is ' . @$authUser->name,
-                    ]);
-
-
-                    $customer_id = $customer['id'];
-                    //save customer id in card table
-                    $saveCard = new UserCard;
-                    $saveCard->user_id = $authUser->id;
-                    $saveCard->customer_id = $customer_id;
-                    $saveCard->card_type = $token->card->brand;
-                    $saveCard->card_number = $token->card->last4;
-                    $saveCard->save();
-                    $saveCardId = $saveCard->id;
-                }else{
-                    $saveCardId = $this->cardId;
-                }
-
-
-               
-
-                if (@$a) {
-                    $booking = new Booking;
-                    $booking->user_id = $authUser->id;
-                    $booking->lawyer_id = $this->lawyerID;
-                    $booking->user_cards_id = $saveCardId;
-                    $booking->first_name = $this->first_name;
-                    $booking->last_name = $this->last_name;
-                    $booking->user_email = $this->email;
-                    $booking->user_contact = $this->phone;
-                    $booking->booking_date = $date;
-                    $booking->booking_time = $nTimeSlot;
-
-                    if ($this->lawyer->details->is_consultation_fee == "no") {
-                        $booking->appointment_fee = "free";
-                    } else {
-                        $booking->appointment_fee = "paid";
-                        $booking->price = $this->lawyer->details->consultation_fee;
-                    }
-
-                    $booking->zoom_id = @$zoom_id;
-                    $booking->zoom_password = @$zoom_password;
-                    $booking->zoom_start_url = @$zoom_start_url;
-                    $booking->save();
-
-                    if ($booking) {
-
-                        //send notification to User
-                        Notification::route('mail', $this->email)->notify(new BookingMail($booking, $authUser));
-                        //send notification to lawyer
-                        Notification::route('mail', $this->lawyer->email)->notify(new BookingMail($booking, $this->lawyer));
-
-                        //...
-                        if (!Auth::check()) {
-                            Auth::login($authUser);
-                        }
-                        $this->flash('success', 'Booking done successfully');
-                        return redirect()->route('user.dashboard');
-                    }
-                }
-            }
-        } catch (\Stripe\Exception\CardException $e) {
-            // Since it's a decline, \Stripe\Exception\CardException will be caught
-            $this->alert('error', $e->getHttpStatus());
-            $this->alert('error', $e->getError()->type);
-            $this->alert('error', $e->getError()->code);
-            $this->alert('error', $e->getError()->param);
-            $this->alert('error', $e->getError()->message);
         }
+
+        //  dd($token->card,$token->card->brand);
+
+        $authUser = '';
+        if (Auth::check() ) {
+            $authUser = auth()->user();
+        } else {
+            $createUser = new User;
+            $createUser->first_name = $this->first_name;
+            $createUser->last_name = $this->last_name;
+            $createUser->email = $this->email;
+            $createUser->contact_number = $this->phone;
+            $createUser->role = "user";
+            $createUser->password = Hash::make($this->password);
+            $createUser->save();
+
+            $authUser = User::find($createUser->id);
+        }
+
+
+        $saveCardId = null;
+
+        if ($this->lawyer->details->is_consultation_fee == "yes") {
+
+            if ($this->cardId == null) {
+                $customer = \Stripe\Customer::create([
+                    'source' => $token['id'],
+                    'email' => @$authUser->email,
+                    'description' => 'My name is ' . @$authUser->name,
+                ]);
+
+
+                $customer_id = $customer['id'];
+                //save customer id in card table
+                $saveCard = new UserCard;
+                $saveCard->user_id = $authUser->id;
+                $saveCard->customer_id = $customer_id;
+                $saveCard->card_type = $token->card->brand;
+                $saveCard->card_number = $token->card->last4;
+                $saveCard->save();
+                $saveCardId = $saveCard->id;
+            }else{
+                $saveCardId = $this->cardId;
+            }
+        }
+
+           
+
+            if (@$a) {
+                $booking = new Booking;
+                $booking->user_id = $authUser->id;
+                $booking->lawyer_id = $this->lawyerID;
+                $booking->user_cards_id = $saveCardId;
+                $booking->first_name = $this->first_name;
+                $booking->last_name = $this->last_name;
+                $booking->user_email = $this->email;
+                $booking->user_contact = $this->phone;
+                $booking->booking_date = $date;
+                $booking->booking_time = $nTimeSlot;
+
+                if ($this->lawyer->details->is_consultation_fee == "no") {
+                    $booking->appointment_fee = "free";
+                } else {
+                    $booking->appointment_fee = "paid";
+                    $booking->price = $this->lawyer->details->consultation_fee;
+                }
+
+                $booking->zoom_id = @$zoom_id;
+                $booking->zoom_password = @$zoom_password;
+                $booking->zoom_start_url = @$zoom_start_url;
+                $booking->save();
+
+                if ($booking) {
+
+                    //send notification to User
+                    Notification::route('mail', $this->email)->notify(new BookingMail($booking, $authUser));
+                    //send notification to lawyer
+                    Notification::route('mail', $this->lawyer->email)->notify(new BookingMail($booking, $this->lawyer));
+
+                    //...
+                    if (!Auth::check()) {
+                        Auth::login($authUser);
+                    }
+                    $this->flash('success', 'Booking done successfully');
+                    return redirect()->route('user.dashboard');
+                }
+            }
+        
     }
 
     public function login()
