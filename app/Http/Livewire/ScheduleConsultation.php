@@ -368,6 +368,7 @@ class ScheduleConsultation extends Component
                     $saveCard->card_type = $token->card->brand;
                     $saveCard->card_number = $token->card->last4;
                     $saveCard->save();
+                    
                     $saveCardId = $saveCard->id;
                 } else {
                     $saveCardId = $this->cardId;
