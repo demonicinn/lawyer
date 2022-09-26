@@ -49,6 +49,5 @@
             </tbody>
         </table>
     </div>
-
-
+    <div id="pagination-container" class="pagination-container-saved">{{$lawyers->links()}}</div>
 </div>

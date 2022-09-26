@@ -5,15 +5,19 @@ namespace App\Http\Livewire\Admin;
 use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use App\Models\Litigation;
+use Livewire\WithPagination;
+
 
 class Litigations extends Component
 {
     use LivewireAlert;
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
 
-    public $litigations = [];
+    // public $litigations = [];
 
-	public $name;
-	public $status = '1';
+    public $name;
+    public $status = '1';
 
     public $litigationId;
     protected $listeners = ['confirmedAction'];
@@ -26,19 +30,19 @@ class Litigations extends Component
     }
 
     public function rules()
-	{
-		return [
-			'name' => 'required|max:255',
-			'status' => 'required',
-		];
-	}
+    {
+        return [
+            'name' => 'required|max:255',
+            'status' => 'required',
+        ];
+    }
 
     public function store()
     {
         $this->validate();
 
         $store = new Litigation;
-        if($this->litigationId){
+        if ($this->litigationId) {
             $store->id = $this->litigationId;
             $store->exists = true;
         }
@@ -53,7 +57,7 @@ class Litigations extends Component
 
 
     public function edit($id)
-	{
+    {
         $this->resetFields();
         $this->litigationId = $id;
         $data = Litigation::findOrFail($this->litigationId);
@@ -66,23 +70,23 @@ class Litigations extends Component
 
 
     public function delete($id)
-	{
+    {
         $this->litigationId = $id;
 
-		$this->alert('warning', 'Are you sure', [
-			'toast' => false,
-			'position' => 'center',
-			'showCancelButton' => true,
-			'cancelButtonText' => 'Cancel',
-			'showConfirmButton' => true,
-			'confirmButtonText' => 'Yes',
-			'onConfirmed' => 'confirmedAction',
-			'allowOutsideClick' => false,
-			'timer' => null
-		]);
-	}
-	
-	public function confirmedAction()
+        $this->alert('warning', 'Are you sure', [
+            'toast' => false,
+            'position' => 'center',
+            'showCancelButton' => true,
+            'cancelButtonText' => 'Cancel',
+            'showConfirmButton' => true,
+            'confirmButtonText' => 'Yes',
+            'onConfirmed' => 'confirmedAction',
+            'allowOutsideClick' => false,
+            'timer' => null
+        ]);
+    }
+
+    public function confirmedAction()
     {
         $data = Litigation::findOrFail($this->litigationId);
 
@@ -94,7 +98,7 @@ class Litigations extends Component
 
     public function render()
     {
-        $this->litigations = Litigation::all();
-        return view('livewire.admin.litigations');
+        $litigations = Litigation::paginate(10);
+        return view('livewire.admin.litigations',compact('litigations'));
     }
 }

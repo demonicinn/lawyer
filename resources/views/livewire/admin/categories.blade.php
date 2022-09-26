@@ -59,7 +59,7 @@
             </tbody>
         </table>
     </div>
-
+    <div id="pagination-container" class="pagination-container-saved">{{$categories->links()}}</div>
 
 
     <!-- Accept Category Modal Start Here-->

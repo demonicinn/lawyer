@@ -30,7 +30,7 @@
             </tbody>
         </table>
     </div>
-
+    <div id="pagination-container" class="pagination-container-saved">{{$litigations->links()}}</div>
 
 
     <!-- Accept Modal Start Here-->

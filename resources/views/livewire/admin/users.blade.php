@@ -1,4 +1,7 @@
 <div>
+    <div class="form-group">
+        <input type="search" wire:model="search" placeholder="Search">
+    </div>
     <div class="table-responsive table-design">
         <table style="width:100%">
             <thead>
@@ -25,5 +28,7 @@
             </tbody>
         </table>
     </div>
-    <div id="pagination-container" class="pagination-container-saved"></div>
+
+
+    <div id="pagination-container" class="pagination-container-saved">{{$users->links()}}</div>
 </div>

@@ -5,12 +5,16 @@ namespace App\Http\Livewire\Admin;
 use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use App\Models\Contract;
+use Livewire\WithPagination;
 
 class Contracts extends Component
 {
 	use LivewireAlert;
 
-    public $contracts = [];
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
+
+    // public $contracts = [];
 
 	public $name;
 	public $status = '1';
@@ -94,8 +98,8 @@ class Contracts extends Component
 
     public function render()
     {
-        $this->contracts = Contract::all();
+        $contracts = Contract::paginate(10);
 
-        return view('livewire.admin.contracts');
+        return view('livewire.admin.contracts',compact('contracts'));
     }
 }

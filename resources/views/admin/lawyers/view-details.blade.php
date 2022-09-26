@@ -45,10 +45,6 @@ $lawyer_details = $user->lawyerInfo;
                         <a class="btn btn-sm btn-success" onclick="declinedFunction()">Decline</a>
                     </form>
                     @endif
-
-
-
-
                 </div>
             </div>
         </div>
@@ -260,11 +256,9 @@ $lawyer_details = $user->lawyerInfo;
                         <h4>Profile not updated by lawyer</h4>
                         @endif
                     </div>
-                    <div class="col-md-12 col-sm-12 mt-3">
-                    <div class="white-shadow-third-box">
-                        <h1>gelllooooo</h1>
-                    </div>
-                    </div>
+                    
+                    @livewire('admin.consultations', ['lawyerId' => $user->details->users_id])
+
                 </div>
             </form>
         </div>

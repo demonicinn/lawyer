@@ -6,33 +6,6 @@
             <h2>Dashboard</h2>
         </div>
         <div class="dashboard_wrapper">
-            <div class="row">
-                <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12">
-                    <div class="data-white-box position-relative">
-                        <a class="data-content-box" href="{{ route('admin.litigations.index') }}">
-                            <h4>UPCOMING CONSULTATIONS</h4>
-                            <h2 class="number-value">{{$upcomingConsul}}</h2>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12">
-                    <div class="data-white-box position-relative">
-                        <div class="data-content-box">
-                            <h4>COMPLETED CONSULTATIONS</h4>
-                            <h2 class="number-value">{{$completedConsul}}</h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12">
-                    <div class="data-white-box position-relative">
-                        <div class="data-content-box">
-                            <h4>CURRENT <br>CASES</h4>
-                            <h2 class="number-value">{{$acceptedConsul}}</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <div class="row">
                 <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12">
@@ -51,9 +24,6 @@
                         </a>
                     </div>
                 </div>
-            </div>
-
-            <div class="row">
                 <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12">
                     <div class="data-white-box position-relative">
                         <a class="data-content-box" href="{{ route('admin.litigations.index') }}">
@@ -70,6 +40,11 @@
                         </a>
                     </div>
                 </div>
+            </div>
+
+            <div class="row">
+
+
                 <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12">
                     <div class="data-white-box position-relative">
                         <a class="data-content-box" href="{{ route('admin.states.index') }}">
@@ -95,11 +70,6 @@
                         </a>
                     </div>
                 </div>
-
             </div>
-
-
-        </div>
-    </div>
 </section>
 @endsection

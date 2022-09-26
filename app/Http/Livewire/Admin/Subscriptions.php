@@ -5,15 +5,18 @@ namespace App\Http\Livewire\Admin;
 use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use App\Models\Subscription;
+use Livewire\WithPagination;
 
 class Subscriptions extends Component
 {
     use LivewireAlert;
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
 
-    public $subscriptions = [];
+    // public $subscriptions = [];
 
-	public $name, $type, $price, $savings;
-	public $status = '1';
+    public $name, $type, $price, $savings;
+    public $status = '1';
 
     public $subscriptionId;
     protected $listeners = ['confirmedAction'];
@@ -29,32 +32,32 @@ class Subscriptions extends Component
     }
 
     public function rules()
-	{
-		return [
-			'name' => 'required|max:255',
-			'type' => 'required',
-			'price' => 'nullable|numeric',
-			'savings' => 'nullable|numeric',
-			'status' => 'required',
-		];
-	}
+    {
+        return [
+            'name' => 'required|max:255',
+            'type' => 'required',
+            'price' => 'nullable|numeric',
+            'savings' => 'nullable|numeric',
+            'status' => 'required',
+        ];
+    }
 
     public function store()
     {
         $this->validate();
 
         $store = new Subscription;
-        if($this->subscriptionId){
+        if ($this->subscriptionId) {
             $store->id = $this->subscriptionId;
             $store->exists = true;
         }
         $store->name = $this->name;
         $store->type = $this->type;
 
-        if(@$this->price){
+        if (@$this->price) {
             $store->price = $this->price;
         }
-        if(@$this->savings){
+        if (@$this->savings) {
             $store->savings = $this->savings;
         }
 
@@ -68,7 +71,7 @@ class Subscriptions extends Component
 
 
     public function edit($id)
-	{
+    {
         $this->resetFields();
         $this->subscriptionId = $id;
         $data = Subscription::findOrFail($this->subscriptionId);
@@ -84,23 +87,23 @@ class Subscriptions extends Component
 
 
     public function delete($id)
-	{
+    {
         $this->subscriptionId = $id;
 
-		$this->alert('warning', 'Are you sure', [
-			'toast' => false,
-			'position' => 'center',
-			'showCancelButton' => true,
-			'cancelButtonText' => 'Cancel',
-			'showConfirmButton' => true,
-			'confirmButtonText' => 'Yes',
-			'onConfirmed' => 'confirmedAction',
-			'allowOutsideClick' => false,
-			'timer' => null
-		]);		
-	}
-	
-	public function confirmedAction()
+        $this->alert('warning', 'Are you sure', [
+            'toast' => false,
+            'position' => 'center',
+            'showCancelButton' => true,
+            'cancelButtonText' => 'Cancel',
+            'showConfirmButton' => true,
+            'confirmButtonText' => 'Yes',
+            'onConfirmed' => 'confirmedAction',
+            'allowOutsideClick' => false,
+            'timer' => null
+        ]);
+    }
+
+    public function confirmedAction()
     {
         $data = Subscription::findOrFail($this->subscriptionId);
 
@@ -112,7 +115,7 @@ class Subscriptions extends Component
 
     public function render()
     {
-        $this->subscriptions = Subscription::all();
-        return view('livewire.admin.subscriptions');
+        $subscriptions = Subscription::paginate(10);
+        return view('livewire.admin.subscriptions', compact('subscriptions'));
     }
 }

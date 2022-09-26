@@ -69,22 +69,22 @@
                                                                 <a class="cancel_dropdown-btn cancel_btn">Cancel</a>
                                                             </div>
                                                         </div>
-                                                        
-                                                            @else
 
-                                                            <div class="reshedule_wrap-box">
-                                                                <span class="info_icns"><i class="fa-solid fa-circle-info"></i></span>
-                                                                <p>Resheduling consultation will hurt your ratings</p>
-                                                                <div class="d-flex">
-                                                                    <form method="post" action="{{route('reshedule.consultation',$upcoming->id )}}">
-                                                                        @csrf
-                                                                        <button type="submit" class="confirm_dropdown-btn">Confirm</button>
-                                                                    </form>
-                                                                    <a class="cancel_dropdown-btn cancel_btn">Cancel</a>
-                                                                </div>
+                                                        @else
+
+                                                        <div class="reshedule_wrap-box">
+                                                            <span class="info_icns"><i class="fa-solid fa-circle-info"></i></span>
+                                                            <p>Resheduling consultation will hurt your ratings</p>
+                                                            <div class="d-flex">
+                                                                <form method="post" action="{{route('reshedule.consultation',$upcoming->id )}}">
+                                                                    @csrf
+                                                                    <button type="submit" class="confirm_dropdown-btn">Confirm</button>
+                                                                </form>
+                                                                <a class="cancel_dropdown-btn cancel_btn">Cancel</a>
                                                             </div>
+                                                        </div>
 
-                                                            @endif
+                                                        @endif
 
 
 
