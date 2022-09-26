@@ -36,7 +36,7 @@
             </tbody>
         </table>
     </div>
-
+    <div id="pagination-container" class="pagination-container-saved">{{$subscriptions->links()}}</div>
 
 
     <!-- Accept Modal Start Here-->

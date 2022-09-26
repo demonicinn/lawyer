@@ -14,11 +14,12 @@ class Lawyers extends Component
     use LivewireAlert;
 
     use WithPagination;
-    
-    public $lawyers = [];
+
+    // public $lawyers = [];
     public $lawyerId;
     public $action;
     protected $listeners = ['confirmedAction'];
+    protected $paginationTheme = 'bootstrap';
 
     public function review($id, $action)
     {
@@ -66,8 +67,7 @@ class Lawyers extends Component
 
     public function render()
     {
-        $this->lawyers = User::where('role', 'lawyer')->get();
-
-        return view('livewire.admin.lawyers');
+        $lawyers = User::where('role', 'lawyer')->paginate(10);
+        return view('livewire.admin.lawyers', compact('lawyers'));
     }
 }

@@ -12,12 +12,16 @@ class Users extends Component
 {
     use LivewireAlert;
     use WithPagination;
+    protected $paginationTheme = 'bootstrap';
 
-    public $users;
+    public $search = '';
+
+   
 
     public function render()
     {
-        $this->users = User::where('role', 'user')->get();
-        return view('livewire.admin.users');
+        $users = User::where('role', 'user')->paginate(10);
+        return view('livewire.admin.users', compact('users'));
+        
     }
 }

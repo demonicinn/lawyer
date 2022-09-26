@@ -33,7 +33,7 @@
         </table>
     </div>
 
-
+    <div id="pagination-container" class="pagination-container-saved">{{$states->links()}}</div>
 
     <!-- Accept Modal Start Here-->
     <div wire:ignore.self class="modal fade" id="stateForm" tabindex="-1" aria-labelledby="stateForm" aria-hidden="true">

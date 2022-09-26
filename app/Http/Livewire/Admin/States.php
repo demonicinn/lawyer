@@ -5,12 +5,16 @@ namespace App\Http\Livewire\Admin;
 use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use App\Models\State;
+use Livewire\WithPagination;
 
 class States extends Component
 {
     use LivewireAlert;
 
-    public $states = [];
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
+
+    // public $states = [];
 
 	public $name, $code;
 	public $status = '1';
@@ -98,7 +102,7 @@ class States extends Component
 
     public function render()
     {
-        $this->states = State::all();
-        return view('livewire.admin.states');
+        $states = State::paginate(10);
+        return view('livewire.admin.states',\compact('states'));
     }
 }

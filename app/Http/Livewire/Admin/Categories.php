@@ -6,12 +6,17 @@ use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use App\Models\Category;
 use App\Models\Item;
+use Livewire\WithPagination;
 
 class Categories extends Component
 {
+    
     use LivewireAlert;
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
 
-    public $categories = [];
+
+  
     public $items = [];
 
     public $category_name;
@@ -190,8 +195,8 @@ class Categories extends Component
 
     public function render()
     {
-        $this->categories = Category::with('items')->get();
+        $categories = Category::with('items')->paginate(10);
 
-        return view('livewire.admin.categories');
+        return view('livewire.admin.categories',compact('categories'));
     }
 }
