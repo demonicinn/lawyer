@@ -79,7 +79,7 @@
                     </div>
                 </div>
                 @empty
-                <h4>No Saved Lawyers</h4>
+                <h4>No Lawyers Found</h4>
                 @endforelse
             </div>
         </div>
