@@ -17,6 +17,7 @@ use App\Models\Note;
 use App\Notifications\LawyerMailForCaseStatus;
 use App\Notifications\MailToAdminForLawyerStatus;
 use App\Notifications\UserMailForCaseStatus;
+use App\Notifications\CaseAcceptReviewNotification;
 use Session;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Stripe\Charge;
@@ -250,6 +251,8 @@ class CommonController extends Controller
                 ->where('is_accepted', '1')
                 ->with('lawyer', 'notes')->latest('id')->get();
         }
+
+
         return view('pages.consultations.accepted', compact('title', 'accptedConsultations'));
     }
 
@@ -312,35 +315,59 @@ class CommonController extends Controller
 
         // dd($acceptCase->cardDetails->customer_id);
         if ($acceptCase) {
-            try {
+            
+            $status = 'accepted';
+            $authUser = auth()->user();
 
-                $charge = Charge::create(array(
-                    'customer' => $acceptCase->cardDetails->customer_id,
-                    'amount'   =>  $acceptCase->price * 100,
-                    "description" => "Test payment",
-                    'currency' => 'usd'
-                ));
-                //send mail to user 
+            if($acceptCase->appointment_fee=='paid'){
+                try {
 
-                if ($charge) {
-                    $status = 'accepted';
-                    // send mail to user
-                    Notification::route('mail', $acceptCase->user_email)->notify(new UserMailForCaseStatus($acceptCase, $status));
-                    // send mail to lawyer
-                    Notification::route('mail', auth()->user()->email)->notify(new LawyerMailForCaseStatus($acceptCase, $status));
-                    $this->flash('success', 'Case accepted successfully');
-                } else {
-                    $this->flash('error', 'Something went wrong');
+                    $charge = Charge::create(array(
+                        'customer' => $acceptCase->cardDetails->customer_id,
+                        'amount'   =>  $acceptCase->price * 100,
+                        "description" => "Test payment",
+                        'currency' => 'usd'
+                    ));
+                    //send mail to user 
+
+                    if ($charge) {
+
+                        // send mail to user
+                        Notification::route('mail', $acceptCase->user_email)->notify(new UserMailForCaseStatus($acceptCase, $status));
+
+                        Notification::route('mail', $acceptCase->user_email)->notify(new CaseAcceptReviewNotification($acceptCase, $authUser));
+
+                        // send mail to lawyer
+                        Notification::route('mail', $authUser->email)->notify(new LawyerMailForCaseStatus($acceptCase, $status));
+
+
+                        $this->flash('success', 'Case accepted successfully');
+                    } else {
+                        $this->flash('error', 'Something went wrong');
+                    }
+
+                } catch (\Stripe\Exception\CardException $e) {
+                    // Since it's a decline, \Stripe\Exception\CardException will be caught
+                    $this->alert('error', $e->getHttpStatus());
+                    $this->alert('error', $e->getError()->type);
+                    $this->alert('error', $e->getError()->code);
+                    $this->alert('error', $e->getError()->param);
+                    $this->alert('error', $e->getError()->message);
                 }
-                return back();
-            } catch (\Stripe\Exception\CardException $e) {
-                // Since it's a decline, \Stripe\Exception\CardException will be caught
-                $this->alert('error', $e->getHttpStatus());
-                $this->alert('error', $e->getError()->type);
-                $this->alert('error', $e->getError()->code);
-                $this->alert('error', $e->getError()->param);
-                $this->alert('error', $e->getError()->message);
             }
+            else {
+                // send mail to user
+                Notification::route('mail', $acceptCase->user_email)->notify(new UserMailForCaseStatus($acceptCase, $status));
+
+                Notification::route('mail', $acceptCase->user_email)->notify(new CaseAcceptReviewNotification($acceptCase, $authUser));
+
+                // send mail to lawyer
+                Notification::route('mail', $authUser->email)->notify(new LawyerMailForCaseStatus($acceptCase, $status));
+
+            }
+            
+            return back();
+            
         }
     }
 
@@ -353,8 +380,17 @@ class CommonController extends Controller
 
         if ($declineCase) {
             $status = 'declined';
+
+            $authUser = auth()->user();
+
             Notification::route('mail', $declineCase->user_email)->notify(new UserMailForCaseStatus($declineCase, $status));
-            Notification::route('mail', $declineCase->user_email)->notify(new LawyerMailForCaseStatus($declineCase, $status));
+
+            Notification::route('mail', $declineCase->user_email)->notify(new CaseAcceptReviewNotification($declineCase, $authUser));
+
+
+            Notification::route('mail', $authUser->email)->notify(new LawyerMailForCaseStatus($declineCase, $status));
+
+
             $this->flash('success', 'Case declined successfully');
         } else {
             $this->flash('error', 'Something went wrong');
