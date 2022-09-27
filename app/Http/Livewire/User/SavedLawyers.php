@@ -3,6 +3,8 @@
 namespace App\Http\Livewire\User;
 
 use App\Models\Contract;
+use App\Models\LawyerContracts;
+use App\Models\LawyerLitigations;
 use App\Models\Litigation;
 use App\Models\SavedLawyer;
 use App\Models\User;
@@ -35,22 +37,27 @@ class SavedLawyers extends Component
         $user = $user->paginate(10);
         $lawyers = $user;
 
-     
-
         if ($this->practiceArea == 'Litigations') {
             $this->practices =  $ligitions;
             if ($this->areaId) {
-                dd($this->areaId);
+
+                $lawyerId = LawyerLitigations::where('litigations_id', $this->areaId)->select('users_id')->get();
+                if (count($lawyerId) > 0) {
+                    $lawyers = SavedLawyer::with('lawyer')->whereIn('lawyer_id',  $lawyerId)->paginate(10);
+                }
             }
         } elseif ($this->practiceArea == 'Contracts') {
             $this->practices =  $contracts;
             if ($this->areaId) {
-                dd($this->areaId);
+                $lawyerId = LawyerLitigations::where('litigations_id', $this->areaId)->select('users_id')->get();
+                if (count($lawyerId) > 0) {
+                    $lawyers = SavedLawyer::with('lawyer')->whereIn('lawyer_id',  $lawyerId)->paginate(10);
+                }
             }
         } else {
             $this->practices = null;
         }
-        
+
 
         return view('livewire.user.saved-lawyers', compact('lawyers', 'ligitions', 'contracts'));
     }
