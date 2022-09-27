@@ -9,8 +9,8 @@ class LawyerContracts extends Model
 {
     use HasFactory;
 
-    public function contracts()
+    public function contract()
     {
-        return $this->hasOne(Litigation::class, 'id', 'contracts_id');
+        return $this->belongsTo(Litigation::class, 'contracts_id');
     }
 }

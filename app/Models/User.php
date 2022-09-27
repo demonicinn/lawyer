@@ -103,9 +103,26 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserCard::class, 'user_id', 'id');
     }
+
+    public function leave()
+    {
+        return $this->hasMany(Leave::class, 'user_id', 'id');
+    }
+
     public function savedLawyer()
     {
         return $this->hasOne(SavedLawyer::class, 'lawyer_id', 'id');
     }
+
+    public function booking()
+    {
+        return $this->hasMany(Booking::class, 'lawyer_id', 'id');
+    }
+
+
+
+
+
+
 
 }

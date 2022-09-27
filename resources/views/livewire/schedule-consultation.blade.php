@@ -11,19 +11,36 @@
 
     @push('scripts')
 
-
-
-
     <script>
         let workingDates = @json(@$workingDates);
 
         $(document).ready(function() {
+
+            $(document).on('click', '.loginModalShow', function(){
+                $('#loginForm').modal('show');
+            });
+            $(document).on('click', '.closeLoginModal', function(){
+                $('#loginForm').modal('hide');
+            });
 
             getDates(workingDates);
 
             window.livewire.on('fireCalender', (dates) => {
                 getDates(dates);
             });
+            window.livewire.on('loginFormClose', () => {
+                $('#loginForm').modal('hide');
+            });
+            window.livewire.on('unCheckRadiobtn', () => {
+
+                $('.checkedbtn').prop('checked', false);
+                @this.set('paymentDetails', true);
+               
+            });
+            window.livewire.on('scrollUp', () => {
+                $(window).scrollTop(0);
+            });
+
         });
 
 
@@ -56,7 +73,6 @@
                     @this.set('year', year);
                     @this.set('selectDate', '');
                     @this.set('selectDateTimeSlot', '');
-                    @this.set('dateFormat', '');
                 },
 
                 onDateSelect: function(date, events) {
@@ -77,28 +93,41 @@
             $calendar.setEvents(eventArray)
         }
 
-        $(document).ready(function() {
-            window.livewire.on('loginFormClose', () => {
-                $('#loginForm').modal('hide');
-            });
-
-        });
-
-
-        $(document).ready(function() {
-            window.livewire.on('unCheckRadiobtn', () => {
-
-                $('.checkedbtn').prop('checked', false);
-                @this.set('paymentDetails', true);
-               
-            });
-
-        });
     </script>
 
     <style>
         .day.wrong-month {
             display: none;
+        }
+        
+        .loading {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            content: "";
+            background-color: #9d9b9bad;
+            top: 0;
+        }
+
+        .loader {
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid #ff0000;
+            border-radius: 50%;
+            width: 56px;
+            height: 56px;
+            animation: spin 2s linear infinite;
+            position: fixed;
+            z-index: 999;
+            margin: auto;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
     @endpush
