@@ -18,23 +18,21 @@
                         <div class="white-shadow-scnd-box">
                             <div class="form-heading">
                                 <h5 class="h5-design">Information about you</h5>
-                                <div class="already_have-account">
 
-                                    @if(!Auth::check())
-                                    <a data-bs-toggle="modal" data-bs-target="#loginForm" style="text-decoration: underline;">
+                                @if(!Auth::check())
+                                <div class="already_have-account">
+                                    <a href="javascript:void(0)" class="loginModalShow" style="text-decoration: underline;">
                                         Already have an account?
                                     </a>
-                                    @endif
-
                                 </div>
-
+                                @endif
                                 <!--Login Modal -->
                                 <div wire:ignore.self class="modal fade" id="loginForm" tabindex="-1" aria-labelledby="loginFormLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="loginFormLabel">Login</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                <button type="button" class="btn-close closeLoginModal"></button>
                                             </div>
                                             <div class="modal-body">
                                                 <div class="container">
@@ -60,7 +58,7 @@
                                                                     {!! $errors->first('upassword', '<span class="help-block">:message</span>') !!}
                                                                 </div>
                                                                 <div class="form-grouph submit-design text-center">
-                                                                    <a style="text-decoration: none;" class="form-btn" wire:click="login">{{__ ('Login') }}</a>
+                                                                    <button type="button" class="form-btn" wire:click="login">{{__ ('Login') }}</button>
                                                                 </div>
 
                                                             </div>
@@ -73,8 +71,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-
                             </div>
 
                             <div class="form-grouph input-design">
@@ -100,7 +96,6 @@
                             </div>
 
                             @if(!Auth::check())
-
                             <div class="form-grouph input-design">
                                 <label>Password*</label>
                                 <input type="password" wire:model='password' placeholder="Password">
@@ -132,15 +127,15 @@
 
                                         <div class="col-md-8">
                                             <label class="booking_type-text">Litigations </label>
-                                            @foreach ($litigations as $litigation )
-                                            <p>{{$litigation->name}}</p>
+                                            @foreach ($lawyer->lawyerLitigations as $litigation )
+                                            <p>{{$litigation->litigation->name}}</p>
                                             @endforeach
                                         </div>
 
                                         <div class="col-md-4">
                                             <label class="booking_type-text">Contracts</label>
-                                            @foreach ($contracts as $contract )
-                                            <p>{{$contract->name}}</p>
+                                            @foreach ($lawyer->lawyerContracts as $contract )
+                                            <p>{{$contract->contract->name}}</p>
                                             @endforeach
                                         </div>
 
@@ -152,44 +147,42 @@
                                 </div>
                             </div>
 
-                            <div class="white-shadow-scnd-box mt-4">
-                                @if($this->lawyer->details->is_consultation_fee == "yes")
 
+                            
+                            <div class="white-shadow-scnd-box mt-4">
+                                @if($lawyer->details->is_consultation_fee == "yes")
 
                                 @if(Auth::check())
+                                @if($authUser->userCards->count()>0)
                                 <h3>Saved Card</h3>
 
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th>Select Card</th>
-                                            <th>Cared type</th>
                                             <th>Card number</th>
-
-
+                                            <th>Card type</th>
+                                            <th>Card expire</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        @foreach ($saveCards as $saveCard)
-                                        <a href="#">
-                                            <tr>
-                                                <td> <input type="radio" wire:click="savedCard({{$saveCard->id}})" name="cardId" class="checkedbtn"></td>
-                                                <td>{{$saveCard->card_type}}</td>
-                                                <td>xxxx xxxx xxxx {{$saveCard->card_number}}</td>
-
-                                            </tr>
-                                        </a>
+                                    <tbody>                                        
+                                        @foreach($authUser->userCards as $saveCard)
+                                        <tr>
+                                            <td>{{$saveCard->card_number}}</td>
+                                            <td>{{$saveCard->card_type}}</td>
+                                            <td>{{$saveCard->expire_month}}/{{$saveCard->expire_year}}</td>
+                                            <td><button type="button" wire:click="useSavedCard({{$saveCard->id}})" class="checkedbtn">Use</button></td>
+                                        </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
 
-                                <a class="btn btn-primary uncleck" wire:click="unCheck">UnCheck</a>
 
-                                @if ($paymentDetails)
                                 <h4>Or</h4>
                                 @endif
                                 @endif
-                                @if ($paymentDetails)
+
+
                                 <div class="form-heading">
                                     <h5 class="h5-design">Payment Details</h5>
                                 </div>
@@ -210,8 +203,9 @@
 
                                         <select wire:model="expire_month" class="form-control" placeholder="Exp Month">
                                             <option value="">Select Month</option>
-                                            @for ($i = 1; $i <=12; $i++) <option value="{{ $i<=9 ? '0'.$i : $i }}">{{ date('F', mktime(0,0,0,$i)) }}</option>
-                                                @endfor
+                                            @for ($i = 1; $i <=12; $i++)
+                                            <option value="{{ $i<=9 ? '0'.$i : $i }}">{{ date('F', mktime(0,0,0,$i)) }}</option>
+                                            @endfor
                                         </select>
                                         {!! $errors->first('expire_month', '<span class="help-block">:message</span>') !!}
                                     </div>
@@ -219,10 +213,12 @@
                                         <label>Expiration Year*</label>
 
 
-                                        <select wire:model="expire_year" placeholder="Expiration Year">
+                                        <select wire:model="expire_year" class="form-control" placeholder="Expiration Year">
                                             <option value="">Select Year</option>
-                                            @for ($i = 0; $i <10; $i++) @php $year=date('Y') + $i; @endphp <option value="{{$year}}">{{$year}}</option>
-                                                @endfor
+                                            @for ($i = 0; $i <10; $i++)
+                                            @php $year = date('Y') + $i; @endphp
+                                            <option value="{{$year}}">{{$year}}</option>
+                                            @endfor
                                         </select>
                                         {!! $errors->first('expire_year', '<span class="help-block">:message</span>') !!}
                                     </div>
@@ -232,16 +228,19 @@
                                         {!! $errors->first('cvv', '<span class="help-block">:message</span>') !!}
                                     </div>
                                 </div>
-                                @endif
+                                <div class="charge_text">
+                                    <p>We will charge you <a href="#" class="pa-design">after</a> your consultation.</p>
+                                </div>
+
+
 
                                 @else
                                 <h4>Free Consultation</h4>
                                 @endif
 
-                                <div class="charge_text">
-                                    <p>We will charge you <a href="#" class="pa-design">after</a> your consultation.</p>
-                                </div>
                             </div>
+
+
                         </div>
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 text-center mt-5">
                             <button type="button" class="btn-design-first" wire:loading.remove wire:click="saveUserInfoAndBooking" wire:loading.attr="disabled">
@@ -256,3 +255,7 @@
         </div>
     </div>
 </section>
+
+<div wire:loading wire:target="useSavedCard">
+    <div class="loading"><div class="loader"></div></div>                     
+</div>

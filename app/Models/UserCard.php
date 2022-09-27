@@ -9,6 +9,12 @@ class UserCard extends Model
 {
     use HasFactory;
 
+
+    public function getExpireMonthAttribute($value){
+        return ($value <= 9 ? '0'.$value : $value);
+    }
+
+
     public function users()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');

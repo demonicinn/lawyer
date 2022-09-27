@@ -104,16 +104,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
     //feed
-    Route::get('/zoom/{id}', function () {
-        $title = array(
-            'title' => 'Feed',
-            'active' => 'feed',
-        );
-        return view('common.zoom', compact('title'));
-    })->name('zoom');
-
-    //zoom
-    Route::get('/zoom/{id}', [ZoomController::class, 'index'])->name('zoom');
+    //meeting
+    Route::get('/meeting/{id}', [ZoomController::class, 'index'])->name('zoom');
+    Route::get('/meeting/{id}/leave', [ZoomController::class, 'leave'])->name('zoom.leave');
 
 
     //change password

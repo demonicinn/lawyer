@@ -26,7 +26,6 @@ return new class extends Migration
             
             $table->string('image')->nullable();
             $table->string('contact_number')->nullable();
-            $table->string('customer_id')->nullable();
 			$table->enum('profile_completed', ['0', '1'])->default('0');
             $table->enum('status', ['0', '1', '2'])->default('1');
             

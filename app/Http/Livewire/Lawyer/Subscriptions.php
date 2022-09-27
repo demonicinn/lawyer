@@ -98,19 +98,22 @@ class Subscriptions extends Component
 				),
 			]);
 
+			$customer = \Stripe\Customer::create([
+				'source' => $token['id'],
+				'email' =>  $user->email,
+				'description' => 'My name is '. $user->name,
+			]);
 
-            if(!$user->customer_id) {
-				$customer = \Stripe\Customer::create([
-					'source' => $token['id'],
-					'email' =>  $user->email,
-					'description' => 'My name is '. $user->name,
-				]);
+			$customer_id = $customer['id'];
+
+            /*if(!$user->customer_id) {
+				
 				
 				$customer_id = $customer['id'];
 				//update customer id
 				$user->customer_id = $customer_id;
 				$user->save();
-			}
+			}*/
 
 
             //make payment
@@ -118,7 +121,7 @@ class Subscriptions extends Component
 			
 			$charge = \Stripe\Charge::create([
 				'currency' => 'USD',
-				'customer' => $user->customer_id,
+				'customer' => $customer_id,
 				'amount' =>  $fee * 100,
 			]);
 
