@@ -84,6 +84,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     //..common consultations
 
+    
+
     //..upcoming
     Route::get('upcoming', [CommonController::class, 'consultations'])->name('consultations.upcoming');
 
@@ -297,5 +299,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         //...saved lawyer
         Route::get('/saved/lawyer', [User\DashboardController::class, 'savedLawyer'])->name('user.saved.lawyer');
         Route::get('/save/lawyer/{id}', [PagesController::class, 'saveLaywer'])->name('user.save.lawyer');
+
+
+        Route::get('review/{id}', [User\ReviewController::class, 'index'])->name('review.lawyer');
+
+
+
     });
 });
