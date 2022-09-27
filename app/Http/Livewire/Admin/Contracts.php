@@ -16,7 +16,7 @@ class Contracts extends Component
 
     // public $contracts = [];
 
-	public $name;
+	public $name,$search;
 	public $status = '1';
 
     public $contractId;
@@ -98,7 +98,9 @@ class Contracts extends Component
 
     public function render()
     {
-        $contracts = Contract::paginate(10);
+        $contracts = Contract::where(function ($query) {
+            return $query->where('name', 'like', '%' . $this->search . '%');
+        })->latest('id')->paginate(10);
 
         return view('livewire.admin.contracts',compact('contracts'));
     }

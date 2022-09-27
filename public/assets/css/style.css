@@ -2941,3 +2941,8 @@ img {
     -webkit-transform: translate3d(0, 0, 0);
             transform: translate3d(0, 0, 0);
 }
+.add-search-box {
+    display: flex;
+    gap: 30px;
+    justify-content: space-between;
+}

@@ -16,7 +16,7 @@ class Litigations extends Component
 
     // public $litigations = [];
 
-    public $name;
+    public $name, $search;
     public $status = '1';
 
     public $litigationId;
@@ -98,7 +98,10 @@ class Litigations extends Component
 
     public function render()
     {
-        $litigations = Litigation::paginate(10);
-        return view('livewire.admin.litigations',compact('litigations'));
+        $litigations = Litigation::where(function ($query) {
+            return $query->where('name', 'like', '%' . $this->search . '%');
+        })->latest('id')->paginate(10);
+
+        return view('livewire.admin.litigations', compact('litigations'));
     }
 }

@@ -16,7 +16,7 @@ class States extends Component
 
     // public $states = [];
 
-	public $name, $code;
+	public $name, $code,$search;
 	public $status = '1';
 
     public $stateId;
@@ -102,7 +102,9 @@ class States extends Component
 
     public function render()
     {
-        $states = State::paginate(10);
+        $states = State::where(function ($query) {
+            return $query->where('name', 'like', '%' . $this->search . '%');
+        })->latest('id')->paginate(10);
         return view('livewire.admin.states',\compact('states'));
     }
 }

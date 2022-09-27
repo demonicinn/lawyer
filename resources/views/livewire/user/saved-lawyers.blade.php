@@ -7,7 +7,7 @@
                     <div class="form-grouph select-design select-design-2 d-flex">
                         <label>Filter by:</label>
                         <select wire:model="practiceArea">
-                            <option value="" selected >Practice Area</option>
+                            <option value="" selected>Practice Area</option>
                             <option value="Litigations">Litigations</option>
                             <option value="Contracts">Contracts</option>
                         </select>
@@ -78,15 +78,12 @@
                         </div>
                     </div>
                 </div>
-
-
                 @empty
-
                 <h4>No Saved Lawyers</h4>
-
                 @endforelse
-
             </div>
         </div>
+
+        <div id="pagination-container" class="pagination-container-saved">{{$lawyers->links()}}</div>
     </div>
 </div>

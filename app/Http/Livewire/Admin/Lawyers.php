@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Notifications\MailToLawyerForStatus;
 use Illuminate\Support\Facades\Notification;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\DB;
+
 
 class Lawyers extends Component
 {
@@ -17,7 +19,7 @@ class Lawyers extends Component
 
     // public $lawyers = [];
     public $lawyerId;
-    public $action;
+    public $action, $search;
     protected $listeners = ['confirmedAction'];
     protected $paginationTheme = 'bootstrap';
 
@@ -67,7 +69,9 @@ class Lawyers extends Component
 
     public function render()
     {
-        $lawyers = User::where('role', 'lawyer')->paginate(10);
+        $lawyers = User::where('role', 'lawyer')->where(function ($query) {
+            return  $query->where(DB::raw("concat(first_name, ' ', last_name)"), 'LIKE', "%" . $this->search . "%");
+        })->paginate(10);
         return view('livewire.admin.lawyers', compact('lawyers'));
     }
 }

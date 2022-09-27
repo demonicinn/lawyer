@@ -1,5 +1,12 @@
 <div>
-    <button type="button" class="accept_btn showModal">Add Category</button>
+    <div class="add-search-box">
+        <div class="add-litigations">
+            <button type="button" class="accept_btn showModal">Add Category</button>
+        </div>
+        <div class="form-group">
+            <input wire:model="search" class="form-control search-box" type="text" placeholder="Search">
+        </div>
+    </div>
 
     <div class="table-responsive table-design">
         <table style="width:100%">
@@ -79,7 +86,7 @@
                                 <label>Name</label>
                                 <input type="text" wire:model="category_name" class="form-control">
                                 {!! $errors->first('category_name', '<span class="help-block">:message</span>') !!}
-                                
+
                             </div>
                             <div class="status_search">
                                 <div class="form-group">

@@ -1,4 +1,10 @@
 <div>
+
+    <div class="add-search-box">
+        <div class="form-group">
+            <input wire:model="search" class="form-control search-box" type="text" placeholder="Search">
+        </div>
+    </div>
     <div class="table-responsive table-design">
         <table style="width:100%">
             <thead>

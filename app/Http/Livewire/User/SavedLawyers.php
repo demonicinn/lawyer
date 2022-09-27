@@ -13,50 +13,45 @@ use Illuminate\Support\Facades\DB;
 class SavedLawyers extends Component
 {
     use WithPagination;
+    protected $paginationTheme = 'bootstrap';
 
-    public $lawyers, $authUser, $search, $ligitions, $contracts, $practices, $practiceArea, $areaId;
+    public  $authUser, $search, $practices, $practiceArea, $areaId;
 
-    public function mount()
+    public function render()
     {
         $this->authUser = auth()->user();
-        $this->lawyers = SavedLawyer::where('user_id', $this->authUser->id)->with('lawyer')->get();
-        $this->ligitions = Litigation::where('status','1')->get();
-        $this->contracts = Contract::where('status','1')->get();
-    }
 
-    public function searchFilter()
-    {
+        $ligitions = Litigation::where('status', '1')->get();
+        $contracts = Contract::where('status', '1')->get();
+
         $user = SavedLawyer::with('lawyer')->where('user_id', $this->authUser->id);
+        if (!empty($this->search)) {
+            $search = $this->search;
+            $user->whereHas('lawyer', function ($query) use ($search) {
+                $query->where('contact_number', 'LIKE', "%" . $search . "%");
+                $query->orWhere(DB::raw("concat(first_name, ' ', last_name)"), 'LIKE', "%" . $search . "%");
+            });
+        }
+        $user = $user->paginate(10);
+        $lawyers = $user;
+
+     
 
         if ($this->practiceArea == 'Litigations') {
-            $this->practices =  $this->ligitions; 
+            $this->practices =  $ligitions;
             if ($this->areaId) {
                 dd($this->areaId);
             }
         } elseif ($this->practiceArea == 'Contracts') {
-            $this->practices =  $this->contracts;
+            $this->practices =  $contracts;
             if ($this->areaId) {
                 dd($this->areaId);
             }
         } else {
             $this->practices = null;
         }
-    
-        if (!empty($this->search)) {
-            $search = $this->search;
-            $this->authUser = auth()->user();
-           
-                $user->whereHas('lawyer', function ($query) use ($search) {
-                    $query->where('contact_number', 'LIKE', "%" . $search . "%");
-                    $query->orWhere(DB::raw("concat(first_name, ' ', last_name)"), 'LIKE', "%" . $search . "%");
-                });
-            $user = $user->get();
-            $this->lawyers = $user;
-        }
-    }
-    public function render()
-    {
-        $this->searchFilter();
-        return view('livewire.user.saved-lawyers');
+        
+
+        return view('livewire.user.saved-lawyers', compact('lawyers', 'ligitions', 'contracts'));
     }
 }
