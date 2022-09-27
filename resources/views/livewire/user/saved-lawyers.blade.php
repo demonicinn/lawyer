@@ -5,7 +5,7 @@
             <form class="form-design">
                 <div class="d-flex justify-content-spacebw">
                     <div class="form-grouph select-design select-design-2 d-flex">
-                        <label>Filter by:</label>
+                        <label>Practice:</label>
                         <select wire:model="practiceArea">
                             <option value="" selected>Practice Area</option>
                             <option value="Litigations">Litigations</option>
@@ -16,7 +16,7 @@
 
                     @if (!empty($practices))
                     <div class="form-grouph select-design select-design-2 d-flex">
-                        <label>Filter by:</label>
+                        <label>Area:</label>
                         <select wire:model="areaId">
                             <option value="" selected disabled>{{$practiceArea}}</option>
                             @foreach ($practices as $practice)
@@ -30,9 +30,15 @@
                         <input type="search" wire:model="search" placeholder="Search">
                         <span class="input_icn"><i class="fa-solid fa-magnifying-glass"></i></span>
                     </div>
+                    <div class="form-grouph input-design icon-input-design right-icn-design mt-1">
+                        <a class="btn clear-btn" wire:click="clear">Clear</a>
+                    </div>
+
                 </div>
             </form>
+
         </div>
+
         <div class="user_saved-lawyers_list">
             <div class="list-wrapper list-wrapper-saved four-layout">
 

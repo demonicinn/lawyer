@@ -679,7 +679,16 @@ input:focus, select:focus, textarea:focus{
     width: 70%;
 }
 .justify-content-spacebw{
-    justify-content: space-between;
+    justify-content: start;
+    align-items: center;
+    gap: 30px;  
+}
+
+a.btn.clear-btn {
+    border: solid 1px #212529;
+    background-color: #A4CAA5;
+    color: white;
+   
 }
 /* End Filter sidebar */
 

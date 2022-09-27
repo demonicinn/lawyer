@@ -48,15 +48,17 @@ class User extends Authenticatable
         'name', 'profile_pic'
     ];
 
-    public function getNameAttribute(){
-        return $this->first_name .' '. $this->last_name;
+    public function getNameAttribute()
+    {
+        return $this->first_name . ' ' . $this->last_name;
     }
 
-    public function getProfilePicAttribute(){
-		if($this->image){
-			return asset('storage/images/'.$this->image);
-		}
-		return asset('assets/images/sample-img.png');
+    public function getProfilePicAttribute()
+    {
+        if ($this->image) {
+            return asset('storage/images/' . $this->image);
+        }
+        return asset('assets/images/sample-img.png');
     }
 
 
@@ -87,8 +89,9 @@ class User extends Authenticatable
     }
 
 
-    public static function getDays(){
-        return ['Monday'=>'Monday', 'Tuesday'=>'Tuesday', 'Wednesday'=>'Wednesday', 'Thursday'=>'Thursday', 'Friday'=>'Friday', 'Saturday'=>'Saturday', 'Sunday'=>'Sunday'];
+    public static function getDays()
+    {
+        return ['Monday' => 'Monday', 'Tuesday' => 'Tuesday', 'Wednesday' => 'Wednesday', 'Thursday' => 'Thursday', 'Friday' => 'Friday', 'Saturday' => 'Saturday', 'Sunday' => 'Sunday'];
     }
 
     public function lawyerInfo()
@@ -102,7 +105,7 @@ class User extends Authenticatable
     }
     public function savedLawyer()
     {
-        return $this->hasOne(SavedLawyer::class,'lawyer_id', 'id');
+        return $this->hasOne(SavedLawyer::class, 'lawyer_id', 'id');
     }
 
 }

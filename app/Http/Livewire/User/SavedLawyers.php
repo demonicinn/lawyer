@@ -19,6 +19,13 @@ class SavedLawyers extends Component
 
     public  $authUser, $search, $practices, $practiceArea, $areaId;
 
+
+    public function clear()
+    {
+        $this->practiceArea = null;
+        $this->search = null;
+    }
+
     public function render()
     {
         $this->authUser = auth()->user();
@@ -26,7 +33,8 @@ class SavedLawyers extends Component
         $ligitions = Litigation::where('status', '1')->get();
         $contracts = Contract::where('status', '1')->get();
 
-        $user = SavedLawyer::with('lawyer')->where('user_id', $this->authUser->id);
+        $user = SavedLawyer::with('lawyer', 'lawyerInfo')->where('user_id', $this->authUser->id);
+
         if (!empty($this->search)) {
             $search = $this->search;
             $user->whereHas('lawyer', function ($query) use ($search) {
@@ -34,6 +42,7 @@ class SavedLawyers extends Component
                 $query->orWhere(DB::raw("concat(first_name, ' ', last_name)"), 'LIKE', "%" . $search . "%");
             });
         }
+
         $user = $user->paginate(10);
         $lawyers = $user;
 
@@ -49,7 +58,7 @@ class SavedLawyers extends Component
         } elseif ($this->practiceArea == 'Contracts') {
             $this->practices =  $contracts;
             if ($this->areaId) {
-                $lawyerId = LawyerLitigations::where('litigations_id', $this->areaId)->select('users_id')->get();
+                $lawyerId = LawyerContracts::where('contracts_id', $this->areaId)->select('users_id')->get();
                 if (count($lawyerId) > 0) {
                     $lawyers = SavedLawyer::with('lawyer')->whereIn('lawyer_id',  $lawyerId)->paginate(10);
                 }
@@ -57,8 +66,6 @@ class SavedLawyers extends Component
         } else {
             $this->practices = null;
         }
-
-
         return view('livewire.user.saved-lawyers', compact('lawyers', 'ligitions', 'contracts'));
     }
 }
