@@ -10,17 +10,17 @@ use Livewire\WithPagination;
 
 class Categories extends Component
 {
-    
+
     use LivewireAlert;
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
 
 
-  
+
     public $items = [];
 
     public $category_name;
-    public $item_name;
+    public $item_name,$search;
 
     public $item_status = '1';
     public $cat_status = '1';
@@ -40,7 +40,7 @@ class Categories extends Component
     {
         $this->category_name = '';
         $this->cat_status = '1';
-        $this->cat_search='1';
+        $this->cat_search = '1';
         $this->categoryId = '';
         $this->is_multiselect = '0';
     }
@@ -195,8 +195,10 @@ class Categories extends Component
 
     public function render()
     {
-        $categories = Category::with('items')->paginate(10);
+        $categories = Category::with('items')->where(function ($query) {
+            return $query->where('name', 'like', '%' . $this->search . '%');
+        })->latest('id')->paginate(10);
 
-        return view('livewire.admin.categories',compact('categories'));
+        return view('livewire.admin.categories', compact('categories'));
     }
 }

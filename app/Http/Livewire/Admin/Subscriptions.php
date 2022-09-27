@@ -15,7 +15,7 @@ class Subscriptions extends Component
 
     // public $subscriptions = [];
 
-    public $name, $type, $price, $savings;
+    public $name,$search, $type, $price, $savings;
     public $status = '1';
 
     public $subscriptionId;
@@ -115,7 +115,9 @@ class Subscriptions extends Component
 
     public function render()
     {
-        $subscriptions = Subscription::paginate(10);
+        $subscriptions = Subscription::where(function ($query) {
+            return $query->where('name', 'like', '%' . $this->search . '%');
+        })->latest('id')->paginate(10);
         return view('livewire.admin.subscriptions', compact('subscriptions'));
     }
 }
