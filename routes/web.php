@@ -107,6 +107,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     //feed
     //meeting
+    Route::get('/meeting/start', [ZoomController::class, 'meet'])->name('zoom.meet');
     Route::get('/meeting/{id}', [ZoomController::class, 'index'])->name('zoom');
     Route::get('/meeting/{id}/leave', [ZoomController::class, 'leave'])->name('zoom.leave');
 
