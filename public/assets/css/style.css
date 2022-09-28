@@ -2955,3 +2955,9 @@ img {
     gap: 30px;
     justify-content: space-between;
 }
+
+.lawyer_status {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+   }

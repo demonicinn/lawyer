@@ -47,7 +47,7 @@ class BookingMail extends Notification
             ->subject('Booking Mail')
             ->greeting('Hi,' . @$this->user->name)
             ->action('Zoom link', $zoomUrl)
-            ->line('Zoom password :' .$this->booking->zoom_password)
+            // ->line('Zoom password :' .$this->booking->zoom_password)
             ->line('Booking date :' .date('d-m-Y', strtotime($this->booking->booking_date)))
             ->line('Booking time :' .date('g:i A', strtotime($this->booking->booking_time)))
             ->line('Your booking done successfully.');

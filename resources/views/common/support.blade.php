@@ -46,7 +46,7 @@
                                 </select>
                                 @error('reason')<div class="help-block">{{ $message }}</div>@enderror
                             </div>
-                           
+
                         </div>
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                             <div class="form-grouph textarea-design">
@@ -54,10 +54,21 @@
                                 <textarea class="@error('message') is-invalid @enderror" name="message" style="height: 150px;" placeholder="Message"></textarea>
                                 @error('message')<div class="help-block">{{ $message }}</div>@enderror
                             </div>
-                           
+
                         </div>
                     </div>
                 </div>
+
+                <div class="form-group row mt-3">
+
+                    <div class="col-md-6"> {!! htmlFormSnippet() !!} </div>
+
+                </div>
+                @error('g-recaptcha-response')
+                <span class="invalid-feedback" role="alert">
+                    <strong>ReCaptcha field is required</strong>
+                </span>
+                @enderror
                 <div class="row mt-3">
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 text-center mt-5">
                         <div class="form-grouph submit-design text-center">

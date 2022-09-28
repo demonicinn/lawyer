@@ -68,6 +68,7 @@ class CommonController extends Controller
                 'email' => ['required', 'email', 'max:255', 'not_regex:/(' . implode("|", $banned) . ')/i'],
                 'reason' => ['required', 'string', 'max:255', 'not_regex:/(' . implode("|", $banned) . ')/i'],
                 'message' => ['required', 'string', 'not_regex:/(' . implode("|", $banned) . ')/i'],
+                'g-recaptcha-response' => 'recaptcha|required',
 
             ]
         );
@@ -99,12 +100,12 @@ class CommonController extends Controller
         })->with('lawyerInfo', function ($query) {
             $query->with('categories', 'items');
         })->with('lawyerLitigations', function ($query) {
-            $query->with('litigations');
+            $query->with('litigation');
         })->with('lawyerContracts', function ($query) {
-            $query->with('contracts');
+            $query->with('contract');
         })->first();
 
-        // dd($user );
+    
         $categories = Category::with('items')->get();
 
 

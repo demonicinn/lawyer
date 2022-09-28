@@ -14,6 +14,7 @@ class ZoomController extends Controller
     //
     public function index(Request $request)
     {
+	
 		$title = array(
 			'title' => 'Zoom',
 			'active' => 'zoom',

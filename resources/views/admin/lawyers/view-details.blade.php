@@ -214,7 +214,7 @@ $lawyer_details = $user->lawyerInfo;
                                 <ul>
                                     @foreach ($user->lawyerlitigations as $lawyerlitigation)
                                     <div class="form-grouph input-design">
-                                        <li>{{@$lawyerlitigation->litigations->name}}</li>
+                                        <li>{{@$lawyerlitigation->litigation->name}}</li>
                                     </div>
                                     @endforeach
                                 </ul>
@@ -222,7 +222,7 @@ $lawyer_details = $user->lawyerInfo;
                                 <ul>
                                     @foreach ($user->lawyerContracts as $lawyerContract)
                                     <div class="form-grouph input-design">
-                                        <li>{{@$lawyerContract->contracts->name}}</li>
+                                        <li>{{@$lawyerContract->contract->name}}</li>
                                     </div>
                                     @endforeach
                                 </ul>
