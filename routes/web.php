@@ -303,5 +303,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
         Route::get('review/{id}', [User\ReviewController::class, 'index'])->name('review.lawyer');
+        Route::post('review/{id}/store', [User\ReviewController::class, 'store'])->name('review.store');
+
+
+
     });
 });

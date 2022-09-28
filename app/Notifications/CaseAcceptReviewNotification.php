@@ -42,7 +42,7 @@ class CaseAcceptReviewNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        $url = route('review.lawyer', encrypt($this->lawyer->id));
+        $url = route('review.lawyer', encrypt($this->bookingInfo->id));
         return (new MailMessage)
                     ->subject('Rate your consultation')
                     ->greeting('Hello ,' . $this->bookingInfo->first_name)
