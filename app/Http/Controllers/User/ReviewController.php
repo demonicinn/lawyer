@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
-use App\Models\User;
+use App\Models\Booking;
+use App\Models\LawyerReviews;
 
 class ReviewController extends Controller
 {
@@ -20,9 +21,39 @@ class ReviewController extends Controller
             'active' => 'review',
         );
 
-        $lawyer = User::findOrFail(decrypt($request->id));
+        $booking = Booking::findOrFail(decrypt($request->id));
 
-        return view('user.review.index', compact('title', 'lawyer'));
+        $checkReview = LawyerReviews::where('booking_id', $booking->id)->first();
+        if(@$checkReview){
+            $this->flash('error', 'You already Rated');
+            return redirect()->route('consultations.complete');
+        }
+
+        return view('user.review.index', compact('title', 'booking'));
+    }
+
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'first_name' => 'rating',
+        ]);
+
+
+        $booking = Booking::findOrFail(decrypt($request->id));
+
+        $store = new LawyerReviews;
+        $store->booking_id = $booking->id;
+        $store->lawyer_id = $booking->lawyer_id;
+        $store->rating = $request->rating;
+        $store->comment = $request->comment;
+        $store->save();
+
+      
+        $this->flash('success', 'Rated successfully');
+        return redirect()->route('consultations.complete');
+
+
     }
 
 
