@@ -71,7 +71,7 @@ class Lawyers extends Component
     {
         $lawyers = User::where('role', 'lawyer')->where(function ($query) {
             return  $query->where(DB::raw("concat(first_name, ' ', last_name)"), 'LIKE', "%" . $this->search . "%");
-        })->paginate(10);
+        })->latest('id')->paginate(10);
         return view('livewire.admin.lawyers', compact('lawyers'));
     }
 }

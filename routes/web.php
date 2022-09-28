@@ -84,7 +84,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     //..common consultations
 
-    
+
 
     //..upcoming
     Route::get('upcoming', [CommonController::class, 'consultations'])->name('consultations.upcoming');
@@ -287,6 +287,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // i replace client to user bz page crashed when user direactly login to web. @gurpreet sir
     Route::group(['prefix' => 'user', 'middleware' => ['role:user']], function () {
 
+
         //...dashboard
         Route::get('/', [User\DashboardController::class, 'index'])->name('user.dashboard');
         Route::get('/reschedule/booking/{id}', [User\DashboardController::class, 'reschedule'])->name('user.reschedule.booking');
@@ -302,8 +303,5 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
         Route::get('review/{id}', [User\ReviewController::class, 'index'])->name('review.lawyer');
-
-
-
     });
 });

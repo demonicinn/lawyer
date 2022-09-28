@@ -8,10 +8,12 @@ use Jantinnerezo\LivewireAlert\LivewireAlert;
 use App\Models\Subscription;
 use App\Models\Payment;
 use App\Models\LawyerSubscription;
+use App\Models\User;
+use App\Models\UserCard;
 
 class Subscriptions extends Component
 {
-	use LivewireAlert;
+    use LivewireAlert;
     public $subscriptions, $user;
 
     public $subscription = '';
@@ -21,7 +23,7 @@ class Subscriptions extends Component
 
     public function __construct()
     {
-        Stripe::setApiKey(config('services.stripe.secret')); 
+        Stripe::setApiKey(config('services.stripe.secret'));
     }
 
     public function mount()
@@ -30,29 +32,29 @@ class Subscriptions extends Component
 
         $subscriptionCount = $this->user->lawyerSubscription->count();
 
-		$this->subscriptions = Subscription::whereStatus('1')
-                        ->where(function ($query) use ($subscriptionCount) {
-                            if($subscriptionCount > 0 ){
-                                $query->where('type', '!=', 'free');
-                            }
-                        }) 
-                        ->get();
+        $this->subscriptions = Subscription::whereStatus('1')
+            ->where(function ($query) use ($subscriptionCount) {
+                if ($subscriptionCount > 0) {
+                    $query->where('type', '!=', 'free');
+                }
+            })
+            ->get();
     }
 
-    public function setSubscription($id, $type){
+    public function setSubscription($id, $type)
+    {
         $this->subscription = $id;
         $this->type = $type;
     }
 
 
     public function store()
-	{
-        if($this->type == 'free'){
+    {
+        if ($this->type == 'free') {
             $this->validate([
                 'subscription' => 'required'
             ]);
-        }
-        else {
+        } else {
             $this->validate([
                 'subscription' => 'required',
                 'card_name' => 'required|max:50',
@@ -66,45 +68,45 @@ class Subscriptions extends Component
         $user = auth()->user();
         $subscription = Subscription::findOrFail($this->subscription);
 
-        $period = $subscription->type=="yearly" ? "1 year" : "1 month";
+        $period = $subscription->type == "yearly" ? "1 year" : "1 month";
         $from_date = date('Y-m-d');
         $to_date = date('Y-m-d', strtotime($from_date . $period));
 
         //Free Plans
-        if($subscription->type == "free"){
+        if ($subscription->type == "free") {
             //...
             $plan = new LawyerSubscription;
-			$plan->users_id = $user->id;
-			$plan->subscriptions_id = $subscription->id;
-			$plan->from_date = $from_date;
-			$plan->to_date = $to_date;
-			$plan->save();
+            $plan->users_id = $user->id;
+            $plan->subscriptions_id = $subscription->id;
+            $plan->from_date = $from_date;
+            $plan->to_date = $to_date;
+            $plan->save();
 
             $this->flash('success', 'Free Plan Activated');
-			return redirect()->route('lawyer.profile');
+            return redirect()->route('lawyer.profile');
         }
 
         //Paid Plans
         //....
         try {
-			//create token
-			$token = \Stripe\Token::create([
-				"card" => array(
-					"name" => $this->card_name,
-					"number" => $this->card_number,
-					"exp_month" => $this->expire_month,
-					"exp_year" => $this->expire_year,
-					"cvc" => $this->cvv
-				),
-			]);
+            //create token
+            $token = \Stripe\Token::create([
+                "card" => array(
+                    "name" => $this->card_name,
+                    "number" => $this->card_number,
+                    "exp_month" => $this->expire_month,
+                    "exp_year" => $this->expire_year,
+                    "cvc" => $this->cvv
+                ),
+            ]);
 
-			$customer = \Stripe\Customer::create([
-				'source' => $token['id'],
-				'email' =>  $user->email,
-				'description' => 'My name is '. $user->name,
-			]);
+            $customer = \Stripe\Customer::create([
+                'source' => $token['id'],
+                'email' =>  $user->email,
+                'description' => 'My name is ' . $user->name,
+            ]);
 
-			$customer_id = $customer['id'];
+            $customer_id = $customer['id'];
 
             /*if(!$user->customer_id) {
 				
@@ -117,45 +119,56 @@ class Subscriptions extends Component
 
 
             //make payment
-			$fee = $subscription->price;
-			
-			$charge = \Stripe\Charge::create([
-				'currency' => 'USD',
-				'customer' => $customer_id,
-				'amount' =>  $fee * 100,
-			]);
+            $fee = $subscription->price;
+
+            $charge = \Stripe\Charge::create([
+                'currency' => 'USD',
+                'customer' => $customer_id,
+                'amount' =>  $fee * 100,
+            ]);
 
 
             //save payment transaction details
-			$payment = new Payment;
-			$payment->users_id = $user->id;
-			$payment->transaction_id = $charge->id;
-			$payment->balance_transaction = $charge->balance_transaction;
-			$payment->customer = $charge->customer;
-			$payment->currency = $charge->currency;
-			$payment->amount = $fee;
-			$payment->payment_status = $charge->status;
-			$payment->save();
+            $payment = new Payment;
+            $payment->users_id = $user->id;
+            $payment->transaction_id = $charge->id;
+            $payment->balance_transaction = $charge->balance_transaction;
+            $payment->customer = $charge->customer;
+            $payment->currency = $charge->currency;
+            $payment->amount = $fee;
+            $payment->payment_status = $charge->status;
+            $payment->save();
+
+            //save customer id in card table
+            $saveCard = new UserCard();
+            $saveCard->user_id = auth()->user()->id;
+            $saveCard->customer_id = $customer_id ;
+            $saveCard->card_name = $this->card_name;
+            $saveCard->expire_month = $this->expire_month;
+            $saveCard->expire_year = $this->expire_year;
+            $saveCard->card_type = $token->card->brand;
+            $saveCard->card_number = $token->card->last4;
+            $saveCard->save();
+
 
 
             //...
             $plan = new LawyerSubscription;
-			$plan->users_id = $user->id;
-			$plan->subscriptions_id = $subscription->id;
-			$plan->payments_id = $payment->id;
-			$plan->from_date = $from_date;
-			$plan->to_date = $to_date;
-			$plan->save();
+            $plan->users_id = $user->id;
+            $plan->subscriptions_id = $subscription->id;
+            $plan->payments_id = $payment->id;
+            $plan->from_date = $from_date;
+            $plan->to_date = $to_date;
+            $plan->save();
 
             $this->flash('success', 'Payment Success');
-			return redirect()->route('lawyer.profile');
-
+            return redirect()->route('lawyer.profile');
         } catch (\Stripe\Exception\CardException $e) {
             $error = $e->getMessage();
         } catch (Exception $e) {
-			$error = $e->getMessage();
-		}
-		
+            $error = $e->getMessage();
+        }
+
         $this->alert('error', $error);
     }
 

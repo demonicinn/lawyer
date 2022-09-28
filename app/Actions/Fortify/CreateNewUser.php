@@ -39,6 +39,9 @@ class CreateNewUser implements CreatesNewUsers
             'city' => ['required', 'string', 'max:100'],
             'state' => ['required'],
             'zip_code' => ['required', 'string', 'max:100'],
+            'term'=>['required'],
+        ],[
+            'term.required' => 'Please accept the privacy policy and Terms & Conditions.',
         ])->validate();
 
         $user = new User;

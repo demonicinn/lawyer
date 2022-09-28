@@ -328,7 +328,7 @@ class ScheduleConsultation extends Component
             $dateTime = Carbon::parse($ndate);
             $meeting = new MeetingController;
             $a = $meeting->store($dateTime);
-            //dd($a);
+            // dd($a);
             $zoom_id = $a['data']['id'];
             $zoom_password = @$a['data']['password'];
             $zoom_start_url = @$a['data']['start_url'];

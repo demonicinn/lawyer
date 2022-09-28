@@ -108,10 +108,12 @@
                                 </div>
                                 <div class="consult-fee_div">
                                     <p>CONSULT FEE</p>
+
+
                                     <h4>{{ @$lawyer->details->is_consultation_fee=='yes' ? '$'.$lawyer->details->consultation_fee : 'Free' }}</h4>
                                 </div>
                             </div>
-                            <p class="school_name"><i class="fa-solid fa-school-flag"></i> Harvard Law School</p>
+                            <p class="school_name"><i class="fa-solid fa-school-flag"></i>{{ @$lawyer->lawyerCategory->items->name }}</p>
                             <div class="location_profile-divs d-flex justify-content-spacebw align-items-center">
                                 <address><i class="fa-solid fa-location-dot"></i> {{ @$lawyer->details->city }}, {{ @$lawyer->details->states->code }}</address>
                                 <a href="{{ route('lawyer.show', $lawyer->id) }}">See Profile</a>

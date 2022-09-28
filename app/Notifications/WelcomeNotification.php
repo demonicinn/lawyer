@@ -40,9 +40,11 @@ class WelcomeNotification extends Notification
      */
     public function toMail($notifiable)
     {
+        $lawyerProfile = route('lawyer.profile');
         return (new MailMessage)
             ->subject('Welcome Notification')
-            ->greeting('Welcome ,' .$this->user->first_name)
+            ->greeting('Welcome ,' . $this->user->first_name)
+            ->action('Create profile',  $lawyerProfile)
             ->line('Thank you for using our application!');
     }
 
