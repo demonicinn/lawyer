@@ -161,7 +161,7 @@ class RescheduleBooking extends Component
         $nTimeSlot = date('H:i:s', strtotime($this->selectDateTimeSlot));
 
         // $ndate = $this->selectDate . ' ' . date('H:i', strtotime($this->selectDateTimeSlot));
-     
+
         // $nTimeSlot = date('H:i', strtotime($this->selectDateTimeSlot));
         // update zoom meeting
         try {
@@ -170,8 +170,8 @@ class RescheduleBooking extends Component
             $a = $meeting->store($dateTime);
 
             $zoom_id = $a['data']['id'];
-            $zoom_password = $a['data']['password'];
-            $zoom_start_url = $a['data']['start_url'];
+            $zoom_password = @$a['data']['password'];
+            $zoom_start_url = @$a['data']['start_url'];
         } catch (\Exception $e) {
             $error = $e->getMessage();
         }
@@ -179,10 +179,11 @@ class RescheduleBooking extends Component
         $rescheduleBooking = Booking::where('id', $this->bookingId)->with('lawyer', 'user')->first();
         $rescheduleBooking->booking_date = $date;
         $rescheduleBooking->booking_time = $nTimeSlot;
-        $rescheduleBooking->zoom_id = $zoom_id;
-        $rescheduleBooking->zoom_password = $zoom_password;
-        $rescheduleBooking->zoom_start_url = $zoom_start_url;
+        $rescheduleBooking->zoom_id = @$zoom_id;
+        $rescheduleBooking->zoom_password = @$zoom_password;
+        $rescheduleBooking->zoom_start_url = @$zoom_start_url;
         $rescheduleBooking->update();
+
 
         if ($rescheduleBooking) {
             $user = 'user';

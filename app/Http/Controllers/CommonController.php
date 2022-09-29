@@ -261,6 +261,7 @@ class CommonController extends Controller
     public function resheduleConsultations($id)
     {
 
+        dd("rechdule by admin");
         $booking = Booking::where('id', $id)->with('user', 'lawyer')->first();
         $booking->reschedule = '1';
         $booking->update();
@@ -397,5 +398,19 @@ class CommonController extends Controller
             $this->flash('error', 'Something went wrong');
         }
         return back();
+    }
+
+    public function reschedule($id)
+   {
+
+       $bookingId=$id;
+        $title = array(
+            'title' => 'Schedule a Consultation',
+            'active' => 'reschedule-consultation',
+        );
+
+        $user = auth()->user();
+
+        return view('pages.reschedule', compact('bookingId'));
     }
 }
