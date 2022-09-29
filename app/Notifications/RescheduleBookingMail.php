@@ -23,12 +23,26 @@ class RescheduleBookingMail extends Notification
         $this->bookingDate = $this->bookingInfo->booking_date;
         $this->bookingTime = $this->bookingInfo->booking_time;
 
-        if ($this->user == "lawyer") {
-            $this->first_name = auth()->user()->first_name;
-            $this->message1 = 'Booking reschedule by Client.';
+        if (auth()->user()->role == 'user') {
+            if ($this->user == "lawyer") {
+                $this->first_name = $this->bookingInfo->lawyer->first_name;
+                $this->message1 = 'Booking reschedule by Client.';
+            } else {
+                $this->first_name = auth()->user()->first_name;
+                $this->message1 = 'Booking reschedule successfully.';
+            }
         } else {
-            $this->first_name = $this->bookingInfo->lawyer->first_name;
-            $this->message1 = 'Booking reschedule successfully.';
+
+            if ($this->user == "user") {
+                $this->first_name = $this->bookingInfo->user->first_name;
+                $this->message1 = 'Please accept my sincere apologies for the inconvenience caused.
+                                    Reschedule booking details give below.';
+ 
+            
+            } else {
+                $this->first_name = auth()->user()->first_name;
+                $this->message1 = 'Booking reschedule successfully.';
+            }
         }
     }
 
@@ -56,10 +70,11 @@ class RescheduleBookingMail extends Notification
             ->subject('Booking Reschedule')
             ->greeting('Hello ,' . $this->first_name)
             ->action('Zoom link', $zoomUrl)
-            ->line('Zoom password :' . $this->bookingInfo->zoom_password)
+            ->line($this->message1)
+            // ->line('Zoom password :' . $this->bookingInfo->zoom_password)
             ->line('Booking date :' . date('d-m-Y', strtotime($this->bookingDate)))
-            ->line('Booking time :' . date('g:i A', strtotime($this->bookingTime)))
-            ->line($this->message1);
+            ->line('Booking time :' . date('g:i A', strtotime($this->bookingTime)));
+            
     }
 
     /**

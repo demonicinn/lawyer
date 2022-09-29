@@ -19,20 +19,7 @@ class DashboardController extends Controller
         return view('user.dashboard.index', compact('user', 'title'));
     }
 
-    public function reschedule($id)
-    {
-
-       $bookingId=$id;
-        $title = array(
-            'title' => 'Schedule a Consultation',
-            'active' => 'reschedule-consultation',
-        );
-
-        $user = auth()->user();
-
-        return view('user.reschedule', compact('bookingId'));
-    }
-
+    
 
     public function savedLawyer(){
        
