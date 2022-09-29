@@ -2961,3 +2961,8 @@ img {
     justify-content: space-evenly;
     flex-wrap: wrap;
    }
+
+   .federal-court {
+    display: flex;
+    justify-content: space-between;
+}

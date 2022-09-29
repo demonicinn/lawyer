@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Category;
+use App\Models\Item;
 use Livewire\Component;
 use App\Models\User;
 
@@ -12,7 +13,7 @@ class SearchLawyers extends Component
 
     public $latitude, $longitude;
 
-    public $free_consultation, $contingency_cases, $year_exp = '20', $category, $distance = '20', $rate = '20', $search;
+    public $free_consultation, $contingency_cases, $year_exp = '20', $category, $distance = '20', $rate = '20', $search, $modal;
 
     public function mount()
     {
@@ -26,9 +27,14 @@ class SearchLawyers extends Component
 
     public function searchFilter()
     {
+        
+
         $user = User::where('status', '1')->with('lawyerCategory', function ($query) {
+            $query->with('items', 'categories');
+        })->with('lawyerInfo', function ($query) {
             $query->with('categories', 'items');
         });
+
 
         //search filter
         if ($this->search) {
@@ -99,9 +105,10 @@ class SearchLawyers extends Component
             }
         });
 
-        
+
         $user = $user->latest()->get();
         $this->lawyers = $user;
+    //dd($this->lawyers);
     }
 
     public function render()
@@ -109,6 +116,15 @@ class SearchLawyers extends Component
         $this->searchFilter();
 
         $this->categories = Category::where('is_search', '1')->withCount('items')->with('items')->get();
-        return view('livewire.search-lawyers');
+
+        $items=Item::whereStatus('1')->get();
+        $categoriesMulti = Category::whereStatus('1')->where('is_multiselect', '1')->get();
+        // dd(  $categoriesMulti);
+        return view('livewire.search-lawyers', compact('categoriesMulti','items'));
+    }
+
+    public function modalData($userData){
+        $this->modal = $userData;
+        
     }
 }
