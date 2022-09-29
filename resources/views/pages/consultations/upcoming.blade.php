@@ -12,8 +12,6 @@
 
                     @include('pages.consultations.tabs')
 
-                     
-
                     <div class="lawyer-tabs_contents">
                         <div class="tab-content">
                             <div id="Upcoming" class="container tab-pane active">
@@ -38,12 +36,17 @@
                                             }
                                             @endphp
                                             @forelse ($upcomingConsultations as $upcoming)
+
+                                            @php
+                                            $start_time=date('g:i A', strtotime($upcoming->booking_time));
+                                            $end_time=date('g:i A', strtotime($upcoming->booking_time. ' +30 minutes'));
+                                            @endphp
                                             <tr>
                                                 <td>{{$upcoming->$role->first_name}}</td>
                                                 <td>{{$upcoming->$role->last_name}}</td>
                                                 <td>Car Accident</td>
                                                 <td>{{date('d-m-y', strtotime($upcoming->booking_date)) }}</td>
-                                                <td>{{date('g:i A', strtotime($upcoming->booking_time))}} - {{date('g:i A', strtotime($upcoming->booking_time. ' +30 minutes'))}} </td>
+                                                <td>{{$start_time}} - {{$end_time}}</td>
                                                 <td>
                                                     <div class="dropdown reshedule_dropdowns">
                                                         <button class="toggle_cstm-btn" type="button">Reshedule</button>
@@ -78,6 +81,8 @@
 
                                                     </div>
                                                 </td>
+
+
                                             </tr>
                                             @empty
 

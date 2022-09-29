@@ -119,6 +119,10 @@
                                 <a href="{{ route('lawyer.show', $lawyer->id) }}">See Profile</a>
                             </div>
 
+                            <div class="add-litigations">
+                                <button type="button" class="accept_btn showModal mt-2" wire:click="modalData({{$lawyer}})">Courts</button>
+                            </div>
+
                             @php $lawyerID= Crypt::encrypt($lawyer->id); @endphp
                             <div class="schedular_consultation">
                                 <a href="{{route('schedule.consultation',$lawyerID)}}" class="schule_consultation-btn">Schedule Consultation</a>
@@ -128,10 +132,56 @@
                 </div>
                 @endforeach
 
-
-
-
+                @if($modal)
+                <!-- Accept Modal Start Here-->
+                <div wire:ignore.self class="modal fade" id="courtModal" tabindex="-1" aria-labelledby="courtModal" aria-hidden="true">
+                    <div class="modal-dialog modal_style">
+                        <button type="button" class="btn btn-default close closeModal">
+                            <i class="fas fa-close"></i>
+                        </button>
+                        <div class="modal-content">
+                            <form>
+                                <div class="modal-header modal_h">
+                                    <h3>Courts</h3>
+                                </div>
+                                <div class="modal-body">
+                                    <div>
+                                        <h5>Federal Court Admissions</h5>
+                                        @foreach ($modal['lawyer_info'] as $lawyerInfo)
+                                        @if($lawyerInfo['categories']['is_multiselect'])
+                                        <h6>{{$lawyerInfo['items']['name']}}</h6>
+                                        <div class="federal-court">
+                                            <div class="form-grouph select-design">
+                                                <label>Bar Number</label>
+                                                <div>{{($lawyerInfo['bar_number'])?$lawyerInfo['bar_number']:'--'}}</div>
+                                            </div>
+                                            <div class="form-grouph select-design">
+                                                <label>Year Admitted</label>
+                                                <div>{{($lawyerInfo['year_admitted'])?$lawyerInfo['year_admitted']:'--'}}</div>
+                                            </div>
+                                        </div>
+                                        @endif
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- Accept Modal Close Here-->
+                @endif
                 <div id="pagination-container" class="pagination-container-service"></div>
             </div>
         </div>
+
+        @push('scripts')
+        <script>
+            $(document).on('click', '.showModal', function(e) {
+                $('#courtModal').modal('show');
+            });
+            $(document).on('click', '.closeModal', function(e) {
+                $('#courtModal').modal('hide');
+            });
+        </script>
+        @endpush
     </div>
