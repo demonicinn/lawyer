@@ -146,9 +146,9 @@
                                 </div>
                                 <div class="modal-body">
                                     <div>
-
                                         @foreach ($modal['lawyer_info'] as $lawyerInfo)
                                         @if($lawyerInfo['categories']['is_multiselect'])
+                                        
                                         <h6>{{$lawyerInfo['items']['name']}}</h6>
                                         <div class="federal-court">
                                             <div class="form-grouph select-design">

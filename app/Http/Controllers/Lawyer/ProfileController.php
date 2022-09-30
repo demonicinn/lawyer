@@ -31,11 +31,11 @@ class ProfileController extends Controller
         // dd($user);
 
         $categories = Category::whereStatus('1')->where('is_multiselect', '0')->get();
-        $categoriesMulti = Category::whereStatus('1')->where('is_multiselect', '1')->get();
+        $categoriesMulti = Category::whereStatus('1')->where('is_multiselect', '1')->orderBy('name','ASC')->get();
         
 
 
-        //    dd($categories);
+        //  dd($categoriesMulti);
         return view('lawyer.profile.index', compact('user', 'title', 'states', 'categories', 'categoriesMulti'));
     }
 

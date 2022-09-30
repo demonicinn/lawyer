@@ -131,12 +131,13 @@ class Categories extends Component
     public function storeItem()
     {
 
+
         $this->validate([
             'item_name' => 'required|max:255',
             'item_status' => 'required',
         ]);
 
-
+       
         $store = new Item();
         if ($this->itemId) {
             $store->id = $this->itemId;
@@ -197,7 +198,9 @@ class Categories extends Component
     {
         $categories = Category::with('items')->where(function ($query) {
             return $query->where('name', 'like', '%' . $this->search . '%');
-        })->latest('id')->paginate(10);
+        })->with('items', function ($query) {
+            $query->latest('id');
+        })->paginate(10);
 
         return view('livewire.admin.categories', compact('categories'));
     }

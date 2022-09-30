@@ -20,7 +20,14 @@
             <tbody>
                 @foreach($categories as $category)
                 <tr style="background: grey;">
-                    <td>{{ $category->name }}<a class="btn_add mr-2" wire:click="addItemTypes('{{$category->id}}')">
+                    <td>@if ($category->is_category=='1' )
+                        <h5> Federal Court Admissions</h5>
+                        <h6>({{ $category->name }})</h6>
+                        @else
+                        <h6>{{ $category->name }}</h6>
+                        @endif
+
+                        <a class="btn_add mr-2" wire:click="addItemTypes('{{$category->id}}')">
                             <i class="fas fa-plus-circle showItemModal"></i> Add Item
                         </a>
                     <td>
@@ -39,6 +46,7 @@
                     @if($category->items && count($category->items)>0)
                 <tr>
                     <thead>
+                        <th>sno</th>
                         <th>Item</th>
                         <th>Status</th>
                         <th>Action</th>
@@ -46,6 +54,7 @@
                 </tr>
                 @foreach($category->items as $i => $list)
                 <tr>
+                    <td>{{ $loop->iteration }} </td>
                     <td>{{ $list->name }}</td>
                     <td>
                         @if($list->status=='1')

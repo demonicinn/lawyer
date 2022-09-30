@@ -35,14 +35,16 @@ $lawyer_details = $user->lawyerInfo;
                 <div class="form-grouph select-design">
                     @foreach ($categories as $category)
                     <div class="form-grouph input-design">
+
                         <label> {{ $category->name }}*</label>
+
                     </div>
                     <select name="lawyer_info[{{$category->id}}]" id="lawyer_info-{{$category->id}}">
                         <option value="">Select {{ $category->name }}</option>
                         @foreach($category->items as $i => $list)
-                            <option value="{{$list->id}}"  @foreach ($lawyer_details as $i=> $item) {{ ( $list->id== $item->item_id) ? 'selected' : '' }} @endforeach >
-                                {{$list->name}}
-                            </option>
+                        <option value="{{$list->id}}" @foreach ($lawyer_details as $i=> $item) {{ ( $list->id== $item->item_id) ? 'selected' : '' }} @endforeach >
+                            {{$list->name}}
+                        </option>
                         @endforeach
                     </select>
                     {!! $errors->first('lawyer_info.'.$category->id, '<span class="help-block">:message</span>') !!}
@@ -157,31 +159,33 @@ $lawyer_details = $user->lawyerInfo;
 
                 @livewire('lawyer.practice-areas')
 
-                
-                
+
+
 
 
                 <div class="form-grouph select-design">
                     @foreach ($categoriesMulti as $category)
                     <div class="form-grouph input-design">
+                        @if ($category->is_category=='1')
+                        <h5>Federal court admissions</h5>
+                       ( {{ $category->name }})*
+                        @else
                         <label> {{ $category->name }}*</label>
+                        @endif
+
                     </div>
                     <select class="select-block multiBoxes" multiple>
                         @foreach($category->items as $i => $list)
-                            <option value="{{$list->id}}" 
-                                    data-cat="{{$category->id}}" 
-                                    data-name="{{$list->name}}"  
-                                    
-                                    @foreach ($lawyer_details as $i=> $item)
-                                    @if($list->id==$item->item_id)
-                                    data-year="{{$item->year_admitted}}" 
-                                    data-bar="{{$item->bar_number}}"
-                                    selected
-                                    @endif
-                                    @endforeach
-                                    >
-                                {{$list->name}}
-                            </option>
+                        <option value="{{$list->id}}" data-cat="{{$category->id}}" data-name="{{$list->name}}" @foreach ($lawyer_details as $i=> $item)
+                            @if($list->id==$item->item_id)
+                            data-year="{{$item->year_admitted}}"
+                            data-bar="{{$item->bar_number}}"
+                            selected
+                            @endif
+                            @endforeach
+                            >
+                            {{$list->name}}
+                        </option>
                         @endforeach
                     </select>
                     {!! $errors->first('lawyer_info.'.$category->id, '<span class="help-block">:message</span>') !!}
@@ -199,10 +203,10 @@ $lawyer_details = $user->lawyerInfo;
 
             </div>
         </div>
-        
-        
+
+
         @include('lawyer.profile.hours')
-        
+
 
 
 
