@@ -1682,7 +1682,7 @@ label.second-label-design {
     padding-bottom: 110px;
 }
 .accept_btn {
-    background-color: #828282;
+    background-color:#98a190;
     color: #fff;
     border: none;
     font-size: 16px;
@@ -2966,3 +2966,8 @@ img {
     display: flex;
     justify-content: space-between;
 }
+
+svg.svg-inline--fa.fa-circle-plus.showItemModal {
+    font-size: 35px;
+}
+

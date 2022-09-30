@@ -73,20 +73,14 @@ class PagesController extends Controller
     //
     public function lawyerShow(Request $request, User $user)
     {
-
-        
-    
         if (@$user->status == '1' && @$user->details->is_verified == 'yes') {
             return view('pages.lawyers-show', compact('user'));
         }
-
         abort(404);
     }
 
     public function saveLaywer($id)
     {
-
-        
         $lawyerID = Crypt::decrypt($id);
         $authUser = auth()->user();
         $saveLawyer = new SavedLawyer;
