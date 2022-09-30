@@ -128,18 +128,14 @@ class SearchLawyers extends Component
         $user = $user->get();
         $user = $user->pluck('SUM(lawyerReviews.rating)');
 
-        dd($user);
+        //dd($user);
         $this->lawyers = $user;
-<<<<<<< HEAD
-=======
-
->>>>>>> 6d056bf (search with rating)
-        //dd($this->lawyers);
     }
 
 
     public function modalData($userData){
         $this->modal = $userData;
+        $this->emit('courtModalShow');
         
     }
 
@@ -152,13 +148,5 @@ class SearchLawyers extends Component
         return view('livewire.search-lawyers');
     }
 
-<<<<<<< HEAD
-    public function modalData($userData)
-    {
-        //  dd($userData);  
-        $this->modal = $userData;
-        $this->emit('courtModalShow');
-    }
-=======
->>>>>>> 6d056bf (search with rating)
+
 }
