@@ -124,4 +124,11 @@ class User extends Authenticatable
         return $this->hasOne(Lawyer_info::class, 'user_id', 'id');
     }
 
+
+    public function lawyerReviews()
+    {
+        return $this->hasMany(LawyerReviews::class, 'lawyer_id', 'id');
+    }
+
+
 }
