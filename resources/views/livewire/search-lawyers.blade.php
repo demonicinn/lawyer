@@ -89,12 +89,14 @@
                 @foreach($lawyers as $lawyer)
                 <div class="list-item list-service-item">
                     <div class="lawyer-hire-block">
+                        @if(@$lawyer->profile_pic)
                         <div class="lawyers-img-block">
                             <img src="{{ $lawyer->profile_pic }}">
                         </div>
+                        @endif
                         <div class="lawyers-service-cntnt-block">
                             <div class="lawyers-heading_service d-flex justify-content-spacebw align-items-center">
-                                <h4 class="lawyer-name">{{ $lawyer->name }}</h4>
+                                <h4 class="lawyer-name">{{ @$lawyer->name }}</h4>
                                 <button class="hire-price-btn">${{ @$lawyer->details->hourly_fee }}/hr.</button>
                             </div>
                             <div class="lawyers-desc_service d-flex justify-content-spacebw">

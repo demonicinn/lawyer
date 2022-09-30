@@ -126,8 +126,6 @@ class SearchLawyers extends Component
 
         //$user = $user->latest()->get();
         $user = $user->get();
-        $user = $user->pluck('SUM(lawyerReviews.rating)');
-
         //dd($user);
         $this->lawyers = $user;
     }
