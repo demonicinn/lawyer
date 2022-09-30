@@ -121,6 +121,7 @@ class SearchLawyers extends Component
 
     public function modalData($userData)
     {
+        //  dd($userData);  
         $this->modal = $userData;
         $this->emit('courtModalShow');
     }
