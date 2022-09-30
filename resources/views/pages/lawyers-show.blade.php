@@ -38,12 +38,16 @@
                                     <div class="location_profile-divs">
                                         <address><i class="fa-solid fa-location-dot"></i> {{ @$user->details->city }}, {{ @$user->details->states->code }}</address>
                                     </div>
+
+
+                                    <!-- <div class="add-litigations">
+                                        <button type="button" class="accept_btn showModal mt-2">Courts</button>
+                                    </div> -->
+
                                     @php $lawyerID= Crypt::encrypt($user->id); @endphp
                                     <div class="schedular_consultation">
                                         <a href="{{route('schedule.consultation',$lawyerID)}}" class="schule_consultation-btn">Schedule Consultation</a>
                                     </div>
-
-
                                 </div>
                             </div>
                         </div>
@@ -58,7 +62,7 @@
 
                                 @if (Auth::check())
 
-                               
+
                                 @if ( !empty($user->savedLawyer) && $user->savedLawyer->user_id==Auth::user()->id)
                                 <div class="save_btn text-center">
                                     <a href="#" class="btn-design-first" title="Already Saved">Saved Attorney</a>
