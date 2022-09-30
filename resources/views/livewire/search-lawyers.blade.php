@@ -38,7 +38,7 @@
                             <p class="min-value">1</p>
                             <div id="years-experience-slider" class="range-slider">
                                 <div id="experience-range-tooltip" class="tooltip-range"></div>
-                                <input wire:model="year_exp" class="range_design-input" type="range" step="1" min="1" max="20">
+                                <input wire:model="year_exp" class="range_design-input" type="range" step="1" min="0" max="20">
                             </div>
                             <p class="max-value">20</p>
                         </div>
@@ -68,7 +68,7 @@
                             <p class="min-value">1 mi</p>
                             <div id="distance-range-slides" class="range-slider">
                                 <div class="tooltip-range"></div>
-                                <input class="range_design-input" wire:model="distance" type="range" step="1" min="1" max="10000">
+                                <input class="range_design-input" wire:model="distance" type="range" step="1" min="0" max="100">
                             </div>
                             <p class="max-value">100 mi</p>
                         </div>
