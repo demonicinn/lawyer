@@ -146,7 +146,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <div>
-                                        <h5>Federal Court Admissions</h5>
+
                                         @foreach ($modal['lawyer_info'] as $lawyerInfo)
                                         @if($lawyerInfo['categories']['is_multiselect'])
                                         <h6>{{$lawyerInfo['items']['name']}}</h6>
@@ -176,6 +176,12 @@
 
         @push('scripts')
         <script>
+            $(document).ready(function() {
+
+                window.livewire.on('courtModalShow', () => {
+                    $('#courtModal').modal('show');
+                });
+            });
             $(document).on('click', '.showModal', function(e) {
                 $('#courtModal').modal('show');
             });

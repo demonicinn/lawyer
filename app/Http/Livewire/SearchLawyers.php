@@ -27,7 +27,7 @@ class SearchLawyers extends Component
 
     public function searchFilter()
     {
-        
+
 
         $user = User::where('status', '1')->with('lawyerCategory', function ($query) {
             $query->with('items', 'categories');
@@ -108,7 +108,7 @@ class SearchLawyers extends Component
 
         $user = $user->latest()->get();
         $this->lawyers = $user;
-    //dd($this->lawyers);
+        //dd($this->lawyers);
     }
 
     public function render()
@@ -116,15 +116,12 @@ class SearchLawyers extends Component
         $this->searchFilter();
 
         $this->categories = Category::where('is_search', '1')->withCount('items')->with('items')->get();
-
-        $items=Item::whereStatus('1')->get();
-        $categoriesMulti = Category::whereStatus('1')->where('is_multiselect', '1')->get();
-        // dd(  $categoriesMulti);
-        return view('livewire.search-lawyers', compact('categoriesMulti','items'));
+        return view('livewire.search-lawyers');
     }
 
-    public function modalData($userData){
+    public function modalData($userData)
+    {
         $this->modal = $userData;
-        
+        $this->emit('courtModalShow');
     }
 }

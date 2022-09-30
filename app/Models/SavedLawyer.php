@@ -14,8 +14,13 @@ class SavedLawyer extends Model
         return $this->belongsTo(User::class, 'lawyer_id', 'id');
     }
 
-    public function lawyerInfo()
+    public function lawyerCategory()
     {
         return $this->hasOne(Lawyer_info::class, 'user_id', 'lawyer_id');
+    }
+
+    public function lawyerInfo()
+    {
+        return $this->hasMany(Lawyer_info::class, 'user_id', 'lawyer_id');
     }
 }

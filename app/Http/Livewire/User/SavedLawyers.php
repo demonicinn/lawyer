@@ -17,13 +17,19 @@ class SavedLawyers extends Component
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
 
-    public  $authUser, $search, $practices, $practiceArea, $areaId;
+    public  $authUser, $search, $practices, $practiceArea, $areaId, $modal;
 
 
     public function clear()
     {
         $this->practiceArea = null;
         $this->search = null;
+    }
+
+    public function modalData($userData)
+    {
+        $this->modal = $userData;
+        $this->emit('courtModalShow');
     }
 
     public function render()
@@ -33,11 +39,13 @@ class SavedLawyers extends Component
         $ligitions = Litigation::where('status', '1')->get();
         $contracts = Contract::where('status', '1')->get();
 
-        $user = SavedLawyer::with('lawyer', 'lawyerInfo')->where('user_id', $this->authUser->id)
-
-            ->with('lawyerInfo', function ($query) {
-                $query->with('categories', 'items');
-            });
+        $user = SavedLawyer::with('lawyer')->where('user_id', $this->authUser->id)
+                            ->with('lawyerCategory', function ($query) {
+                                $query->with('categories', 'items');
+                            })->with('lawyerInfo', function ($query) {
+                                $query->with('categories', 'items');
+                            });
+            
         if (!empty($this->search)) {
             $search = $this->search;
             $user->whereHas('lawyer', function ($query) use ($search) {
@@ -49,7 +57,7 @@ class SavedLawyers extends Component
         $user = $user->paginate(10);
         $lawyers = $user;
 
-       if ($this->practiceArea == 'Litigations') {
+        if ($this->practiceArea == 'Litigations') {
             $this->practices =  $ligitions;
             if ($this->areaId) {
 
