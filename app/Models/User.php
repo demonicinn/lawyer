@@ -119,6 +119,11 @@ class User extends Authenticatable
         return $this->hasMany(Booking::class, 'lawyer_id', 'id');
     }
 
+    public function bookingUser()
+    {
+        return $this->hasMany(Booking::class, 'user_id', 'id');
+    }
+
     public function lawyerCategory()
     {
         return $this->hasOne(Lawyer_info::class, 'user_id', 'id');

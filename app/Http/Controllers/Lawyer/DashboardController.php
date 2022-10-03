@@ -5,10 +5,6 @@ namespace App\Http\Controllers\Lawyer;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-
-use App\Models\Booking;
-
-
 class DashboardController extends Controller
 {
     //
@@ -23,6 +19,7 @@ class DashboardController extends Controller
 
 
 		$upcomingConsultations = $user->booking()
+									->where('booking_Date', '>=', date('Y-m-d'))
 									->where('is_call', 'pending')
 									->where('is_accepted', '0')
 									->count();

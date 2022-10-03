@@ -156,33 +156,41 @@ class ScheduleConsultation extends Component
 
         $getLeaves = $this->lawyer->booking()->whereDate('booking_date', $date)->pluck('booking_time')->toArray();
 
-        if (@$lawyerHours && $date > date('Y-m-d')) {
 
-            $startTime = strtotime($lawyerHours->from_time);
-            $endTime = strtotime($lawyerHours->to_time);
-            $duration = '30';
+        $checkLeave = $this->lawyer->leave()->where('date', $date)->first();
 
-            //...
-            $time_slots = array();
-            $add_mins  = $duration * 60;
 
-            while ($startTime <= $endTime) {
-                $timeSlot = [];
-                if(in_array(date("H:i:s", $startTime), $getLeaves)) {
-                    $timeSlot['is_free'] = 'no';
+
+
+        if(!$checkLeave){
+            if (@$lawyerHours && $date > date('Y-m-d')) {
+
+                $startTime = strtotime($lawyerHours->from_time);
+                $endTime = strtotime($lawyerHours->to_time);
+                $duration = '30';
+
+                //...
+                $time_slots = array();
+                $add_mins  = $duration * 60;
+
+                while ($startTime <= $endTime) {
+                    $timeSlot = [];
+                    if(in_array(date("H:i:s", $startTime), $getLeaves)) {
+                        $timeSlot['is_free'] = 'no';
+                    }
+                    else {
+                        $timeSlot['is_free'] = 'yes';
+                    }
+
+
+                    $timeSlot['time'] = date("H:i", $startTime);
+                    $time_slots[] = $timeSlot;
+
+                    $startTime += $add_mins;
+
                 }
-                else {
-                    $timeSlot['is_free'] = 'yes';
-                }
-
-
-                $timeSlot['time'] = date("H:i", $startTime);
-                $time_slots[] = $timeSlot;
-
-                $startTime += $add_mins;
-
+                $this->workingDatesTimeSlot = $time_slots;
             }
-            $this->workingDatesTimeSlot = $time_slots;
         }
     }
 
@@ -440,8 +448,8 @@ class ScheduleConsultation extends Component
                         if (!Auth::check()) {
                             Auth::login($authUser);
                         }
-                        $this->flash('success', 'Booking done successfully');
-                        return redirect()->route('user.dashboard');
+                        $this->flash('success', 'Booking scheduled successfully');
+                        return redirect()->route('consultations.upcoming');
                     }
                 }
     }

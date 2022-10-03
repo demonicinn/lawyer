@@ -86,6 +86,7 @@
         <div class="lawyers-list-sec">
             <div class="list-wrapper list-service">
 
+                @if(count($lawyers)>0)
                 @foreach($lawyers as $lawyer)
                 <div class="list-item list-service-item">
                     <div class="lawyer-hire-block">
@@ -133,6 +134,12 @@
                     </div>
                 </div>
                 @endforeach
+                @else
+                <p>No lawyers found</p>
+                @endif
+
+
+
 
                 @if($modal)
                 <!-- Accept Modal Start Here-->
