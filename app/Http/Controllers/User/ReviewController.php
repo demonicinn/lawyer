@@ -23,11 +23,21 @@ class ReviewController extends Controller
 
         $booking = Booking::findOrFail(decrypt($request->id));
 
-        $checkReview = LawyerReviews::where('booking_id', $booking->id)->first();
-        if(@$checkReview){
+
+
+        $checkReviewCount = LawyerReviews::where('booking_id', $booking->id)->count();
+
+        if(@$checkReviewCount == '1'){
             $this->flash('error', 'You already Rated');
             return redirect()->route('consultations.complete');
         }
+        else {
+            if($booking->is_accepted=='1' && $checkReviewCount=='1'){
+                return view('user.review.index', compact('title', 'booking'));
+            }
+        }
+
+        
 
         return view('user.review.index', compact('title', 'booking'));
     }

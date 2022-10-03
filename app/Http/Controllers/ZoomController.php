@@ -69,17 +69,19 @@ class ZoomController extends Controller
 		$user = auth()->user();
 
 		$booking = Booking::where('zoom_id', $request->id)
-					//->where('booking_date', '>=', date('Y-m-d'))
+					->where('booking_date', date('Y-m-d'))
+					->where('booking_time', '>', date('h:i:s'))
 					->where(function($query) use($user) {
 						$query->where('user_id', $user->id);
 						$query->orWhere('lawyer_id', $user->id);
 					})
-					->where('is_call', 'pending')
+					//->where('is_call', 'pending')
 					->first();
 		
-		$this->flash('success', 'Meeting successfully completed.');
+		
 
 		if(!$booking){
+			//$this->flash('success', 'Meeting successfully completed.');
 			return redirect()->route('home');
 		}
 
@@ -87,7 +89,7 @@ class ZoomController extends Controller
 		$booking->is_call = 'completed';
 		$booking->save();
 
-
+		$this->flash('success', 'Meeting successfully completed.');
         return redirect()->route('home');
     }
 
