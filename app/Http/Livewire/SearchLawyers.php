@@ -131,8 +131,8 @@ class SearchLawyers extends Component
     }
 
 
-    public function modalData($userData){
-        $this->modal = $userData;
+    public function modalData($userId){
+        $this->modal = user::findOrFail($userId);
         $this->emit('courtModalShow');
         
     }

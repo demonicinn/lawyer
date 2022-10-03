@@ -40,6 +40,21 @@
 
 
 
+	function getBookingsCount($month, $year){
+		$user = auth()->user();
+
+		$data = $user->booking()->whereYear('booking_date', $year)->whereMonth('booking_date', $month)->count();
+
+		if(@$data){
+			return $data;
+		}
+		else{
+			return '0';
+		}
+	}
+
+
+
 	
 	
 	
