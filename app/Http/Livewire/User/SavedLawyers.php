@@ -63,7 +63,7 @@ class SavedLawyers extends Component
 
                 $lawyerId = LawyerLitigations::where('litigations_id', $this->areaId)->select('users_id')->get();
                 if (count($lawyerId) > 0) {
-                    $lawyers = SavedLawyer::with('lawyer')->whereIn('lawyer_id',  $lawyerId)->paginate(10);
+                    $lawyers = SavedLawyer::with('lawyer')->whereIn('lawyer_id',  $lawyerId)->where('user_id',$this->authUser->id)->paginate(10);
                 }
             }
         } elseif ($this->practiceArea == 'Contracts') {
@@ -71,7 +71,7 @@ class SavedLawyers extends Component
             if ($this->areaId) {
                 $lawyerId = LawyerContracts::where('contracts_id', $this->areaId)->select('users_id')->get();
                 if (count($lawyerId) > 0) {
-                    $lawyers = SavedLawyer::with('lawyer')->whereIn('lawyer_id',  $lawyerId)->paginate(10);
+                    $lawyers = SavedLawyer::with('lawyer')->whereIn('lawyer_id',  $lawyerId)->where('user_id',$this->authUser->id)->paginate(10);
                 }
             }
         } else {
