@@ -358,6 +358,9 @@ class CommonController extends Controller
                 }
             }
             else {
+
+                $this->flash('success', 'Case accepted successfully');
+
                 // send mail to user
                 Notification::route('mail', $acceptCase->user_email)->notify(new UserMailForCaseStatus($acceptCase, $status));
 
@@ -368,7 +371,7 @@ class CommonController extends Controller
 
             }
             
-            return back();
+            return redirect()->route('consultations.accepted');
             
         }
     }
@@ -398,6 +401,7 @@ class CommonController extends Controller
             $this->flash('error', 'Something went wrong');
         }
         return back();
+        return redirect()->route('consultations.accepted');
     }
 
     public function reschedule($id)

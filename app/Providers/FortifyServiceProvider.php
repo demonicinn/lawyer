@@ -39,6 +39,14 @@ class FortifyServiceProvider extends ServiceProvider
 				'title' => 'Login',
 				'active' => 'login'
 			);
+
+			if(@request()->redirect==true){
+				session(['link' => url()->previous()]);
+			}
+			else {
+				session(['link' => '']);
+			}
+
 			return view('auth.login', compact('title'));
 		});
 	
@@ -49,6 +57,8 @@ class FortifyServiceProvider extends ServiceProvider
 				'password' => 'required',
 			]);
 			
+			
+
 			$user = User::where('email', $request->email)->first();
 			
 			if ($user &&

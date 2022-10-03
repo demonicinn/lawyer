@@ -5,89 +5,40 @@
         <div class="heading-paragraph-design text-center position-relative mb-5">
             <h2>{{ @$title['title'] }}</h2>
         </div>
-        <div class="portal-page-wrapper">
+        <div class="">
             <div class="row">
-                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
                     <div class="portal-div-design position-relative">
                         <div class="portal-div-img">
                             <img src="{{ asset('assets/images/schedule.svg') }}">
                         </div>
                         <div class="portal-cntnt-wrapper">
-                            <a href="#">Schedule</a>
-                            <p>Scheduled Consultations </p>
-                        </div>
-                        <div class="dropdown">
-                            <button type="button" class="options-dropdown dropdown-toggle" data-bs-toggle="dropdown">
-                                <i class="fas fa-ellipsis-v"></i>
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Link 1</a></li>
-                                <li><a class="dropdown-item" href="#">Link 2</a></li>
-                                <li><a class="dropdown-item" href="#">Link 3</a></li>
-                            </ul>
+                            <a href="{{ route('consultations.upcoming') }}">Upcoming Consultations</a>
+                            <p>{{ $upcomingConsultations }}</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
                     <div class="portal-div-design position-relative">
                         <div class="portal-div-img">
-                            <img src="{{ asset('assets/images/services-portal.svg') }}">
+                            <img src="{{ asset('assets/images/schedule.svg') }}">
                         </div>
                         <div class="portal-cntnt-wrapper">
-                            <a href="#">Services</a>
-                            <p>Lawyer Services Needed</p>
-                        </div>
-                        <div class="dropdown">
-                            <button type="button" class="options-dropdown dropdown-toggle" data-bs-toggle="dropdown">
-                                <i class="fas fa-ellipsis-v"></i>
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Link 1</a></li>
-                                <li><a class="dropdown-item" href="#">Link 2</a></li>
-                                <li><a class="dropdown-item" href="#">Link 3</a></li>
-                            </ul>
+                            <a href="{{ route('consultations.complete') }}">Completed Consultations</a>
+                            <p>{{ $completeConsultations }}</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
                     <div class="portal-div-design position-relative">
                         <div class="portal-div-img">
-                            <img src="{{ asset('assets/images/account-portal.svg') }}">
+                            <img src="{{ asset('assets/images/schedule.svg') }}">
                         </div>
                         <div class="portal-cntnt-wrapper">
-                            <a href="#">Account</a>
-                            <p>Account + Billing Information</p>
-                        </div>
-                        <div class="dropdown">
-                            <button type="button" class="options-dropdown dropdown-toggle" data-bs-toggle="dropdown">
-                                <i class="fas fa-ellipsis-v"></i>
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Link 1</a></li>
-                                <li><a class="dropdown-item" href="#">Link 2</a></li>
-                                <li><a class="dropdown-item" href="#">Link 3</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                    <div class="portal-div-design position-relative">
-                        <div class="portal-div-img">
-                            <img src="{{ asset('assets/images/saved-lawyers.svg') }}">
-                        </div>
-                        <div class="portal-cntnt-wrapper">
-                            <a href="{{route('user.saved.lawyer')}}">Saved Lawyers</a>
-                            <p>Favorited Lawyers for Services</p>
-                        </div>
-                        <div class="dropdown">
-                            <button type="button" class="options-dropdown dropdown-toggle" data-bs-toggle="dropdown">
-                                <i class="fas fa-ellipsis-v"></i>
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Link 1</a></li>
-                                <li><a class="dropdown-item" href="#">Link 2</a></li>
-                                <li><a class="dropdown-item" href="#">Link 3</a></li>
-                            </ul>
+                            <a href="{{ route('consultations.accepted') }}">Accepted Consultations</a>
+                            <p>{{ $acceptedConsultations }}</p>
                         </div>
                     </div>
                 </div>

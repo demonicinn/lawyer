@@ -77,7 +77,6 @@
 
                 onDateSelect: function(date, events) {
 
-
                     var dateF = new Date(date);
                     let newDate = (dateF.getMonth() + 1) + '/' + dateF.getDate() + '/' + dateF.getFullYear();
 
@@ -90,7 +89,12 @@
 
             let $calendar = container.data('plugin_simpleCalendar')
             //reinit events
+
+
             $calendar.setEvents(eventArray)
+
+
+            console.log('fcdfcdx', $calendar)
         }
 
     </script>

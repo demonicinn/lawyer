@@ -73,6 +73,10 @@
                                 </div>
                                 @endif
 
+                                @else
+                                <div class="save_btn text-center">
+                                    <a href="{{route('login')}}?redirect=true" class="btn-design-first">Save Attorney</a>
+                                </div>
                                 @endif
 
                             </div>
