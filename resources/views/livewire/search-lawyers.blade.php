@@ -122,7 +122,7 @@
                             </div>
 
                             <div class="add-litigations">
-                                <button type="button" class="accept_btn showModal mt-2" wire:click="modalData({{$lawyer}})">Courts</button>
+                                <button type="button" class="accept_btn showModal mt-2" wire:click="modalData({{$lawyer->id}})">Courts</button>
                             </div>
 
                             @php $lawyerID= Crypt::encrypt($lawyer->id); @endphp
@@ -148,18 +148,20 @@
                                 </div>
                                 <div class="modal-body">
                                     <div>
-                                        @foreach ($modal['lawyer_info'] as $lawyerInfo)
-                                        @if($lawyerInfo['categories']['is_multiselect'])
-                                        
-                                        <h6>{{$lawyerInfo['items']['name']}}</h6>
-                                        <div class="federal-court">
-                                            <div class="form-grouph select-design">
-                                                <label>Bar Number</label>
-                                                <div>{{($lawyerInfo['bar_number'])?$lawyerInfo['bar_number']:'--'}}</div>
-                                            </div>
-                                            <div class="form-grouph select-design">
-                                                <label>Year Admitted</label>
-                                                <div>{{($lawyerInfo['year_admitted'])?$lawyerInfo['year_admitted']:'--'}}</div>
+                                        @foreach ($modal->lawyerInfo as $lawyerInfo)
+                                        @if($lawyerInfo->categories->is_multiselect)
+                                        <div class="mb-4">
+                                            <h6>{{ @$lawyerInfo->items->name }}</h6>
+                                            <p class="mb-0">{{ @$lawyerInfo->items->category->name }} {{ @$lawyerInfo->items->category->mainCat->name ? ' - '.$lawyerInfo->items->category->mainCat->name : ''  }}</p>
+                                            <div class="federal-court">
+                                                <div class="form-grouph select-design">
+                                                    <label>Bar Number</label>
+                                                    <div>{{ @$lawyerInfo->bar_number ?? '--' }}</div>
+                                                </div>
+                                                <div class="form-grouph select-design">
+                                                    <label>Year Admitted</label>
+                                                    <div>{{ $lawyerInfo->year_admitted ?? '--'}}</div>
+                                                </div>
                                             </div>
                                         </div>
                                         @endif

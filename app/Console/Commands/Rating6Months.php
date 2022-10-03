@@ -48,7 +48,7 @@ class Rating6Months extends Command
             try{
                 
                 $user = $booking->user;
-                $url = '/';
+                $url = route('review.lawyer', encrypt($booking->id));
 
                 Notification::route('mail', $user->email)
                     ->notify(new Rating6MonthsNotification($user, $url));
