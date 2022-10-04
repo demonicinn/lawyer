@@ -76,20 +76,19 @@
                                                         </div>
 
                                                         @endif
-
-
-
                                                     </div>
                                                 </td>
-
-
                                             </tr>
-                                            @empty
-
-                                            <h2>No Upcoming Consultation.</h2>
-
-                                            @endforelse
                                         </tbody>
+                                        @empty
+                                        <tfoot>
+                                            <tr>
+                                                <td>
+                                                    <h4>No consultations found</h4>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                        @endforelse
                                     </table>
                                 </div>
                             </div>

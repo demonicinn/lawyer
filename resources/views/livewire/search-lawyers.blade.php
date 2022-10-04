@@ -86,7 +86,7 @@
         <div class="lawyers-list-sec">
             <div class="list-wrapper list-service">
 
-                @foreach($lawyers as $lawyer)
+                @forelse($lawyers as $lawyer)
                 <div class="list-item list-service-item">
                     <div class="lawyer-hire-block">
                         @if(@$lawyer->profile_pic)
@@ -132,7 +132,11 @@
                         </div>
                     </div>
                 </div>
-                @endforeach
+
+                @empty
+                <h4>No lawyers found</h4>
+                @endforelse
+
 
                 @if($modal)
                 <!-- Accept Modal Start Here-->

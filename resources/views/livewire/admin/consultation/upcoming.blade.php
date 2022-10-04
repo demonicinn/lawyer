@@ -12,7 +12,6 @@
                     <th>Practice Area</th>
                     <th>Date</th>
                     <th>Time</th>
-
                 </tr>
             </thead>
             <tbody>
@@ -22,7 +21,9 @@
                 $role = 'lawyer';
                 }
                 @endphp
-                @forelse ($upcomingConsul as $upcoming)
+
+                @if (count($upcomingConsul)>0)
+                @foreach ($upcomingConsul as $upcoming)
                 <tr>
                     <td>{{$upcoming->$role->first_name}}</td>
                     <td>{{$upcoming->$role->last_name}}</td>
@@ -31,11 +32,17 @@
                     <td>{{date('g:i A', strtotime($upcoming->booking_time))}} - {{date('g:i A', strtotime($upcoming->booking_time. ' +30 minutes'))}} </td>
 
                 </tr>
-                @empty
+                @endforeach
+                @else
+            <tfoot>
+                <tr>
+                    <td class="text-center">
+                        <h4>No consultations found</h4>
+                    </td>
+                </tr>
+            </tfoot>
+            @endif
 
-                <h2>No Upcoming Consultation.</h2>
-
-                @endforelse
             </tbody>
         </table>
     </div>

@@ -71,8 +71,14 @@
                     <td>Car Accident</td>
                 </tr>
                 @empty
-                <h2>No Accepted Consultation.</h2>
-                @endforelse
+            <tfoot>
+                <tr>
+                    <td class="text-center">
+                        <h4>No consultations found</h4>
+                    </td>
+                </tr>
+            </tfoot>
+            @endforelse
             </tbody>
         </table>
     </div>
