@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="42.359314px" height="41.02292px" viewBox="0 0 42.359314 41.02292" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <path d="M0 40L41.3367 40L41.3367 0L0 0L0 40Z" id="path_1" />
+    <clipPath id="mask_1">
+      <use xlink:href="#path_1" />
+    </clipPath>
+  </defs>
+  <g id="Group-18" transform="translate(0.511261 0.5114746)">
+    <path d="M12.1576 11.1577L14.5794 13.3173L18.4995 8.5231" id="Stroke-1" fill="none" fill-rule="evenodd" stroke="#F93F64" stroke-width="1.5" stroke-linecap="round" />
+    <g id="Group-17">
+      <path d="M39.5954 34.8269L39.5954 34.8269C40.4272 34.8236 41.0994 34.1478 41.098 33.316L41.0621 8.13643L38.0446 8.1486L38.0806 33.3201C38.0817 34.155 38.7606 34.8302 39.5954 34.8269Z" id="Stroke-2" fill="none" fill-rule="evenodd" stroke="#F93F64" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M39.5534 1.91477L39.5534 1.91477C40.3866 1.91477 41.0621 2.59029 41.0621 3.42349L41.0621 8.13635L38.0447 8.13635L38.0447 3.42349C38.0447 2.59029 38.7202 1.91477 39.5534 1.91477Z" id="Stroke-4" fill="none" fill-rule="evenodd" stroke="#F93F64" stroke-width="1.5" stroke-linecap="round" />
+      <path d="M39.5724 34.8329L39.5724 38.0852" id="Stroke-6" fill="none" fill-rule="evenodd" stroke="#F93F64" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M30.4186 3.26075L33.5724 3.26075L33.5724 32.6276C33.5724 36.5675 30.3785 39.7614 26.4385 39.7614L2.82188 39.7614L2.82188 36.6076" id="Stroke-8" fill="none" fill-rule="evenodd" stroke="#F93F64" stroke-width="1.5" stroke-linecap="round" />
+      <path d="M22.613 0.238534L0.238728 0.238534L0.238728 36.6076L23.9784 36.6076C25.0711 36.6076 25.9568 35.7218 25.9568 34.6291L25.9568 32.1459L28.4401 32.1459C29.5328 32.1459 30.4185 31.2601 30.4185 30.1674L30.4185 0.238534L22.613 0.238534" id="Stroke-10" fill="none" fill-rule="evenodd" stroke="#F93F64" stroke-width="1.5" stroke-linecap="round" />
+      <path d="M0 40L41.3367 40L41.3367 0L0 0L0 40Z" id="Clip-13" fill="none" fill-rule="evenodd" stroke="none" />
+      <g clip-path="url(#mask_1)">
+        <path d="M10.1555 16.0935L20.5018 16.0935L20.5018 5.74716L10.1555 5.74716L10.1555 16.0935Z" id="Stroke-12" fill="none" fill-rule="evenodd" stroke="#F93F64" stroke-width="1.5" stroke-linecap="round" />
+        <path d="M10.1555 30.0733L20.5018 30.0733L20.5018 19.727L10.1555 19.727L10.1555 30.0733Z" id="Stroke-14" fill="none" fill-rule="evenodd" stroke="#F93F64" stroke-width="1.5" stroke-linecap="round" />
+        <path d="M12.205 21.7767L18.4521 28.0237" id="Stroke-15" fill="none" fill-rule="evenodd" stroke="#F93F64" stroke-width="1.5" stroke-linecap="round" />
+        <path d="M12.205 28.0238L18.4521 21.7767" id="Stroke-16" fill="none" fill-rule="evenodd" stroke="#F93F64" stroke-width="1.5" stroke-linecap="round" />
+      </g>
+    </g>
+  </g>
+</svg>
