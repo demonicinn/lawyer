@@ -55,7 +55,7 @@ $states = \App\Models\State::whereStatus('1')->pluck('name', 'id');
 							{!! $errors->first('password_confirmation', '<span class="help-block">:message</span>') !!}
 						</div>
 					</div>
-					<div class="form-flex">
+					<div class="form-flex box_checkbox">
 						<div class="form-grouph input-design{!! ($errors->has('term') ? ' has-error' : '') !!}">
 							<input type="checkbox" id="term" name="term" class="{!! ($errors->has('term') ? ' is-invalid' : '') !!}" />Accept the privacy policy and Terms & Conditions.
 							{!! $errors->first('term', '<div class="help-block">:message</div>') !!}

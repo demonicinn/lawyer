@@ -9,7 +9,7 @@
     </div>
     <div class="directory-profile-wrapper">
         <form class="directory-form-information form-design">
-            <div class="row">
+            <div class="row justify-content-center">
                 <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12">
                     <div class="white-shadow-third-box lawyer-directory_about-block">
                         <div class="form-flex">

@@ -12,9 +12,10 @@ $lawyer_details = $user->lawyerInfo;
             <h2>Lawyer Profile</h2>
             <a href="{{ url()->previous() ?? route('narrow.down') }}" class="go-back"><i class="fa-solid fa-arrow-left-long"></i> Back to Lawyers</a>
             <div class="lawyer_status">
-                <div>
+                <div class="block_blocked">
+                <div >
                     @if($user->status=="2")
-                    <a class="btn btn-sm btn-success" href="">Blocked</a>
+                    <a class="btn btn-sm btn-success " href="">Blocked</a>
                     @else
                     <form action="{{ route('admin.block.lawyer',$user->id) }}" method="post" id="formblock">
                         @csrf
@@ -28,6 +29,7 @@ $lawyer_details = $user->lawyerInfo;
                         @csrf
                         <a class="btn btn-sm btn-success" onclick="deActiveFunction()">De-active</a>
                     </form>
+                </div>
                 </div>
                 <div>
 
@@ -54,7 +56,7 @@ $lawyer_details = $user->lawyerInfo;
             <form class="directory-form-information form-design">
                 <div class="row">
                     <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12">
-                        <div class="white-shadow-third-box">
+                        <div class="white-shadow-third-box" style="height: auto;">
                             <div class="lawyer-hire-block">
                                 <div class="lawyers-img-block">
                                     <img src="{{ $user->profile_pic }}">
@@ -91,7 +93,7 @@ $lawyer_details = $user->lawyerInfo;
                         </div>
                     </div>
                     <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12">
-                        <div class="white-shadow-third-box lawyer-directory_about-block">
+                        <div class="white-shadow-third-box lawyer-directory_about-block" style="height: auto;">
                             @if($user && $user->details->bio)
                             <div class="grey-light-heading">
                                 <h4>About {{ @$user->name }}</h4>

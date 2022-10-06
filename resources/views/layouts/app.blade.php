@@ -72,6 +72,45 @@
 
     getLocation();
   </script>
+  <script>
+      $(".service-slider").slick({
+        dots: true,
+        infinite: true,
+        centerMode: false,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        responsive: [
+    {
+      breakpoint: 1199,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 1,
+      },
+    },
+    {
+      breakpoint: 767,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+      },
+    },
+    {
+      breakpoint: 0,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+      },
+    },
+  ],
+      });
+      $(".rating-slider").slick({
+        dots: true,
+        infinite: true,
+        centerMode: false,
+        slidesToShow: 1,
+        slidesToScroll: 1
+      });
+</script>
 
 </body>
 

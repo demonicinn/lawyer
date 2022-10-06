@@ -1,6 +1,6 @@
 <div>
     <div class="add-search-box">
-        <div class="add-litigations">
+        <div class="add-litigations py-3">
             <button type="button" class="accept_btn showModal">Add</button>
         </div>
         <div class="form-group">
@@ -43,7 +43,7 @@
     <div id="pagination-container" class="pagination-container-saved">{{$states->links()}}</div>
 
     <!-- Accept Modal Start Here-->
-    <div wire:ignore.self class="modal fade" id="stateForm" tabindex="-1" aria-labelledby="stateForm" aria-hidden="true">
+    <div wire:ignore.self class="modal fade common_modal" id="stateForm" tabindex="-1" aria-labelledby="stateForm" aria-hidden="true">
         <div class="modal-dialog modal_style">
             <button type="button" class="btn btn-default close closeModal">
                 <i class="fas fa-close"></i>
@@ -75,7 +75,7 @@
                         </div>
                     </div>
                     <div class="text-center mb-3">
-                        <button type="button" class="btn_s b-0" wire:click="store" wire:loading.attr="disabled">
+                        <button type="button" class="btn-design-first" wire:click="store" wire:loading.attr="disabled">
                             <i wire:loading wire:target="store" class="fas fa-spin fa-spinner"></i> Save
                         </button>
                     </div>

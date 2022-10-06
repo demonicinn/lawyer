@@ -2,8 +2,8 @@
 $days = \App\Models\User::getDays();
 @endphp
 
-<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-    <div class="white-shadow-scnd-box">
+<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+    <div class="white-shadow-scnd-box" style="height:auto;">
         <div class="form-heading">
             <h4 class="h4-design">Working Hours</h4>
         </div>

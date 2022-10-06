@@ -48,7 +48,7 @@
 
 
             {!! Form::open(['method'=>'get']) !!}
-            <div class="row">
+            <div class="row py-4">
                 <div class="col-md-2 form-group">
                     <input type="number" class="form-control" name="year" value="{{ $year = request()->year ?? date('Y') }}" min="2022" max="{{ date('Y') }}" required>
                 </div>

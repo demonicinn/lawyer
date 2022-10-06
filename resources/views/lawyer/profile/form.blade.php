@@ -8,7 +8,7 @@ $lawyer_details = $user->lawyerInfo;
 <div class="lawyer_profile-wrapper">
     {!! Form::open(['route' => 'lawyer.profile.update', 'class'=>'lawyer_profile-information form-design']) !!}
     <div class="row">
-        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
             <div class="white-shadow-scnd-box">
                 <div class="form-heading">
                     <h4 class="h4-design">Information about you</h4>
