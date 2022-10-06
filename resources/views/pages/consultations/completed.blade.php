@@ -9,7 +9,7 @@
         <div>
             <div class="lawyer_conultation-wrapper">
                 <div class="tabs_design-wrap three_tabs-layout">
-                    
+
                     @include('pages.consultations.tabs')
 
                     <div class="lawyer-tabs_contents">
@@ -28,7 +28,7 @@
                                                 @if (Auth::user()->role == "lawyer")
                                                 <th>Action</th>
                                                 @endif
-                                               
+
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -103,9 +103,15 @@
                                             </tr>
                                             @empty
 
-                                            <h2>No Complete Consultation.</h2>
+                                        <tfoot>
+                                            <tr>
+                                                <td class="text-center">
+                                                    <h4>No consultations found</h4>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
 
-                                            @endforelse
+                                        @endforelse
 
                                         </tbody>
                                     </table>
@@ -131,7 +137,7 @@
 
 @section('script')
 <script>
-    {{--
+{{--
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",

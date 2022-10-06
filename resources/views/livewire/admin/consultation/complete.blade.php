@@ -89,9 +89,15 @@
                 </tr>
                 @empty
 
-                <h2>No Complete Consultation.</h2>
+            <tfoot>
+                <tr>
+                    <td class="text-center">
+                        <h4>No consultations found</h4>
+                    </td>
+                </tr>
+            </tfoot>
 
-                @endforelse
+            @endforelse
 
             </tbody>
         </table>
