@@ -8,6 +8,12 @@ class LoginResponse implements LoginResponseContract {
 
     public function toResponse($request) {		
 	
+		$redirectUrl = session('link');
+
+		if(@$redirectUrl){
+			session(['link' => '']);
+			return redirect($redirectUrl);
+		}
 		
 		if (auth()->check()){
 			$route = auth()->user()->role . '.dashboard';

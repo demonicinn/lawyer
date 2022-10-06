@@ -111,7 +111,7 @@ rel="Stylesheet"type="text/css"/>
                 title: 'Number of Bookings'
             },
             seriesType: 'bars',
-            series: {4: {type: 'line'}},
+            series: {1: {type: 'line'}},
             tooltip: { isHtml: true },
             legend: { position: 'top' }
         };

@@ -31,7 +31,6 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="loginFormLabel">Login</h5>
                                                 <button type="button" class="btn-close closeLoginModal"></button>
                                             </div>
                                             <div class="modal-body">
@@ -47,7 +46,6 @@
 
                                                             <div class="white-shadow-box">
 
-
                                                                 <div class="form-grouph input-design">
                                                                     <input type="email" wire:model="uemail" placeholder="Enter email">
                                                                     {!! $errors->first('uemail', '<span class="help-block">:message</span>') !!}
@@ -60,7 +58,6 @@
                                                                 <div class="form-grouph submit-design text-center">
                                                                     <button type="button" class="form-btn" wire:click="login">{{__ ('Login') }}</button>
                                                                 </div>
-
                                                             </div>
 
                                                         </div>

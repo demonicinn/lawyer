@@ -16,7 +16,32 @@ class DashboardController extends Controller
 
         $user = auth()->user();
 
-        return view('user.dashboard.index', compact('user', 'title'));
+
+        $upcomingConsultations = $user->bookingUser()
+                                    ->where('booking_Date', '>=', date('Y-m-d'))
+                                    ->where('is_call', 'pending')
+                                    ->where('is_accepted', '0')
+                                    ->count();
+
+        $completeConsultations = $user->bookingUser()
+                                    ->where('is_call', 'completed')
+                                    ->where('is_accepted', '0')
+                                    ->count();
+
+        $acceptedConsultations = $user->bookingUser()
+                                    ->where('is_call', 'completed')
+                                    ->where('is_accepted', '1')
+                                    ->count();
+
+        $data = array(
+            'title' => $title,
+            'user' => $user,
+            'upcomingConsultations' => $upcomingConsultations,
+            'completeConsultations' => $completeConsultations,
+            'acceptedConsultations' => $acceptedConsultations,
+        );
+
+        return view('user.dashboard.index', $data);
     }
 
     
