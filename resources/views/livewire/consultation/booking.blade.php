@@ -1,14 +1,14 @@
 <section class="body-banner per-info-page-sec min-height-100vh">
-    <div class="container">
+    <div class="container" style="position: relative;">
         <div class="heading-paragraph-design text-center position-relative go-back-wrap mb-5">
             <h2>Booking Information</h2>
         </div>
 
 
-        <div class="personal-information-wrapper">
-            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 text-center mt-5">
+        <div class="personal-information-wrapper booking_information">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 text-center go-back-wrap my-5">
                 <div class="form-grouph submit-design text-center">
-                    <button type="button" class="btn-design-first" wire:click="backbtn">go back</button>
+                    <button type="button" class="go-back border-0" wire:click="backbtn">go back</button>
                 </div>
             </div>
             <form class="personal-form-information form-design">
@@ -44,7 +44,7 @@
                                                         @endif
                                                         <div class="lawyer-login">
 
-                                                            <div class="white-shadow-box">
+                                                            <div class="">
 
                                                                 <div class="form-grouph input-design">
                                                                     <input type="email" wire:model="uemail" placeholder="Enter email">
@@ -56,7 +56,7 @@
                                                                     {!! $errors->first('upassword', '<span class="help-block">:message</span>') !!}
                                                                 </div>
                                                                 <div class="form-grouph submit-design text-center">
-                                                                    <button type="button" class="form-btn" wire:click="login">{{__ ('Login') }}</button>
+                                                                    <button type="button" class="btn-design-first" wire:click="login">{{__ ('Login') }}</button>
                                                                 </div>
                                                             </div>
 
@@ -119,7 +119,7 @@
                                 </div>
                                 @endif
                                 <div class="booking-info-right_column">
-                                    <h4 class="booking_name">{{ $lawyer->name }}</h4>
+                                    <h4 class="booking_name pt-3">{{ $lawyer->name }}</h4>
                                     <div class="row">
 
                                         <div class="col-md-8">
@@ -146,7 +146,11 @@
 
 
                             
-                            <div class="white-shadow-scnd-box mt-4">
+                            
+
+
+                        </div>
+                        <div class="white-shadow-scnd-box mt-4">
                                 @if($lawyer->details->is_consultation_fee == "yes")
 
                                 @if(Auth::check())
@@ -236,10 +240,9 @@
                                 @endif
 
                             </div>
-
-
-                        </div>
-                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 text-center mt-5">
+                        
+                    </div>
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 text-center mt-5">
                             <button type="button" class="btn-design-first" wire:loading.remove wire:click="saveUserInfoAndBooking" wire:loading.attr="disabled">
                                 Confirm Booking
                             </button>
@@ -247,7 +250,6 @@
                                 <i class="fa fa-spin fa-spinner"></i>
                             </button>
                         </div>
-                    </div>
             </form>
         </div>
     </div>

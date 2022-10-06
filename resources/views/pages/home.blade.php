@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+
 <section class="home-banner-section" style="background-image: url(assets/images/home-banner.png);">
   <div class="container">
      <div class="homepbanner-content text-center">
@@ -146,4 +147,5 @@
        </div>
     </div>
  </section>
+ 
 @endsection

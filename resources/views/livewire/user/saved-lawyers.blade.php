@@ -97,7 +97,7 @@
 
         @if($modal)
         <!-- Accept Modal Start Here-->
-        <div wire:ignore.self class="modal fade" id="courtModal" tabindex="-1" aria-labelledby="courtModal" aria-hidden="true">
+        <div wire:ignore.self class="modal fade courts_modal common_modal" id="courtModal" tabindex="-1" aria-labelledby="courtModal" aria-hidden="true">
             <div class="modal-dialog modal_style">
                 <button type="button" class="btn btn-default close closeModal">
                     <i class="fas fa-close"></i>

@@ -44,7 +44,7 @@
                                                 <td>{{$accepted->$role->email}}</td>
                                                 <td>{{date('d-m-y', strtotime($accepted->updated_at)) }}</td>
                                                 <td>
-
+                                                   <div class="eye_edit">
                                                     <a class="view-icon info_icns" href="#"><i class="fas fa-eye"></i></a>
 
                                                     <div class="info_icns_note_name">
@@ -56,9 +56,12 @@
 
                                                     @if (Auth::user()->role=="lawyer")
                                                     <a class="edit-icons toggle_note-btn" href="#"><i class="fas fa-pen"></i></a>
+                                                   </div>
                                                     <div class="note-box">
-                                                        <span class="info_icns"><i class="fa-solid fa-circle-info"></i></span>
+                                                       <div class="add_notes">  
+                                                    <span class="info_icns"><i class="fa-solid fa-circle-info"></i></span>
                                                         <p>Add note</p>
+                                                       </div>
                                                         <div class="d-flex">
                                                             @if (@$accepted->notes->note !=null)
                                                             <form method="post" action="{{route('edit.note',@$accepted->notes->id)}}">

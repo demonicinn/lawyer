@@ -553,7 +553,7 @@ input:focus, select:focus, textarea:focus{
     background-color: #F8F8F8;
     border: 1px solid #979797;
     border-radius: 15px;
-    padding: 20px 40px;
+    padding: 20px 43.2px;
     height: 100%;
     position: relative;
     text-align: center;
@@ -973,7 +973,8 @@ input:focus, select:focus, textarea:focus{
     width: 100%;
     max-width: 100%;
     box-shadow: 1px 2px 38px -27px #979797;
-    height: 100%;
+    height: 589px;
+    overflow: auto;
 }
 #events-data ul li {
     position: relative;
@@ -1313,7 +1314,7 @@ label.second-label-design {
     border: 1px solid #979797;
     border-radius: 50px;
     font-size: 20px;
-    padding: 20px 113px;
+    padding: 20px 83.5px;
     position: relative;
     width: 100%;
     line-height: 20px;
@@ -1328,7 +1329,7 @@ label.second-label-design {
 .login-header-btn .user-icon {
     width: 46px;
     height: 46px;
-    background-color: #ed3c63;
+    /* background-color: #ed3c63; */
     display: inline-flex;
     position: absolute;
     align-items: center;
@@ -1337,6 +1338,13 @@ label.second-label-design {
     border-radius: 50%;
     right: 8px;
     top: 8px;
+}
+
+
+.login-header-btn .user-icon img{
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
 }
 .login-right-column .dropdown-menu {
     width: 100%;
@@ -1639,9 +1647,9 @@ label.second-label-design {
     color: #3E3E3E;
     text-decoration: none;
 }
-.table-design tbody tr td a:hover {
+/* .table-design tbody tr td a:hover {
     color: #ed3c63;
-}
+} */
 .tabs_design-wrap .nav-tabs>li.nav-item {
     text-align: center;
     position: relative;
@@ -2408,7 +2416,7 @@ img {
 }
 .user-span {
     display: inline-block;
-    max-width: 70px;
+    /* max-width: 70px; */
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -2428,6 +2436,103 @@ img {
 }
 
 
+
+
+
+.dashboard_wrapper .data-white-box.position-relative a.data-content-box {
+    color: inherit;
+    text-decoration: none;
+}
+.dashboard_wrapper .data-white-box.position-relative h4{
+    font-weight: 600;
+}
+.calendar-container div#celender .calendar .day {
+    cursor: pointer;
+}
+/* .courts_modal button.closeModal{
+    position: absolute;
+    right: 0px;
+    cursor: pointer;
+    z-index: 1;
+} */
+.box_checkbox{
+    padding-top: 20px;
+    position: relative;
+    justify-content: center;
+}
+.box_checkbox .form-grouph.input-design{
+    position: relative;
+    text-align: center;
+    width: 70%;
+}
+.box_checkbox .form-grouph.input-design input#term {
+    position: absolute;
+    left: 23px;
+    cursor: pointer;
+    width: auto;
+    top: 7px;
+}
+.reshedule_wrap-box .d-flex a.accept_btn.showModal {
+    margin-right: 10px;
+}
+.note-box {
+    display: flex;
+    /* align-items: center; */
+    flex-direction: column;
+}
+.note-box .d-flex{
+    flex-direction: column;
+    align-items: center;
+}
+.note-box .d-flex a,.note-box .d-flex button{
+    cursor: pointer;
+    margin:5px;
+    width: auto;
+}
+.note-box .d-flex form{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.eye_edit{
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: center;
+}
+.add_notes {
+    display: flex;
+    justify-content: center;
+}
+.booking_information .booking-info_profile-flex {
+    display: block;
+}
+form .help-block,form span.help-block {
+    color: red;
+}
+.block_blocked{
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+.modal-dialog{
+    pointer-events: auto;
+}
+.common_modal button.close{
+position: absolute;
+right: 0px;
+z-index: 1;
+}
+.common_modal .modal-header.modal_h{
+    justify-content: center;
+}
+.common_modal .modal-header.modal_h h3{
+    font-size: 23px;
+}
+.common_modal label{
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+/* responsive */
 
 @media (min-width: 1200px){
     .footer-widget-first {
