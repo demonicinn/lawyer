@@ -113,11 +113,11 @@ class SearchLawyers extends Component
 
 
             $user = $user->whereHas('lawyerReviews', function ($query) {
-                    $query->orderByRaw('SUM(rating) DESC');
+                    // $query->orderByRaw('SUM(rating) DESC');
                     
 
-                    //$query->selectRaw('SUM(rating) as rate')
-                        //->orderByRaw('rate asc');
+                    $query->selectRaw('SUM(rating) as rate')
+                        ->orderByRaw('rate asc');
                 });
 
 
@@ -126,7 +126,7 @@ class SearchLawyers extends Component
 
         //$user = $user->latest()->get();
         $user = $user->get();
-        //dd($user);
+        // dd($user);
         $this->lawyers = $user;
     }
 

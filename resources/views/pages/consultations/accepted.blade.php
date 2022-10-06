@@ -9,7 +9,7 @@
         <div>
             <div class="lawyer_conultation-wrapper">
                 <div class="tabs_design-wrap three_tabs-layout">
-                    
+
                     @include('pages.consultations.tabs')
 
                     <div class="lawyer-tabs_contents">
@@ -31,7 +31,7 @@
                                         </thead>
                                         <tbody>
 
-                                        @php
+                                            @php
                                             $role = 'user';
                                             if(Auth::user()->role == 'user'){
                                             $role = 'lawyer';
@@ -89,9 +89,15 @@
 
                                             @empty
 
-                                            <h2>No Accepted Consultation.</h2>
+                                        <tfoot>
+                                            <tr>
+                                                <td class="text-center">
+                                                    <h4>No consultations found</h4>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
 
-                                            @endforelse
+                                        @endforelse
 
 
                                         </tbody>
