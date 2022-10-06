@@ -64,6 +64,8 @@ Route::get('/rating6months', function () {
 
 //home
 Route::get('/', [PagesController::class, 'home'])->name('home');
+Route::get('/home', [PagesController::class, 'home']);
+
 Route::get('/narrow-down-candidates', [PagesController::class, 'narrowDown'])->name('narrow.down');
 Route::get('/narrow-down-litigations', [PagesController::class, 'litigations'])->name('narrow.litigations');
 Route::get('/narrow-down-contracts', [PagesController::class, 'contracts'])->name('narrow.contracts');

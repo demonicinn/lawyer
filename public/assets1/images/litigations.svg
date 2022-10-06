@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="52px" height="43.66667px" viewBox="0 0 52 43.66667" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="filter_1">
+      <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0" color-interpolation-filters="sRGB" />
+    </filter>
+  </defs>
+  <g id="Group-17" transform="translate(1 1)" filter="url(#filter_1)">
+    <path d="M43.0542 41.6667L7.77912 41.6667C6.7047 41.6667 5.83333 40.774 5.83333 39.6726L5.83333 38.661C5.83333 37.5596 6.7047 36.6667 7.77912 36.6667L43.0542 36.6667C44.129 36.6667 45 37.5596 45 38.6607L45 39.6726C45 40.774 44.129 41.6667 43.0542 41.6667Z" id="Stroke-1" fill="none" fill-rule="evenodd" stroke="#3E3E3E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M36.6667 36.6667L36.6667 36.3754C36.6667 31.4736 32.4569 27.5 27.2643 27.5L22.7357 27.5C17.5428 27.5 13.3333 31.4736 13.3333 36.3754L13.3333 36.6667" id="Stroke-3" fill="none" fill-rule="evenodd" stroke="#3E3E3E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M25.4167 27.5L25.4167 5.83333" id="Stroke-5" fill="none" fill-rule="evenodd" stroke="#3E3E3E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M28.3333 2.9165C28.3333 1.30572 27.0276 0 25.4165 0C23.8057 0 22.5 1.30572 22.5 2.9165C22.5 4.52761 23.8057 5.83333 25.4165 5.83333C27.0276 5.83333 28.3333 4.52761 28.3333 2.9165Z" id="Stroke-7" fill="none" fill-rule="evenodd" stroke="#3E3E3E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M8.33333 8.33333L8.33333 4.13865L22.5 2.5" id="Stroke-9" fill="none" fill-rule="evenodd" stroke="#3E3E3E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M41.6667 8.33333L41.6667 4.13865L27.5 2.5" id="Stroke-11" fill="none" fill-rule="evenodd" stroke="#3E3E3E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M16.6667 12.5L16.6667 12.5C16.6667 16.6423 13.1463 20 8.80385 20L7.86282 20C3.52033 20 0 16.6423 0 12.5L16.6667 12.5Z" id="Stroke-13" fill="none" fill-rule="evenodd" stroke="#3E3E3E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M50 12.5L50 12.5C50 16.6423 46.4797 20 42.1372 20L41.1961 20C36.8537 20 33.3333 16.6423 33.3333 12.5L50 12.5Z" id="Stroke-15" fill="none" fill-rule="evenodd" stroke="#3E3E3E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+</svg>
