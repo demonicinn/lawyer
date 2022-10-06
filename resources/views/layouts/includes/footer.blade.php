@@ -19,12 +19,12 @@
         <div class="footer-widget footer-widget-second">
           <h4 class="footer-heading">Practice Areas</h4>
           <ul class="list-unstyled menu-footer-ul">
-            <li><a href="">Litigation</a></li>
-            <li><a href="">Car Accident</a></li>
-            <li><a href="">Divorce</a></li>
-            <li><a href="">Bankruptcy</a></li>
-            <li><a href="">Antitrust</a></li>
-            <li><a href="">Wills and Trusts</a></li>
+            <li><a href="">Personal Injury – Plaintiff</a></li>
+            <li><a href="">Divorce/Family</a></li>
+            <li><a href="">Wills, Trusts, & Estates</a></li>
+            <li><a href="">Class Action/Mass Tort</a></li>
+            <li><a href="">Small Business Contracts</a></li>
+            <li><a href="">Commercial Litigation</a></li>
             <li><a href="" class="see-all">See All</a></li>
           </ul>
         </div>
@@ -33,9 +33,8 @@
         <div class="footer-widget footer-widget-third">
           <h4 class="footer-heading">Resources</h4>
           <ul class="list-unstyled menu-footer-ul">
-            <li><a href="">Blog</a></li>
+            <li><a href="">Articles</a></li>
             <li><a href="">FAQ</a></li>
-            <li><a href="">Community</a></li>
             <li><a href="{{route('support')}}">Support</a></li>
             <li><a href="">Client Portal</a></li>
             <li><a href="">Lawyer Sign Up</a></li>
@@ -48,12 +47,11 @@
           <h4 class="footer-heading">Company</h4>
           <ul class="list-unstyled menu-footer-ul">
             <li><a href="">Join the Team</a></li>
-            <li><a href="">Legal Stuff</a></li>
             <li><a href="">Privacy Policy</a></li>
             <li><a href="">Terms of Service</a></li>
             <li><a href="">Accessibility</a></li>
             <li><a href="">Partners Program</a></li>
-            <li><a href="">Know an Awesome Lawyer?</a></li>
+         
           </ul>
         </div>
       </div>
