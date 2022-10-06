@@ -15,7 +15,7 @@
 						{!! Form::email('email', request()->email ?? null, ['class' => ($errors->has('email') ? ' is-invalid' : '')]) !!}
 					</div>
 
-					<div class="form-grouph submit-design text-center">
+					<div class="form-grouph submit-design text-center pt-3">
 						<button class="form-btn" type="submit">{{ __('Forgot Password') }}</button>
 					</div>
 
