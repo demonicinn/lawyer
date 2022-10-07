@@ -41,6 +41,8 @@
 
         @include('lawyer.profile.form')
 
+        @include('lawyer.profile.bank_info')
+
     </div>
 </section>
 @endsection
@@ -70,6 +72,23 @@
 </div>
 
 
+<div class="layoutHours">
+    <div>
+        <div class="form-flex layout layout_0key0">
+            <div class="form-grouph input-design{!! ($errors->has('from_time') ? ' has-error' : '') !!}">
+                {!! Form::time('day[0day0][0key0][from_time]', null, ['class' => ($errors->has('from_time') ? ' is-invalid' : '')]) !!}
+                {!! $errors->first('from_time', '<span class="help-block">:message</span>') !!}
+            </div>
+            <div class="form-grouph input-design{!! ($errors->has('to_time') ? ' has-error' : '') !!}">
+                {!! Form::time('day[0day0][0key0][to_time]', null, ['class' => ($errors->has('to_time') ? ' is-invalid' : '')]) !!}
+                {!! $errors->first('to_time', '<span class="help-block">:message</span>') !!}
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
 <script>
     $('input[name=is_consultation_fee]').on('click', function() {
         let fee = $(this).val();
@@ -80,7 +99,7 @@
         }
     });
 
-    @if(@$user -> details -> is_consultation_fee == 'no')
+    @if(@$user->details->is_consultation_fee == 'no')
     $('#consultation_fee').hide();
     @endif
 
@@ -133,6 +152,30 @@
     }
     //...
     callAdmission();
+
+
+    $('.clickHours').on('click', function (){
+        let day = $(this).attr('data-day');
+        layoutHoursBind(day);
+    });
+
+    function layoutHoursBind(day){
+
+        var countHour = $('.addNewHoursLayout.'+day+' .layout').length;
+        countHour = countHour + 1;
+        
+        var html = $('.layoutHours').html();
+        //...
+        html = html.replace(/0key0/g, countHour);
+        html = html.replace(/0day0/g, day);
+
+
+        //...
+        $('.addNewHoursLayout.'+day).append(html);
+
+    }
+
+
 
 </script>
 @endsection

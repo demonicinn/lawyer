@@ -272,6 +272,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
             //...profile
             Route::get('/profile', [Lawyer\ProfileController::class, 'index'])->name('lawyer.profile');
             Route::post('/profile/update', [Lawyer\ProfileController::class, 'update'])->name('lawyer.profile.update');
+            Route::post('/profile/bank', [Lawyer\ProfileController::class, 'saveBank'])->name('lawyer.profile.bank');
+            Route::post('/profile/bank-connect', [Lawyer\ProfileController::class, 'connectedAccount'])->name('lawyer.bank.connect');
+
+
+            Route::get('/banking-info-error', [Lawyer\ProfileController::class, 'bankingInfoError'])->name('lawyer.banking.error');
+            Route::get('/banking-info-success', [Lawyer\ProfileController::class, 'bankingInfoSuccess'])->name('lawyer.banking.success');
+
+
             Route::post('/profile/submit', [Lawyer\ProfileController::class, 'submit'])->name('lawyer.profile.submit');
 
             //...profile middleware

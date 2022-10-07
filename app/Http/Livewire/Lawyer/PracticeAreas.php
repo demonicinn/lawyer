@@ -40,8 +40,22 @@ class PracticeAreas extends Component
 
     public function store()
     {
-        if($this->selectLitigations){
-            //dd($this->selectLitigations);
+        if($this->currentTab == 'litigations'){
+            $this->validate([
+                'selectLitigations' => 'required|array|min:3'
+            ]);
+        }
+
+        if($this->currentTab == 'contracts'){
+            $this->validate([
+                'selectContracts' => 'required|array|min:3'
+            ]);
+        }
+
+
+        //....
+        if($this->currentTab == 'litigations' && $this->selectLitigations){
+
             foreach($this->selectLitigations as $id){
                 if(@$id){
                     $checkLitigation = LawyerLitigations::where('users_id', $this->user->id)
@@ -71,7 +85,9 @@ class PracticeAreas extends Component
         }
 
         //...
-        if($this->selectContracts){
+        if($this->currentTab == 'contracts' && $this->selectContracts){
+            
+
             foreach($this->selectContracts as $id){
                 if(@$id){
                     $checkContract = LawyerContracts::where('users_id', $this->user->id)

@@ -40,6 +40,7 @@
                                             </div>
                                             @endforeach
                                         </div>
+                                        {!! $errors->first('selectLitigations', '<span class="help-block">:message</span>') !!}
                                     </div>
                                     @endif
 
@@ -54,6 +55,7 @@
                                             </div>
                                             @endforeach
                                         </div>
+                                        {!! $errors->first('selectContracts', '<span class="help-block">:message</span>') !!}
                                     </div>
                                     @endif
 

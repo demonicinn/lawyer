@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class LawyerSubscription extends Model
 {
     use HasFactory;
+
+
+    public function subscription()
+    {
+        return $this->belongsTo(Subscription::class, 'subscriptions_id', 'id');
+    }
 }
