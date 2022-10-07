@@ -203,12 +203,8 @@ $lawyer_details = $user->lawyerInfo;
 
             </div>
         </div>
-
-
+        
         @include('lawyer.profile.hours')
-
-
-
 
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 text-center mt-5">
             <div class="form-grouph submit-design text-center">
@@ -217,4 +213,5 @@ $lawyer_details = $user->lawyerInfo;
         </div>
     </div>
     {!! Form::close() !!}
+
 </div>

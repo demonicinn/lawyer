@@ -5,6 +5,10 @@ namespace App\Http\Livewire\Lawyer;
 use Livewire\Component;
 use Stripe\Stripe;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\LawyerSubscription as LawyerSubscriptionNotification;
+
 use App\Models\Subscription;
 use App\Models\Payment;
 use App\Models\LawyerSubscription;
@@ -82,6 +86,9 @@ class Subscriptions extends Component
             $plan->to_date = $to_date;
             $plan->save();
 
+            //send Lawyer Subscription Notification
+            Notification::route('mail', $user->email)->notify(new LawyerSubscriptionNotification($user, $plan));
+
             $this->flash('success', 'Free Plan Activated');
             return redirect()->route('lawyer.profile');
         }
@@ -141,7 +148,7 @@ class Subscriptions extends Component
 
             //save customer id in card table
             $saveCard = new UserCard();
-            $saveCard->user_id = auth()->user()->id;
+            $saveCard->user_id = $user->id;
             $saveCard->customer_id = $customer_id ;
             $saveCard->card_name = $this->card_name;
             $saveCard->expire_month = $this->expire_month;
@@ -160,6 +167,10 @@ class Subscriptions extends Component
             $plan->from_date = $from_date;
             $plan->to_date = $to_date;
             $plan->save();
+
+
+            //send Lawyer Subscription Notification
+            Notification::route('mail', $user->email)->notify(new LawyerSubscriptionNotification($user, $plan));
 
             $this->flash('success', 'Payment Success');
             return redirect()->route('lawyer.profile');
