@@ -244,8 +244,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
 
+    
+
+
+            
+
     //lawyer
     Route::group(['prefix' => 'lawyer', 'middleware' => ['role:lawyer']], function () {
+
 
         //...subscription
         Route::get('/subscription', function () {

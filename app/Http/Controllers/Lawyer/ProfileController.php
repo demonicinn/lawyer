@@ -209,78 +209,6 @@ class ProfileController extends Controller
 
 
 
-    public function saveBank(Request $request)
-    {
-        $request->validate([
-            'account_number' => 'required',
-            'routing_number' => 'required|min:9',
-            'account_holder_name' => 'required',
-        ]);
-
-        
-        $user = auth()->user();
-        $record = BankInfo::where(['user_id' => $user->id])->first(); 
-        try {
-            $stripe = new \Stripe\StripeClient(
-                config('services.stripe.secret')
-            );
-
-            $bank = $stripe->accounts->createExternalAccount(
-            $record->account_id,
-            [
-                'external_account' => [
-                    "currency" => "usd",
-                    "country" => "us",
-                    "object" => "bank_account",
-                    "account_holder_name" => $request->account_holder_name,
-                    "routing_number" => $request->routing_number,
-                    "account_number" => $request->account_number,
-                ],
-            ]
-            ); 
-
-            if($bank) {
-                BankInfo::where('id', $record->id)->update([
-                    "account_holder_name" => $request->account_holder_name,
-                    "routing_number" => $request->routing_number,
-                    "account_number" => $request->account_number
-                ]);
-            }
-
-            $this->flash('success', 'Your bank info added successfully');
-            return redirect()->back();
-
-
-        } catch (\Stripe\Exception\RateLimitException $e) {
-            // Too many requests made to the API too quickly
-            $error = $e->getMessage();
-        } catch (\Stripe\Exception\InvalidRequestException $e) {
-            // Invalid parameters were supplied to Stripe's API
-            $error = $e->getMessage();
-        } catch (\Stripe\Exception\AuthenticationException $e) {
-            // Authentication with Stripe's API failed
-            $error = $e->getMessage();
-            // (maybe you changed API keys recently)
-        } catch (\Stripe\Exception\ApiConnectionException $e) {
-            // Network communication with Stripe failed
-            $error = $e->getMessage();
-        } catch (\Stripe\Exception\ApiErrorException $e) {
-            // Display a very generic error to the user, and maybe send
-            $error = $e->getMessage();
-            // yourself an email
-        } catch (Exception $e) {
-            // Something else happened, completely unrelated to Stripe
-            $error = $e->getMessage();
-        }
-
-
-        $this->flash('error', $error);
-        return redirect()->back();
-    }
-
-
-
-
 
     public function connectedAccount( Request $request ){
         $user = auth()->user();
@@ -317,7 +245,7 @@ class ProfileController extends Controller
                         'return_url' => route('lawyer.banking.success'),
                         'type' => 'account_onboarding',
                     ]);
-                    
+                    //dd($link);
                     return redirect($link->url);
                 } else {
                     $this->flash('error', 'Error in account create.');
@@ -358,32 +286,38 @@ class ProfileController extends Controller
     {
         $user = auth()->user();
         $record = BankInfo::where(['user_id' => $user->id])->first();
+
+
         try {
             if($record) {
                 $stripe = new \Stripe\StripeClient(
-                    env('STRIPE_SECRET')
+                    config('services.stripe.secret')
                 );
                 $account = $stripe->accounts->retrieve($record->account_id);
-                $status = ''; 
-                if($account && $account->payouts_enabled) {
-                    $status = 'active';              
+
+                if(@$account && $account->payouts_enabled) {
+                    $record->payouts_enabled = 'active';              
                 } else {
-                    $status = 'inactive'; 
+                    $record->payouts_enabled = 'inactive'; 
                 }
                 
-                BankInfo::where('id', $record->id)->update(["payouts_enabled" => $status]);
-                $record = $record->refresh(); 
+                $record->save();
+
+                $this->flash('success', 'Account added successfully');
             }
 
         } catch (\Exception $e) {
-            return redirect('/account')->with('error', $e->getMessage());
+            $this->flash('error', $e->getMessage());
         }
-        return redirect('/account');
+        
+
+        return redirect()->route('lawyer.profile');
     }
 
     public function bankingInfoError()
     {
-        redirect('/account')->with('error', 'Try again.');
+        $this->flash('error', 'Try again.');
+        return redirect()->route('lawyer.profile');
     }
 
 
