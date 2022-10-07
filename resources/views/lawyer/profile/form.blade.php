@@ -28,7 +28,7 @@ $lawyer_details = $user->lawyerInfo;
 
                 <div class="form-grouph textarea-design{!! ($errors->has('bio') ? ' has-error' : '') !!}">
                     {!! Form::label('bio','Bio*', ['class' => 'form-label']) !!}
-                    {!! Form::textarea('bio', $details->bio ?? null, ['class' => ($errors->has('bio') ? ' is-invalid' : '')]) !!}
+                    {!! Form::textarea('bio', $details->bio ?? null, ['class' => ($errors->has('bio') ? ' is-invalid' : ''), 'placeholder'=>'Tell us about yourself']) !!}
                     {!! $errors->first('bio', '<span class="help-block">:message</span>') !!}
                 </div>
 
@@ -90,7 +90,7 @@ $lawyer_details = $user->lawyerInfo;
 
                 <div class="form-flex">
                     <div class="form-grouph input-design{!! ($errors->has('hourly_fee') ? ' has-error' : '') !!}">
-                        {!! Form::label('hourly_fee','Hourly Fee*', ['class' => 'form-label']) !!}
+                        {!! Form::label('hourly_fee','Hourly Rate*', ['class' => 'form-label']) !!}
                         {!! Form::number('hourly_fee', $details->hourly_fee ?? null, ['class' => ($errors->has('hourly_fee') ? ' is-invalid' : '')]) !!}
                         {!! $errors->first('hourly_fee', '<span class="help-block">:message</span>') !!}
                     </div>

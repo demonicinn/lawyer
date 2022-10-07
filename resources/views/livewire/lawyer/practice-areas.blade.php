@@ -1,6 +1,6 @@
 <div>
     <div class="form-grouph view_practice-area">
-        <button type="button" class="btn-design-second showModal">View Practice Areas</button>
+        <button type="button" class="btn-design-second showModal">Select Practice areas</button>
     </div>
 
 

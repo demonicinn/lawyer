@@ -187,7 +187,7 @@ button:focus,a:focus{
     padding-left: 5px;
 }
 .account-availblity-div p a:hover {
-    color: #ed3c63;
+    color: #f93f64;
 }
 .account-availblity-div {
     margin-top: 25px;
@@ -225,7 +225,7 @@ button:focus,a:focus{
     transition: all 0.5s ease-in-out;
 }
 .menu-footer-ul li a:hover {
-    color: #ed3c63;
+    color: #f93f64;
     font-weight: 500;
 }
 .footer-row {
@@ -249,7 +249,7 @@ button:focus,a:focus{
     margin-right: 15px;
 }
 .footer-social-icons a:hover {
-    color: #ed3c63;
+    color: #f93f64;
 }
 .footer-logo img {
     width: auto;
@@ -382,7 +382,7 @@ input[type=number] {
     padding-left: 4px;
 }
 .pa-design:hover {
-    color: #ed3c63;
+    color: #f93f64;
 }
 .narrow-down-cand-sec {
     padding-bottom: 195px;
@@ -595,7 +595,7 @@ input:focus, select:focus, textarea:focus{
     padding-bottom: 123px;
 }
 .login_signup-btns>a {
-    background-color: #ed3c63;
+    background-color: #f93f64;
     color: #fff;
     text-decoration: none;
     font-size: 15px;
@@ -803,9 +803,9 @@ input:focus, select:focus, textarea:focus{
     padding: 7px 10px;
 }
 .schule_consultation-btn:hover {
-    background-color: #ed3c63;
+    background-color: #f93f64;
     color: #fff;
-    border-color: #ed3c63;
+    border-color: #f93f64;
 }
 .schedular_consultation {
     margin-top: 15px;
@@ -832,7 +832,7 @@ input:focus, select:focus, textarea:focus{
     font-weight: 400;
 }
 #pagination-container ul span.current {
-    color: #ed3c63;
+    color: #f93f64;
     text-decoration: underline;
 }
 #pagination-container ul span.current.prev {
@@ -907,7 +907,7 @@ input:focus, select:focus, textarea:focus{
     cursor: pointer;
 }
 .toggle-design_div input:checked+.cstm-toggle-btn {
-    background: #ed3c63;
+    background: #f93f64;
 }
 .toggle-design_div input:checked+.cstm-toggle-btn::before {
     left: initial;
@@ -1264,7 +1264,7 @@ label.second-label-design {
     cursor: pointer;
 }
 .checkbox-design-2 input:checked+.checkbox-btn {
-    background: #ed3c63;
+    background: #f93f64;
     color: #fff;
 }
 .current_list_rules li p {
@@ -1288,7 +1288,7 @@ label.second-label-design {
     right: 0;
     top: 15px;
     font-size: 32px;
-    color: #ed3c63;
+    color: #f93f64;
     line-height: 24px;
 }
 .current_list_rules li {
@@ -1329,7 +1329,7 @@ label.second-label-design {
 .login-header-btn .user-icon {
     width: 46px;
     height: 46px;
-    /* background-color: #ed3c63; */
+    /* background-color: #f93f64; */
     display: inline-flex;
     position: absolute;
     align-items: center;
@@ -1363,7 +1363,7 @@ label.second-label-design {
 }
 .booking-info-right_column .booking_type-text {
     font-size: 18px;
-    color: #ed3c63;
+    color: #f93f64;
     font-family: 'Lato', sans-serif;
     margin-bottom: 8px;
 }
@@ -1390,7 +1390,7 @@ label.second-label-design {
 }
 .already_have-account a {
     font-size: 18px;
-    color: #ed3c63;
+    color: #f93f64;
     font-family: 'Lato', sans-serif;
     margin-bottom: 8px;
     display: block;
@@ -1490,7 +1490,7 @@ label.second-label-design {
 }
 .payemnt_selection-box h5 {
     margin-bottom: 0px;
-    color: #ed3c63;
+    color: #f93f64;
 }
 .payment_plans-inner {
     background-color: #F8F8F8;
@@ -1519,18 +1519,18 @@ label.second-label-design {
     display: flex;
 }
 .payment_plans-inner .payment_confirmation-form svg {
-    color: #ed3c63;
+    color: #f93f64;
     font-size: 40px;
 }
 .payment_plans-inner .price_saving-tag {
-    background: #ed3c63;
+    background: #f93f64;
     position: absolute;
     top: 0;
     right: 0;
     color: #fff;
     padding: 8px 15px;
     font-weight: 400;
-    font-size: 14px;
+    font-size: 15px;
 }
 .select-design .select2-selection {
     width: 100%;
@@ -1547,7 +1547,7 @@ label.second-label-design {
     background-position: 97%;
 }
 .select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
-    background-color: #ed3c63 !important;
+    background-color: #f93f64 !important;
 }
 .create_profile-full-container.white-shadow-scnd-box {
     padding-left: 100px;
@@ -1648,7 +1648,7 @@ label.second-label-design {
     text-decoration: none;
 }
 /* .table-design tbody tr td a:hover {
-    color: #ed3c63;
+    color: #f93f64;
 } */
 .tabs_design-wrap .nav-tabs>li.nav-item {
     text-align: center;
@@ -1679,7 +1679,7 @@ label.second-label-design {
     border-radius: 6px;
 }
 .decline-btn {
-    background-color: #ed3c63;
+    background-color: #f93f64;
     color: #fff;
     border: none;
     font-size: 16px;
@@ -1747,7 +1747,7 @@ label.second-label-design {
     width: 47%;
 }
 .cancel_dropdown-btn {
-    background-color: #ed3c63;
+    background-color: #f93f64;
     color: #fff;
     border: none;
     font-size: 16px;
@@ -1758,16 +1758,16 @@ label.second-label-design {
 }
 .reshedule_wrap-box p {
     font-size: 15px;
-    color: #ed3c63;
+    color: #f93f64;
     line-height: 19px;
     margin-bottom: 8px;
 }
 .reshedule_wrap-box .info_icns {
     font-size: 20px;
-    color: #ed3c63;
+    color: #f93f64;
 }
 .toggle_cstm-btn:hover{
-    background-color: #ed3c63;
+    background-color: #f93f64;
 }
 .lawyer-tabs_contents {
     width: 100%;
@@ -1848,7 +1848,7 @@ label.second-label-design {
     top: 20px;
 }
 .faq-questions-wrapper-inner .card-header .btn .accordian-icon:hover {
-    background: #ed3c63;
+    background: #f93f64;
     color: #fff;
 }
 .faq-questions-wrapper-inner .card-header [aria-expanded="true"] .accordian-icon .fa-minus {
@@ -1858,7 +1858,7 @@ label.second-label-design {
     display: none;
 }
 .faq-questions-wrapper-inner .card-header [aria-expanded="true"] .accordian-icon{
-    background: #ed3c63;
+    background: #f93f64;
     color: #fff;
 }
 .faq-questions-wrapper-inner .card .card-body {
@@ -1979,7 +1979,7 @@ label.second-label-design {
     margin-bottom: 42px;
 }
 .btn-banner-design {
-    background-color: #ed3c63;
+    background-color: #f93f64;
     color: #fff;
     text-decoration: none;
     font-size: 18px;
@@ -2039,12 +2039,12 @@ label.second-label-design {
     align-items: center;
 }
 .check-price-btn {
-    background-color: #ed3c63;
+    background-color: #f93f64;
     color: #fff;
     text-decoration: none;
     font-size: 18px;
     font-weight: 500;
-    padding: 19px 27px;
+    padding: 19px;
     border-radius: 8px;
     display: inline-block;
 }
@@ -2063,7 +2063,8 @@ label.second-label-design {
 }
 .service-practice_link a {
     font-size: 18px;
-    color: #ed3c63;
+    color: #f93f64;
+    font-weight: 600;
 }
 .incrediable_services-sec {
     padding-top: 65px;
@@ -2335,7 +2336,7 @@ label.second-label-design {
     z-index: -1;
 }
 .btn-design-four {
-    background-color: #ed3c63;
+    background-color: #f93f64;
     color: #fff;
     text-decoration: none;
     font-size: 18px;
@@ -2389,7 +2390,7 @@ img {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background-color: #ed3c63;
+    background-color: #f93f64;
     border-radius: 6px;
     color: #fff;
     margin-right: 10px;
@@ -2412,7 +2413,7 @@ img {
     margin-right: 10px;
 }
 .contact-social-icons a:hover,.contact-page-wrapper ul li a:hover {
-    color: #ed3c63;
+    color: #f93f64;
 }
 .user-span {
     display: inline-block;
@@ -2756,14 +2757,14 @@ z-index: 1;
     .services-slider-sec .slick-prev {
         left: 11px;
         z-index: 99;
-        background-color: #ed3c63 !important;
+        background-color: #f93f64 !important;
         width: 30px !important;
         height: 30px !important;
     }
     .services-slider-sec .slick-next {
         right: 11px;
         z-index: 99;
-        background-color: #ed3c63 !important;
+        background-color: #f93f64 !important;
         width: 30px !important;
         height: 30px !important;
     }

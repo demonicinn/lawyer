@@ -1,6 +1,6 @@
 <div>
     <div class="add-search-box">
-        <div class="add-litigations">
+        <div class="add-litigations py-3">
             <button type="button" class="accept_btn showModal">Add Category</button>
         </div>
         <div class="form-group">
