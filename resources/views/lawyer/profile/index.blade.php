@@ -3,7 +3,8 @@
 <section class="body-banner lawyer_profile-sec min-height-100vh">
     <div class="container">
         <div class="heading-paragraph-design text-center position-relative go-back-wrap mb-5">
-            <h2>{{ @$title['title'] }}</h2>
+            <!-- <h2>{{ @$title['title'] }}</h2> -->
+            <h2>Account Information</h2>
         </div>
 
         @if(@$user->details && $user->details->is_verified=='no')
