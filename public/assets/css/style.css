@@ -2533,6 +2533,9 @@ z-index: 1;
     padding-bottom: 10px;
     padding-top: 10px;
 }
+.table-responsive{
+    overflow-x: initial;
+}
 /* responsive */
 
 @media (min-width: 1200px){
