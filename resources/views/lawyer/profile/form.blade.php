@@ -163,7 +163,7 @@ $lawyer_details = $user->lawyerInfo;
 
 
 
-                <div class="form-grouph select-design">
+                <!-- <div class="form-grouph select-design">
                     @foreach ($categoriesMulti as $category)
                     <div class="form-grouph input-design">
                         @if ($category->is_category=='1')
@@ -192,14 +192,15 @@ $lawyer_details = $user->lawyerInfo;
                     @endforeach
                 </div>
 
-
-                <div class="admissionHtml"></div>
-
                 <div class="form-grouph input-design{!! ($errors->has('year_experience') ? ' has-error' : '') !!}">
                     <label>Years of Experience <span class="label_color">?</span></label>
                     {!! Form::text('year_experience', $details->year_experience ?? null, ['class' => ($errors->has('year_experience') ? ' is-invalid' : ''), 'maxlength'=>'2']) !!}
                     {!! $errors->first('year_experience', '<span class="help-block">:message</span>') !!}
-                </div>
+                </div> -->
+                
+                <div class="admissionHtml"></div>
+
+                
 
             </div>
         </div>
