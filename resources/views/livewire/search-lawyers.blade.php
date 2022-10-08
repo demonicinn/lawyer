@@ -86,12 +86,7 @@
         <div class="lawyers-list-sec">
             <div class="list-wrapper list-service">
 
-<<<<<<< HEAD
                 @forelse($lawyers as $lawyer)
-=======
-                @if(count($lawyers)>0)
-                @foreach($lawyers as $lawyer)
->>>>>>> 83e9f901848287b0a6698f6bee5178f0ebcd1c31
                 <div class="list-item list-service-item">
                     <div class="lawyer-hire-block">
                         @if(@$lawyer->profile_pic)
@@ -137,19 +132,10 @@
                         </div>
                     </div>
                 </div>
-<<<<<<< HEAD
-
                 @empty
                 <h4>No lawyers found</h4>
                 @endforelse
-=======
-                @endforeach
-                @else
-                <p>No lawyers found</p>
-                @endif
 
-
->>>>>>> 83e9f901848287b0a6698f6bee5178f0ebcd1c31
 
 
                 @if($modal)
