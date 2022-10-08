@@ -28,7 +28,7 @@
 
 
     <!-- Accept Modal Start Here-->
-    <div wire:ignore.self class="modal fade" id="leaveForm" tabindex="-1" aria-labelledby="leaveForm" aria-hidden="true">
+    <div wire:ignore.self class="modal fade common_modal" id="leaveForm" tabindex="-1" aria-labelledby="leaveForm" aria-hidden="true">
         <div class="modal-dialog modal_style">
             <button type="button" class="btn btn-default close closeModal">
                 <i class="fas fa-close"></i>
@@ -50,7 +50,7 @@
                         </div>
                     </div>
                     <div class="text-center mb-3">
-                        <button type="button" class="btn_s b-0" wire:click="store" wire:loading.attr="disabled">
+                        <button type="button" class="btn-design-first" wire:click="store" wire:loading.attr="disabled">
                             <i wire:loading wire:target="store" class="fas fa-spin fa-spinner"></i> Save
                         </button>
                     </div>

@@ -1755,6 +1755,7 @@ label.second-label-design {
     padding: 5px 15px;
     border-radius: 6px;
     width: 47%;
+    cursor: pointer;
 }
 .reshedule_wrap-box p {
     font-size: 15px;
@@ -2419,7 +2420,7 @@ img {
     display: inline-block;
     /* max-width: 70px; */
     white-space: nowrap;
-    overflow: hidden;
+    /* overflow: hidden; */
     text-overflow: ellipsis;
 }
 .services-slider-sec {
@@ -2535,6 +2536,20 @@ z-index: 1;
 }
 .table-responsive{
     overflow-x: initial;
+}
+a.btn_add.mr-2{
+    cursor: pointer;
+    color: #fff;
+}
+.custom-control.custom-switch.input_add {
+    padding-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.custom-control.custom-switch.input_add button{
+    padding: 2.3px 5px;
+    line-height: normal;
 }
 /* responsive */
 
