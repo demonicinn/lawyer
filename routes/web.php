@@ -46,17 +46,25 @@ Route::get('/storage-link', function () {
 });
 
 
-
+//cronjobs
 Route::get('/3days', function () {
     Artisan::call('case:3days');
+    return 'done';
 });
 
 Route::get('/reminder1day', function () {
     Artisan::call('reminder:1day');
+    return 'done';
 });
 
 Route::get('/rating6months', function () {
     Artisan::call('rating:6months');
+    return 'done';
+});
+
+Route::get('/lawyer-stripe', function () {
+    Artisan::call('lawyers:account');
+    return 'done';
 });
 
 
@@ -244,8 +252,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
 
+    
+
+
+            
+
     //lawyer
     Route::group(['prefix' => 'lawyer', 'middleware' => ['role:lawyer']], function () {
+
 
         //...subscription
         Route::get('/subscription', function () {

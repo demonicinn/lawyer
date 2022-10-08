@@ -51,7 +51,7 @@
 @section('script')
 @include('common.crop_image')
 
-<div class="layoutHtml">
+<div class="layoutHtml" style="display: none;">
     <div>
         <div class="layout layout_0id0">
             <div class="grey-light-heading">
@@ -73,7 +73,7 @@
 </div>
 
 
-<div class="layoutHours">
+<div class="layoutHours" style="display: none;">
     <div>
         <div class="form-flex layout layout_0key0">
             <div class="form-grouph input-design{!! ($errors->has('from_time') ? ' has-error' : '') !!}">
