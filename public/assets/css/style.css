@@ -2548,8 +2548,51 @@ a.btn_add.mr-2{
     gap: 10px;
 }
 .custom-control.custom-switch.input_add button{
-    padding: 2.3px 5px;
+    padding: 2.3px 7px 3px 7px;
+    font-weight: bold;
     line-height: normal;
+    background: #F93F64;
+    border-color: #F93F64;
+    border-radius: 50%;
+}
+.working_hours .addNewHoursLayout {
+    max-height: 223px;
+    overflow: auto;
+    padding-right: 25px;
+    margin-bottom: 20px;
+}
+.appned_inputs span.btn_close {
+    padding: 0px 7px;
+    border-radius: 50%;
+    width: 23.4px;
+    height: 23.4px;
+    position: absolute;
+    cursor: pointer;
+    right: -17px;
+    top: -7px;
+    background-color: red;
+    color: #fff;
+}
+.appned_inputs .form-flex {
+    position: relative;
+}
+.name_data_p,.mb-4.courts_data .form-grouph.select-design {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.name_data_p h6 {
+    margin: 0px;
+}
+.name_data_p h6,.mb-4.courts_data .form-grouph.select-design label{
+    font-weight: bold;
+    min-width: 143px;
+}
+.mb-4.courts_data {
+    border-bottom: 1px solid;
+}
+.common_modal .courts_data:last-child{
+    border: none;
 }
 /* responsive */
 

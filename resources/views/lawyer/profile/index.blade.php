@@ -74,7 +74,7 @@
 
 
 <div class="layoutHours" style="display: none;">
-    <div>
+    <div class="appned_inputs">
         <div class="form-flex layout layout_0key0">
             <div class="form-grouph input-design{!! ($errors->has('from_time') ? ' has-error' : '') !!}">
                 {!! Form::time('day[0day0][0key0][from_time]', null, ['class' => ($errors->has('from_time') ? ' is-invalid' : '')]) !!}
@@ -84,6 +84,7 @@
                 {!! Form::time('day[0day0][0key0][to_time]', null, ['class' => ($errors->has('to_time') ? ' is-invalid' : '')]) !!}
                 {!! $errors->first('to_time', '<span class="help-block">:message</span>') !!}
             </div>
+              <span class="btn_close">X</span>
         </div>
 
     </div>

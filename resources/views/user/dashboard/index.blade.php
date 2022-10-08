@@ -6,8 +6,8 @@
             <h2>{{ @$title['title'] }}</h2>
         </div>
         <div class="">
-            <div class="row">
-                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+            <div class="row justify-content-center">
+                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-12">
                     <div class="portal-div-design position-relative">
                         <div class="portal-div-img">
                             <img src="{{ asset('assets/images/schedule.svg') }}">
@@ -19,7 +19,7 @@
                     </div>
                 </div>
 
-                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                <div class="col-xl-3 col-lg-3 col-sm-12">
                     <div class="portal-div-design position-relative">
                         <div class="portal-div-img">
                             <img src="{{ asset('assets/images/schedule.svg') }}">
@@ -31,7 +31,7 @@
                     </div>
                 </div>
 
-                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+                <div class="col-xl-3 col-lg-3 col-sm-12">
                     <div class="portal-div-design position-relative">
                         <div class="portal-div-img">
                             <img src="{{ asset('assets/images/schedule.svg') }}">

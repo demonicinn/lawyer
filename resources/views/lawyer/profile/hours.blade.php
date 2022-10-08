@@ -2,7 +2,7 @@
 $days = \App\Models\User::getDays();
 @endphp
 
-<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 working_hours">
     <div class="white-shadow-scnd-box" style="height:auto;">
         <div class="form-heading">
             <h4 class="h4-design">Working Hours</h4>
@@ -16,7 +16,7 @@ $days = \App\Models\User::getDays();
                 <input type="checkbox" class="custom-control-input hoursDay" value="{{ $day }}" {{ @$hours ? 'checked' : '' }}> {{ $day }}
                 <label class="custom-control-label"></label>
 
-                <button style="display:{{ @$hours ? '' : 'none' }}" type="button" class="btn btn-primary clickHours {{ $day }}" data-day="{{ $day }}">Add</button>
+                <button style="display:{{ @$hours ? '' : 'none' }}" type="button" class="btn btn-primary clickHours {{ $day }}" data-day="{{ $day }}">+</button>
             </div>
 
 
@@ -41,8 +41,43 @@ $days = \App\Models\User::getDays();
             </div>
 
 
+            
 
         @endforeach
 
+        <div class="form-grouph select-design">
+                    @foreach ($categoriesMulti as $category)
+                    <div class="form-grouph input-design">
+                        @if ($category->is_category=='1')
+                        <h5 class="h5_titile_form pt-3">Federal court admissions</h5>
+                       ( {{ $category->name }})*
+                        @else
+                        <label> {{ $category->name }}*</label>
+                        @endif
+
+                    </div>
+                    <select class="select-block multiBoxes" multiple>
+                        @foreach($category->items as $i => $list)
+                        <option value="{{$list->id}}" data-cat="{{$category->id}}" data-name="{{$list->name}}" @foreach ($lawyer_details as $i=> $item)
+                            @if($list->id==$item->item_id)
+                            data-year="{{$item->year_admitted}}"
+                            data-bar="{{$item->bar_number}}"
+                            selected
+                            @endif
+                            @endforeach
+                            >
+                            {{$list->name}}
+                        </option>
+                        @endforeach
+                    </select>
+                    {!! $errors->first('lawyer_info.'.$category->id, '<span class="help-block">:message</span>') !!}
+                    @endforeach
+                </div>
+
+                <div class="form-grouph input-design{!! ($errors->has('year_experience') ? ' has-error' : '') !!}">
+                    <label>Years of Experience <span class="label_color">?</span></label>
+                    {!! Form::text('year_experience', $details->year_experience ?? null, ['class' => ($errors->has('year_experience') ? ' is-invalid' : ''), 'maxlength'=>'2']) !!}
+                    {!! $errors->first('year_experience', '<span class="help-block">:message</span>') !!}
+                </div>
     </div>
 </div>

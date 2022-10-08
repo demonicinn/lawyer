@@ -154,9 +154,11 @@
                                     <div>
                                         @foreach ($modal->lawyerInfo as $lawyerInfo)
                                         @if($lawyerInfo->categories->is_multiselect)
-                                        <div class="mb-4">
-                                            <h6>{{ @$lawyerInfo->items->name }}</h6>
+                                        <div class="mb-4 courts_data">
+                                           <div class="name_data_p">
+                                             <h6>{{ @$lawyerInfo->items->name }}</h6>
                                             <p class="mb-0">{{ @$lawyerInfo->items->category->name }} {{ @$lawyerInfo->items->category->mainCat->name ? ' - '.$lawyerInfo->items->category->mainCat->name : ''  }}</p>
+                                           </div>
                                             <div class="federal-court">
                                                 <div class="form-grouph select-design">
                                                     <label>Bar Number</label>
