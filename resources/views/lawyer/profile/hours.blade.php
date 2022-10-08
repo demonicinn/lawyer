@@ -12,7 +12,7 @@ $days = \App\Models\User::getDays();
             @php
             $hours = $user->lawyerHours()->where('day', $day)->first();
             @endphp
-            <div class="custom-control custom-switch">
+            <div class="custom-control custom-switch input_add">
                 <input type="checkbox" class="custom-control-input hoursDay" value="{{ $day }}" {{ @$hours ? 'checked' : '' }}> {{ $day }}
                 <label class="custom-control-label"></label>
 

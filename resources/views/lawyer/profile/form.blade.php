@@ -167,7 +167,7 @@ $lawyer_details = $user->lawyerInfo;
                     @foreach ($categoriesMulti as $category)
                     <div class="form-grouph input-design">
                         @if ($category->is_category=='1')
-                        <h5>Federal court admissions</h5>
+                        <h5 class="h5_titile_form pt-3">Federal court admissions</h5>
                        ( {{ $category->name }})*
                         @else
                         <label> {{ $category->name }}*</label>
