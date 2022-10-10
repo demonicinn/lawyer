@@ -8,9 +8,11 @@
             <h2>{{ @$title['title'] }}</h2>
         </div>
         <div class="user_acc_info-wrapper">
-            <form class="form-design" method="post" action="{{route('update.password')}}" enctype="multipart/form-data">
+            <form class="form-design row justify-content-center" method="post" action="{{route('update.password')}}" enctype="multipart/form-data">
                 @csrf
-                <div class="white-shadow-scnd-box">
+
+                <div class="col-md-7">
+                <div class="white-shadow-scnd-box ">
                     <div class="form">
                         <div class="form-grouph input-design">
                             <label>Old Password*</label>
@@ -30,7 +32,8 @@
 
                     </div>
                 </div>
-                <div class="row mt-3">
+                </div>
+                <div class="col-12 mt-3">
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 text-center mt-5">
                         <div class="form-grouph submit-design text-center">
                             <input type="submit" value="Update" class="btn-design-second">

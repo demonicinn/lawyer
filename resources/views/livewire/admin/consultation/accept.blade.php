@@ -73,7 +73,7 @@
                 @empty
             <tfoot>
                 <tr>
-                    <td colspan="6" class="text-center pt-3">
+                    <td colspan="7" class="text-center pt-3">
                         <h4>No consultations found</h4>
                     </td>
                 </tr>
