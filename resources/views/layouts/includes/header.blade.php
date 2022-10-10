@@ -12,7 +12,7 @@ $user = auth()->user();
       </div>
       <div class="login-right-column">
         @guest
-        <div class="login_signup-btns dropdown">
+        <!-- <div class="login_signup-btns dropdown">
         <button type="button" class="dropdown-toggle login-header-btn" data-bs-toggle="dropdown">
             <span class="drop-icon"><i class="fa-solid fa-angle-down"></i></span>
             <span class="user-span">login</span>
@@ -22,7 +22,9 @@ $user = auth()->user();
           <a class="dropdown-item btn_sign_up mb-3" href="{{ route('register') }}">Sign Up</a>
           <a class="dropdown-item btn_login" href="{{ route('login') }}">Login</a>
           </ul>
-        </div>
+        </div> -->
+        <a class="login-header-btn btn_sign_up mb-3 me-3 py-3" href="{{ route('register') }}">Sign Up</a>
+          <a class="login-header-btn btn_login py-3" href="{{ route('login') }}">Login</a>
         @else
         <div class="dropdown">
           <button type="button" class="dropdown-toggle login-header-btn" data-bs-toggle="dropdown">

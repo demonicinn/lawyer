@@ -138,7 +138,7 @@ button:focus,a:focus{
     display: block;
     margin-bottom: 5px;
 }
-.input-design input {
+.input-design input ,.input-design select{
     width: 100%;
     border: 1px solid #979797;
     font-size: 16px;
@@ -742,6 +742,9 @@ input:focus, select:focus, textarea:focus{
     text-align: center;
     padding: 10px;
 }
+.lawyers-desc_service>.consult-fee_div{
+    width: 28%;
+}
 .lawyers-desc_service>.contingency-cases_div {
     width: 40%;
     background-color: #F8F8F8;
@@ -761,11 +764,11 @@ input:focus, select:focus, textarea:focus{
 .lawyers-desc_service h4 {
     margin-bottom: 0px;
     color: #3E3E3E;
-    font-size: 14px;
+    font-size: 11px;
     font-weight: 700;
     overflow: hidden;
     white-space: nowrap;
-    text-overflow: ellipsis;
+    /* text-overflow: ellipsis; */
     width: 100%;
 }
 .lawyers-service-cntnt-block .school_name {
@@ -2593,6 +2596,18 @@ a.btn_add.mr-2{
 }
 .common_modal .courts_data:last-child{
     border: none;
+}
+.btn_sign_up,.btn_login{
+    padding-left: 35px;
+    padding-right: 35px;
+    text-decoration: none;
+    color: inherit;
+}
+.login_modal button.btn-close.closeLoginModal {
+    position: absolute;
+    right: 0px;
+    z-index: 11;
+    cursor: pointer;
 }
 /* responsive */
 
