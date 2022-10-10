@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('expire_month', 2);
             $table->integer('expire_year', 4);
             $table->string('card_type', 20);
-            $table->integer('card_number', 4);
+            $table->bigInteger('card_number');
             $table->timestamps();
         });
     }

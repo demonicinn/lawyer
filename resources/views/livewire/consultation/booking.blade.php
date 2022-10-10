@@ -139,20 +139,21 @@
 
                                     </div>
 
-                                    <p class="booking_date-time">{{ $selectDate }} <span class="divider-horizonatl"></span> {{ $selectDateTimeSlot }}</p>
+                                    <p class="booking_date-time">Booking Time: {{ $selectDate }} <span class="divider-horizonatl"></span> {{ $selectDateTimeSlot }}</p>
+
+                                    <p>Consultation Fee: {{ $lawyer->details->is_consultation_fee=='yes' ? '$'.$lawyer->details->consultation_fee : 'Free' }}</p>
+
+                                    <p>Deposit Amount: ${{ env('CHARGES') }}</p>
+
+                                    <p>Total Charges: ${{ $totalCharges }}</p>
+
+
 
                                 </div>
                             </div>
-
-
-                            
-                            
-
-
                         </div>
                         <div class="white-shadow-scnd-box mt-4">
-                                @if($lawyer->details->is_consultation_fee == "yes")
-
+                                
                                 @if(Auth::check())
                                 @if($authUser->userCards->count()>0)
                                 <h3>Saved Card</h3>
@@ -169,7 +170,7 @@
                                     <tbody>                                        
                                         @foreach($authUser->userCards as $saveCard)
                                         <tr>
-                                            <td>{{$saveCard->card_number}}</td>
+                                            <td>**** {{ substr($saveCard->card_number, -4) }}</td>
                                             <td>{{$saveCard->card_type}}</td>
                                             <td>{{$saveCard->expire_month}}/{{$saveCard->expire_year}}</td>
                                             <td><button type="button" wire:click="useSavedCard({{$saveCard->id}})" class="checkedbtn">Use</button></td>
@@ -230,14 +231,9 @@
                                     </div>
                                 </div>
                                 <div class="charge_text">
-                                    <p>We will charge you <a href="#" class="pa-design">after</a> your consultation.</p>
+                                    <input type="checkbox" wire:model="save_card"> Save Card
                                 </div>
 
-
-
-                                @else
-                                <h4>Free Consultation</h4>
-                                @endif
 
                             </div>
                         

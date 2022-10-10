@@ -6,6 +6,10 @@ use App\Http\Controllers\MeetingController;
 use App\Models\Booking;
 use App\Models\User;
 use App\Models\UserCard;
+use App\Models\Payment;
+
+
+
 
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
@@ -43,10 +47,11 @@ class ScheduleConsultation extends Component
     public $authUser;
 
     public $first_name, $last_name, $phone, $password, $password_confirmation, $email;
-    public $card_name, $card_number, $expire_month, $expire_year, $cvv;
+    public $card_name, $card_number, $expire_month, $expire_year, $cvv, $save_card=false;
     public $upassword, $uemail;
 
     public $cardId = null;
+    public $totalCharges = 0;
 
 
 
@@ -57,6 +62,14 @@ class ScheduleConsultation extends Component
         }
 
         $this->lawyer = User::where('id', $this->lawyerID)->first();
+
+        $totalCharges = 0;
+        if($this->lawyer->details->is_consultation_fee=='yes'){
+            $totalCharges = $this->lawyer->details->consultation_fee;
+        }
+
+        $this->totalCharges = $totalCharges + env('CHARGES');
+
 
         $this->todayDate = Carbon::now();
         
@@ -325,99 +338,135 @@ class ScheduleConsultation extends Component
     {
         $this->validate();
 
-        \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+        \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
+
         $selectDate = Carbon::parse($this->selectDate);
         $date = $selectDate->format('Y-m-d');
         $ndate = $this->selectDate . ' ' . $this->selectDateTimeSlot;
         $nTimeSlot = date('H:i:s', strtotime($this->selectDateTimeSlot));
 
 
+        $authUser = '';
+        if (Auth::check()) {
+            $authUser = auth()->user();
+        } else {
+            $createUser = new User;
+            $createUser->first_name = $this->first_name;
+            $createUser->last_name = $this->last_name;
+            $createUser->email = $this->email;
+            $createUser->contact_number = $this->phone;
+            $createUser->role = "user";
+            $createUser->password = Hash::make($this->password);
+            $createUser->save();
+
+            $authUser = User::find($createUser->id);
+        }
+
+        //...
+        if (!Auth::check()) {
+            Auth::login($authUser);
+        }
+
+
+        $dateTime = Carbon::parse($ndate);
+
         
-            $dateTime = Carbon::parse($ndate);
-            $meeting = new MeetingController;
-            $a = $meeting->store($dateTime);
-            // dd($a);
-            $zoom_id = $a['data']['id'];
-            $zoom_password = @$a['data']['password'];
-            $zoom_start_url = @$a['data']['start_url'];
+        //....
+        try {
+            //create token
+            $token = \Stripe\Token::create([
+                "card" => array(
+                    "name" => $this->card_name,
+                    "number" => $this->card_number,
+                    "exp_month" => $this->expire_month,
+                    "exp_year" => $this->expire_year,
+                    "cvc" => $this->cvv
+                ),
+            ]);
+
+            $customer = \Stripe\Customer::create([
+                'source' => $token['id'],
+                'email' =>  $authUser->email,
+                'description' => 'My name is ' . $authUser->name,
+            ]);
+
+            $customer_id = $customer['id'];
 
 
-            if(!$this->cardId){
-                try {
-                    if ($this->lawyer->details->is_consultation_fee == "yes") {
-                        $token = \Stripe\Token::create([
-                            "card" => array(
-                                "name" => $this->card_name,
-                                "number" => $this->card_number,
-                                "exp_month" => $this->expire_month,
-                                "exp_year" => $this->expire_year,
-                                "cvc" => $this->cvv
-                            ),
-                        ]);
-                    }
-                } catch (\Stripe\Exception\CardException $e) {
-                    // Since it's a decline, \Stripe\Exception\CardException will be caught
-                    $this->alert('error', $e->getHttpStatus());
-                    $this->alert('error', $e->getError()->type);
-                    $this->alert('error', $e->getError()->code);
-                    $this->alert('error', $e->getError()->param);
-                    $this->alert('error', $e->getError()->message);
-                }
-            }
+            $fee = $this->totalCharges;
+
+            $charge = \Stripe\Charge::create([
+                'currency' => 'USD',
+                'customer' => $customer_id,
+                'amount' =>  $fee * 100,
+            ]);
 
 
-            //  dd($token->card,$token->card->brand);
+            if(@$charge){
 
-            $authUser = '';
-            if (Auth::check()) {
-                $authUser = auth()->user();
-            } else {
-                $createUser = new User;
-                $createUser->first_name = $this->first_name;
-                $createUser->last_name = $this->last_name;
-                $createUser->email = $this->email;
-                $createUser->contact_number = $this->phone;
-                $createUser->role = "user";
-                $createUser->password = Hash::make($this->password);
-                $createUser->save();
+                //save customer id in card table
 
-                $authUser = User::find($createUser->id);
-            }
+                if($this->save_card){
+                    $checkCard = UserCard::where('user_id', $authUser->id)
+                                    ->where('card_number', $this->card_number)
+                                    ->first();
 
-
-            $saveCardId = $this->cardId;
-
-                if (!$this->cardId && $this->lawyer->details->is_consultation_fee == "yes") {
-                    $customer = \Stripe\Customer::create([
-                        'source' => $token['id'],
-                        'email' => @$authUser->email,
-                        'description' => 'My name is ' . @$authUser->name,
-                    ]);
-
-
-                    $customer_id = $customer['id'];
-                    //save customer id in card table
                     $saveCard = new UserCard;
+                    if(@$checkCard){
+                        $saveCard->id = $checkCard->id;
+                        $saveCard->exists = true;
+                    }
                     $saveCard->user_id = $authUser->id;
                     $saveCard->customer_id = $customer_id;
                     $saveCard->card_name = $this->card_name;
                     $saveCard->expire_month = $this->expire_month;
                     $saveCard->expire_year = $this->expire_year;
                     $saveCard->card_type = $token->card->brand;
-                    $saveCard->card_number = $token->card->last4;
+                    //$saveCard->card_number = $token->card->last4;
+                    $saveCard->card_number = $this->card_number;
                     $saveCard->save();
 
                     $saveCardId = $saveCard->id;
                 }
 
-
+                /// generate meeting
+                $meeting = new MeetingController;
+                $a = $meeting->store($dateTime);
+                // dd($a);
 
 
                 if (@$a) {
+                    $zoom_id = $a['data']['id'];
+                    $zoom_password = @$a['data']['password'];
+                    $zoom_start_url = @$a['data']['start_url'];
+
+
+                    $lawyer_amount = 0;
+                    if ($this->lawyer->details->is_consultation_fee == "yes") {
+                        $calAmount = $this->lawyer->details->consultation_fee;
+                        $calAmountPercentage = $calAmount / env('ADMIN_PERCENTAGE');
+
+                        $lawyer_amount = $calAmount - $calAmountPercentage;
+                    }
+
+                    //...
+                    $paymentStore = new Payment;
+                    $paymentStore->user_id = $authUser->id;
+                    $paymentStore->transaction_id = $charge->id;;
+                    $paymentStore->balance_transaction = $charge->balance_transaction;
+                    $paymentStore->customer_id = $customer_id;
+                    $paymentStore->currency = 'usd';
+                    $paymentStore->amount = $fee;
+                    $paymentStore->payment_status = $charge->status;
+                    $paymentStore->save();
+                    
+
+                    //...
                     $booking = new Booking;
                     $booking->user_id = $authUser->id;
                     $booking->lawyer_id = $this->lawyerID;
-                    $booking->user_cards_id = $saveCardId;
+                    $booking->user_cards_id = @$saveCardId;
+                    $booking->payment_id = @$paymentStore->id;
                     $booking->first_name = $this->first_name;
                     $booking->last_name = $this->last_name;
                     $booking->user_email = $this->email;
@@ -429,8 +478,12 @@ class ScheduleConsultation extends Component
                         $booking->appointment_fee = "free";
                     } else {
                         $booking->appointment_fee = "paid";
-                        $booking->price = $this->lawyer->details->consultation_fee;
+                        $booking->consultation_fee = $this->lawyer->details->consultation_fee;
                     }
+
+                    $booking->deposit_amount = env('CHARGES');
+                    $booking->lawyer_amount = @$lawyer_amount;
+                    $booking->total_amount = $fee;
 
                     $booking->zoom_id = @$zoom_id;
                     $booking->zoom_password = @$zoom_password;
@@ -444,27 +497,51 @@ class ScheduleConsultation extends Component
                         //send notification to lawyer
                         Notification::route('mail', $this->lawyer->email)->notify(new BookingMail($booking, $this->lawyer));
 
-                        //...
-                        if (!Auth::check()) {
-                            Auth::login($authUser);
-                        }
-                        $this->flash('success', 'Booking scheduled successfully');
+                        $this->flash('success', 'Appointment scheduled successfully');
                         return redirect()->route('consultations.upcoming');
                     }
                 }
+                ///...........
+            }
+            else {
+                $this->alert('error', 'Charge error');
+            }
+
+        } catch (\Stripe\Exception\CardException $e) {
+            $error = $e->getMessage();
+        } catch (Exception $e) {
+            $error = $e->getMessage();
+        }
+
+        $this->alert('error', $error);
+
     }
 
 
 
     public function useSavedCard($id)
     {
-        $this->cardId = $id;
+        $this->resetCardInfo();
 
-        $this->saveUserInfoAndBooking();
+        $getCard = UserCard::findOrFail($id);
+        
+        $this->card_name = $getCard->card_name;
+        $this->card_number = $getCard->card_number;
+        $this->expire_month = $getCard->expire_month;
+        $this->expire_year = $getCard->expire_year;
+        $this->cvv = $getCard->cvv;
+
+        //$this->saveUserInfoAndBooking();
     }
 
-    
-
+    public function resetCardInfo()
+    {
+        $this->card_name = '';
+        $this->card_number = '';
+        $this->expire_month = '';
+        $this->expire_year = '';
+        $this->cvv = '';
+    }
 
 
     public function render()
@@ -478,8 +555,6 @@ class ScheduleConsultation extends Component
         if ($this->selectDate) {
             $this->slotAvailability();
         }
-
-        
 
         return view('livewire.schedule-consultation');
     }
