@@ -40,4 +40,9 @@ class Booking extends Model
     {
         return $this->belongsTo(UserCard::class, 'user_cards_id', 'id');
     }
+
+    public function payments()
+    {
+        return $this->belongsTo(Payment::class, 'payment_id', 'id');
+    }
 }
