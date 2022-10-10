@@ -27,17 +27,17 @@
                                 </div>
                                 @endif
                                 <!--Login Modal -->
-                                <div wire:ignore.self class="modal fade" id="loginForm" tabindex="-1" aria-labelledby="loginFormLabel" aria-hidden="true">
+                                <div wire:ignore.self class="modal fade login_modal" id="loginForm" tabindex="-1" aria-labelledby="loginFormLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
-                                            <div class="modal-header">
+
                                                 <button type="button" class="btn-close closeLoginModal"></button>
-                                            </div>
+                                            
                                             <div class="modal-body">
                                                 <div class="container">
                                                     <div class="authentication-container">
                                                         <div class="authentication-header">
-                                                            <h2>User Login</h2>
+                                                            <h2>User Login </h2>
                                                         </div>
                                                         @if(Session::has('error'))
                                                         <p class="alert alert-info">{{ Session::get('error') }}</p>
