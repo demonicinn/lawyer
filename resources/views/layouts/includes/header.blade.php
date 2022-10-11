@@ -39,7 +39,13 @@ $user = auth()->user();
             @elseif(Auth::user()->role=="lawyer")
             <li><a class="dropdown-item" href="{{ route($user->role) }}">Dashboard</a></li>
             <li><a class="dropdown-item" href="{{ route('lawyer.profile') }}">My profile</a></li>
+            
+            {{--
             <li><a class="dropdown-item" href="{{ route('lawyer.leave') }}">Leave</a></li>
+            --}}
+
+            <li><a class="dropdown-item" href="{{ route('lawyer.subscription') }}">Subscription</a></li>
+
             @else
             <li><a class="dropdown-item" href="{{ route('user.dashboard') }}">Dashboard</a></li>
             <li><a class="dropdown-item" href="{{ route('user.profile') }}">My profile</a></li>

@@ -138,21 +138,35 @@ class ProfileController extends Controller
 
         //...Working Hours
         if ($request->day) {
-            foreach ($request->day as $day => $data) {
-                if (@$data['from_time'] && $data['to_time']) {
+            foreach ($request->day as $day => $daysData) {
 
-                    $checkHour = LawyerHours::where(['users_id' => $user->id, 'day' => $day])->first();
+                foreach($daysData as $data){
+                    
+                    if(@$data['delete']=='yes'){
+                        $checkHour = LawyerHours::find($data['id']);
 
-                    $hour = new LawyerHours;
-                    if (@$checkHour) {
-                        $hour->id = $checkHour->id;
-                        $hour->exists = true;
+                        if (@$checkHour) {
+                            $checkHour->delete();
+                        }
+
                     }
-                    $hour->users_id = $user->id;
-                    $hour->day = $day;
-                    $hour->from_time = $data['from_time'];
-                    $hour->to_time = $data['to_time'];
-                    $hour->save();
+                    else {
+                        if (@$data['from_time'] && $data['to_time']) {
+                            $hour = new LawyerHours;
+                            if (@$data['id']) {
+                                $checkHour = LawyerHours::find($data['id']);
+                                if (@$checkHour) {
+                                    $hour->id = $checkHour->id;
+                                    $hour->exists = true;
+                                }
+                            }
+                            $hour->users_id = $user->id;
+                            $hour->day = $day;
+                            $hour->from_time = $data['from_time'];
+                            $hour->to_time = $data['to_time'];
+                            $hour->save();
+                        }
+                    }
                 }
             }
         }

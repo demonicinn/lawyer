@@ -67,6 +67,20 @@ Route::get('/lawyer-stripe', function () {
     return 'done';
 });
 
+Route::get('/refund-amount', function () {
+    Artisan::call('refund.amount');
+    return 'done';
+});
+
+Route::get('/transfer-amount', function () {
+    Artisan::call('transfer.amount');
+    return 'done';
+});
+
+
+
+
+
 
 
 

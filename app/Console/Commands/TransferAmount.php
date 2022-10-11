@@ -35,13 +35,14 @@ class TransferAmount extends Command
                     ->get();
 
 
+        \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
+
         foreach($bookings as $booking){
 
             if(@$booking->lawyer->bankInfo->account_id){
 
 
                 try {
-                    \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
 
                     $transfer = \Stripe\Transfer::create([
                         'amount' => $booking->lawyer_amount * 100,
