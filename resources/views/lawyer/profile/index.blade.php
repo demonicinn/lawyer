@@ -123,7 +123,7 @@
 
     function callAdmission(){
 
-        let newHtml = '';
+        //let newHtml = '';
         var html = $('.layoutHtml').html();
 
         $.each($('.multiBoxes').find(":selected"), function (i, item) { 
@@ -145,11 +145,13 @@
             html1 = html1.replace(/0year0/g, year ?? '');
             html1 = html1.replace(/0bar0/g, bar ?? '');
 
-            newHtml += html1;
+            //newHtml += html1;
+
+
+            //...
+            $('.admissionHtml.cat_'+id).append(html1);
         });
 
-        //...
-        $('.admissionHtml').html(newHtml);
 
     }
     //...
@@ -177,7 +179,15 @@
 
     }
 
+    $('.deleteLayout').on('click', function (){
+        let day = $(this).attr('data-day');
+        let id = $(this).attr('data-id');
 
+        //...
+
+        $('.addNewHoursLayout.'+day+' .layout-'+id+' .delete').val('yes');
+        $('.addNewHoursLayout.'+day+' .layout-'+id).hide();
+    });
 
 </script>
 @endsection

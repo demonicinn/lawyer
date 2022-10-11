@@ -23,6 +23,17 @@ class SearchLawyers extends Component
         if (request()->longitude) {
             $this->longitude = request()->longitude;
         }
+
+
+
+        if (request()->litigations) {
+            session(['search_data' => request()->litigations, 'search_type' => 'litigations']);
+        }
+
+        if (request()->contracts) {
+            session(['search_data' => request()->contracts, 'search_type' => 'contracts']);
+        }
+
     }
 
     public function searchFilter()
