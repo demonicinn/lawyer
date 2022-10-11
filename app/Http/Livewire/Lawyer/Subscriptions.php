@@ -25,6 +25,8 @@ class Subscriptions extends Component
 
     public $card_name, $card_number, $expire_month, $expire_year, $cvv;
 
+    public $currentPlan;
+
     public function __construct()
     {
         Stripe::setApiKey(config('services.stripe.secret'));
@@ -43,6 +45,8 @@ class Subscriptions extends Component
                 }
             })
             ->get();
+
+        $this->currentPlan = $this->user->lawyerSubscription()->orderBy('id', 'desc')->first();
     }
 
     public function setSubscription($id, $type)

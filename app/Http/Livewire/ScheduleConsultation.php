@@ -52,7 +52,7 @@ class ScheduleConsultation extends Component
 
     public $cardId = null;
     public $totalCharges = 0;
-
+    public $searchType, $searchData;
 
 
     public function mount()
@@ -75,6 +75,28 @@ class ScheduleConsultation extends Component
         
         $this->dateFormat = $this->todayDate->format("l, F j");
         $this->getWorkingDays($this->todayDate);
+
+
+        $this->searchType = session('search_type');
+        $search_data = session('search_data');
+        if(@$this->searchType=='litigations' && $search_data){
+            $this->searchData = $this->lawyer->lawyerLitigations()
+                        ->whereHas('litigation', function($query) use($search_data) {
+                            $query->whereIn('id', $search_data);
+                        })
+                        ->get()
+                        ->pluck('litigation.name');
+        }
+        if(@$this->searchType=='contracts' && $search_data){
+            $this->searchData = $this->lawyer->lawyerContracts()
+                        ->whereHas('contract', function($query) use($search_data) {
+                            $query->whereIn('id', $search_data);
+                        })
+                        ->get()
+                        ->pluck('contract.name');
+        }
+        //dd($search_data);
+        //dd($this->searchData);
     }
 
     public function confirmSlot()
@@ -165,7 +187,7 @@ class ScheduleConsultation extends Component
 
 
 
-        $lawyerHours = $this->lawyer->lawyerHours()->where('day', $this->dateDay)->first();
+        $lawyerHours = $this->lawyer->lawyerHours()->where('day', $this->dateDay)->get();
 
         $getLeaves = $this->lawyer->booking()->whereDate('booking_date', $date)->pluck('booking_time')->toArray();
 
@@ -178,29 +200,32 @@ class ScheduleConsultation extends Component
         if(!$checkLeave){
             if (@$lawyerHours && $date > date('Y-m-d')) {
 
-                $startTime = strtotime($lawyerHours->from_time);
-                $endTime = strtotime($lawyerHours->to_time);
+                
                 $duration = '30';
 
                 //...
                 $time_slots = array();
                 $add_mins  = $duration * 60;
 
-                while ($startTime <= $endTime) {
-                    $timeSlot = [];
-                    if(in_array(date("H:i:s", $startTime), $getLeaves)) {
-                        $timeSlot['is_free'] = 'no';
+                foreach($lawyerHours as $lawyerHour){
+                    $startTime = strtotime($lawyerHour->from_time);
+                    $endTime = strtotime($lawyerHour->to_time);
+                    while ($startTime <= $endTime) {
+                        $timeSlot = [];
+                        if(in_array(date("H:i:s", $startTime), $getLeaves)) {
+                            $timeSlot['is_free'] = 'no';
+                        }
+                        else {
+                            $timeSlot['is_free'] = 'yes';
+                        }
+
+
+                        $timeSlot['time'] = date("H:i", $startTime);
+                        $time_slots[] = $timeSlot;
+
+                        $startTime += $add_mins;
+
                     }
-                    else {
-                        $timeSlot['is_free'] = 'yes';
-                    }
-
-
-                    $timeSlot['time'] = date("H:i", $startTime);
-                    $time_slots[] = $timeSlot;
-
-                    $startTime += $add_mins;
-
                 }
                 $this->workingDatesTimeSlot = $time_slots;
             }
@@ -451,10 +476,10 @@ class ScheduleConsultation extends Component
 
                     //...
                     $paymentStore = new Payment;
-                    $paymentStore->user_id = $authUser->id;
+                    $paymentStore->users_id = $authUser->id;
                     $paymentStore->transaction_id = $charge->id;;
                     $paymentStore->balance_transaction = $charge->balance_transaction;
-                    $paymentStore->customer_id = $customer_id;
+                    $paymentStore->customer = $customer_id;
                     $paymentStore->currency = 'usd';
                     $paymentStore->amount = $fee;
                     $paymentStore->payment_status = $charge->status;

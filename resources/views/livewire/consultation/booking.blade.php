@@ -122,19 +122,23 @@
                                     <h4 class="booking_name pt-3">{{ $lawyer->name }}</h4>
                                     <div class="row">
 
+                                        @if($searchType=='litigations' && $searchData)
                                         <div class="col-md-8">
                                             <label class="booking_type-text">Litigations </label>
-                                            @foreach ($lawyer->lawyerLitigations as $litigation )
-                                            <p>{{$litigation->litigation->name}}</p>
+                                            @foreach ($searchData as $dat )
+                                            <p>{{$dat}}</p>
                                             @endforeach
                                         </div>
+                                        @endif
 
+                                        @if($searchType=='contracts' && $searchData)
                                         <div class="col-md-4">
                                             <label class="booking_type-text">Contracts</label>
-                                            @foreach ($lawyer->lawyerContracts as $contract )
-                                            <p>{{$contract->contract->name}}</p>
+                                            @foreach ($searchData as $dat )
+                                            <p>{{$dat}}</p>
                                             @endforeach
                                         </div>
+                                        @endif
 
 
                                     </div>
