@@ -2942,6 +2942,32 @@ a.btn_add.mr-2{
     .footer-heading {
         margin-bottom: 15px;
     }
+    .btn_sign_up, .btn_login{
+        padding: 10px 20px;
+    }
+    .box_checkbox .form-grouph.input-design input#term{
+        left: -20px;
+    }
+    .accept_btn{
+        padding: 3px 10px;
+    }
+    .table-design tbody tr td{
+        padding: 20px 5px;
+    }
+    .login-header-btn .user-icon img{
+        width: 25px;
+        height: 25px;
+    }
+    .portal-div-design{
+        margin-bottom: 15px;
+    }
+    .table-responsive {
+        overflow-x: auto;
+    }
+    .col-md-1.form-group button.btn.btn-primary {
+        margin-top: 10px;
+    }
+    /* css 767 end here */
 }
 @media (max-width: 1200px){
     .rating_container {
