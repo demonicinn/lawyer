@@ -38,7 +38,7 @@ class RefundAmount extends Command
         foreach($bookings as $booking){
 
             try {
-                $stripe = new \Stripe\Stripe::StripeClient(config('services.stripe.secret'));
+                // $stripe = new \Stripe\Stripe::StripeClient(config('services.stripe.secret'));
 
                 $refund = $stripe->refunds->create([
                     'charge' => $booking->payments->transaction_id,
