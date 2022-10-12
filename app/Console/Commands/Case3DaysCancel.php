@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 
 use Illuminate\Support\Facades\Notification;
-use App\Notifications\Vendor\Case3DaysCancelNotification;
+use App\Notifications\Case3DaysCancelNotification;
 
 use App\Models\Booking;
 use Carbon\Carbon;

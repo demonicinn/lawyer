@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 
 use Illuminate\Support\Facades\Notification;
-use App\Notifications\Vendor\Rating6MonthsNotification;
+use App\Notifications\Rating6MonthsNotification;
 
 use App\Models\Booking;
 use Carbon\Carbon;

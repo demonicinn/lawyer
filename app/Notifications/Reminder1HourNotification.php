@@ -7,19 +7,21 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class BookingMail extends Notification
+class Reminder1HourNotification extends Notification
 {
     use Queueable;
-    public $booking, $user;
+    public $user;
+    public $url;
+
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($booking, $user)
+    public function __construct($user, $url)
     {
-        $this->booking = $booking;
         $this->user = $user;
+        $this->url = $url;
     }
 
     /**
@@ -41,17 +43,11 @@ class BookingMail extends Notification
      */
     public function toMail($notifiable)
     {
-        $zoomUrl = route('zoom', $this->booking->zoom_id);
-        
         return (new MailMessage)
-            ->subject('Booking Mail')
-            ->greeting('Hi,' . @$this->user->name)
-            ->action('Zoom link', $zoomUrl)
-            // ->line('Zoom password :' .$this->booking->zoom_password)
-            ->line('Booking date :' .date('d-m-Y', strtotime($this->booking->booking_date)))
-            ->line('Booking time :' .date('g:i A', strtotime($this->booking->booking_time)))
-            ->line('Your booking done successfully.');
-            
+                    ->subject('Reminder for your call in 1 hour')
+                    ->greeting('Hello, '. $this->user->name)
+                    ->line('You have a Upcoming call within 1 hour')
+                    ->action('Meeting Url', $this->url);
     }
 
     /**

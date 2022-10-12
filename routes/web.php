@@ -47,34 +47,52 @@ Route::get('/storage-link', function () {
 
 
 //cronjobs
-Route::get('/3days', function () {
-    Artisan::call('case:3days');
-    return 'done';
-});
+Route::group(['prefix' => 'cron'], function () {
+    Route::get('/3days', function () {
+        Artisan::call('case:3days');
+        return 'done';
+    });
+    Route::get('/reminder1day', function () {
+        Artisan::call('reminder:1day');
+        return 'done';
+    });
+    Route::get('/reminder1hour', function () {
+        Artisan::call('reminder:1hour');
+        return 'done';
+    });
+    Route::get('/rating6months', function () {
+        Artisan::call('rating:6months');
+        return 'done';
+    });
+    Route::get('/lawyer-stripe', function () {
+        Artisan::call('lawyers:account');
+        return 'done';
+    });
+    Route::get('/refund-amount', function () {
+        Artisan::call('refund.amount');
+        return 'done';
+    });
+    Route::get('/transfer-amount', function () {
+        Artisan::call('transfer.amount');
+        return 'done';
+    });
 
-Route::get('/reminder1day', function () {
-    Artisan::call('reminder:1day');
-    return 'done';
-});
+    //....
+    Route::get('/hourly', function () {
+        Artisan::call('reminder:1hour');
+        return 'done';
+    });
 
-Route::get('/rating6months', function () {
-    Artisan::call('rating:6months');
-    return 'done';
-});
+    Route::get('/daily', function () {
+        Artisan::call('case:3days');
+        Artisan::call('reminder:1day');
+        Artisan::call('transfer.amount');
+        Artisan::call('refund.amount');
+        Artisan::call('lawyers:account');
+        Artisan::call('rating:6months');
+        return 'done';
+    });
 
-Route::get('/lawyer-stripe', function () {
-    Artisan::call('lawyers:account');
-    return 'done';
-});
-
-Route::get('/refund-amount', function () {
-    Artisan::call('refund.amount');
-    return 'done';
-});
-
-Route::get('/transfer-amount', function () {
-    Artisan::call('transfer.amount');
-    return 'done';
 });
 
 
