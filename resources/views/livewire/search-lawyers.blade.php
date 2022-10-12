@@ -10,7 +10,7 @@
                             <p class="min-value">$0</p>
                             <div id="hourly-rate-slider" class="range-slider">
                                 <div id="hourly-range" class="tooltip-range"></div>
-                                <input class="range_design-input" type="range" step="10" wire:model="rate" min="0" max="500">
+                                <input class="range_design-input" type="range" step="10" wire:model="rate" title="{{$rate}}" min="0" max="500">
                             </div>
                             <p class="max-value">$500</p>
                         </div>
@@ -19,7 +19,7 @@
                     <div class="toggle-design-wrapper d-flex flex-wrap align-items-center mb-4 justify-content-spacebw">
                         <h5 class="h5-design">Free Consultation</h5>
                         <div class="toggle-design_div">
-                            <input type="checkbox" wire:model="free_consultation" name="free-consultation">
+                            <input type="checkbox" wire:model="free_consultation"  name="free-consultation">
                             <button class="cstm-toggle-btn"></button>
                         </div>
                     </div>
@@ -38,7 +38,7 @@
                             <p class="min-value">1</p>
                             <div id="years-experience-slider" class="range-slider">
                                 <div id="experience-range-tooltip" class="tooltip-range"></div>
-                                <input wire:model="year_exp" class="range_design-input" type="range" step="1" min="0" max="20">
+                                <input wire:model="year_exp" class="range_design-input" type="range" step="1" min="0" max="20" title="{{$year_exp}}">
                             </div>
                             <p class="max-value">20</p>
                         </div>
@@ -68,7 +68,7 @@
                             <p class="min-value">1 mi</p>
                             <div id="distance-range-slides" class="range-slider">
                                 <div class="tooltip-range"></div>
-                                <input class="range_design-input" wire:model="distance" type="range" step="1" min="0" max="100">
+                                <input class="range_design-input" wire:model="distance" type="range" step="1" min="0" max="100" title="{{$distance}}">
                             </div>
                             <p class="max-value">100 mi</p>
                         </div>
@@ -180,7 +180,11 @@
                 </div>
                 <!-- Accept Modal Close Here-->
                 @endif
-                <div id="pagination-container" class="pagination-container-service"></div>
+
+
+                <div id="pagination-container" class="pagination-container-service">
+                    {!! $lawyers->links() !!}
+                </div>
             </div>
         </div>
 

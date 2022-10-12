@@ -4,7 +4,7 @@
 	<div class="container">
 		<div class="authentication-container">
 			<div class="authentication-header">
-				<h2>Change Password</h2>
+				<h2>Forgot Password</h2>
 			</div>
 			<div class="lawyer-login">
 				{!! Form::open(['route' => 'password.email', 'class'=>'user']) !!}

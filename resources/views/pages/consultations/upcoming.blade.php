@@ -49,13 +49,13 @@
                                                 <td>{{$start_time}} - {{$end_time}}</td>
                                                 <td>
                                                     <div class="dropdown reshedule_dropdowns">
-                                                        <button class="toggle_cstm-btn" type="button">Reshedule</button>
+                                                        <button class="toggle_cstm-btn" type="button">Reschedule</button>
 
                                                         @if (Auth::user()->role == 'user')
 
                                                         <div class="reshedule_wrap-box">
                                                             <span class="info_icns"><i class="fa-solid fa-circle-info"></i></span>
-                                                            <p>Resheduling consultation will hurt your ratings</p>
+                                                            <p>Rescheduling consultation will hurt your ratings</p>
                                                             <div class="d-flex">
                                                                 <a href="{{route('reschedule.booking',$upcoming->id)}}" class="accept_btn showModal">Confirm</a>
 
@@ -67,7 +67,7 @@
 
                                                         <div class="reshedule_wrap-box">
                                                             <span class="info_icns"><i class="fa-solid fa-circle-info"></i></span>
-                                                            <p>Resheduling consultation will hurt your ratings</p>
+                                                            <p>Rescheduling consultation will hurt your ratings</p>
                                                             <div class="d-flex">
                                                                 <a href="{{route('reschedule.booking',$upcoming->id)}}" class="accept_btn showModal">Confirm</a>
 

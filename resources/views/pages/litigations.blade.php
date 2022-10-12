@@ -5,7 +5,7 @@
         <div class="heading-paragraph-design text-center position-relative go-back-wrap mb-4">
             <h2>Can you narrow down even further…</h2>
             <p>Check one of the Litigations that may apply.</p>
-            <a href="{{ route('narrow.litigations') }}" class="go-back"><i class="fa-solid fa-arrow-left-long"></i> Go Back</a>
+            <a href="{{ route('narrow.down') }}" class="go-back"><i class="fa-solid fa-arrow-left-long"></i> Go Back</a>
         </div>
         <div class="narrow-selection-box">
             {!! Form::open(['route' => 'lawyers', 'method'=>'get', 'class'=>'form-design']) !!}
