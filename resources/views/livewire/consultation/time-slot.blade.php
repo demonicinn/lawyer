@@ -5,10 +5,34 @@
         </div>
 
         <div class="schedule_consultation-wrapper">
+
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 text-center go-back-wrap my-5">
+                <div class="form-grouph submit-design text-center">
+                    <a href="{{ url()->previous() }}" class="go-back border-0">go back</a>
+                </div>
+            </div>
+
+
             <form class="schedule-form-design">
                 <div class="row">
 
                     <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+
+
+                        <div class="">
+                            <div class="booking-info_profile-flex">
+                                @if(@$lawyer->profile_pic)
+                                <div class="booking-info-left_column">
+                                    <img src="{{ $lawyer->profile_pic }}">
+                                </div>
+                                @endif
+                                <div class="booking-info-right_column">
+                                    <h4 class="booking_name pt-3">{{ $lawyer->name }}</h4>
+                                </div>
+                            </div>
+                        </div>
+
+
                         <div wire:ignore class="calendar-container">
                             <div id="celender"></div>
                         </div>

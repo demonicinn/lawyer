@@ -22,7 +22,7 @@ use Session;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Stripe\Charge;
 
-\Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+
 
 class CommonController extends Controller
 {
@@ -321,55 +321,13 @@ class CommonController extends Controller
             $status = 'accepted';
             $authUser = auth()->user();
 
-            if($acceptCase->appointment_fee=='paid'){
-                try {
+            // send mail to user
+            Notification::route('mail', $acceptCase->user_email)->notify(new UserMailForCaseStatus($acceptCase, $status));
 
-                    $charge = Charge::create(array(
-                        'customer' => $acceptCase->cardDetails->customer_id,
-                        'amount'   =>  $acceptCase->price * 100,
-                        "description" => "Test payment",
-                        'currency' => 'usd'
-                    ));
-                    //send mail to user 
+            Notification::route('mail', $acceptCase->user_email)->notify(new CaseAcceptReviewNotification($acceptCase, $authUser));
 
-                    if ($charge) {
-
-                        // send mail to user
-                        Notification::route('mail', $acceptCase->user_email)->notify(new UserMailForCaseStatus($acceptCase, $status));
-
-                        Notification::route('mail', $acceptCase->user_email)->notify(new CaseAcceptReviewNotification($acceptCase, $authUser));
-
-                        // send mail to lawyer
-                        Notification::route('mail', $authUser->email)->notify(new LawyerMailForCaseStatus($acceptCase, $status));
-
-
-                        $this->flash('success', 'Case accepted successfully');
-                    } else {
-                        $this->flash('error', 'Something went wrong');
-                    }
-
-                } catch (\Stripe\Exception\CardException $e) {
-                    // Since it's a decline, \Stripe\Exception\CardException will be caught
-                    $this->alert('error', $e->getHttpStatus());
-                    $this->alert('error', $e->getError()->type);
-                    $this->alert('error', $e->getError()->code);
-                    $this->alert('error', $e->getError()->param);
-                    $this->alert('error', $e->getError()->message);
-                }
-            }
-            else {
-
-                $this->flash('success', 'Case accepted successfully');
-
-                // send mail to user
-                Notification::route('mail', $acceptCase->user_email)->notify(new UserMailForCaseStatus($acceptCase, $status));
-
-                Notification::route('mail', $acceptCase->user_email)->notify(new CaseAcceptReviewNotification($acceptCase, $authUser));
-
-                // send mail to lawyer
-                Notification::route('mail', $authUser->email)->notify(new LawyerMailForCaseStatus($acceptCase, $status));
-
-            }
+            // send mail to lawyer
+            //Notification::route('mail', $authUser->email)->notify(new LawyerMailForCaseStatus($acceptCase, $status));
             
             return redirect()->route('consultations.accepted');
             

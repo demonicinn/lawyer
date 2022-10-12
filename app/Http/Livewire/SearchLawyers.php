@@ -6,10 +6,15 @@ use App\Models\Category;
 use App\Models\Item;
 use Livewire\Component;
 use App\Models\User;
+use Livewire\WithPagination;
 
 class SearchLawyers extends Component
 {
-    public $lawyers, $categories;
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
+
+    //public $lawyers;
+    public $categories;
 
     public $latitude, $longitude;
 
@@ -105,8 +110,8 @@ class SearchLawyers extends Component
                     if ($this->search) {
                         $query->where(function ($que) {
                             $que->orWhere('city', $this->search);
-                            $que->orWhere('zip_code', $this->zip_code);
-                            $que->orWhere('address', $this->address);
+                            $que->orWhere('zip_code', $this->search);
+                            $que->orWhere('address', $this->search);
                         });
                     }
                 });
@@ -136,9 +141,11 @@ class SearchLawyers extends Component
 
 
         //$user = $user->latest()->get();
-        $user = $user->get();
+        $user = $user->paginate(9);
         // dd($user);
-        $this->lawyers = $user;
+        //$this->lawyers = $user;
+
+        return $user;
     }
 
 
@@ -151,10 +158,12 @@ class SearchLawyers extends Component
 
     public function render()
     {
-        $this->searchFilter();
+        $lawyers = $this->searchFilter();
 
         $this->categories = Category::where('is_search', '1')->withCount('items')->with('items')->get();
-        return view('livewire.search-lawyers');
+
+
+        return view('livewire.search-lawyers', ['lawyers'=>$lawyers]);
     }
 
 

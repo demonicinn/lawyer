@@ -299,7 +299,7 @@ class ScheduleConsultation extends Component
             return [
                 'first_name' => ['required', 'string', 'max:100'],
                 'last_name' => ['required', 'string', 'max:100'],
-                'phone' => ['required', 'numeric', 'digits_between:10,12'],
+                'phone' => ['nullable', 'numeric', 'digits_between:10,12'],
                 'email' => ['required', 'string', 'email', 'max:255'],
             ];
         }
@@ -309,7 +309,7 @@ class ScheduleConsultation extends Component
                 return [
                     'first_name' => ['required', 'string', 'max:100'],
                     'last_name' => ['required', 'string', 'max:100'],
-                    'phone' => ['required', 'numeric', 'digits_between:10,12'],
+                    'phone' => ['nullable', 'numeric', 'digits_between:10,12'],
                     'email' => ['required', 'string', 'email', 'max:255'],
                 ];
             }
@@ -317,7 +317,7 @@ class ScheduleConsultation extends Component
             return [
                 'first_name' => ['required', 'string', 'max:100'],
                 'last_name' => ['required', 'string', 'max:100'],
-                'phone' => ['required', 'numeric', 'digits_between:10,12'],
+                'phone' => ['nullable', 'numeric', 'digits_between:10,12'],
                 'email' => ['required', 'string', 'email', 'max:255'],
                 'card_name' => 'required|max:50',
                 'card_number' => 'required|numeric|digits_between:12,16',
@@ -331,7 +331,7 @@ class ScheduleConsultation extends Component
             return [
                 'first_name' => ['required', 'string', 'max:100'],
                 'last_name' => ['required', 'string', 'max:100'],
-                'phone' => ['required', 'numeric', 'digits_between:10,12'],
+                'phone' => ['nullable', 'numeric', 'digits_between:10,12'],
                 'email' => ['required', 'string', 'email', 'max:255', Rule::unique(User::class)],
                 'password' => 'required',
                 'password_confirmation' => 'required_with:password|same:password',
@@ -341,7 +341,7 @@ class ScheduleConsultation extends Component
         return [
             'first_name' => ['required', 'string', 'max:100'],
             'last_name' => ['required', 'string', 'max:100'],
-            'phone' => ['required', 'numeric', 'digits_between:10,12'],
+            'phone' => ['nullable', 'numeric', 'digits_between:10,12'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique(User::class)],
             'password' => 'required',
             'password_confirmation' => 'required_with:password|same:password',
