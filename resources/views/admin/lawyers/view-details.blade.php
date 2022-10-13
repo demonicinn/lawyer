@@ -251,7 +251,10 @@ $lawyer_details = $user->lawyerInfo;
                                 {!! Form::text('year_experience', $user->details->year_experience ?? null, ['disabled' => true,'class' => ($errors->has('year_experience') ? ' is-invalid' : ''), 'maxlength'=>'2']) !!}
 
                             </div>
+
+                            {{--
                             @include('lawyer.profile.hours')
+                            --}}
                         </div>
                         @else
 
