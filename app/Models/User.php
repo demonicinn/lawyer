@@ -78,6 +78,11 @@ class User extends Authenticatable
         return $this->hasMany(LawyerSubscription::class, 'users_id', 'id');
     }
 
+    public function lawyerSubscriptionLast()
+    {
+        return $this->hasOne(LawyerSubscription::class, 'users_id', 'id')->orderBy('id', 'desc');
+    }
+
     public function lawyerLitigations()
     {
         return $this->hasMany(LawyerLitigations::class, 'users_id', 'id');
