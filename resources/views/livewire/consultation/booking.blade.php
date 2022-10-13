@@ -8,7 +8,7 @@
         <div class="personal-information-wrapper booking_information">
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 text-center go-back-wrap my-5">
                 <div class="form-grouph submit-design text-center">
-                    <button type="button" class="go-back border-0" wire:click="backbtn">go back</button>
+                    <button type="button" class="go-back border-0" wire:click="backbtn"> <i class="fa-solid fa-arrow-left-long"></i>go back</button>
                 </div>
             </div>
             <form class="personal-form-information form-design">
@@ -132,30 +132,38 @@
                                         @endif
 
                                         @if($searchType=='contracts' && $searchData)
-                                        <div class="col-md-4">
+                                        <div class="">
                                             <label class="booking_type-text">Contracts</label>
+                                            <ul class="list_dat">
                                             @foreach ($searchData as $dat )
-                                            <p>{{$dat}}</p>
+                                      
+                                            <li>{{$dat}}</li>
+                                            
                                             @endforeach
+                                            </ul>
                                         </div>
                                         @endif
 
 
                                     </div>
 
-                                    <p class="booking_date-time">Booking Time: {{ $selectDate }} <span class="divider-horizonatl"></span> {{ $selectDateTimeSlot }}</p>
-
-                                    <p>Consultation Fee: {{ $lawyer->details->is_consultation_fee=='yes' ? '$'.$lawyer->details->consultation_fee : 'Free' }}</p>
-
-                                    <p>Deposit Amount: ${{ env('CHARGES') }}</p>
-
-                                    <p>Total Charges: ${{ $totalCharges }}</p>
-
+                                  
 
 
                                 </div>
                             </div>
                         </div>
+                        <div class="white-shadow-scnd-box booking-info_profile mt-4">
+                                 <div class="booking_card">
+                                    <p class="booking_date-time"><b>Booking Time:</b> {{ $selectDate }} <span class="divider-horizonatl"></span> {{ $selectDateTimeSlot }}</p>
+
+                                    <p><b>Consultation Fee:</b> {{ $lawyer->details->is_consultation_fee=='yes' ? '$'.$lawyer->details->consultation_fee : 'Free' }}</p>
+
+                                    <p><b>Deposit Amount:</b> ${{ env('CHARGES') }}</p>
+
+                                    <p><b>Total Charges:</b> ${{ $totalCharges }}</p>
+                                 </div>
+                                 </div>
                         <div class="white-shadow-scnd-box mt-4">
                                 
                                 @if(Auth::check())

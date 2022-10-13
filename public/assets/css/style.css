@@ -11,6 +11,10 @@ button:focus,a:focus{
 }
 
 
+@font-face {
+    font-family: 'Lato-Medium';
+    src: url(../fonts/Lato-Medium.ttf);
+}  
 
 /* Custom Container Sizes */
 .container-1340px {
@@ -21,6 +25,7 @@ button:focus,a:focus{
 }
 .container {
     max-width: 1194px;
+    position: relative;
 }
 /* End Custom Container Sizes */
 
@@ -289,6 +294,7 @@ button:focus,a:focus{
     padding-right: 50px;
 }
 .form-flex {
+    position: relative;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -335,7 +341,7 @@ input[type=number] {
 }
 .narrow-box p {
     font-size: 18px;
-    font-weight: 400;
+    font-family: 'Lato-Medium';
     margin-bottom: 0px;
 }
 .narrow-box h4 {
@@ -434,7 +440,7 @@ input[type=number] {
 .form-design .checkbox-design label {
     margin-bottom: 0px;
     font-size: 18px;
-    font-weight: 400;
+    font-family: 'Lato-Medium';
     margin-left: 30px;
 }
 .checkbox-design input:checked~.checkbox-btn::before{
@@ -709,7 +715,7 @@ input:focus, select:focus, textarea:focus{
     border: none;
     font-weight: 700;
     padding: 2px 11px;
-    min-width: 75px;
+    /* min-width: 75px; */
     text-align: center;
 }
 .lawyers-heading_service {
@@ -1089,15 +1095,16 @@ input:focus, select:focus, textarea:focus{
     text-align: center;
 }
 .lawyers-service-cntnt-block .lawyers-heading_service {
-    display: block !important;
+    display: block;
     text-align: center;
     padding-top: 20px;
     padding-bottom: 15px;
 }
 .lawyers-service-cntnt-block .lawyers-heading_service .lawyer-name {
-    font-size: 24px;
+    font-size: 16px;
     padding-right: 0px;
     margin-bottom: 8px;
+    text-align: left;
 }
 .grey-light-heading h4 {
     color: #A5A5A5;
@@ -2096,8 +2103,8 @@ label.second-label-design {
     left: 21px;
     width: 13px;
     height: 13px;
-    border-bottom: 2px solid #D8D8D8;
-    border-left: 2px solid #D8D8D8;
+    border-bottom: 3px solid #D8D8D8;
+    border-left: 3px solid #D8D8D8;
     transform: rotate(45deg);
     top: 19px;
 }
@@ -2114,8 +2121,8 @@ label.second-label-design {
     left: 16px;
     width: 13px;
     height: 13px;
-    border-top: 2px solid #D8D8D8;
-    border-right: 2px solid #D8D8D8;
+    border-top: 3px solid #D8D8D8;
+    border-right: 3px solid #D8D8D8;
     transform: rotate(45deg);
     top: 19px;
 }
@@ -2246,6 +2253,7 @@ label.second-label-design {
 }
 .five-star-blocks img {
     margin-right: 8px;
+    filter: drop-shadow(0px 2px 27px rgba(0,0,0,0.17));
 }
 .how-prickly-pear-works {
     background: #f8f8f8;
@@ -2306,7 +2314,7 @@ label.second-label-design {
     position: absolute;
     left: 0;
     right: 0;
-    top: 31%;
+    top: 37%;
     bottom: 0;
     width: 1225px;
     height: 1225px;
@@ -2508,9 +2516,10 @@ img {
     display: flex;
     justify-content: center;
 }
-.booking_information .booking-info_profile-flex {
+
+/* .booking_information .booking-info_profile-flex {
     display: block;
-}
+} */
 form .help-block,form span.help-block {
     color: red;
 }
@@ -2564,7 +2573,7 @@ a.btn_add.mr-2{
     padding-right: 25px;
     margin-bottom: 20px;
 }
-.appned_inputs span.btn_close {
+.layout  span.btn_close {
     padding: 0px 7px;
     border-radius: 50%;
     width: 23.4px;
@@ -2572,13 +2581,19 @@ a.btn_add.mr-2{
     position: absolute;
     cursor: pointer;
     right: -17px;
-    top: -7px;
+    top: 13px;
     background-color: red;
     color: #fff;
 }
 .appned_inputs .form-flex {
     position: relative;
 }
+.directory_h4_btn{
+    position: relative;}
+
+    .directory_h4_btn h4{
+        font-size: 24px !important;
+    }
 .name_data_p,.mb-4.courts_data .form-grouph.select-design {
     display: flex;
     align-items: center;
@@ -2608,6 +2623,61 @@ a.btn_add.mr-2{
     right: 0px;
     z-index: 11;
     cursor: pointer;
+}
+
+
+.text_p a{
+    font-weight: bold;
+  color: inherit;
+}
+    .btn_court {
+        padding: 0px;
+        border: 0;
+        background-color: transparent;
+        font-size: 14px;
+        color: #FE3F65;
+        font-size: 14px;
+        text-decoration: underline;
+    }
+    .btn_court svg{
+        margin-right: 5px;
+    }
+.border-10{
+    border-radius: 10px;
+}
+.border-10 img{
+    border-radius: 10px;
+}
+td.form_td {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+td.form_td button{
+   padding: 5px 10px;
+}
+.custom-control.custom-switch.input_add span {
+    min-width: 93px;
+}
+ul.list_dat {
+    list-style: none;
+    padding: 0px;
+}
+ul.list_dat li{
+    padding-right: 5px;
+    position: relative;
+ display: inline-block;
+}
+ul.list_dat li::after{
+    position: absolute;
+    content: ',';
+}
+ul.list_dat li:last-child::after{
+   content: ".";
+}
+.booking_card p b {
+    min-width: 150px;
+    display: inline-block;
 }
 /* responsive */
 
