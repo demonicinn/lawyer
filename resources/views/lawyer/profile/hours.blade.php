@@ -16,7 +16,7 @@ $days = \App\Models\User::getDays();
             @endphp
 
             <div class="custom-control custom-switch input_add">
-                <input type="checkbox" class="custom-control-input hoursDay" value="{{ $day }}" {{ @$hours ? 'checked' : '' }}> {{ $day }}
+                <input type="checkbox" class="custom-control-input hoursDay" value="{{ $day }}" {{ @$hours ? 'checked' : '' }}><span> {{ $day }}</span>
                 <label class="custom-control-label"></label>
 
                 <button style="display:{{ @$hours ? '' : 'none' }}" type="button" class="btn btn-primary clickHours {{ $day }}" data-day="{{ $day }}">+</button>

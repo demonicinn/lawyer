@@ -90,7 +90,7 @@
                 <div class="list-item list-service-item">
                     <div class="lawyer-hire-block">
                         @if(@$lawyer->profile_pic)
-                        <div class="lawyers-img-block">
+                        <div class="lawyers-img-block border-10">
                             <img src="{{ $lawyer->profile_pic }}">
                         </div>
                         @endif
@@ -116,13 +116,14 @@
                                 </div>
                             </div>
                             <p class="school_name"><i class="fa-solid fa-school-flag"></i>{{ @$lawyer->lawyerCategory->items->name }}</p>
-                            <div class="location_profile-divs d-flex justify-content-spacebw align-items-center">
+                            <div class="location_profile-divs border-bottom pb-2">
                                 <address><i class="fa-solid fa-location-dot"></i> {{ @$lawyer->details->city }}, {{ @$lawyer->details->states->code }}</address>
-                                <a href="{{ route('lawyer.show', $lawyer->id) }}">See Profile</a>
+                                
                             </div>
 
-                            <div class="add-litigations">
-                                <button type="button" class="accept_btn showModal mt-2" wire:click="modalData({{$lawyer->id}})">Courts</button>
+                            <div class="add-litigations mt-2 location_profile-divs d-flex justify-content-spacebw align-items-center ">
+                                <button type="button" class="btn_court showModal " wire:click="modalData({{$lawyer->id}})"><i class="fa-solid fa-gavel"></i>  Courts</button>
+                                <a href="{{ route('lawyer.show', $lawyer->id) }}">See Profile</a>
                             </div>
 
                             @php $lawyerID= Crypt::encrypt($lawyer->id); @endphp

@@ -9,7 +9,7 @@
         <div class="narrow-down-rows">
             <div class="row">
                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-                    <div class="narrow-box position-relative">
+                    <div class="narrow-box position-relative    ">
                         <div class="narrow-icon-box">
                             <img src="assets/images/litigations.svg">
                         </div>

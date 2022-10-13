@@ -87,8 +87,8 @@
                                                 </td>
 
                                                 @if (Auth::user()->role == "lawyer")
-                                                <td>
-                                                    <form method="post" action="{{route('accept.case',$complete->id)}}">
+                                                <td class="form_td">
+                                                    <form method="post" action="{{route('accept.case',$complete->id)}}" class="">
                                                         @csrf
                                                         <button type="submit" class="accept_btn">Accept</button>
                                                     </form>

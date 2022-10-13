@@ -16,8 +16,8 @@
                                     <img src="{{ $user->profile_pic }}">
                                 </div>
                                 <div class="lawyers-service-cntnt-block">
-                                    <div class="lawyers-heading_service d-flex justify-content-spacebw align-items-center">
-                                        <h4 class="lawyer-name">{{ @$user->name }}</h4>
+                                    <div class="lawyers-heading_service d-block justify-content-spacebw align-items-center directory_h4_btn">
+                                        <h4 class="lawyer-name text-center">{{ @$user->name }}</h4>
                                         <button class="hire-price-btn">${{ @$user->details->hourly_fee }}/hr.</button>
                                     </div>
                                     <div class="lawyers-desc_service d-flex justify-content-spacebw">
@@ -35,9 +35,14 @@
                                         </div>
                                     </div>
                                     <p class="school_name"><i class="fa-solid fa-school-flag"></i> Harvard Law School</p>
-                                    <div class="location_profile-divs">
+                                    <div class="location_profile-divs school_name border-bottom px-0 pb-2">
                                         <address><i class="fa-solid fa-location-dot"></i> {{ @$user->details->city }}, {{ @$user->details->states->code }}</address>
                                     </div>
+
+                                    <div class="add-litigations mt-2 location_profile-divs d-flex justify-content-spacebw align-items-center ">
+                                <button type="button" class="btn_court showModal "><i class="fa-solid fa-gavel"></i>  Courts</button>
+                                <a href="#">See Profile</a>
+                            </div>
 
 
                                     <!-- <div class="add-litigations">

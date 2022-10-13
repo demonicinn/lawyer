@@ -28,7 +28,7 @@
 						{!! $errors->first('password_confirmation', '<span class="help-block">:message</span>') !!}
 					</div>
 
-					<div class="form-grouph submit-design text-center">
+					<div class="form-grouph submit-design text-center pt-3">
 						<button class="form-btn" type="submit">{{ __('Reset Password') }}</button>
 					</div>
 
