@@ -82,6 +82,9 @@ class Subscriptions extends Component
 
         //Free Plans
         if ($subscription->type == "free") {
+            $period = env('FREE_SUBSCRIPTION') . 'days';
+            $to_date = date('Y-m-d', strtotime($from_date . $period));
+
             //...
             $plan = new LawyerSubscription;
             $plan->users_id = $user->id;
