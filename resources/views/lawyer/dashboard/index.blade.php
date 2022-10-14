@@ -11,37 +11,40 @@
             <div class="row">
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-3">
                     <div class="portal-div-design position-relative">
-                        <div class="portal-div-img">
+                        <!-- <div class="portal-div-img">
                             <img src="{{ asset('assets/images/schedule.svg') }}">
-                        </div>
+                        </div> -->
                         <div class="portal-cntnt-wrapper">
                             <a href="{{ route('consultations.upcoming') }}">Upcoming Consultations</a>
                             <p>{{ $upcomingConsultations }}</p>
                         </div>
+                        <span class="three_dots">...</span>
                     </div>
                 </div>
 
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-3">
                     <div class="portal-div-design position-relative">
-                        <div class="portal-div-img">
+                        <!-- <div class="portal-div-img">
                             <img src="{{ asset('assets/images/schedule.svg') }}">
-                        </div>
+                        </div> -->
                         <div class="portal-cntnt-wrapper">
                             <a href="{{ route('consultations.complete') }}">Completed Consultations</a>
                             <p>{{ $completeConsultations }}</p>
                         </div>
+                        <span class="three_dots">...</span>
                     </div>
                 </div>
 
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-3">
                     <div class="portal-div-design position-relative">
-                        <div class="portal-div-img">
+                        <!-- <div class="portal-div-img">
                             <img src="{{ asset('assets/images/schedule.svg') }}">
-                        </div>
+                        </div> -->
                         <div class="portal-cntnt-wrapper">
                             <a href="{{ route('consultations.accepted') }}">Accepted Consultations</a>
                             <p>{{ $acceptedConsultations }}</p>
                         </div>
+                        <span class="three_dots">...</span>
                     </div>
                 </div>
             </div>
@@ -54,7 +57,7 @@
                 </div>
 
                 <div class="col-md-1 form-group">
-                    <button class="btn btn-primary" type="submit">Search</button>
+                    <button class="btn btn-primary" style="background-color: #f93f64; border-color:#f93f64;" type="submit">Search</button>
                 </div>
 
             </div>
