@@ -96,8 +96,8 @@ rel="Stylesheet"type="text/css"/>
     function bookingChart() {
         
         var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Month');
-        data.addColumn('number', 'Bookings');
+        data.addColumn('string', 'Months');
+        data.addColumn('number', 'Bookings by Months');
         
         data.addRows([
         @foreach($months as $k => $month)
@@ -108,10 +108,10 @@ rel="Stylesheet"type="text/css"/>
         
         var options = {
             hAxis: {
-                title: 'Months'
+                title: ''
             },
             vAxis: {
-                title: 'Number of Bookings'
+                title: ''
             },
             seriesType: 'bars',
             series: {1: {type: 'line'}},

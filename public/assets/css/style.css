@@ -2711,8 +2711,12 @@ span.three_dots {
     transform: rotate(90deg);
     color: #d8d8d8;
 }
+.logo-left-column img {
+    width: 264px;
+}
 /* responsive */
-
+/* responsive */
+/* responsive */
 @media (min-width: 1200px){
     .footer-widget-first {
         width: 100%;
