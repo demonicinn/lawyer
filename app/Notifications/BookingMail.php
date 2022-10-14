@@ -44,7 +44,7 @@ class BookingMail extends Notification
         $zoomUrl = route('zoom', $this->booking->zoom_id);
         
         return (new MailMessage)
-            ->subject('Booking Mail')
+            ->subject('Prickly Pear Consultation Confirmed')
             ->greeting('Hi,' . @$this->user->name)
             ->action('Zoom link', $zoomUrl)
             // ->line('Zoom password :' .$this->booking->zoom_password)
