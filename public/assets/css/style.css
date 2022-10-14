@@ -15,7 +15,9 @@ button:focus,a:focus{
     font-family: 'Lato-Medium';
     src: url(../fonts/Lato-Medium.ttf);
 }  
-
+p{
+    font-family: 'Lato-Medium';
+}
 /* Custom Container Sizes */
 .container-1340px {
     width: 100%;
@@ -2457,7 +2459,7 @@ img {
     text-decoration: none;
 }
 .dashboard_wrapper .data-white-box.position-relative h4{
-    font-weight: 600;
+    font-family: 'Lato-Medium';
 }
 .calendar-container div#celender .calendar .day {
     cursor: pointer;
@@ -2582,8 +2584,7 @@ a.btn_add.mr-2{
     cursor: pointer;
     right: -17px;
     top: 13px;
-    background-color: red;
-    color: #fff;
+    color: red;
 }
 .appned_inputs .form-flex {
     position: relative;
@@ -2625,10 +2626,13 @@ a.btn_add.mr-2{
     cursor: pointer;
 }
 
-
+.text_p{
+    font-family: 'Lato-Medium';
+}
 .text_p a{
     font-weight: bold;
   color: inherit;
+  font-style: italic;
 }
     .btn_court {
         padding: 0px;
@@ -2678,6 +2682,34 @@ ul.list_dat li:last-child::after{
 .booking_card p b {
     min-width: 150px;
     display: inline-block;
+}
+.portal-div-design:hover,.data-white-box:hover{
+    transition: 0.3s;
+    background-color: #F93F64;
+    border-color: #F93F64;
+}
+.portal-div-design:hover .portal-div-img img {
+    filter: brightness(0) invert(1);
+}
+.portal-div-design:hover  .portal-cntnt-wrapper a,.portal-div-design:hover p{
+    color: #fff ;
+}
+.data-white-box:hover a.data-content-box{
+    color: #fff !important;
+}
+div#bookingChart g text {
+    font-size: 18px;
+    font-family: 'Lato-Medium';
+    font-style: inherit;
+}
+span.three_dots {
+    position: absolute;
+    right: -4px;
+    top: 37px;
+    font-size: 50px;
+    line-height: 0px;
+    transform: rotate(90deg);
+    color: #d8d8d8;
 }
 /* responsive */
 

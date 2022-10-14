@@ -9,9 +9,16 @@
     font-style: normal;
     font-display: swap;
 }
+@font-face {
+    font-family: 'Lato-Medium';
+    src: url(../fonts/Lato-Medium.ttf);
+}  
 p,a,button,span,label,input,select,textarea{
     font-family: 'Lato', sans-serif;
 }
 h1,h2,h3,h4,h5,h6{
     font-family: 'P22 Mackinac';
+}
+p{
+    font-family: 'Lato-Medium';
 }
