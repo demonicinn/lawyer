@@ -93,3 +93,56 @@
     </div>
 </section>
 @endsection
+
+@section('script')
+<div class="modal fade courts_modal common_modal" id="courtModal" tabindex="-1" aria-labelledby="courtModal" aria-hidden="true">
+    <div class="modal-dialog modal_style">
+        <button type="button" class="btn btn-default close closeModal">
+            <i class="fas fa-close"></i>
+        </button>
+        <div class="modal-content">
+            <form>
+                <div class="modal-header modal_h">
+                    <h3>Courts</h3>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        @foreach ($user->lawyerInfo as $lawyerInfo)
+                        @if($lawyerInfo->categories->is_multiselect)
+                        <div class="mb-4 courts_data">
+                           <div class="name_data_p">
+                             <h6>{{ @$lawyerInfo->items->name }}</h6>
+                            <p class="mb-0">{{ @$lawyerInfo->items->category->name }} {{ @$lawyerInfo->items->category->mainCat->name ? ' - '.$lawyerInfo->items->category->mainCat->name : ''  }}</p>
+                           </div>
+                            <div class="federal-court">
+                                <div class="form-grouph select-design">
+                                    <label>Bar Number</label>
+                                    <div>{{ @$lawyerInfo->bar_number ?? '--' }}</div>
+                                </div>
+                                <div class="form-grouph select-design">
+                                    <label>Year Admitted</label>
+                                    <div>{{ $lawyerInfo->year_admitted ?? '--'}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+                        @endforeach
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('.showModal').on('click', function(){
+        $('#courtModal').modal('show');
+    });
+    $('.closeModal').on('click', function(){
+        $('#courtModal').modal('hide');
+    });
+
+
+
+</script>
+@endsection
