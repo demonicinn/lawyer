@@ -2690,7 +2690,6 @@ ul.list_dat li:last-child::after{
 }
 .portal-div-design:hover .portal-div-img img {
     filter: brightness(0) invert(1);
-    fill: aaa;
 }
 .portal-div-design:hover  .portal-cntnt-wrapper a,.portal-div-design:hover p{
     color: #fff ;
@@ -2698,7 +2697,6 @@ ul.list_dat li:last-child::after{
 .data-white-box:hover a.data-content-box{
     color: #fff !important;
 }
-/* ccc */
 div#bookingChart g text {
     font-size: 18px;
     font-family: 'Lato-Medium';
@@ -2717,7 +2715,7 @@ span.three_dots {
     width: 264px;
 }
 /* responsive */
-
+/* responsive */
 @media (min-width: 1200px){
     .footer-widget-first {
         width: 100%;
