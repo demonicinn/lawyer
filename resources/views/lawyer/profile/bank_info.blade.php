@@ -9,7 +9,7 @@
 
 				{!! Form::open(['route' => 'lawyer.bank.connect', 'class'=>'lawyer_profile-information form-design']) !!}
 
-				<button type="submit" class="btn-design-first">Connect Bank Account</button>
+				<button type="submit" class="btn-design-first btn_bank">Connect Bank Account</button>
 
 				{!! Form::close() !!}
 

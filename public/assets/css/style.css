@@ -2714,6 +2714,11 @@ span.three_dots {
 .logo-left-column img {
     width: 264px;
 }
+.btn_bank{
+    max-width: 100%;
+    display: inline-block;
+    width: auto;
+}
 /* responsive */
 /* responsive */
 /* responsive */
