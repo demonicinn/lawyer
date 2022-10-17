@@ -16,7 +16,7 @@ $days = \App\Models\User::getDays();
             @endphp
 
             <div class="custom-control custom-switch input_add">
-                <input type="checkbox" class="custom-control-input hoursDay" value="{{ $day }}" {{ @$hours ? 'checked' : '' }}><span> {{ $day }}</span>
+                <input type="checkbox" class="custom-control-input hoursDay" name="day[{{$day}}][selected]" {{ @$hours ? 'checked' : '' }}><span> {{ $day }}</span>
                 <label class="custom-control-label"></label>
 
                 <button style="display:{{ @$hours ? '' : 'none' }}" type="button" class="btn btn-primary clickHours {{ $day }}" data-day="{{ $day }}">+</button>
@@ -32,17 +32,17 @@ $days = \App\Models\User::getDays();
                 @endphp
                 <div class="form-flex layout layout-{{$j}}">
 
-                    {!! Form::hidden('day['.$day.']['.$j.'][id]', @$hour->id) !!}
-                    {!! Form::hidden('day['.$day.']['.$j.'][delete]', 'no', ['class'=>'delete']) !!}
+                    {!! Form::hidden('day['.$day.'][data]['.$j.'][id]', @$hour->id) !!}
+                    {!! Form::hidden('day['.$day.'][data]['.$j.'][delete]', 'no', ['class'=>'delete']) !!}
 
                     <div class="form-grouph input-design{!! ($errors->has('from_time') ? ' has-error' : '') !!}">
                         {!! Form::label('from_time','From Time*', ['class' => 'form-label']) !!}    
-                        {!! Form::time('day['.$day.']['.$j.'][from_time]', @$hour->from_time ?? null, ['class' => ($errors->has('from_time') ? ' is-invalid' : '')]) !!}
+                        {!! Form::time('day['.$day.'][data]['.$j.'][from_time]', @$hour->from_time ?? null, ['class' => ($errors->has('from_time') ? ' is-invalid' : '')]) !!}
                         {!! $errors->first('from_time', '<span class="help-block">:message</span>') !!}
                     </div>
                     <div class="form-grouph input-design{!! ($errors->has('to_time') ? ' has-error' : '') !!}">
                         {!! Form::label('to_time','To Time*', ['class' => 'form-label']) !!}    
-                        {!! Form::time('day['.$day.']['.$j.'][to_time]', @$hour->to_time ?? null, ['class' => ($errors->has('to_time') ? ' is-invalid' : '')]) !!}
+                        {!! Form::time('day['.$day.'][data]['.$j.'][to_time]', @$hour->to_time ?? null, ['class' => ($errors->has('to_time') ? ' is-invalid' : '')]) !!}
                         {!! $errors->first('to_time', '<span class="help-block">:message</span>') !!}
                     </div>
                     <span class="btn_close deleteLayout" data-day="{{ $day }}" data-id="{{$j}}">X</span>
@@ -52,12 +52,12 @@ $days = \App\Models\User::getDays();
                 <div class="form-flex layout layout-1">
                     <div class="form-grouph input-design{!! ($errors->has('from_time') ? ' has-error' : '') !!}">
                         {!! Form::label('from_time','From Time*', ['class' => 'form-label']) !!}    
-                        {!! Form::time('day['.$day.'][1][from_time]', null, ['class' => ($errors->has('from_time') ? ' is-invalid' : '')]) !!}
+                        {!! Form::time('day['.$day.'][data][1][from_time]', null, ['class' => ($errors->has('from_time') ? ' is-invalid' : '')]) !!}
                         {!! $errors->first('from_time', '<span class="help-block">:message</span>') !!}
                     </div>
                     <div class="form-grouph input-design{!! ($errors->has('to_time') ? ' has-error' : '') !!}">
                         {!! Form::label('to_time','To Time*', ['class' => 'form-label']) !!}    
-                        {!! Form::time('day['.$day.'][1][to_time]', null, ['class' => ($errors->has('to_time') ? ' is-invalid' : '')]) !!}
+                        {!! Form::time('day['.$day.'][data][1][to_time]', null, ['class' => ($errors->has('to_time') ? ' is-invalid' : '')]) !!}
                         {!! $errors->first('to_time', '<span class="help-block">:message</span>') !!}
                     </div>
                 </div>

@@ -50,9 +50,20 @@
                                     </div> -->
 
                                     @php $lawyerID= Crypt::encrypt($user->id); @endphp
+
+                                    @if(auth()->check())
+                                    @if(auth()->user()->role=='user')
                                     <div class="schedular_consultation">
                                         <a href="{{route('schedule.consultation',$lawyerID)}}" class="schule_consultation-btn">Schedule Consultation</a>
                                     </div>
+                                    @endif
+                                    @else
+                                    <div class="schedular_consultation">
+                                        <a href="{{route('schedule.consultation',$lawyerID)}}" class="schule_consultation-btn">Schedule Consultation</a>
+                                    </div>
+                                    @endif
+
+
                                 </div>
                             </div>
                         </div>
@@ -65,19 +76,20 @@
                             <div class="lawyer_profile-description">
                                 {!! @$user->details->bio !!}
 
-                                @if (Auth::check())
-
-
-                                @if ( !empty($user->savedLawyer) && $user->savedLawyer->user_id==Auth::user()->id)
-                                <div class="save_btn text-center">
-                                    <a href="#" class="btn-design-first" title="Already Saved">Saved Attorney</a>
-                                </div>
-                                @else
-                                <div class="save_btn text-center">
-                                    <a href="{{route('user.save.lawyer',$lawyerID)}}" class="btn-design-first">Save Attorney</a>
-                                </div>
-                                @endif
-
+                                @if(Auth::check())
+                                    @php
+                                        $savedLawyer = auth()->user()->savedLawyer->pluck('lawyer_id')->toArray();
+                                        //dd($savedLawyer);
+                                    @endphp
+                                    @if(in_array($user->id, $savedLawyer))
+                                    <div class="save_btn text-center">
+                                        <a href="{{route('user.lawyer.remove', $lawyerID)}}" class="btn-design-first" title="Already Saved">Remove Attorney</a>
+                                    </div>
+                                    @else
+                                    <div class="save_btn text-center">
+                                        <a href="{{route('user.save.lawyer',$lawyerID)}}" class="btn-design-first">Save Attorney</a>
+                                    </div>
+                                    @endif
                                 @else
                                 <div class="save_btn text-center">
                                     <a href="{{route('login')}}?redirect=true" class="btn-design-first">Save Attorney</a>

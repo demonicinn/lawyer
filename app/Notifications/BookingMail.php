@@ -42,11 +42,16 @@ class BookingMail extends Notification
     public function toMail($notifiable)
     {
         $zoomUrl = route('zoom', $this->booking->zoom_id);
+        $reschedule = route('reschedule.booking', $this->booking->id);
         
+
+        
+
         return (new MailMessage)
             ->subject('Prickly Pear Consultation Confirmed')
             ->greeting('Hi,' . @$this->user->name)
             ->action('Zoom link', $zoomUrl)
+            ->action('Reschedule Booking', $reschedule)
             // ->line('Zoom password :' .$this->booking->zoom_password)
             ->line('Booking date :' .date('d-m-Y', strtotime($this->booking->booking_date)))
             ->line('Booking time :' .date('g:i A', strtotime($this->booking->booking_time)))

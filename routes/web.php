@@ -215,6 +215,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         //...users
         Route::get('/user/view/{id}', [CommonController::class, 'viewUserDetails'])->name('admin.user.view');
 
+        Route::get('/transactions', [CommonController::class, 'adminTransactions'])->name('admin.transactions');
+
         //...lawyers
         Route::get('/lawyers', function () {
             $title = array(
@@ -359,6 +361,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         //...saved lawyer
         Route::get('/saved/lawyer', [User\DashboardController::class, 'savedLawyer'])->name('user.saved.lawyer');
         Route::get('/save/lawyer/{id}', [PagesController::class, 'saveLaywer'])->name('user.save.lawyer');
+        Route::get('/lawyer/{id}/remove', [PagesController::class, 'removeLaywer'])->name('user.lawyer.remove');
 
 
         Route::get('review/{id}', [User\ReviewController::class, 'index'])->name('review.lawyer');

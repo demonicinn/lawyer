@@ -24,10 +24,7 @@ class DashboardController extends Controller
             'title' => 'Dashboard',
             'active' => 'dashboard',
         );
-        $upcomingConsul=Booking::where('is_call', 'pending')->where('reschedule', '0')->count();
-        $completedConsul=Booking::where('is_call', 'completed')->where('is_accepted', '0')->count();
-        $acceptedConsul=Booking::where('is_call', 'completed')->where('is_accepted', '1')->count();
-   
+
         $user = auth()->user();
         $lawyers = User::where('role', 'lawyer')->count();
         $clients = User::where('role', 'user')->count();
@@ -37,6 +34,20 @@ class DashboardController extends Controller
         $states = State::count();
         $categories = Category::count();
 
-        return view('admin.dashboard.index', compact('user', 'title','clients', 'lawyers', 'subscriptions', 'litigations', 'contracts', 'states', 'categories','upcomingConsul','completedConsul','acceptedConsul'));
+
+        $upcomingConsultations = Booking::where('booking_Date', '>=', date('Y-m-d'))
+                                    ->where('is_call', 'pending')
+                                    ->where('is_accepted', '0')
+                                    ->count();
+
+        $completeConsultations = Booking::where('is_call', 'completed')
+                                    ->where('is_accepted', '0')
+                                    ->count();
+
+        $acceptedConsultations = Booking::where('is_call', 'completed')
+                                    ->where('is_accepted', '1')
+                                    ->count();
+
+        return view('admin.dashboard.index', compact('user', 'title','clients', 'lawyers', 'subscriptions', 'litigations', 'contracts', 'states', 'categories', 'upcomingConsultations', 'completeConsultations', 'acceptedConsultations'));
     }
 }
