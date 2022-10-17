@@ -135,39 +135,54 @@ class ProfileController extends Controller
 
         $details->save();
 
-
+        //dd($request->day);
         //...Working Hours
+        $daysArray = [];
         if ($request->day) {
             foreach ($request->day as $day => $daysData) {
 
-                foreach($daysData as $data){
-                    
-                    if(@$data['delete']=='yes'){
-                        $checkHour = LawyerHours::find($data['id']);
+                if(@$daysData['selected']=='on' && @$daysData['data']) {
 
-                        if (@$checkHour) {
-                            $checkHour->delete();
-                        }
+                    array_push($daysArray, $day);
+                    //dd($daysData['data']);
+                    foreach(@$daysData['data'] as $data){
+                        
+                        if(@$data['delete']=='yes'){
+                            $checkHour = LawyerHours::find($data['id']);
 
-                    }
-                    else {
-                        if (@$data['from_time'] && $data['to_time']) {
-                            $hour = new LawyerHours;
-                            if (@$data['id']) {
-                                $checkHour = LawyerHours::find($data['id']);
-                                if (@$checkHour) {
-                                    $hour->id = $checkHour->id;
-                                    $hour->exists = true;
-                                }
+                            if (@$checkHour) {
+                                $checkHour->delete();
                             }
-                            $hour->users_id = $user->id;
-                            $hour->day = $day;
-                            $hour->from_time = $data['from_time'];
-                            $hour->to_time = $data['to_time'];
-                            $hour->save();
+
+                        }
+                        else {
+                            if (@$data['from_time'] && $data['to_time']) {
+                                $hour = new LawyerHours;
+                                if (@$data['id']) {
+                                    $checkHour = LawyerHours::find($data['id']);
+                                    if (@$checkHour) {
+                                        $hour->id = $checkHour->id;
+                                        $hour->exists = true;
+                                    }
+                                }
+                                $hour->users_id = $user->id;
+                                $hour->day = $day;
+                                $hour->from_time = $data['from_time'];
+                                $hour->to_time = $data['to_time'];
+                                $hour->save();
+                            }
                         }
                     }
                 }
+            }
+        }
+
+        if($daysArray){
+            $deleteLawyersDay = LawyerHours::whereNotIn('day', $daysArray)
+                        ->where('users_id', auth()->user()->id)
+                        ->get();
+            foreach($deleteLawyersDay as $delDays){
+                $delDays->delete();
             }
         }
 

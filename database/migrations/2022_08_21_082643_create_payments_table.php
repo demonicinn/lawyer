@@ -24,7 +24,8 @@ return new class extends Migration
 			$table->string('customer', 50)->nullable();
 			$table->string('currency');
 			$table->decimal('amount', 8, 2);
-			$table->string('payment_status');
+            $table->string('payment_status');
+			$table->string('payment_type', 20);
 
             $table->timestamps();
         });

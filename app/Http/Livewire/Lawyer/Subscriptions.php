@@ -151,6 +151,7 @@ class Subscriptions extends Component
             $payment->currency = $charge->currency;
             $payment->amount = $fee;
             $payment->payment_status = $charge->status;
+            $payment->payment_type = 'subscription';
             $payment->save();
 
             //save customer id in card table

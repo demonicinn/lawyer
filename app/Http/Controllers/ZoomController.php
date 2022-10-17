@@ -23,15 +23,18 @@ class ZoomController extends Controller
 		$user = auth()->user();
 
 		$booking = Booking::where('zoom_id', $request->id)
-					->where('booking_date', '>=', date('Y-m-d'))
+					//->where('booking_date', '>=', date('Y-m-d'))
 					->where(function($query) use($user) {
 						$query->where('user_id', $user->id);
 						$query->orWhere('lawyer_id', $user->id);
 					})
 					->first();
-		
+		//dd($booking);
 		if(!$booking){
-			abort(404);
+			//abort(404);
+
+			$this->flash('error', 'Invalid Meeting Id');
+        	return redirect()->route('home');
 		}
 
         return view('common.zoom_cdn', compact('title', 'booking', 'user'));

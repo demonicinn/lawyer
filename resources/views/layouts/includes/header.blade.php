@@ -36,6 +36,7 @@ $user = auth()->user();
             @if(Auth::user()->role=="admin")
             <li><a class="dropdown-item" href="{{ route($user->role) }}">Dashboard</a></li>
             <li><a class="dropdown-item" href="{{ route('admin.profile') }}">My profile</a></li>
+            <li><a class="dropdown-item" href="{{ route('admin.transactions') }}">Transactions</a></li>
             @elseif(Auth::user()->role=="lawyer")
             <li><a class="dropdown-item" href="{{ route($user->role) }}">Dashboard</a></li>
             <li><a class="dropdown-item" href="{{ route('lawyer.profile') }}">My profile</a></li>
@@ -49,9 +50,12 @@ $user = auth()->user();
             @else
             <li><a class="dropdown-item" href="{{ route('user.dashboard') }}">Dashboard</a></li>
             <li><a class="dropdown-item" href="{{ route('user.profile') }}">My profile</a></li>
-            @endif
-            @if (Auth::user()->role=="user" || Auth::user()->role=="lawyer")
+            <li><a class="dropdown-item" href="{{ route('user.saved.lawyer') }}">Saved Lawyers</a></li>
             <li><a class="dropdown-item" href="{{ route('consultations.upcoming') }}">Consultations</a></li>
+
+
+            
+
             @endif
             <li><a class="dropdown-item" href="{{route('change.password')}}">Change password</a></li>
             <li>

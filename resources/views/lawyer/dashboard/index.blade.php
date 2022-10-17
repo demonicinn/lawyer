@@ -98,10 +98,11 @@ rel="Stylesheet"type="text/css"/>
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Months');
         data.addColumn('number', 'Bookings by Months');
+        data.addColumn({type: 'string', role: 'style'});
         
         data.addRows([
         @foreach($months as $k => $month)
-            ['{{ $month }}', {{ getBookingsCount($k, $year) }}],
+            ['{{ $month }}', {{ getBookingsCount($k, $year) }}, 'color: #f93f64'],
         @endforeach
         ]);
 

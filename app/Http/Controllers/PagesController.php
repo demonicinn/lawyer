@@ -93,4 +93,27 @@ class PagesController extends Controller
             return back();
         }
     }
+
+    public function removeLaywer($id)
+    {
+        $lawyerID = Crypt::decrypt($id);
+        $authUser = auth()->user();
+
+        $checkLawyer = SavedLawyer::where('user_id', $authUser->id)
+                        ->where('lawyer_id', $lawyerID)->first();
+
+
+        if (@$checkLawyer) {
+            $checkLawyer->delete();
+            $this->flash('success', 'Attorney Removed');            
+        }
+        else {
+            $this->flash('error', 'Server Error');            
+        }
+
+        return back();
+
+    }
+
+
 }

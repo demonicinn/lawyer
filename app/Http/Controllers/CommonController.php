@@ -14,6 +14,7 @@ use App\Models\Supports;
 use App\Models\User;
 use App\Models\Category;
 use App\Models\Note;
+use App\Models\Payment;
 use App\Notifications\LawyerMailForCaseStatus;
 use App\Notifications\MailToAdminForLawyerStatus;
 use App\Notifications\UserMailForCaseStatus;
@@ -261,7 +262,7 @@ class CommonController extends Controller
     public function resheduleConsultations($id)
     {
 
-        dd("rechdule by admin");
+        //dd("rechdule by admin");
         $booking = Booking::where('id', $id)->with('user', 'lawyer')->first();
         $booking->reschedule = '1';
         $booking->update();
@@ -375,4 +376,23 @@ class CommonController extends Controller
 
         return view('pages.reschedule', compact('bookingId'));
     }
+
+
+
+    public function adminTransactions()
+    {
+        $title = array(
+            'title' => 'Transactions',
+            'active' => 'transactions',
+        );
+
+        $transactions = Payment::paginate(10);
+
+        return view('admin.transactions.index', compact('title', 'transactions'));
+    }
+
+
+
+
+    
 }

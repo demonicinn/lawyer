@@ -483,6 +483,7 @@ class ScheduleConsultation extends Component
                     $paymentStore->currency = 'usd';
                     $paymentStore->amount = $fee;
                     $paymentStore->payment_status = $charge->status;
+                    $paymentStore->payment_type = 'booking';
                     $paymentStore->save();
                     
 

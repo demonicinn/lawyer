@@ -121,7 +121,7 @@ class User extends Authenticatable
 
     public function savedLawyer()
     {
-        return $this->hasOne(SavedLawyer::class, 'lawyer_id', 'id');
+        return $this->hasMany(SavedLawyer::class, 'user_id', 'id');
     }
 
     public function booking()

@@ -89,13 +89,21 @@ $lawyer_details = $user->lawyerInfo;
 
 
                 <div class="form-flex">
-                    <div class="form-grouph input-design{!! ($errors->has('hourly_fee') ? ' has-error' : '') !!}">
+                    
+                    <div class="input-grouph input-design{!! ($errors->has('hourly_fee') ? ' has-error' : '') !!}">
                         {!! Form::label('hourly_fee','Hourly Rate*', ['class' => 'form-label']) !!}
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">$</span>
+                        </div>
                         {!! Form::number('hourly_fee', $details->hourly_fee ?? null, ['class' => ($errors->has('hourly_fee') ? ' is-invalid' : '')]) !!}
                         {!! $errors->first('hourly_fee', '<span class="help-block">:message</span>') !!}
                     </div>
-                    <div class="form-grouph input-design{!! ($errors->has('consultation_fee') ? ' has-error' : '') !!}" id="consultation_fee">
+
+                    <div class="input-grouph input-design{!! ($errors->has('consultation_fee') ? ' has-error' : '') !!}">
                         {!! Form::label('consultation_fee','Consultation Fee*', ['class' => 'form-label']) !!}
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">$</span>
+                        </div>
                         {!! Form::number('consultation_fee', $details->consultation_fee ?? null, ['class' => ($errors->has('consultation_fee') ? ' is-invalid' : '')]) !!}
                         {!! $errors->first('consultation_fee', '<span class="help-block">:message</span>') !!}
                     </div>
