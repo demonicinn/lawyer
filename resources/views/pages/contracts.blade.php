@@ -3,8 +3,8 @@
 <section class="body-banner narrow-down-inner-sec min-height-100vh">
     <div class="container">
         <div class="heading-paragraph-design text-center position-relative go-back-wrap mb-4">
-            <h2>Can you narrow down even further…</h2>
-            <p>Check one of the Contracts that may apply.</p>
+            <h2>Select the type of contract…</h2>
+            <p>Check the box that best describes your needs.</p>
             <a href="{{ route('narrow.down') }}" class="go-back"><i class="fa-solid fa-arrow-left-long"></i> Go Back</a>
         </div>
         <div class="narrow-selection-box">

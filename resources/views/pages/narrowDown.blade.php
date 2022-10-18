@@ -4,7 +4,7 @@
     <div class="container">
         <div class="heading-paragraph-design text-center">
             <h2>Let’s narrow down the candidates…</h2>
-            <p>What do you need your attorney to do?</p>
+            <p>What do you need your lawyer to do?</p>
         </div>
         <div class="narrow-down-rows">
             <div class="row">
