@@ -2169,6 +2169,34 @@ label.second-label-design {
     max-width: 50%;
     margin-left: auto;
 }
+.rating-slider-sec .slick-prev:before{
+    color: #F93F64 ;
+}
+.rating-slider-sec .slick-prev::before{
+    content: '';
+    position: absolute;
+    left: 16px;
+    width: 13px;
+    height: 13px;
+    border-top: 3px solid #fff;
+    border-right: 3px solid #fff;
+    transform: rotate(223deg);
+    top: 19px;
+    opacity: 1;
+}
+.rating-slider-sec .slick-prev {
+    left:-7%;
+    width: 50px;
+    height: 50px;
+    background-color: #F93F64 !important;
+    border-radius: 50%;
+    outline: 10px solid #fff !important;
+    opacity: 1;
+    z-index: 1;
+}
+.rating_container .heading-paragraph-design p{
+    padding-right: 22px;
+}
 .rating-section {
     max-width: 100vw;
     background-color: #F8F8F8;
@@ -2213,7 +2241,7 @@ label.second-label-design {
     z-index: 9;
 }
 .rating-slider-sec .slick-next {
-    left: 71%;
+    left: 68%;
     width: 50px;
     height: 50px;
     background-color: #F93F64 !important;
@@ -2568,6 +2596,8 @@ a.btn_add.mr-2{
     background: #F93F64;
     border-color: #F93F64;
     border-radius: 50%;
+    height: 25px;
+    width: 25px;
 }
 .working_hours .addNewHoursLayout {
     max-height: 223px;
@@ -2711,6 +2741,9 @@ span.three_dots {
     transform: rotate(90deg);
     color: #d8d8d8;
 }
+span.three_dots{
+    display: none;
+}
 .logo-left-column img {
     width: 264px;
 }
@@ -2718,6 +2751,17 @@ span.three_dots {
     max-width: 100%;
     display: inline-block;
     width: auto;
+}
+a.login-header-btn.btn_sign_up.mb-3.me-3.py-3 ,a.login-header-btn.btn_login.py-3{
+    padding: 13px 35px !important;
+}
+.question_div{
+    display: flex;
+}
+.question_div span{
+    padding-left: 10px;
+    font-weight: bold;
+    color: #F93F64;
 }
 /* responsive */
 /* responsive */
@@ -3077,6 +3121,12 @@ span.three_dots {
     }
     .col-md-1.form-group button.btn.btn-primary {
         margin-top: 10px;
+    }
+    .rating-slider-sec .slick-next{
+        right: -3%;
+    }
+    .rating-slider-sec .slick-prev{
+        left: -3%;
     }
     /* css 767 end here */
 }

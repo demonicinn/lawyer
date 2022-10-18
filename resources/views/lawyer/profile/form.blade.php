@@ -90,7 +90,7 @@ $lawyer_details = $user->lawyerInfo;
 
                 <div class="form-flex">
                     
-                    <div class="input-grouph input-design{!! ($errors->has('hourly_fee') ? ' has-error' : '') !!}">
+                    <div class="form-grouph input-grouph input-design{!! ($errors->has('hourly_fee') ? ' has-error' : '') !!}">
                         {!! Form::label('hourly_fee','Hourly Rate*', ['class' => 'form-label']) !!}
                         <div class="input-group-prepend">
                             <span class="input-group-text">$</span>
@@ -99,8 +99,10 @@ $lawyer_details = $user->lawyerInfo;
                         {!! $errors->first('hourly_fee', '<span class="help-block">:message</span>') !!}
                     </div>
 
-                    <div class="input-grouph input-design{!! ($errors->has('consultation_fee') ? ' has-error' : '') !!}">
-                        {!! Form::label('consultation_fee','Consultation Fee*', ['class' => 'form-label']) !!}
+                    <div class=" form-grouph  input-grouph input-design{!! ($errors->has('consultation_fee') ? ' has-error' : '') !!}">
+                       <div class="question_div">
+                         {!! Form::label('consultation_fee','Consultation Fee*', ['class' => 'form-label']) !!}<span>?</span>
+                       </div>
                         <div class="input-group-prepend">
                             <span class="input-group-text">$</span>
                         </div>

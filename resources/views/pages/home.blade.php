@@ -4,17 +4,17 @@
 <section class="home-banner-section" style="background-image: url(assets/images/home-banner.png);">
   <div class="container">
     <div class="homepbanner-content text-center">
-      <h2>Finding  Lawyers Just Got Easier</h2>
-      <p class="text_p">Find the best attorney close to and best <a href="#">for you</a></p>
-      <a href="{{ route('narrow.down') }}" class="btn-banner-design">Find my Attorney</a>
+      <h2>Finding a Lawyer Just Got Easier</h2>
+      <!-- <p class="text_p">Find the best attorney close to and best <a href="#">for you</a></p> -->
+      <a href="{{ route('narrow.down') }}" class="btn-banner-design">Find my lawyer</a>
     </div>
   </div>
 </section>
 <section class="incrediable_services-sec">
   <div class="container">
     <div class="heading-paragraph-design text-center">
-      <h2>Incredible Services. Great Price.</h2>
-      <p>Amazing savings when you bundle services together.</p>
+      <h2>Most Popular Practice Areas</h2>
+      <!-- <p>Amazing savings when you bundle services together.</p> -->
     </div>
     <div class="services-slider-sec">
       <div class="slider service-slider">
@@ -23,9 +23,20 @@
             <img src="{{ asset('assets/images/services/litigation.svg') }}">
           </div>
           <div class="service_block-cntnt">
-            <h4>Litigation</h4>
-            <p>Est voluptatum placeat est maxime architecto eum.</p>
-            <a href="#" class="check-price-btn">Check Our Prices</a>
+            <h4>Personal Injury (Plaintiff)</h4>
+            <!-- <p>Est voluptatum placeat est maxime architecto eum.</p> -->
+            <a href="#" class="check-price-btn">See Available Lawyers</a>
+          </div>
+        </div>
+        
+        <div class="service_blocks">
+          <div class="service_block-icon">
+            <img src="{{ asset('assets/images/services/divorce.svg') }}">
+          </div>
+          <div class="service_block-cntnt">
+            <h4>Divorce/Family</h4>
+            <!-- <p>Est voluptatum placeat est maxime architecto eum.</p> -->
+            <a href="#" class="check-price-btn">See Available Lawyers</a>
           </div>
         </div>
         <div class="service_blocks">
@@ -33,9 +44,9 @@
             <img src="{{ asset('assets/images/services/car-acceident.svg') }}">
           </div>
           <div class="service_block-cntnt">
-            <h4>Car Accident</h4>
-            <p>Est voluptatum placeat est maxime architecto eum.</p>
-            <a href="#" class="check-price-btn">Check Our Prices</a>
+            <h4>Wills, Trusts, & Estates</h4>
+            <!-- <p>Est voluptatum placeat est maxime architecto eum.</p> -->
+            <a href="#" class="check-price-btn">See Available Lawyers</a>
           </div>
         </div>
         <div class="service_blocks">
@@ -43,9 +54,9 @@
             <img src="{{ asset('assets/images/services/divorce.svg') }}">
           </div>
           <div class="service_block-cntnt">
-            <h4>Divorce</h4>
-            <p>Est voluptatum placeat est maxime architecto eum.</p>
-            <a href="#" class="check-price-btn">Check Our Prices</a>
+            <h4>Criminal Defense (Felony)</h4>
+            <!-- <p>Est voluptatum placeat est maxime architecto eum.</p> -->
+            <a href="#" class="check-price-btn">See Available Lawyers</a>
           </div>
         </div>
         <div class="service_blocks">
@@ -53,25 +64,15 @@
             <img src="{{ asset('assets/images/services/car-acceident.svg') }}">
           </div>
           <div class="service_block-cntnt">
-            <h4>Car Accident</h4>
-            <p>Est voluptatum placeat est maxime architecto eum.</p>
-            <a href="#" class="check-price-btn">Check Our Prices</a>
-          </div>
-        </div>
-        <div class="service_blocks">
-          <div class="service_block-icon">
-            <img src="{{ asset('assets/images/services/divorce.svg') }}">
-          </div>
-          <div class="service_block-cntnt">
-            <h4>Divorce</h4>
-            <p>Est voluptatum placeat est maxime architecto eum.</p>
-            <a href="#" class="check-price-btn">Check Our Prices</a>
+            <h4>Criminal Defense (Misdemeanor/ Traffic Offenses)</h4>
+            <!-- <p>Est voluptatum placeat est maxime architecto eum.</p> -->
+            <a href="#" class="check-price-btn">See Available Lawyers</a>
           </div>
         </div>
       </div>
     </div>
     <div class="text-center service-practice_link">
-      <a href="#">Sell All Practice Areas</a>
+      <a href="#">See All Practice Areas</a>
     </div>
   </div>
   </div>

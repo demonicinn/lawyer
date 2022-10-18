@@ -12,16 +12,16 @@
                 <div class="modal-body">
                     <div class="heading-paragraph-design text-center position-relative go-back-wrap">
                         <h2>Areas of Practice</h2>
-                        <p>Edit or change area of practice</p>
+                        <p>Edit or change practice areas</p>
                     </div>
                     <div class="tabs_design-wrap two_tabs-layout">
                         <div class="area_practice_lists">
                             <ul class="nav nav-tabs" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link {{ $currentTab=='litigations' ? 'active' : '' }}" href="javascript:void(0)" wire:click="setCurrentTab('litigations')">Litigations</a>
+                                    <a class="nav-link {{ $currentTab=='litigations' ? 'active' : '' }}" href="javascript:void(0)" wire:click="setCurrentTab('litigations')">Litigation</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link {{ $currentTab=='contracts' ? 'active' : '' }}" href="javascript:void(0)" wire:click="setCurrentTab('contracts')">Contracts</a>
+                                    <a class="nav-link {{ $currentTab=='contracts' ? 'active' : '' }}" href="javascript:void(0)" wire:click="setCurrentTab('contracts')">Transactional</a>
                                 </li>
                             </ul>
                         </div>

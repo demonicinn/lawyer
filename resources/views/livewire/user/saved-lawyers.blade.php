@@ -1,7 +1,7 @@
 <div>
 
     <div class="user_saved-lawyers_inner">
-        <div class="user-saved_filter-sec">
+        <div class="user-saved_filter-sec pb-5">
             <form class="form-design">
                 <div class="d-flex justify-content-spacebw">
                     <div class="form-grouph select-design select-design-2 d-flex">
@@ -26,6 +26,7 @@
                     </div>
                     @endif
 
+                  <div class="d-flex justify-content-center"> 
                     <div class="form-grouph input-design icon-input-design right-icn-design">
                         <input type="search" wire:model="search" placeholder="Search">
                         <span class="input_icn"><i class="fa-solid fa-magnifying-glass"></i></span>
@@ -33,6 +34,7 @@
                     <div class="form-grouph input-design icon-input-design right-icn-design mt-1">
                         <a class="btn clear-btn" wire:click="clear">Clear</a>
                     </div>
+                  </div>
 
                 </div>
             </form>

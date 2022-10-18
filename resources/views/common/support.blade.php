@@ -37,12 +37,12 @@
                                 <label>Reason</label>
                                 <select name="reason" class="@error('reason') is-invalid @enderror">
                                     <option value="" disabled selected>Select reason</option>
-                                    <option>Reason1</option>
-                                    <option>Reason2</option>
-                                    <option>Reason3</option>
-                                    <option>Reason4</option>
-                                    <option>Reason5</option>
-
+                                    <option>Issue with lawyer </option>
+                                    <option>Issue with client</option>
+                                    <option>Issue with website</option>
+                                    <option>Issue with account </option>
+                                    <option>Request new feature </option>
+                                    <option>Other</option>
                                 </select>
                                 @error('reason')<div class="help-block">{{ $message }}</div>@enderror
                             </div>

@@ -15,7 +15,7 @@
                             <img src="{{ asset('assets/images/schedule.svg') }}">
                         </div> -->
                         <div class="portal-cntnt-wrapper">
-                            <a href="{{ route('consultations.upcoming') }}">Upcoming Consultations</a>
+                            <a href="{{ route('consultations.upcoming') }}">Consultations</a>
                             <p>{{ $upcomingConsultations }}</p>
                         </div>
                         <span class="three_dots">...</span>
@@ -28,7 +28,20 @@
                             <img src="{{ asset('assets/images/schedule.svg') }}">
                         </div> -->
                         <div class="portal-cntnt-wrapper">
-                            <a href="{{ route('consultations.complete') }}">Completed Consultations</a>
+                            <a href="#">Dashboard</a>
+                            <p></p>
+                        </div>
+                        <span class="three_dots">...</span>
+                    </div>
+                </div>
+
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-3">
+                    <div class="portal-div-design position-relative">
+                        <!-- <div class="portal-div-img">
+                            <img src="{{ asset('assets/images/schedule.svg') }}">
+                        </div> -->
+                        <div class="portal-cntnt-wrapper">
+                            <a href="{{ route('consultations.complete') }}">Account</a>
                             <p>{{ $completeConsultations }}</p>
                         </div>
                         <span class="three_dots">...</span>
@@ -41,12 +54,26 @@
                             <img src="{{ asset('assets/images/schedule.svg') }}">
                         </div> -->
                         <div class="portal-cntnt-wrapper">
-                            <a href="{{ route('consultations.accepted') }}">Accepted Consultations</a>
-                            <p>{{ $acceptedConsultations }}</p>
+                            <a href="{{ route('lawyer.profile') }}">Profile</a>
+                            <p></p>
                         </div>
                         <span class="three_dots">...</span>
                     </div>
                 </div>
+
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-3">
+                    <div class="portal-div-design position-relative">
+                        <!-- <div class="portal-div-img">
+                            <img src="{{ asset('assets/images/schedule.svg') }}">
+                        </div> -->
+                        <div class="portal-cntnt-wrapper">
+                            <a href="{{route('support')}}">Support</a>
+                            <p></p>
+                        </div>
+                        <span class="three_dots">...</span>
+                    </div>
+                </div>
+
             </div>
 
 
@@ -64,8 +91,9 @@
             {!! Form::close() !!}
 
 
-
-            <div id="bookingChart"></div>
+           <div class="row">
+            <div id="bookingChart" class="col-md-6"></div>
+           </div>
         </div>
 
 
