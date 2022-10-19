@@ -5,7 +5,7 @@
 		    <div class="white-shadow-scnd-box">
 		        <div class="form-heading">
 		            <h4 class="h4-design">Add Bank Details</h4>
-		        </div>
+		        </div> 
 
 				{!! Form::open(['route' => 'lawyer.bank.connect', 'class'=>'lawyer_profile-information form-design']) !!}
 

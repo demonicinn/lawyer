@@ -7,9 +7,9 @@
       <p>At Prickly Pear, we know how difficult it can be to find a lawyer that fits your needs. We created our company to provide potential clients with the information and tools they need to make quality decisions about their legal representation, and we strive to make these decisions as simple and painless as possible. </p>
       <!-- <a href="narrow-down-candidates.html" class="btn-banner-design">Get Started</a> -->
      </div>
-  </div>
+  </div> 
  </section>
- 
+
  <section class="why-choose-us-sec">
   <div class="container">
     <div class="row align-items-center">
