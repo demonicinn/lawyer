@@ -69,7 +69,7 @@ class CommonController extends Controller
                 'email' => ['required', 'email', 'max:255', 'not_regex:/(' . implode("|", $banned) . ')/i'],
                 'reason' => ['required', 'string', 'max:255', 'not_regex:/(' . implode("|", $banned) . ')/i'],
                 'message' => ['required', 'string', 'not_regex:/(' . implode("|", $banned) . ')/i'],
-                'g-recaptcha-response' => 'recaptcha|required',
+                //'g-recaptcha-response' => 'recaptcha|required',
 
             ]
         );
@@ -83,8 +83,9 @@ class CommonController extends Controller
         $contact->message = $request->message;
         $contact->save();
 
-        Notification::route('mail', env('MAIL_FROM_ADDRESS'))->notify(new SupportNotification($contact));
-        $this->flash('success', 'Support added successfully');
+        //Notification::route('mail', env('ADMIN_EMAIL'))->notify(new SupportNotification($contact));
+        Notification::route('mail', 'guri1@yopmail.com')->notify(new SupportNotification($contact));
+        $this->flash('success', 'Support added successfully pp');
         return back();
     }
 

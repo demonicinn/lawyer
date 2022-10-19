@@ -61,7 +61,22 @@ class ScheduleConsultation extends Component
             $this->authUser = auth()->user();
         }
 
+        $date = date('Y-m-d');
         $this->lawyer = User::where('id', $this->lawyerID)->first();
+
+        $subscription = $user->lawyerSubscription()
+                        ->where('from_date', '<=', $date)
+                        ->where('to_date', '>=', $date)
+                        ->orderBy('id', 'desc')
+                        ->first();
+        if(!$subscription){
+
+
+            $this->flash('error', 'Lawyer Subscription is expired');
+            return redirect()->route('narrow.down');
+        }
+
+
 
         $totalCharges = 0;
         if($this->lawyer->details->is_consultation_fee=='yes'){
