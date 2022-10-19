@@ -69,6 +69,59 @@
             <a href="#" class="check-price-btn">See Available Lawyers</a>
           </div>
         </div>
+
+
+        <div class="service_blocks">
+          <div class="service_block-icon">
+            <img src="{{ asset('assets/images/services/car-acceident.svg') }}">
+          </div>
+          <div class="service_block-cntnt">
+            <h4> Commercial Litigation </h4>
+            <!-- <p>Est voluptatum placeat est maxime architecto eum.</p> -->
+            <a href="#" class="check-price-btn">See Available Lawyers</a>
+          </div>
+        </div>
+
+        <div class="service_blocks">
+          <div class="service_block-icon">
+            <img src="{{ asset('assets/images/services/car-acceident.svg') }}">
+          </div>
+          <div class="service_block-cntnt">
+            <h4> Landlord/Tenant (Tenant)  </h4>
+            <!-- <p>Est voluptatum placeat est maxime architecto eum.</p> -->
+            <a href="#" class="check-price-btn">See Available Lawyers</a>
+          </div>
+        </div>
+        <div class="service_blocks">
+          <div class="service_block-icon">
+            <img src="{{ asset('assets/images/services/car-acceident.svg') }}">
+          </div>
+          <div class="service_block-cntnt">
+            <h4> Class Action/Mass Tort   </h4>
+            <!-- <p>Est voluptatum placeat est maxime architecto eum.</p> -->
+            <a href="#" class="check-price-btn">See Available Lawyers</a>
+          </div>
+        </div>
+        <div class="service_blocks">
+          <div class="service_block-icon">
+            <img src="{{ asset('assets/images/services/car-acceident.svg') }}">
+          </div>
+          <div class="service_block-cntnt">
+            <h4> Defamation/ Libel/ Slander    </h4>
+            <!-- <p>Est voluptatum placeat est maxime architecto eum.</p> -->
+            <a href="#" class="check-price-btn">See Available Lawyers</a>
+          </div>
+        </div>
+        <div class="service_blocks">
+          <div class="service_block-icon">
+            <img src="{{ asset('assets/images/services/car-acceident.svg') }}">
+          </div>
+          <div class="service_block-cntnt">
+            <h4> Small Business Contracts     </h4>
+            <!-- <p>Est voluptatum placeat est maxime architecto eum.</p> -->
+            <a href="#" class="check-price-btn">See Available Lawyers</a>
+          </div>
+        </div>
       </div>
     </div>
     <div class="text-center service-practice_link">
