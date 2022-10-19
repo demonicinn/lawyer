@@ -37,6 +37,7 @@ class Reminder1Hour extends Command
 
         $bookings = Booking::where('is_call', 'pending')
                 ->where('is_accepted', '0')
+                ->where('is_canceled', '0')
                 ->where('booking_date', $date)
                 ->where('booking_time', '<=', $time1hour)
                 ->get();

@@ -44,6 +44,7 @@ return new class extends Migration
             $table->enum('reschedule', ['0', '1'])->default('0');
 
             $table->enum('payment_process', ['0', '1'])->default('0');
+            $table->enum('is_canceled', ['0', '1'])->default('0');
 
             $table->timestamps();
         });

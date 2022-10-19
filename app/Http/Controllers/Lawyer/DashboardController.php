@@ -22,16 +22,19 @@ class DashboardController extends Controller
 									->where('booking_Date', '>=', date('Y-m-d'))
 									->where('is_call', 'pending')
 									->where('is_accepted', '0')
+                                    ->where('is_canceled', '0')
 									->count();
 
 		$completeConsultations = $user->booking()
 									->where('is_call', 'completed')
 									->where('is_accepted', '0')
+                                    ->where('is_canceled', '0')
 									->count();
 
 		$acceptedConsultations = $user->booking()
 									->where('is_call', 'completed')
 									->where('is_accepted', '1')
+                                    ->where('is_canceled', '0')
 									->count();
 
 		$data = array(

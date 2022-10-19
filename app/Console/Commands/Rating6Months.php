@@ -39,6 +39,7 @@ class Rating6Months extends Command
 
         $bookings = Booking::where('is_call', 'completed')
                 ->where('is_accepted', '1')
+                ->where('is_canceled', '0')
                 ->where('booking_date', '<=', $date6months)
                 ->get();
 

@@ -24,6 +24,9 @@ use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Stripe\Charge;
 
 
+use App\Http\Controllers\MeetingController;
+
+
 
 class CommonController extends Controller
 {
@@ -84,9 +87,9 @@ class CommonController extends Controller
         $contact->save();
 
         //Notification::route('mail', env('ADMIN_EMAIL'))->notify(new SupportNotification($contact));
-        Notification::route('mail', 'guri1@yopmail.com')->notify(new SupportNotification($contact));
+        Notification::route('mail', 'info.gurpreetsaini@gmail.com')->notify(new SupportNotification($contact));
 
-        dd($request->all());
+        //dd($request->all());
 
         $this->flash('success', 'Support added successfully pp');
         return back();
@@ -195,20 +198,24 @@ class CommonController extends Controller
 
         $authUser = auth()->user();
 
-        if ($authUser->role == 'lawyer') {
-            $upcomingConsultations = Booking::where('lawyer_id', $authUser->id)
-                ->where('booking_Date', '>=', date('Y-m-d'))
-                ->where('is_call', 'pending')
-                ->where('reschedule', '0')
-                ->with('user')->latest('id')->get();
-        } else {
 
-            $upcomingConsultations = Booking::where('user_id', $authUser->id)
-                ->where('booking_Date', '>=', date('Y-m-d'))
+        $upcomingConsultations = Booking::query();
+
+            if ($authUser->role == 'lawyer') {
+                $upcomingConsultations = $upcomingConsultations->where('lawyer_id', $authUser->id);
+            }
+            else {
+                $upcomingConsultations = $upcomingConsultations->where('user_id', $authUser->id);
+            }
+
+            $upcomingConsultations = $upcomingConsultations->where('booking_Date', '>=', date('Y-m-d'))
                 ->where('is_call', 'pending')
                 ->where('reschedule', '0')
+                ->where('is_canceled', '0')
                 ->with('lawyer')->latest('id')->get();
-        }
+
+
+
         return view('pages.consultations.upcoming', compact('title', 'upcomingConsultations'));
     }
 
@@ -224,6 +231,7 @@ class CommonController extends Controller
             $completeConsultations = Booking::where('lawyer_id', $authUser->id)
                 ->where('is_call', 'completed')
                 ->where('is_accepted', '0')
+                ->where('is_canceled', '0')
                 ->with('user', 'notes')->latest('id')->get();
             //   dd( $completeConsultations);
         } else {
@@ -231,6 +239,7 @@ class CommonController extends Controller
             $completeConsultations = Booking::where('user_id', $authUser->id)
                 ->where('is_call', 'completed')
                 ->where('is_accepted', '0')
+                ->where('is_canceled', '0')
                 ->with('lawyer')->latest('id')->get();
         }
         return view('pages.consultations.completed', compact('title', 'completeConsultations'));
@@ -248,6 +257,7 @@ class CommonController extends Controller
             $accptedConsultations = Booking::where('lawyer_id', $authUser->id)
                 ->where('is_call', 'completed')
                 ->where('is_accepted', '1')
+                ->where('is_canceled', '0')
                 ->with('user', 'notes')->latest('id')->get();
             // dd($accptedConsultations);
         } else {
@@ -255,6 +265,7 @@ class CommonController extends Controller
             $accptedConsultations = Booking::where('user_id', $authUser->id)
                 ->where('is_call', 'completed')
                 ->where('is_accepted', '1')
+                ->where('is_canceled', '0')
                 ->with('lawyer', 'notes')->latest('id')->get();
         }
 
@@ -405,6 +416,31 @@ class CommonController extends Controller
         );
 
         return view('pages.thankYou', compact('title'));
+    }
+
+
+    public function consultationsCancel(Request $request)
+    {
+        $user = auth()->user();
+
+        $booking = Booking::where('id', $request->id)->where('user_id', $user->id)->first();
+
+        if(!$booking){
+            abort(404);
+        }
+
+        $meeting = new MeetingController;
+        $a = $meeting->destroy($booking);
+
+        ///
+        if($a){
+            $booking->is_canceled = '1';
+            $booking->save();
+
+            $this->flash('success', 'Booking Canceled');
+
+        }
+        $this->flash('error', 'Something went wrong');
     }
 
 

@@ -39,6 +39,7 @@ class Reminder1Day extends Command
 
         $bookings = Booking::where('is_call', 'completed')
                 ->where('is_accepted', '0')
+                ->where('is_canceled', '0')
                 ->where('booking_date', '<=', $date1Days)
                 ->get();
 

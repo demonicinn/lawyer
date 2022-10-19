@@ -64,7 +64,7 @@ class ScheduleConsultation extends Component
         $date = date('Y-m-d');
         $this->lawyer = User::where('id', $this->lawyerID)->first();
 
-        $subscription = $user->lawyerSubscription()
+        $subscription = $this->lawyer->lawyerSubscription()
                         ->where('from_date', '<=', $date)
                         ->where('to_date', '>=', $date)
                         ->orderBy('id', 'desc')
@@ -174,7 +174,8 @@ class ScheduleConsultation extends Component
 
             // dd($ndate );
 
-            if ($ndate > date('Y-m-d') && in_array($day, $lawyerHoursDay)) {
+            ///,.....available current date
+            if ($ndate >= date('Y-m-d') && in_array($day, $lawyerHoursDay)) {
                 array_push($dates, $ndate);
             }
         }
@@ -211,9 +212,9 @@ class ScheduleConsultation extends Component
 
 
 
-
+        ///,.....available current date
         if(!$checkLeave){
-            if (@$lawyerHours && $date > date('Y-m-d')) {
+            if (@$lawyerHours && $date >= date('Y-m-d')) {
 
                 
                 $duration = '30';

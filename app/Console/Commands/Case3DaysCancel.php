@@ -39,12 +39,14 @@ class Case3DaysCancel extends Command
 
         $bookings = Booking::where('is_call', 'completed')
                 ->where('is_accepted', '0')
+                ->where('is_canceled', '0')
                 ->where('booking_date', '<=', $date3Days)
                 ->get();
 
         //...
         foreach($bookings as $booking){
             $booking->is_accepted = '2';
+            $booking->is_canceled = '1';
             $booking->save();
 
             //send cancelation email to client and lawyer

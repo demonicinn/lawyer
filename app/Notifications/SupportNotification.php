@@ -6,7 +6,6 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Illuminate\Support\HtmlString;
 
 class SupportNotification extends Notification
 {
@@ -45,11 +44,9 @@ class SupportNotification extends Notification
         return (new MailMessage)
             ->subject('Support Notification')
             ->greeting('Hi, Admin')
-            ->from($this->contact->email)
-
-            //->line(new HtmlString('<a href="/" class="button button-primary" target="_blank" rel="noopener">Booking</a>'))
-
+            //->from($this->contact->email)
             ->line('You have new message from : ' . $this->contact->first_name)
+            ->line('Email : ' . $this->contact->email)
             ->line('Reason : ' . $this->contact->reason)
             ->line('Message : ' . $this->contact->message);
     }
