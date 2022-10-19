@@ -3098,8 +3098,8 @@ a.login-header-btn.btn_sign_up.mb-3.me-3.py-3 ,a.login-header-btn.btn_login.py-3
     .footer-heading {
         margin-bottom: 15px;
     }
-    .btn_sign_up, .btn_login{
-        padding: 10px 20px;
+    a.login-header-btn.btn_sign_up.mb-3.me-3.py-3, a.login-header-btn.btn_login.py-3,.btn_sign_up, .btn_login{
+        padding: 10px 20px !important;
     }
     .box_checkbox .form-grouph.input-design input#term{
         left: -20px;
@@ -3128,6 +3128,9 @@ a.login-header-btn.btn_sign_up.mb-3.me-3.py-3 ,a.login-header-btn.btn_login.py-3
     }
     .rating-slider-sec .slick-prev{
         left: -3%;
+    }
+    .min-height-100vh {
+        min-height: auto;
     }
     /* css 767 end here */
 }
