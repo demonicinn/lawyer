@@ -539,7 +539,9 @@ class ScheduleConsultation extends Component
                         Notification::route('mail', $this->lawyer->email)->notify(new BookingMail($booking, $this->lawyer));
 
                         $this->flash('success', 'Appointment scheduled successfully');
-                        return redirect()->route('consultations.upcoming');
+
+                        return redirect()->route('thankYou');
+                        //return redirect()->route('consultations.upcoming');
                     }
                 }
                 ///...........

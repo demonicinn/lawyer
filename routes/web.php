@@ -112,6 +112,9 @@ Route::get('/narrow-down-contracts', [PagesController::class, 'contracts'])->nam
 
 Route::get('/narrow-lawyers', [PagesController::class, 'lawyers'])->name('lawyers');
 Route::get('/narrow-lawyers/{user}', [PagesController::class, 'lawyerShow'])->name('lawyer.show');
+Route::get('/about', [PagesController::class, 'about'])->name('about');
+
+
 
 
 // schedule consultation
@@ -183,6 +186,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/support/store', [CommonController::class, 'SupportStore'])->name('support.store');
 
 
+    Route::get('thank-you', [CommonController::class, 'thankYou'])->name('thankYou');
 
 
     //admin
@@ -366,5 +370,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         Route::get('review/{id}', [User\ReviewController::class, 'index'])->name('review.lawyer');
         Route::post('review/{id}/store', [User\ReviewController::class, 'store'])->name('review.store');
+
+
+        
+
     });
 });
