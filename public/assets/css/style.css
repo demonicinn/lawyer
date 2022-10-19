@@ -3132,6 +3132,7 @@ a.login-header-btn.btn_sign_up.mb-3.me-3.py-3 ,a.login-header-btn.btn_login.py-3
     .min-height-100vh {
         min-height: auto;
     }
+    
     /* css 767 end here */
 }
 @media (max-width: 1200px){

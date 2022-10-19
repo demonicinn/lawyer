@@ -12,7 +12,7 @@
 				<button type="submit" class="btn-design-first btn_bank">Connect Bank Account</button>
 
 				{!! Form::close() !!}
-
+  
 		    </div>
 		</div>
     </div>

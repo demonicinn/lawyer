@@ -106,6 +106,7 @@
           <div class="service_block-icon">
             <img src="{{ asset('assets/images/services/car-acceident.svg') }}">
           </div>
+          
           <div class="service_block-cntnt">
             <h4> Defamation/ Libel/ Slander    </h4>
             <!-- <p>Est voluptatum placeat est maxime architecto eum.</p> -->
