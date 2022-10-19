@@ -116,4 +116,15 @@ class PagesController extends Controller
     }
 
 
+    public function about()
+    {
+        $title = array(
+            'title' => 'About Us',
+            'active' => 'about',
+        );
+
+        return view('pages.about', compact('title'));
+    }
+
+
 }

@@ -60,7 +60,7 @@ class CommonController extends Controller
 
     public function SupportStore(Request $request)
     {
-        // dd($request->all());
+        
         $banned = array("Whore", "Hoe", "Slut", "Bitch", "Retarded", "Prostitut", "Wetback", "Nigga", "Nigger", "Niger", "Nigg", "Blackface", "Coon", "Fuk", "Fuck", "Democrat", "Republican", "Pussy", "Dick", "Vagina", "Penis", "Lesbian", "Gay", "Sex", "Gender", "Dumb", "Stupid");
         $request->validate(
             [
@@ -85,6 +85,9 @@ class CommonController extends Controller
 
         //Notification::route('mail', env('ADMIN_EMAIL'))->notify(new SupportNotification($contact));
         Notification::route('mail', 'guri1@yopmail.com')->notify(new SupportNotification($contact));
+
+        dd($request->all());
+
         $this->flash('success', 'Support added successfully pp');
         return back();
     }
@@ -390,6 +393,18 @@ class CommonController extends Controller
         $transactions = Payment::paginate(10);
 
         return view('admin.transactions.index', compact('title', 'transactions'));
+    }
+
+
+
+    public function thankYou()
+    {
+        $title = array(
+            'title' => 'Thank You',
+            'active' => 'thankYou',
+        );
+
+        return view('pages.thankYou', compact('title'));
     }
 
 
