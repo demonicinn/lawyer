@@ -22,18 +22,18 @@
                     </div>
                 </div>
 
-                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-3">
+                <!-- <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-3">
                     <div class="portal-div-design position-relative">
-                        <!-- <div class="portal-div-img">
+                        <div class="portal-div-img">
                             <img src="{{ asset('assets/images/schedule.svg') }}">
-                        </div> -->
+                        </div>
                         <div class="portal-cntnt-wrapper">
                             <a href="#">Dashboard</a>
                             <p></p>
                         </div>
                         <span class="three_dots">...</span>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-3">
                     <div class="portal-div-design position-relative">

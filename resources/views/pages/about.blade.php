@@ -7,8 +7,9 @@
       <p>At Prickly Pear, we know how difficult it can be to find a lawyer that fits your needs. We created our company to provide potential clients with the information and tools they need to make quality decisions about their legal representation, and we strive to make these decisions as simple and painless as possible. </p>
       <!-- <a href="narrow-down-candidates.html" class="btn-banner-design">Get Started</a> -->
      </div>
-  </div>
+  </div> 
  </section>
+
  <section class="why-choose-us-sec">
   <div class="container">
     <div class="row align-items-center">
@@ -21,7 +22,7 @@
     <div class="heading-paragraph-design m-text-center">
       <h2>Why choose us</h2>
       <p>Prickly Pear simplifies the process of finding a lawyer. You only see lawyers that practice the area of law you need, are seeking new clients, and have availability for a video consultation to address your concerns and answer your questions before moving forward. We make it as simple as possible to make a decision you’re happy with, and we are always looking for ways to be better. </p>
-      <a href="lawyer-service-providing.html" class="btn-design-four">Find a Lawyer</a>
+      <a href="#" class="btn-design-four">Find a Lawyer</a>
     </div>
     </div>
     </div>

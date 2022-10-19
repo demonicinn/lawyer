@@ -1105,7 +1105,7 @@ input:focus, select:focus, textarea:focus{
 .lawyers-service-cntnt-block .lawyers-heading_service .lawyer-name {
     font-size: 16px;
     padding-right: 0px;
-    margin-bottom: 8px;
+    /* margin-bottom: 8px; */
     text-align: left;
 }
 .grey-light-heading h4 {
@@ -3096,7 +3096,7 @@ a.login-header-btn.btn_sign_up.mb-3.me-3.py-3 ,a.login-header-btn.btn_login.py-3
         margin-bottom: 30px;
     }
     .footer-heading {
-        margin-bottom: 15px;
+        margin-bottom: 15px;   
     }
     a.login-header-btn.btn_sign_up.mb-3.me-3.py-3, a.login-header-btn.btn_login.py-3,.btn_sign_up, .btn_login{
         padding: 10px 20px !important;
@@ -3104,7 +3104,7 @@ a.login-header-btn.btn_sign_up.mb-3.me-3.py-3 ,a.login-header-btn.btn_login.py-3
     .box_checkbox .form-grouph.input-design input#term{
         left: -20px;
     }
-    .accept_btn{
+    .accept_btn{  
         padding: 3px 10px;
     }
     .table-design tbody tr td{
@@ -3132,6 +3132,7 @@ a.login-header-btn.btn_sign_up.mb-3.me-3.py-3 ,a.login-header-btn.btn_login.py-3
     .min-height-100vh {
         min-height: auto;
     }
+
     /* css 767 end here */
 }
 @media (max-width: 1200px){
