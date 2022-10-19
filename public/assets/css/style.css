@@ -2039,6 +2039,7 @@ label.second-label-design {
     font-size: 24px;
     font-weight: 500;
     color: #3E3E3E;
+    min-height: 85px;
 }
 .service_block-cntnt p {
     font-size: 18px;
