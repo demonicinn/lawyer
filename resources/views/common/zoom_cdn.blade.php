@@ -30,8 +30,8 @@
 	  websdkready();
 	});
 
-	var SDK_KEY = "aQGxehQBJFFVeVORcrZ7GApWitGIPP8GHSpu";
-	var SDK_SECRET = "g3ZO0EmtO0rpFzEPMFGGTehNY0XL5IykgFmS";
+	var SDK_KEY = "{{ env('ZOOM_SDK_KEY') }}";
+	var SDK_SECRET = "{{ env('ZOOM_SDK_SECRET') }}";
 
 	function websdkready() {
 
