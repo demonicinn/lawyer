@@ -1105,7 +1105,7 @@ input:focus, select:focus, textarea:focus{
 .lawyers-service-cntnt-block .lawyers-heading_service .lawyer-name {
     font-size: 16px;
     padding-right: 0px;
-    margin-bottom: 8px;
+    /* margin-bottom: 8px; */
     text-align: left;
 }
 .grey-light-heading h4 {
