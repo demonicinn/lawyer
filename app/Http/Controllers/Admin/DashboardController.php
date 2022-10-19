@@ -38,14 +38,17 @@ class DashboardController extends Controller
         $upcomingConsultations = Booking::where('booking_Date', '>=', date('Y-m-d'))
                                     ->where('is_call', 'pending')
                                     ->where('is_accepted', '0')
+                                    ->where('is_canceled', '0')
                                     ->count();
 
         $completeConsultations = Booking::where('is_call', 'completed')
                                     ->where('is_accepted', '0')
+                                    ->where('is_canceled', '0')
                                     ->count();
 
         $acceptedConsultations = Booking::where('is_call', 'completed')
                                     ->where('is_accepted', '1')
+                                    ->where('is_canceled', '0')
                                     ->count();
 
         return view('admin.dashboard.index', compact('user', 'title','clients', 'lawyers', 'subscriptions', 'litigations', 'contracts', 'states', 'categories', 'upcomingConsultations', 'completeConsultations', 'acceptedConsultations'));

@@ -5,10 +5,10 @@
 
             @if(@$currentPlan)
             <div class="alert alert-warning">
-            Current Subscription Plan <strong>{{ $currentPlan->subscription->name }}</strong>
+                <p>Current Subscription Plan <strong>{{ $currentPlan->subscription->name }}</strong></p>
+                <p>Expires on: <strong>{{ $currentPlan->to_date }}</strong></p>
             </div>
             @endif
-
 
 
             <div class="row">

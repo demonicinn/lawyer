@@ -51,7 +51,7 @@
                                                     <div class="dropdown reshedule_dropdowns">
                                                         <button class="toggle_cstm-btn" type="button">Reschedule</button>
 
-                                                        @if (Auth::user()->role == 'user')
+                                                        @if (Auth::user()->role == 'lawyer')
 
                                                         <div class="reshedule_wrap-box">
                                                             <span class="info_icns"><i class="fa-solid fa-circle-info"></i></span>
@@ -77,6 +77,19 @@
 
                                                         @endif
                                                     </div>
+
+                                                    @php
+                                                        $date1Days = \Carbon\Carbon::parse($upcoming->booking_date.' '.$upcoming->booking_time)->subtract(1, 'days')->format('Y-m-d h:i:s');
+
+                                                        $cDate = date('Y-m-d h:i:s');
+                                                    @endphp
+                                                    @if (Auth::user()->role == 'user' && $cDate <= $date1Days)
+                                                    <button class="toggle_cstm-btn" type="button" onclick="cancelBooking(`{{$upcoming->id}}`)">Cancel Booking</button>
+
+                                                    <form id="cancel-form-{{$upcoming->id}}" action="{{ route('consultations.upcoming.cancel', $upcoming->id) }}" method="POST" class="d-none">
+                                                    @csrf
+                                                    </form>
+                                                     @endif
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -99,4 +112,27 @@
         </div>
     </div>
 </section>
+@endsection
+
+@section('script')
+<script>
+    function cancelBooking(id) {
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "Cancel Booking",
+            type: "danger",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Yes, Cancel!",
+            closeOnConfirm: false
+
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+                $("#cancel-form-"+id).submit();
+            }
+        });
+    }
+</script>
 @endsection

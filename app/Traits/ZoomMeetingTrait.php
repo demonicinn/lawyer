@@ -66,7 +66,7 @@ trait ZoomMeetingTrait
             'headers' => $this->headers,
             'body'    => json_encode([
                 'topic'      => '',
-                'type'       => self::MEETING_TYPE_SCHEDULE,
+                'type'       => self::MEETING_TYPE_INSTANT,
                 'start_time' => $this->toZoomTimeFormat($date),
                 'duration'   => '30',
                 'agenda'     => null,

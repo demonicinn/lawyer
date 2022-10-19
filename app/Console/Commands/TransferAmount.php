@@ -31,6 +31,7 @@ class TransferAmount extends Command
     {
         $bookings = Booking::where('is_call','completed')
                     ->where('is_accepted', '1')
+                    ->where('is_canceled', '0')
                     ->where('payment_process', '0')
                     ->get();
 

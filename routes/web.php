@@ -135,6 +135,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     //..upcoming
     Route::get('upcoming', [CommonController::class, 'consultations'])->name('consultations.upcoming');
+    Route::post('upcoming/{id}/cancel', [CommonController::class, 'consultationsCancel'])->name('consultations.upcoming.cancel');
 
     Route::post('/reshedule/{id}', [CommonController::class, 'resheduleConsultations'])->name('reshedule.consultation');
     //..complete

@@ -29,13 +29,32 @@ class RefundAmount extends Command
      */
     public function handle()
     {
+        //refund when lawyer declined the request
         $bookings = Booking::where('is_call','completed')
                     ->where('is_accepted', '2')
                     ->where('payment_process', '0')
+                    ->where('is_canceled', '0')
                     ->whereHas('payments')
                     ->get();
 
+        self::refundAmount($bookings);
 
+        //refund when user cancled the booking
+        $bookings1 = Booking::where('is_call','pending')
+                    ->where('is_accepted', '0')
+                    ->where('payment_process', '0')
+                    ->where('is_canceled', '1')
+                    ->whereHas('payments')
+                    ->get();
+
+        self::refundAmount($bookings1);
+        
+
+        return 'done';
+    }
+
+
+    private function refundAmount(){
         $stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
 
         foreach($bookings as $booking){
@@ -70,7 +89,5 @@ class RefundAmount extends Command
         }
 
         return 'done';
-
-
     }
 }
