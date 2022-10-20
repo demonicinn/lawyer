@@ -10,9 +10,13 @@ $lawyer_details = $user->lawyerInfo;
     <div class="container">
         <div class="heading-paragraph-design text-center position-relative go-back-wrap mb-5">
             <h2>Lawyer Profile</h2>
-            <a href="{{ url()->previous() ?? route('narrow.down') }}" class="go-back"><i class="fa-solid fa-arrow-left-long"></i> Back to Lawyers</a>
+            <a href="{{ route('admin.lawyers.index') }}" class="go-back"><i class="fa-solid fa-arrow-left-long"></i> Back to Lawyers</a>
             <div class="lawyer_status">
+                
+
                 <div class="block_blocked">
+                
+                {{--
                 <div >
                     @if($user->status=="2")
                     <a class="btn btn-sm btn-success " href="">Blocked</a>
@@ -23,14 +27,25 @@ $lawyer_details = $user->lawyerInfo;
                     </form>
                     @endif
                 </div>
+                --}}
 
                 <div>
-                    <form action="{{ route('admin.deactive.lawyer',$user->id) }}" method="post" id="formdeactive">
+                    @if($user->status=="1")
+                    <form action="{{ route('admin.deactive.lawyer', $user->id) }}" method="post" id="formdeactive">
                         @csrf
-                        <a class="btn btn-sm btn-success" onclick="deActiveFunction()">De-active</a>
+                        <a class="btn btn-sm btn-success" onclick="deActiveFunction()">De-activate Account</a>
                     </form>
+                    @else
+                    <form action="{{ route('admin.deactive.lawyer', $user->id) }}" method="post" id="formdeactive">
+                        @csrf
+                        <a class="btn btn-sm btn-success" onclick="activateFunction()">Activate Account</a>
+                    </form>
+                    @endif
+
                 </div>
                 </div>
+
+
                 <div>
 
 
@@ -311,6 +326,30 @@ $lawyer_details = $user->lawyerInfo;
             }
         });
     }
+
+
+    function activateFunction() {
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "Active lawyer!",
+            type: "danger",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Yes, Active!",
+            closeOnConfirm: false
+
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+                $("#formdeactive").submit();
+            }
+        });
+    }
+
+
+    
+
 
     function acceptFunction() {
 
