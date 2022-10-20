@@ -2134,7 +2134,7 @@ label.second-label-design {
     max-width: 1000px;
     margin: 0 auto;
     padding: 0px 15px;
-    height: 500px;
+    height: 550px;
     display: flex;
     align-items: center;
 }
@@ -2763,6 +2763,12 @@ a.login-header-btn.btn_sign_up.mb-3.me-3.py-3 ,a.login-header-btn.btn_login.py-3
     padding-left: 10px;
     font-weight: bold;
     color: #F93F64;
+}
+.btn_all_type{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }
 /* responsive */
 /* responsive */

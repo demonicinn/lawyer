@@ -11,7 +11,7 @@ $lawyer_details = $user->lawyerInfo;
         <div class="heading-paragraph-design text-center position-relative go-back-wrap mb-5">
             <h2>Lawyer Profile</h2>
             <a href="{{ route('admin.lawyers.index') }}" class="go-back"><i class="fa-solid fa-arrow-left-long"></i> Back to Lawyers</a>
-            <div class="lawyer_status">
+            <div class="lawyer_status btn_all_type">
                 
 
                 <div class="block_blocked">
