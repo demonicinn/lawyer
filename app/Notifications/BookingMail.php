@@ -44,8 +44,7 @@ class BookingMail extends Notification
     {
         $zoomUrl = route('zoom', $this->booking->zoom_id);
         $reschedule = route('reschedule.booking', $this->booking->id);
-        
-
+        $upcoming = route('consultations.upcoming');
         
 
         return (new MailMessage)
@@ -56,6 +55,7 @@ class BookingMail extends Notification
             ->line(new HtmlString('
                 <a href="'.$zoomUrl.'" class="button button-primary" target="_blank" rel="noopener" style="margin-right: 20px;">Meeting link</a>
                 <a href="'.$reschedule.'" class="button button-primary" target="_blank" rel="noopener" style="margin-right: 20px;">Reschedule Booking</a>
+                <a href="'.$upcoming.'" class="button button-primary" target="_blank" rel="noopener" style="margin-right: 20px;">Cancel Booking</a>
             '))
             ->line('Booking date :' .date('d-m-Y', strtotime($this->booking->booking_date)))
             ->line('Booking time :' .date('g:i A', strtotime($this->booking->booking_time)))

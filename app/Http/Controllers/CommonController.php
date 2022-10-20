@@ -150,14 +150,22 @@ class CommonController extends Controller
     public function deActiveLawyer(Request $request, $id)
     {
         $user = User::findOrFail($id);
-        $user->status = '0';
+        if($user->status=='1'){
+            $user->status = '0';
+            $action = "deactivated";
+        }
+        else {
+            $user->status = '1';
+            $action = "activated";
+        }
+
         $user->save();
-        $action = "deactivated";
+        
 
         //...send mail
 
         Notification::route('mail', $user->email)->notify(new ResponseToLawyerRequest($user, $action));
-        $this->flash('success', 'Lawyer de-active  successfully');
+        $this->flash('success', 'Lawyer '.$action.' successfully');
         return back();
     }
 

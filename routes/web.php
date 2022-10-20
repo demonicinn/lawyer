@@ -210,7 +210,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         Route::post('/laywer/block/{id}', [CommonController::class, 'blockLawyer'])->name('admin.block.lawyer');
 
-        Route::post('/laywer/deactive/{id}', [CommonController::class, 'deActiveLawyer'])->name('admin.deactive.lawyer');
+        Route::post('/laywer/status/{id}', [CommonController::class, 'deActiveLawyer'])->name('admin.deactive.lawyer');
 
         Route::post('/accept/lawyer/{id}', [CommonController::class, 'acceptLawyer'])->name('admin.accept.lawyer');
 
