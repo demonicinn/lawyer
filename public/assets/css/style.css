@@ -144,6 +144,7 @@ p{
     font-size: 16px;
     display: block;
     margin-bottom: 5px;
+    font-family: 'lato-medium';
 }
 .input-design input ,.input-design select{
     width: 100%;
@@ -812,6 +813,7 @@ input:focus, select:focus, textarea:focus{
     color: #3E3E3E;
     border-radius: 8px;
     padding: 7px 10px;
+    font-weight: 600;
 }
 .schule_consultation-btn:hover {
     background-color: #f93f64;
@@ -870,6 +872,7 @@ input:focus, select:focus, textarea:focus{
     margin-bottom: 0px;
     color: #3E3E3E;
     font-size: 14px;
+    font-family: 'Lato-Medium';
 }
 .range-wrapper>p {
     width: auto;
@@ -2618,7 +2621,7 @@ a.btn_add.mr-2{
     position: absolute;
     cursor: pointer;
     right: -17px;
-    top: 13px;
+    bottom: 50px;
     color: red;
 }
 .appned_inputs .form-flex {
