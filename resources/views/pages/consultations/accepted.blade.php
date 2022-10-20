@@ -44,47 +44,57 @@
                                                 <td>{{$accepted->$role->email}}</td>
                                                 <td>{{date('d-m-y', strtotime($accepted->updated_at)) }}</td>
                                                 <td>
-                                                   <div class="eye_edit">
-                                                    <a class="view-icon info_icns" href="#"><i class="fas fa-eye"></i></a>
+                                                    <a class="view-icon info_icns mdl" href="javascript:void(0)" data-id="myNoteModal_{{ $accepted->id }}"><i class="fas fa-eye"></i></a>
 
-                                                    <div class="info_icns_note_name">
-                                                        @if (@$accepted->notes->note !=null)
-                                                        {{@$accepted->notes->note}}
 
-                                                        @endif
-                                                    </div>
+                                                    <div id="myNoteModal_{{ $accepted->id }}" class="modal fade noteModal" role="dialog">
+                                                      <div class="modal-dialog">
 
-                                                    @if (Auth::user()->role=="lawyer")
-                                                    <a class="edit-icons toggle_note-btn" href="#"><i class="fas fa-pen"></i></a>
-                                                   </div>
-                                                    <div class="note-box">
-                                                       <div class="add_notes">  
-                                                    <span class="info_icns"><i class="fa-solid fa-circle-info"></i></span>
-                                                        <p>Add note</p>
-                                                       </div>
-                                                        <div class="d-flex">
-                                                            @if (@$accepted->notes->note !=null)
+                                                        <!-- Modal content-->
+                                                        <div class="modal-content">
+                                                          <div class="modal-header">
+                                                            <h4 class="modal-title">Notes</h4>
+                                                          </div>
+                                                          @if (Auth::user()->role=="lawyer")
+                                                            @if (@$accepted->notes->note != null)
                                                             <form method="post" action="{{route('edit.note',@$accepted->notes->id)}}">
-                                                                @else
-                                                                <form method="post" action="{{route('add.note',$accepted->id)}}">
+                                                            @else
+                                                            <form method="post" action="{{route('add.note',$accepted->id)}}">
+                                                            @endif
+
+                                                            @csrf
+
+                                                              <div class="modal-body">
+                                                                @if (@$accepted->notes->note !=null)
+                                                                <p>{{@$accepted->notes->note}}</p>
+                                                                @endif
+
+
+                                                                <textarea required name="note" class="form-control">{{@$accepted->notes->note}}</textarea>
+
+                                                              </div>
+                                                              <div class="modal-footer">
+                                                                <button type="submit" class="confirm_dropdown-btn">
+                                                                    @if (@$accepted->notes->note !=null)
+                                                                    Update
+                                                                    @else
+                                                                    Save
                                                                     @endif
+                                                                </button>
 
-                                                                    @csrf
-                                                                    <textarea required name="note" class="form-control">{{@$accepted->notes->note}}</textarea>
-
-                                                                    <button type="submit" class="confirm_dropdown-btn">
-
-                                                                        @if (@$accepted->notes->note !=null)
-                                                                        Update
-                                                                        @else
-                                                                        Save
-                                                                        @endif
-                                                                    </button>
-                                                                </form>
-                                                                <a class="cancel_dropdown-btn cancel_btn">Cancel</a>
+                                                                <button type="button" class="btn btn-default cloaseModal">Close</button>
+                                                              </div>
+                                                          @else
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-default cloaseModal">Close</button>
+                                                                </div>
+                                                          @endif
                                                         </div>
+
+                                                      </div>
                                                     </div>
-                                                    @endif
+
+
                                                 </td>
                                                 <td>{{$accepted->$role->contact_number}}</td>
                                                 <td>Car Accident</td>
@@ -115,4 +125,20 @@
 
     </div>
 </section>
+@endsection
+
+@section('script')
+<script>
+$('.info_icns.mdl').on('click', function (){
+    var id = $(this).attr('data-id');
+
+    $('#'+id).modal('show');
+});
+
+
+$('.cloaseModal').on('click', function (){
+    $('.noteModal').modal('hide');
+});
+
+</script>
 @endsection
