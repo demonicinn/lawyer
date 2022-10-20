@@ -47,13 +47,14 @@
                                                     <a class="view-icon info_icns mdl" href="javascript:void(0)" data-id="myNoteModal_{{ $accepted->id }}"><i class="fas fa-eye"></i></a>
 
 
-                                                    <div id="myNoteModal_{{ $accepted->id }}" class="modal fade noteModal" role="dialog">
+                                                    <div id="myNoteModal_{{ $accepted->id }}" class="modal fade common_modal  noteModal" role="dialog">
+                                                    
                                                       <div class="modal-dialog">
-
+                                                      <button type="button" class="btn btn-default close cloaseModal">  <i class="fas fa-close"></i></button>
                                                         <!-- Modal content-->
                                                         <div class="modal-content">
-                                                          <div class="modal-header">
-                                                            <h4 class="modal-title">Notes</h4>
+                                                          <div class="modal-header modal_h">
+                                                            <h3 class="modal-title">Notes</h3>
                                                           </div>
                                                           @if (Auth::user()->role=="lawyer")
                                                             @if (@$accepted->notes->note != null)
@@ -73,8 +74,8 @@
                                                                 <textarea required name="note" class="form-control">{{@$accepted->notes->note}}</textarea>
 
                                                               </div>
-                                                              <div class="modal-footer">
-                                                                <button type="submit" class="confirm_dropdown-btn">
+                                                              <div class="modal-footer justify-content-center">
+                                                                <button type="submit" class="   btn-design-first   ">
                                                                     @if (@$accepted->notes->note !=null)
                                                                     Update
                                                                     @else
@@ -82,7 +83,7 @@
                                                                     @endif
                                                                 </button>
 
-                                                                <button type="button" class="btn btn-default cloaseModal">Close</button>
+                                                               
                                                               </div>
                                                           @else
                                                                 <div class="modal-footer">

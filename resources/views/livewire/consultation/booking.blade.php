@@ -185,7 +185,7 @@
                                             <td>**** {{ substr($saveCard->card_number, -4) }}</td>
                                             <td>{{$saveCard->card_type}}</td>
                                             <td>{{$saveCard->expire_month}}/{{$saveCard->expire_year}}</td>
-                                            <td><button type="button" wire:click="useSavedCard({{$saveCard->id}})" class="checkedbtn">Use</button></td>
+                                            <td><button type="button" wire:click="useSavedCard({{$saveCard->id}})" class="checkedbtn btn-design-second py-2">Use</button></td>
                                         </tr>
                                         @endforeach
                                     </tbody>

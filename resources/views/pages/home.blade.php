@@ -196,11 +196,11 @@
       <div class="steps-flex-wrap d-flex">
         <div class="step first-step">
           <h4>Step 1</h4>
-          <img src="{{ asset('assets/images/phone.png') }}">
+          <img src="{{ asset('assets/images/phone1.png') }}">
         </div>
         <div class="step second-step">
           <h4>Step 2</h4>
-          <img src="{{ asset('assets/images/phone.png') }}">
+          <img src="{{ asset('assets/images/phone2.png') }}">
         </div>
         <div class="step third-step">
           <h4>Step 3</h4>
