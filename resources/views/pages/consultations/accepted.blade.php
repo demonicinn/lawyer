@@ -44,8 +44,11 @@
                                                 <td>{{$accepted->$role->email}}</td>
                                                 <td>{{date('d-m-y', strtotime($accepted->updated_at)) }}</td>
                                                 <td>
-                                                    <a class="view-icon info_icns mdl" href="javascript:void(0)" data-id="myNoteModal_{{ $accepted->id }}"><i class="fas fa-eye"></i></a>
-
+                                                    <a class="view-icon info_icns mdl" href="javascript:void(0)" data-id="myNoteModal_{{ $accepted->id }}" data-type="view"><i class="fas fa-eye"></i></a>
+                                                    
+                                                    @if (Auth::user()->role=="lawyer")
+                                                    <a class="view-icon info_icns mdl" href="javascript:void(0)" data-id="myNoteModal_{{ $accepted->id }}" data-type="edit"><i class="fas fa-edit"></i></a>
+                                                    @endif
 
                                                     <div id="myNoteModal_{{ $accepted->id }}" class="modal fade common_modal  noteModal" role="dialog">
                                                     
@@ -56,6 +59,10 @@
                                                           <div class="modal-header modal_h">
                                                             <h3 class="modal-title">Notes</h3>
                                                           </div>
+
+
+
+
                                                           @if (Auth::user()->role=="lawyer")
                                                             @if (@$accepted->notes->note != null)
                                                             <form method="post" action="{{route('edit.note',@$accepted->notes->id)}}">
@@ -66,16 +73,18 @@
                                                             @csrf
 
                                                               <div class="modal-body">
+                                                                
                                                                 @if (@$accepted->notes->note !=null)
-                                                                <p>{{@$accepted->notes->note}}</p>
+                                                                <div class="view">{{@$accepted->notes->note}}</div>
                                                                 @endif
 
-
+                                                                <div class="edit">
                                                                 <textarea required name="note" class="form-control">{{@$accepted->notes->note}}</textarea>
+                                                            </div>
 
                                                               </div>
-                                                              <div class="modal-footer justify-content-center">
-                                                                <button type="submit" class="   btn-design-first   ">
+                                                              <div class="modal-footer">
+                                                                <button type="submit" class="   btn-design-first edit">
                                                                     @if (@$accepted->notes->note !=null)
                                                                     Update
                                                                     @else
@@ -83,12 +92,23 @@
                                                                     @endif
                                                                 </button>
 
-                                                               
-                                                              </div>
+                                                                    <button type="button" class="btn btn-default cloaseModal">Close</button>
+                                                                </div>
                                                           @else
+
+                                                          <div class="modal-body">
+                                                                
+                                                                @if (@$accepted->notes->note !=null)
+                                                                <p>{{@$accepted->notes->note}}</p>
+                                                                @endif
+
+                                                              </div>
+
+                                                            <div class="modal-footer">
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-default cloaseModal">Close</button>
                                                                 </div>
+                                                            </div>
                                                           @endif
                                                         </div>
 
@@ -132,8 +152,16 @@
 <script>
 $('.info_icns.mdl').on('click', function (){
     var id = $(this).attr('data-id');
+    var type = $(this).attr('data-type');
 
     $('#'+id).modal('show');
+
+
+    $('#'+id+' .view').hide();
+    $('#'+id+' .edit').hide();
+
+    $('#'+id+' .'+type).show();
+
 });
 
 

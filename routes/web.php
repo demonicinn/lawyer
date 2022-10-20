@@ -187,7 +187,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/support/store', [CommonController::class, 'SupportStore'])->name('support.store');
 
 
-    Route::get('thank-you', [CommonController::class, 'thankYou'])->name('thankYou');
+    
 
 
     //admin
@@ -351,27 +351,30 @@ Route::middleware(['auth', 'verified'])->group(function () {
     //client
 
     // i replace client to user bz page crashed when user direactly login to web. @gurpreet sir
-    Route::group(['prefix' => 'user', 'middleware' => ['role:user']], function () {
+    Route::group(['middleware' => ['role:user']], function () {
+
+        Route::group(['prefix' => 'user'], function () {
+            //...dashboard
+            Route::get('/', [User\DashboardController::class, 'index'])->name('user.dashboard');
 
 
-        //...dashboard
-        Route::get('/', [User\DashboardController::class, 'index'])->name('user.dashboard');
+            //...profile
+            Route::get('/profile', [User\ProfileController::class, 'index'])->name('user.profile');
+            Route::post('/profile/update', [User\ProfileController::class, 'update'])->name('user.profile.update');
+            Route::post('/profile/submit', [User\ProfileController::class, 'submit'])->name('user.profile.submit');
+
+            //...saved lawyer
+            Route::get('/saved/lawyer', [User\DashboardController::class, 'savedLawyer'])->name('user.saved.lawyer');
+            Route::get('/save/lawyer/{id}', [PagesController::class, 'saveLaywer'])->name('user.save.lawyer');
+            Route::get('/lawyer/{id}/remove', [PagesController::class, 'removeLaywer'])->name('user.lawyer.remove');
 
 
-        //...profile
-        Route::get('/profile', [User\ProfileController::class, 'index'])->name('user.profile');
-        Route::post('/profile/update', [User\ProfileController::class, 'update'])->name('user.profile.update');
-        Route::post('/profile/submit', [User\ProfileController::class, 'submit'])->name('user.profile.submit');
+            Route::get('review/{id}', [User\ReviewController::class, 'index'])->name('review.lawyer');
+            Route::post('review/{id}/store', [User\ReviewController::class, 'store'])->name('review.store');
 
-        //...saved lawyer
-        Route::get('/saved/lawyer', [User\DashboardController::class, 'savedLawyer'])->name('user.saved.lawyer');
-        Route::get('/save/lawyer/{id}', [PagesController::class, 'saveLaywer'])->name('user.save.lawyer');
-        Route::get('/lawyer/{id}/remove', [PagesController::class, 'removeLaywer'])->name('user.lawyer.remove');
+        });
 
-
-        Route::get('review/{id}', [User\ReviewController::class, 'index'])->name('review.lawyer');
-        Route::post('review/{id}/store', [User\ReviewController::class, 'store'])->name('review.store');
-
+        Route::get('thank-you/{id}', [CommonController::class, 'thankYou'])->name('thankYou');
 
         
 

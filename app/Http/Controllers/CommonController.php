@@ -416,14 +416,16 @@ class CommonController extends Controller
 
 
 
-    public function thankYou()
+    public function thankYou($id)
     {
         $title = array(
             'title' => 'Thank You',
             'active' => 'thankYou',
         );
 
-        return view('pages.thankYou', compact('title'));
+        $booking = Booking::findOrFail(decrypt($id));
+
+        return view('pages.thankYou', compact('title', 'booking'));
     }
 
 

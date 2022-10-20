@@ -189,5 +189,13 @@
         $('.addNewHoursLayout.'+day+' .layout-'+id).hide();
     });
 
+    $(document).ready(function() {
+        @foreach ($categoriesMulti as $category)
+        $('#ccat-{{$category->id}}').select2({
+            placeholder: "Please select {{ $category->name }}",
+            allowClear: true
+        });
+        @endforeach
+    });
 </script>
 @endsection
