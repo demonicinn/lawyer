@@ -2733,9 +2733,10 @@ ul.list_dat li:last-child::after{
     color: #fff !important;
 }
 div#bookingChart g text {
-    font-size: 18px;
+    font-size: 14px;
     font-family: 'Lato-Medium';
     font-style: inherit;
+    color: #3E3E3E ;
 }
 span.three_dots {
     position: absolute;
@@ -2773,6 +2774,15 @@ a.login-header-btn.btn_sign_up.mb-3.me-3.py-3 ,a.login-header-btn.btn_login.py-3
     justify-content: center;
     align-items: center;
     gap: 10px;
+}
+.hour_rate_form .input-group-prepend {
+    position: absolute;
+    top: 43px;
+    left: 5px;
+    z-index: 1;
+}
+.hour_rate_form .input-grouph.input-design {
+    position: relative;
 }
 /* responsive */
 /* responsive */
