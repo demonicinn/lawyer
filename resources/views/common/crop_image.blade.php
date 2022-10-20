@@ -32,8 +32,8 @@
 <script>
     $(document).ready(function() {
 
-        let viewportWidth = 200;
-        let viewportHeight = 200;
+        let viewportWidth = 300;
+        let viewportHeight = 300;
         let boundaryWidth = 300;
         let boundaryHeight = 300;
 

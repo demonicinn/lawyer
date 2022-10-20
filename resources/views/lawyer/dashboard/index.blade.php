@@ -117,7 +117,7 @@ rel="Stylesheet"type="text/css"/>
     google.charts.setOnLoadCallback(bookingChart);
 
     @php
-    $months=array('01'=>'Jan', '02'=>'Feb', '03'=>'Mar', '04'=>'Apr', '05'=>'May', '06'=>'June', '07'=>'July', '08'=>'Aug', '09'=>'Sep', '10'=>'Oct', '11'=>'Nov', '12'=>'Dec');
+    $months=array('01'=>'JAN', '02'=>'FEB', '03'=>'MAR', '04'=>'APR', '05'=>'MAY', '06'=>'JUN', '07'=>'JUL', '08'=>'AUG', '09'=>'SEP', '10'=>'OCT', '11'=>'NOV', '12'=>'DEC');
     @endphp
 
 
@@ -126,11 +126,10 @@ rel="Stylesheet"type="text/css"/>
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Months');
         data.addColumn('number', 'Bookings by Months');
-        data.addColumn({type: 'string', role: 'style'});
         
         data.addRows([
         @foreach($months as $k => $month)
-            ['{{ $month }}', {{ getBookingsCount($k, $year) }}, 'color: #f93f64'],
+            ['{{ $month }}', {{ getBookingsCount($k, $year) }}],
         @endforeach
         ]);
 
@@ -145,7 +144,12 @@ rel="Stylesheet"type="text/css"/>
             seriesType: 'bars',
             series: {1: {type: 'line'}},
             tooltip: { isHtml: true },
-            legend: { position: 'top' }
+            legend: { position: 'top' },
+            colors: ['#f93f64'],
+            chartArea: {'width': '85%'},
+            backgroundColor: '#f8f8f8',
+            border: '1px solid #979797',
+            is3D: true
         };
         
         var chart = new google.visualization.ComboChart(document.getElementById('bookingChart'));

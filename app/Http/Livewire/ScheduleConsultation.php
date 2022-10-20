@@ -541,7 +541,7 @@ class ScheduleConsultation extends Component
 
                         $this->flash('success', 'Appointment scheduled successfully');
 
-                        return redirect()->route('thankYou');
+                        return redirect()->route('thankYou', encrypt($booking->id));
                         //return redirect()->route('consultations.upcoming');
                     }
                 }

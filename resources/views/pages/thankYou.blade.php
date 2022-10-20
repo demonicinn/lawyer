@@ -8,22 +8,24 @@
          </div>
         <div class="booking-info_profile-flex">
           <div class="booking-info-left_column">
-             <img src="assets/images/hallie.png">
+             <img src="{{ $booking->lawyer->profile_pic }}">
           </div>
           <div class="booking-info-right_column">
-             <h4 class="booking_name">Hallie Norris</h4>
+             <h4 class="booking_name">{{ $booking->lawyer->name }}</h4>
              <h5 class="booking_type-text">Admiralty/Maritime</h5>
-             <p class="booking_date-time">Wednestday, August 15 2022 <span class="divider-horizonatl"></span> 11:00 am</p>
+             <p class="booking_date-time">{{ date('l, F d Y', strtotime($booking->booking_date)) }} <span class="divider-horizonatl"></span> {{ date('H:i a', strtotime($booking->booking_time)) }}</p>
          </div>
         </div>
       </div>
       <div class="row mt-3">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 text-center mt-5">
           <div class="text-center">
-            <a href="/" class="btn-design-first">Go Back Home</a>
+            <a href="{{ route('home') }}" class="btn-design-first">Go Back Home</a>
           </div>
         </div>
       </div>
+
+      {{--
     <!-- <div class="row justify-content-center">
       <div class="col-md-8 white-shadow-box">
      <div class="homepbanner-content text-center">
@@ -34,6 +36,7 @@
       </div>
 
     </div> -->
+    --}}
   </div>
  </section>
 @endsection

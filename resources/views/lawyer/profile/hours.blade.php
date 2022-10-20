@@ -92,8 +92,9 @@ $days = \App\Models\User::getDays();
                     @endif
 
                 </div>
-                <select class="select-block multiBoxes" multiple>
+                <select id="ccat-{{$category->id}}" class="select-block multiBoxes" multiple>
                     @foreach($category->items as $i => $list)
+
                     <option value="{{$list->id}}" data-cat="{{$category->id}}" data-name="{{$list->name}}" @foreach ($lawyer_details as $i=> $item)
                         @if($list->id==$item->item_id)
                         data-year="{{$item->year_admitted}}"
