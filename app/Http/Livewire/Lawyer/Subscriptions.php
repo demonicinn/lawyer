@@ -26,22 +26,29 @@ class Subscriptions extends Component
     public $card_name, $card_number, $expire_month, $expire_year, $cvv;
 
     public $currentPlan;
+    protected $listeners = ['confirmedSubscriptionAction'];
 
-    public function __construct()
+    /*public function __construct()
     {
         Stripe::setApiKey(config('services.stripe.secret'));
-    }
+    }*/
 
     public function mount()
     {
+        Stripe::setApiKey(config('services.stripe.secret'));
+
         $this->user = auth()->user();
 
         $subscriptionCount = $this->user->lawyerSubscription->count();
+        $lawyerSubscription = $this->user->lawyerSubscriptionLast;
 
         $this->subscriptions = Subscription::whereStatus('1')
-            ->where(function ($query) use ($subscriptionCount) {
+            ->where(function ($query) use ($subscriptionCount, $lawyerSubscription) {
                 if ($subscriptionCount > 0) {
                     $query->where('type', '!=', 'free');
+                }
+                if ($lawyerSubscription->subscription->type == 'monthly' || $lawyerSubscription->subscription->type == 'yearly') {
+                    $query->where('type', '!=', 'monthly');
                 }
             })
             ->get();
@@ -189,6 +196,31 @@ class Subscriptions extends Component
         }
 
         $this->alert('error', $error);
+    }
+
+    public function removeSubscription()
+    {
+        $this->alert('warning', 'Are you sure', [
+            'toast' => false,
+            'position' => 'center',
+            'showCancelButton' => true,
+            'cancelButtonText' => 'Cancel',
+            'showConfirmButton' => true,
+            'confirmButtonText' => 'Yes',
+            'onConfirmed' => 'confirmedSubscriptionAction',
+            'allowOutsideClick' => false,
+            'timer' => null
+        ]);
+    }
+
+    public function confirmedSubscriptionAction()
+    {
+        $user = auth()->user();
+        $user->auto_renew = '0';
+        $user->save();
+
+        $this->flash('success', 'Subscription Removed');
+        return redirect()->route('lawyer.subscription');
     }
 
 

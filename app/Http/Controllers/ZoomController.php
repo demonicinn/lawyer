@@ -22,7 +22,9 @@ class ZoomController extends Controller
 
 		$user = auth()->user();
 
-		$booking = Booking::where('zoom_id', $request->id)
+		$zoom_id = $request->id;
+		$booking = Booking::where('zoom_start_url', 'like', '%'.$zoom_id.'%')
+		            //where('zoom_id', $request->id)
 					//->where('booking_date', '>=', date('Y-m-d'))
 					->where(function($query) use($user) {
 						$query->where('user_id', $user->id);
@@ -37,7 +39,7 @@ class ZoomController extends Controller
         	return redirect()->route('home');
 		}
 
-        return view('common.zoom_cdn', compact('title', 'booking', 'user'));
+        return view('common.zoom_cdn', compact('title', 'booking', 'user', 'zoom_id'));
     }
 
     

@@ -311,36 +311,101 @@ class ProfileController extends Controller
         return redirect()->back();
     }
 
-    public function bankingInfoSuccess()
-    {
+    public function bankingInfoSuccess(){
         $user = auth()->user();
         $record = BankInfo::where(['user_id' => $user->id])->first();
 
 
         try {
             if($record) {
-                $stripe = new \Stripe\StripeClient(
-                    config('services.stripe.secret')
-                );
-                $account = $stripe->accounts->retrieve($record->account_id);
 
-                if(@$account && $account->payouts_enabled) {
-                    $record->payouts_enabled = 'active';              
-                } else {
-                    $record->payouts_enabled = 'inactive'; 
-                }
-                
-                $record->save();
 
-                $this->flash('success', 'Account added successfully');
+                return view('lawyer.profile.account', compact('user', 'record'));
             }
 
         } catch (\Exception $e) {
             $this->flash('error', $e->getMessage());
         }
-        
 
         return redirect()->route('lawyer.profile');
+    }
+
+    public function bankingInfoStore(Request $request)
+    {
+
+        $request->validate([
+            'account_number' => 'required',
+            'routing_number' => 'required|min:9',
+            'account_holder_name' => 'required',
+        ]);
+
+
+
+        $user = auth()->user();
+        $record = BankInfo::where(['user_id' => $user->id])->first();
+
+        try {
+            $stripe = new \Stripe\StripeClient(
+                config('services.stripe.secret')
+            );
+
+            $bank = $stripe->accounts->createExternalAccount(
+                $record->account_id,
+                [
+                    'external_account' => [
+                        "currency" => "usd",
+                        "country" => "us",
+                        "object" => "bank_account",
+                        "account_holder_name" => $request->account_holder_name,
+                        "routing_number" => $request->routing_number,
+                        "account_number" => $request->account_number,
+                    ],
+                ]
+            );
+
+            //dd($bank['id']);
+
+            
+            if($bank) {
+
+                $record->bid = @$bank['id'];
+                $record->account_holder_name = $request->account_holder_name;
+                $record->routing_number = $request->routing_number;
+                $record->account_number = $request->account_number;
+                $record->save();
+                
+            }
+
+            $this->flash('success', 'Your bank info added successfully');
+            return redirect()->route('lawyer.profile');
+            
+
+        } catch (\Stripe\Exception\RateLimitException $e) {
+            // Too many requests made to the API too quickly
+            $error = $e->getMessage();
+        } catch (\Stripe\Exception\InvalidRequestException $e) {
+            // Invalid parameters were supplied to Stripe's API
+            $error = $e->getMessage();
+        } catch (\Stripe\Exception\AuthenticationException $e) {
+            // Authentication with Stripe's API failed
+            $error = $e->getMessage();
+            // (maybe you changed API keys recently)
+        } catch (\Stripe\Exception\ApiConnectionException $e) {
+            // Network communication with Stripe failed
+            $error = $e->getMessage();
+        } catch (\Stripe\Exception\ApiErrorException $e) {
+            // Display a very generic error to the user, and maybe send
+            $error = $e->getMessage();
+            // yourself an email
+        } catch (Exception $e) {
+            // Something else happened, completely unrelated to Stripe
+            $error = $e->getMessage();
+        }
+
+        //dd($error);
+        $this->flash('error', $error);
+
+        return redirect()->back();
     }
 
     public function bankingInfoError()

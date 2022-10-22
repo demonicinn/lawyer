@@ -42,6 +42,15 @@ return [
     
     'google' => [
         'api' => env('GOOGLE_MAPS_API_KEY'),
+    ],
+
+    'zoom' => [
+        'key' => env('ZOOM_API_KEY'),
+        'secret' => env('ZOOM_API_SECRET'),
+        'sdk_key' => env('ZOOM_SDK_KEY'),
+        'sdk_secret' => env('ZOOM_SDK_SECRET'),
+        'url' => env('ZOOM_API_URL'),
+        'time_zone' => env('ZOOM_TIME_ZONE'),
     ]
 
 ];

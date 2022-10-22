@@ -44,8 +44,10 @@
                                                 <td>{{$accepted->$role->email}}</td>
                                                 <td>{{date('d-m-y', strtotime($accepted->updated_at)) }}</td>
                                                 <td>
+                                                    @if (@$accepted->notes->note != null)
                                                     <a class="view-icon info_icns mdl" href="javascript:void(0)" data-id="myNoteModal_{{ $accepted->id }}" data-type="view"><i class="fas fa-eye"></i></a>
-                                                    
+                                                    @endif
+
                                                     @if (Auth::user()->role=="lawyer")
                                                     <a class="view-icon info_icns mdl" href="javascript:void(0)" data-id="myNoteModal_{{ $accepted->id }}" data-type="edit"><i class="fas fa-edit"></i></a>
                                                     @endif

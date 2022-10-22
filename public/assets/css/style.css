@@ -2736,7 +2736,7 @@ ul.list_dat li:last-child::after{
     color: #fff !important;
 }
 div#bookingChart g text {
-    font-size: 14px;
+    font-size: 13px;
     font-family: 'Lato-Medium';
     font-style: inherit;
     color: #3E3E3E ;
@@ -2787,6 +2787,28 @@ a.login-header-btn.btn_sign_up.mb-3.me-3.py-3 ,a.login-header-btn.btn_login.py-3
 .hour_rate_form .input-grouph.input-design {
     position: relative;
 }
+
+
+.noteModal .modal-header, .noteModal .modal-footer {
+    border: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* responsive */
 /* responsive */
 /* responsive */

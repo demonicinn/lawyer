@@ -50,12 +50,19 @@ class RescheduleMail extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('Reschedule Mail')
-            ->greeting('Hello ,' . $this->info->first_name)
-            ->line('Booking date :' . $this->booking->booking_date)
-            ->line('Booking time :' . $this->booking->booking_time)
-            ->line($this->message1)
-            ->line($this->message2);
+            ->subject('Prickly Pear Consultation Reschedule')
+            ->greeting('Hello ' . $this->info->first_name.',')
+            ->line('Your Booking has been rescheduled.')
+            ->line('Please see below your consultation schedule.')
+            ->line('Booking time :'. date('l, F d Y', strtotime($this->booking->booking_date)) .' | '. date('H:i a', strtotime($this->booking->booking_time)))
+            ->line(new HtmlString('
+                <a href="'.$zoomUrl.'" class="button button-primary" target="_blank" rel="noopener" style="margin-right: 20px;">Meeting link</a>
+                <a href="'.$reschedule.'" class="button button-primary" target="_blank" rel="noopener" style="margin-right: 20px;">Reschedule Booking</a>
+                <a href="'.$upcoming.'" class="button button-primary" target="_blank" rel="noopener" style="margin-right: 20px;">Cancel Booking</a>
+            '));
+
+            //->line($this->message1)
+            //->line($this->message2);
     }
 
     /**

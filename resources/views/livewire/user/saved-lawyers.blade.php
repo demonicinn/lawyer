@@ -86,6 +86,19 @@
 
                                 <a href="{{route('schedule.consultation',$lawyerID)}}" class="schule_consultation-btn">Schedule Consultation</a>
                             </div>
+                            @php
+                                $tdate = date('Y-m-d');
+
+                                $date2week = \Carbon\Carbon::parse($tdate)->add(14, 'days')->format('Y-m-d');
+
+                                $checkAv = $lawyer->lawyer->leave()->where('date', '>=', $tdate)
+                                        ->where('date', '<=', $date2week)
+                                        ->count();
+
+                            @endphp
+                            @if(@$checkAv=='14')
+                            <p class="alt info">This lawyer is not available within two weeks</p>
+                            @endif
                         </div>
                     </div>
                 </div>
