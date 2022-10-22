@@ -1,12 +1,22 @@
+@php
+    $message = 'Monthly/Yearly Payment Plans';
+@endphp
 <div>
     <div class="billing_account-wrapper form-design">
         <form>
 
 
             @if(@$currentPlan)
+            @php
+                $message = 'Upgrade Payment Plans';
+            @endphp
             <div class="alert alert-warning">
                 <p>Current Subscription Plan <strong>{{ $currentPlan->subscription->name }}</strong></p>
                 <p>Expires on: <strong>{{ $currentPlan->to_date }}</strong></p>
+
+                @if(@$user->auto_renew=='1')
+                <button type="button" class="btn-design-first" wire:click="removeSubscription">Remove Subscription</button>
+                @endif
             </div>
             @endif
 
@@ -16,7 +26,7 @@
                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                     <div class="white-shadow-scnd-box">
                         <div class="form-heading mb-4">
-                            <h4 class="h4-design">Monthly/Yearly Payment Plans</h4>
+                            <h4 class="h4-design">{{ @$message }}</h4>
                         </div>
                         <div class="payment_plans">
 

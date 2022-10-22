@@ -330,7 +330,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
             Route::get('/banking-info-error', [Lawyer\ProfileController::class, 'bankingInfoError'])->name('lawyer.banking.error');
-            Route::get('/banking-info-success', [Lawyer\ProfileController::class, 'bankingInfoSuccess'])->name('lawyer.banking.success');
+            Route::get('/banking-info', [Lawyer\ProfileController::class, 'bankingInfoSuccess'])->name('lawyer.banking.success');
+            Route::post('/banking-info/store', [Lawyer\ProfileController::class, 'bankingInfoStore'])->name('lawyer.banking.store');
 
 
             Route::post('/profile/submit', [Lawyer\ProfileController::class, 'submit'])->name('lawyer.profile.submit');

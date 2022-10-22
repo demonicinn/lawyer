@@ -175,7 +175,7 @@ class ScheduleConsultation extends Component
             // dd($ndate );
 
             ///,.....available current date
-            if ($ndate >= date('Y-m-d') && in_array($day, $lawyerHoursDay)) {
+            if ($ndate > date('Y-m-d') && in_array($day, $lawyerHoursDay)) {
                 array_push($dates, $ndate);
             }
         }
@@ -214,7 +214,7 @@ class ScheduleConsultation extends Component
 
         ///,.....available current date
         if(!$checkLeave){
-            if (@$lawyerHours && $date >= date('Y-m-d')) {
+            if (@$lawyerHours && $date > date('Y-m-d')) {
 
                 
                 $duration = '30';
@@ -473,11 +473,11 @@ class ScheduleConsultation extends Component
                 /// generate meeting
                 $meeting = new MeetingController;
                 $a = $meeting->store($dateTime);
-                // dd($a);
+                //dd($a);
 
 
-                if (@$a) {
-                    $zoom_id = $a['data']['id'];
+                if (@$a['data']) {
+                    $zoom_ids = $a['data']['id'];
                     $zoom_password = @$a['data']['password'];
                     $zoom_start_url = @$a['data']['start_url'];
 
@@ -527,7 +527,7 @@ class ScheduleConsultation extends Component
                     $booking->lawyer_amount = @$lawyer_amount;
                     $booking->total_amount = $fee;
 
-                    $booking->zoom_id = @$zoom_id;
+                    $booking->zoom_id = @$zoom_ids;
                     $booking->zoom_password = @$zoom_password;
                     $booking->zoom_start_url = @$zoom_start_url;
                     $booking->save();

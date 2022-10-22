@@ -9,6 +9,10 @@ class Booking extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'zoom_id'
+    ];
+
 	protected $appends = [
         'zoom_zak'
     ];

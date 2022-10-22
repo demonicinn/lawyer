@@ -48,6 +48,7 @@ class UserMailForCaseStatus extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
+            ->subject('Prickly Pear Consultation '.ucfirst($this->status))
             ->subject('Your Case ' . $this->status)
             ->greeting('Hi ,' . $this->bookingInfo->first_name)
             ->line($this->message);

@@ -49,17 +49,15 @@ class BookingMail extends Notification
 
         return (new MailMessage)
             ->subject('Prickly Pear Consultation Confirmed')
-            ->greeting('Hi,' . @$this->user->name)
-            //->action('Meeting link', $zoomUrl)
-
+            ->greeting('Hi ' . @$this->user->name.',')
+            ->line('Your Booking has been completed successfully.')
+            ->line('Please see below your consultation schedule.')
+            ->line('Booking time :'. date('l, F d Y', strtotime($this->booking->booking_date)) .' | '. date('H:i a', strtotime($this->booking->booking_time)))
             ->line(new HtmlString('
                 <a href="'.$zoomUrl.'" class="button button-primary" target="_blank" rel="noopener" style="margin-right: 20px;">Meeting link</a>
                 <a href="'.$reschedule.'" class="button button-primary" target="_blank" rel="noopener" style="margin-right: 20px;">Reschedule Booking</a>
                 <a href="'.$upcoming.'" class="button button-primary" target="_blank" rel="noopener" style="margin-right: 20px;">Cancel Booking</a>
-            '))
-            ->line('Booking date :' .date('d-m-Y', strtotime($this->booking->booking_date)))
-            ->line('Booking time :' .date('g:i A', strtotime($this->booking->booking_time)))
-            ->line('Your booking done successfully.');
+            '));
             
     }
 

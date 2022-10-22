@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('contact_number')->nullable();
 			$table->enum('profile_completed', ['0', '1'])->default('0');
             $table->enum('status', ['0', '1', '2'])->default('1');
+            $table->enum('auto_renew', ['0', '1'])->default('1');
             
             $table->rememberToken();
             $table->timestamps();

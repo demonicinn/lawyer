@@ -45,7 +45,7 @@ class PagesController extends Controller
             'active' => 'litigations',
         );
 
-        $litigations = Litigation::whereStatus('1')->get();
+        $litigations = Litigation::whereStatus('1')->orderBy('name', 'asc')->get();
         return view('pages.litigations', compact('title', 'litigations'));
     }
 
@@ -56,7 +56,7 @@ class PagesController extends Controller
             'title' => 'Narrow Down Contracts',
             'active' => 'contracts',
         );
-        $contracts = Contract::whereStatus('1')->get();
+        $contracts = Contract::whereStatus('1')->orderBy('name', 'asc')->get();
         return view('pages.contracts', compact('title', 'contracts'));
     }
 

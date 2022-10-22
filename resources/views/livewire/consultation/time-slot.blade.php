@@ -63,7 +63,7 @@
                                 @endforeach
                             </ul>
                             @else
-                            <h5>Oops! Slot not available.</h5>
+                            <h5>Please select the date to show the availability.</h5>
                             @endif
 
                             {!! $errors->first('selectDateTimeSlot', '<span class="help-block">:message</span>')  !!}

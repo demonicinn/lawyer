@@ -27,8 +27,8 @@ trait ZoomMeetingTrait
 
     public function generateZoomToken()
     {
-        $key = env('ZOOM_API_KEY', '');
-        $secret = env('ZOOM_API_SECRET', '');
+        $key = config('services.zoom.key');
+        $secret = config('services.zoom.secret');
         $payload = [
             'iss' => $key,
             'exp' => strtotime('+1 minute'),
@@ -39,7 +39,7 @@ trait ZoomMeetingTrait
 
     private function retrieveZoomUrl()
     {
-        return env('ZOOM_API_URL', '');
+        return config('services.zoom.url');
     }
 
     public function toZoomTimeFormat(string $dateTime)
@@ -66,11 +66,11 @@ trait ZoomMeetingTrait
             'headers' => $this->headers,
             'body'    => json_encode([
                 'topic'      => '',
-                'type'       => self::MEETING_TYPE_INSTANT,
+                'type'       => self::MEETING_TYPE_SCHEDULE,
                 'start_time' => $this->toZoomTimeFormat($date),
                 'duration'   => '30',
                 'agenda'     => null,
-                'timezone'     => env('ZOOM_TIME_ZONE', ''),
+                'timezone'     => config('services.zoom.time_zone'),
                 'settings'   => [
                     //'host_video'        => ($data['host_video'] == "1") ? true : false,
                     //'participant_video' => ($data['participant_video'] == "1") ? true : false,
@@ -102,7 +102,7 @@ trait ZoomMeetingTrait
                 'start_time' => $this->toZoomTimeFormat($data['start_time']),
                 'duration'   => $data['duration'],
                 'agenda'     => (! empty($data['agenda'])) ? $data['agenda'] : null,
-                'timezone'     => env('ZOOM_TIME_ZONE', ''),
+                'timezone'     => config('services.zoom.time_zone'),
                 'settings'   => [
                     'host_video'        => ($data['host_video'] == "1") ? true : false,
                     'participant_video' => ($data['participant_video'] == "1") ? true : false,

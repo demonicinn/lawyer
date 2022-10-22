@@ -10,7 +10,7 @@
 @endif
 --}}
 
-<img src="{{ asset('assets/images/logo/logo.png') }}" class="logo" alt="{{ $slot }}">
+<img src="{{ asset('assets/images/logo/logo.png') }}" class="logo" alt="{{ $slot }}" style="width:100%; height:56px">
 
 </a>
 </td>
