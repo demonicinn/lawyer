@@ -41,10 +41,17 @@ class MailToLawyerForStatus extends Notification
      */
     public function toMail($notifiable)
     {
+        if($this->action == 'accept'){
+            $act = 'accepted';
+        }
+        else {
+            $act = 'rejected';
+        }
+
         return (new MailMessage)
             ->subject('Your request has been ' . $this->action)
             ->greeting('Hello ,'. $this->lawyer->first_name)
-            ->line('Your request has been ' . $this->action . ' by admin');
+            ->line('Your request has been ' . $act . ' by admin');
     }
 
     /**

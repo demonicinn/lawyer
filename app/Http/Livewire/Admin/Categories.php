@@ -126,6 +126,7 @@ class Categories extends Component
     public function addItemTypes($id)
     {
         $this->categoryId = $id;
+         $this->emit('itemFormShow');
     }
 
     public function storeItem()
@@ -202,6 +203,9 @@ class Categories extends Component
             $query->latest('id');
         })->paginate(10);
 
+
+        $this->emit('callDatatable');
+        
         return view('livewire.admin.categories', compact('categories'));
     }
 }

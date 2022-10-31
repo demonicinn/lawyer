@@ -13,19 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('bank_infos', function (Blueprint $table) {
+        Schema::create('lawyer_state_bars', function (Blueprint $table) {
             $table->id();
 
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
-
-            $table->string('account_id', 30);
-            $table->string('status', 30);
-            $table->string('payouts_enabled', 30);
-
-            $table->string('bid')->nullable();
-            $table->string('account_number', 20)->nullable();
-            $table->bigInteger('routing_number')->nullable();
-            $table->string('account_holder_name', 50)->nullable();
+            $table->foreignId('state_bar_id')->references('id')->on('state_bars')->onDelete('cascade');
+            
+            $table->string('year_admitted');
+            $table->string('bar_number');
 
             $table->timestamps();
         });
@@ -38,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bank_infos');
+        Schema::dropIfExists('lawyer_state_bars');
     }
 };

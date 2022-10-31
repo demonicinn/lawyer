@@ -20,15 +20,11 @@
                                     <table style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th>First Name</th>
-                                                <th>Last Name</th>
+                                                <th>Name</th>
                                                 <th>Practice Area</th>
                                                 <th>Date</th>
                                                 <th>Details</th>
-                                                @if (Auth::user()->role == "lawyer")
                                                 <th>Action</th>
-                                                @endif
-
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -41,10 +37,22 @@
                                             @endphp
                                             @forelse ($completeConsultations as $complete)
                                             <tr>
-                                                <td>{{$complete->$role->first_name}}</td>
-                                                <td>{{$complete->$role->last_name}}</td>
-                                                <td>Car Accident</td>
-                                                <td>{{date('d-m-y', strtotime($complete->booking_date)) }}</td>
+                                                <td>{{$complete->$role->first_name}} {{$complete->$role->last_name}}</td>
+                                                <td>
+                                                    @if($complete->search_data)
+                                                    @php
+                                                        $search = json_decode($complete->search_data);
+                                                    @endphp
+                                                        @foreach($search as $id)
+                                                            @if($complete->search_type == 'litigations')
+                                                            {{ litigationsData($id) }}
+                                                            @else
+                                                            {{ contractsData($id) }}
+                                                            @endif
+                                                        @endforeach
+                                                    @endif
+                                                </td>
+                                                <td>{{date('m-d-Y', strtotime($complete->booking_date)) }}</td>
                                                 <td>
                                                     @if (@$complete->notes->note != null)
                                                     <a class="view-icon info_icns mdl" href="javascript:void(0)" data-id="myNoteModal_{{ $complete->id }}" data-type="view"><i class="fas fa-eye"></i></a>
@@ -98,6 +106,8 @@
 
                                                                     <button type="button" class="btn btn-default cloaseModal">Close</button>
                                                                 </div>
+                                                                </form>
+
                                                           @else
 
                                                           <div class="modal-body">
@@ -118,23 +128,30 @@
 
                                                       </div>
                                                     </div>
-
-
                                                 </td>
 
-                                                @if (Auth::user()->role == "lawyer")
                                                 <td class="form_td">
-                                                    <form method="post" action="{{route('accept.case',$complete->id)}}" class="">
+                                                    @if($complete->is_canceled=='1')
+                                                        <button type="submit" class="decline-btn">Canceled</button>
+                                                    @else
+                                                    @if (Auth::user()->role == "lawyer")
+                                                    <form method="post" action="{{route('accept.case', $complete->id)}}" class="">
                                                         @csrf
                                                         <button type="submit" class="accept_btn">Accept</button>
                                                     </form>
 
-                                                    <form method="post" action="{{route('decline.case',$complete->id)}}">
+                                                    <form method="post" action="{{route('decline.case', $complete->id)}}">
                                                         @csrf
                                                         <button type="submit" class="decline-btn">Decline</button>
                                                     </form>
+                                                    @else
+                                                    <form method="post" action="{{route('cancel.case', $complete->id)}}">
+                                                        @csrf
+                                                        <button type="submit" class="decline-btn">Cancel</button>
+                                                    </form>
+                                                    @endif
+                                                    @endif
                                                 </td>
-                                                @endif
 
                                             </tr>
                                             @empty
