@@ -7,8 +7,13 @@ use App\Models\Litigation;
 use App\Models\Contract;
 use App\Models\SavedLawyer;
 use App\Models\User;
+use App\Models\JoinTeam;
 use Illuminate\Support\Facades\Crypt;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+
+
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\JoinTeamNotification;
 
 
 class PagesController extends Controller
@@ -141,6 +146,56 @@ class PagesController extends Controller
         );
 
         return view('pages.about', compact('title'));
+    }
+
+
+
+    //
+    public function joinTeam()
+    {
+        $title = array(
+            'title' => 'Join the Team',
+            'active' => 'joinTeam',
+        );
+
+        return view('pages.joinTeam', compact('title'));
+    }
+
+
+    public function joinTeamStore(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'resume' => 'required|file',
+        ]);
+
+        //...
+
+        $store = new JoinTeam;
+        $path = 'storage/resume/';
+        if ($request->hasFile('resume')){
+            if(!is_dir($path)) {
+                mkdir($path, 0775, true);
+                chown($path, exec('whoami'));
+            }
+
+            $file = $request->file('resume');
+            $filename = uniqid(time()) . '.' . $file->getClientOriginalExtension();
+            $request->file('resume')->move($path, $filename);
+            
+            //...
+            $store->resume = $filename;
+        }
+        $store->name = $request->name;
+        $store->email = $request->email;
+        $store->save();
+        
+        //...
+        Notification::route('mail', env('JOIN_TEAM'))->notify(new JoinTeamNotification($store));
+
+        $this->flash('success', "Your resume submitted, We'll update you after review it"); 
+        return back();
     }
 
 

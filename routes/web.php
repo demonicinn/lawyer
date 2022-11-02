@@ -112,7 +112,11 @@ Route::get('/narrow-down-contracts', [PagesController::class, 'contracts'])->nam
 
 Route::get('/narrow-lawyers', [PagesController::class, 'lawyers'])->name('lawyers');
 Route::get('/narrow-lawyers/{user}', [PagesController::class, 'lawyerShow'])->name('lawyer.show');
+
+
 Route::get('/about', [PagesController::class, 'about'])->name('about');
+Route::get('/join-the-team', [PagesController::class, 'joinTeam'])->name('joinTeam');
+Route::post('/join-the-team/store', [PagesController::class, 'joinTeamStore'])->name('joinTeamStore');
 
 
 
@@ -197,6 +201,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         //...dashboard
         Route::get('/', [Admin\DashboardController::class, 'index'])->name('admin');
         Route::get('/dashboard', [Admin\DashboardController::class, 'index'])->name('admin.dashboard');
+
+        Route::get('/join-team', [Admin\JoinTeamController::class, 'index'])->name('admin.joinTeam');
 
 
         //...profile 
@@ -350,7 +356,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::group(['middleware' => 'profileVerified'], function () {
 
                 //...dashboard
-                Route::get('/', [Lawyer\DashboardController::class, 'index'])->name('lawyer');
+                Route::get('/', [Lawyer\DashboardController::class, 'portal'])->name('lawyer');
                 Route::get('/dashboard', [Lawyer\DashboardController::class, 'index'])->name('lawyer.dashboard');
 
                 //...

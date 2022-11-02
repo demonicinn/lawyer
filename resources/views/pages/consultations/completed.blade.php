@@ -132,24 +132,24 @@
 
                                                 <td class="form_td">
                                                     @if($complete->is_canceled=='1')
-                                                        <button type="submit" class="decline-btn">Canceled</button>
+                                                        <button type="submit" class="decline-btn">Rejected</button>
                                                     @else
-                                                    @if (Auth::user()->role == "lawyer")
-                                                    <form method="post" action="{{route('accept.case', $complete->id)}}" class="">
-                                                        @csrf
-                                                        <button type="submit" class="accept_btn">Accept</button>
-                                                    </form>
+                                                        @if (Auth::user()->role == "lawyer")
+                                                        <form method="post" action="{{route('accept.case', $complete->id)}}" class="">
+                                                            @csrf
+                                                            <button type="submit" class="accept_btn">Accept</button>
+                                                        </form>
 
-                                                    <form method="post" action="{{route('decline.case', $complete->id)}}">
-                                                        @csrf
-                                                        <button type="submit" class="decline-btn">Decline</button>
-                                                    </form>
-                                                    @else
-                                                    <form method="post" action="{{route('cancel.case', $complete->id)}}">
-                                                        @csrf
-                                                        <button type="submit" class="decline-btn">Cancel</button>
-                                                    </form>
-                                                    @endif
+                                                        <form method="post" action="{{route('decline.case', $complete->id)}}">
+                                                            @csrf
+                                                            <button type="submit" class="decline-btn">Decline</button>
+                                                        </form>
+                                                        @else
+                                                        <form method="post" action="{{route('cancel.case', $complete->id)}}">
+                                                            @csrf
+                                                            <button type="submit" class="decline-btn">Reject lawyer</button>
+                                                        </form>
+                                                        @endif
                                                     @endif
                                                 </td>
 
