@@ -152,7 +152,7 @@ p{
 }
 .input-design input ,.input-design select{
     width: 100%;
-    border: 1px solid #979797;r
+    border: 1px solid #979797;
     font-size: 16px;
     border-radius: 8px;
     padding: 12px 18px;
@@ -1581,28 +1581,73 @@ label.second-label-design {
 #practiceModal .modal-dialog {
     width: 100%;
     max-width: 966px;
-    border-radius: 35px !important;
-    background-color: #fff;
 }
 #practiceModal .modal-dialog .modal-content {
     background: transparent;
     border: none;
     padding-top: 30px;
     padding-bottom: 30px;
+    background-color: #fff;
+    border-radius: 35px;
 }
 #practiceModal .modal-dialog .modal-content .heading-paragraph-design h2 {
     margin-bottom: 5px;
 }
+.modal-design .modal-dialog {
+    width: 100%;
+    max-width: 966px;
+}
+.modal-design .modal-dialog .modal-content {
+    background: transparent;
+    border: none;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    background-color: #fff;
+    border-radius: 35px;
+}
+.modal-design .modal-dialog .modal-content .heading-paragraph-design h2 {
+    margin-bottom: 5px;
+}
+.modal-design .modal-dialog .btn.close {
+    position: absolute;
+    right: 0;
+    top: -58px;
+    filter: brightness(0) invert(1) !important;
+    opacity: 1 !important;
+    width: 50px !important;
+    height: 50px !important;
+    background-position: right;
+    background-size: 22px;
+}
+.modal-design .modal-dialog .btn.close svg {
+    font-size: 34px;
+}
+.modal-design .nav-tabs {
+    border-bottom: 3px solid #DCDCDC;
+    justify-content: space-between;
+}
+
 .tabs_design-wrap .nav-tabs {
     border-bottom: 3px solid #DCDCDC;
     justify-content: space-between;
 }
 .tabs_design-wrap .nav-tabs .nav-link {
-    color: #505050;
+    color: #505050 !important;
     font-size: 20px;
     border: none;
     margin-bottom: 0px;
     padding: 20px 15px;
+    position: relative;
+}
+.modal-design .nav-tabs li button.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 8px;
+    background-color: #A4CAA5;
+    bottom: -5px;
 }
 .two_tabs-layout .nav-tabs>li.nav-item {
     width: 45%;
@@ -2649,8 +2694,37 @@ a.btn_add.mr-2{
     min-width: 143px;
 }
 .mb-4.courts_data {
-    max-width: 67%;
+    width: 100%;
     margin: auto;
+    max-width: 600px;
+}
+.courts_data .name_data_p h6 {
+    width: 45%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    min-width: auto;
+    padding-right: 15px;
+}
+.courts_data  .select-design label {
+    width: 45%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    min-width: auto;
+    padding-right: 15px;
+}
+.courts_data  .select-design div {
+    width: 55%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.courts_data .name_data_p p {
+    width: 55%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 .common_modal .courts_data:last-child{
     border: none;
@@ -2842,7 +2916,7 @@ input[type="checkbox"]#term:before{
     color:#fff;
 }
 .common_modal .modal-dialog{
-    margin-top:100px;
+    margin-top:60px;
 }
 .btn-success {
     color: #fff;
@@ -2883,6 +2957,38 @@ input[type="checkbox"]#term:before{
 .lawyers-heading_service.d-block.justify-content-spacebw.align-items-center.directory_h4_btn h4.lawyer-name.text-center {
     padding-bottom: 10px;
 }
+.modal-design {
+    padding: 15px;
+}
+.hourly-range-design .n-slider input {
+    background: transparent;
+    width: 100%;
+    text-align: center;
+    padding: 0px;
+    margin-bottom: 0px;
+    color: #3E3E3E;
+    font-size: 14px;
+}
+.hourly-range-design .n-slider .slider {
+    width: 100%;
+    margin: 10px auto;
+    position: relative;
+    padding: 0px 15px;
+    height: 3px;
+    background-color: #D8D8D8;
+    border: none;
+}
+.hourly-range-design .n-slider .slider .ui-slider-handle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    font-family: none;
+    background-color: #fff !important;
+    border: 3px solid #ed3c62;
+    background-image: none !important;
+    margin-top: -4px;
+}
+
 /* responsive */
 /* responsive */
 /* responsive */
@@ -3007,6 +3113,11 @@ input[type="checkbox"]#term:before{
 @media (max-width: 767px){
     .why-choose-img {
         text-align: center;
+    }
+    .modal-design .nav-tabs li button {
+        font-size: 14px;
+        padding-left: 8px !important;
+        padding-right: 8px !important;
     }
     .list-wrapper-saved.four-layout>.list-item {
         width: 100%;

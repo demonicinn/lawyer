@@ -42,8 +42,8 @@
 
 
     <!-- Accept Modal Start Here-->
-    <div wire:ignore.self class="modal fade common_modal" id="litigationForm" tabindex="-1" aria-labelledby="litigationForm" aria-hidden="true">
-        <div class="modal-dialog modal_style">
+    <div wire:ignore.self class="modal fade common_modal modal-design" id="litigationForm" tabindex="-1" aria-labelledby="litigationForm" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
             <button type="button" class="btn btn-default close closeModal">
                 <i class="fas fa-close"></i>
             </button>

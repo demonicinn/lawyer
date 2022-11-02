@@ -82,8 +82,8 @@
 
 
     <!-- Accept Category Modal Start Here-->
-    <div wire:ignore.self class="modal fade common_modal" id="categoryForm" tabindex="-1" aria-labelledby="categoryForm" aria-hidden="true">
-        <div class="modal-dialog modal_style">
+    <div wire:ignore.self class="modal fade common_modal modal-design" id="categoryForm" tabindex="-1" aria-labelledby="categoryForm" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
             <button type="button" class="btn btn-default close closeModal">
                 <i class="fas fa-close"></i>
             </button>
@@ -142,8 +142,8 @@
 
     <!-- Accept items Modal Start Here-->
 
-    <div wire:ignore.self class="modal fade common_modal" id="itemForm" tabindex="-1" aria-labelledby="itemForm" aria-hidden="true">
-        <div class="modal-dialog modal_style">
+    <div wire:ignore.self class="modal fade common_modal modal-design" id="itemForm" tabindex="-1" aria-labelledby="itemForm" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
             <button type="button" class="btn btn-default close closeModal">
                 <i class="fas fa-close"></i>
             </button>
