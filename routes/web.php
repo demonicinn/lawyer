@@ -147,6 +147,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::post('/accept/case/{id}', [CommonController::class, 'acceptCase'])->name('accept.case');
     Route::post('/decline/case/{id}', [CommonController::class, 'declineCase'])->name('decline.case');
+    Route::post('/cancel/case/{id}', [CommonController::class, 'cancelCase'])->name('cancel.case');
 
 
     //..accepted
@@ -280,10 +281,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
             return view('admin.subscriptions.index', compact('title'));
         })->name('admin.subscriptions.index');
 
-        //...categories
-        Route::get('/categories', function () {
+        //...state bar
+        Route::get('/state-bar', function () {
             $title = array(
-                'title' => 'Categories',
+                'title' => 'State Bar Admissions',
+                'active' => 'state-bar',
+            );
+            return view('admin.state_bar.index', compact('title'));
+        })->name('admin.state_bar.index');
+
+        //...categories
+        Route::get('/federal-court', function () {
+            $title = array(
+                'title' => 'Federal Court Admissions',
                 'active' => 'categories',
             );
             return view('admin.categories.index', compact('title'));

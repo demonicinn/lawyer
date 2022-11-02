@@ -35,7 +35,7 @@ class Subscriptions extends Component
 
     public function mount()
     {
-        Stripe::setApiKey(config('services.stripe.secret'));
+        
 
         $this->user = auth()->user();
 
@@ -47,7 +47,7 @@ class Subscriptions extends Component
                 if ($subscriptionCount > 0) {
                     $query->where('type', '!=', 'free');
                 }
-                if ($lawyerSubscription->subscription->type == 'monthly' || $lawyerSubscription->subscription->type == 'yearly') {
+                if (@$lawyerSubscription->subscription->type == 'monthly' || @$lawyerSubscription->subscription->type == 'yearly') {
                     $query->where('type', '!=', 'monthly');
                 }
             })
@@ -110,6 +110,9 @@ class Subscriptions extends Component
         //Paid Plans
         //....
         try {
+            
+            Stripe::setApiKey(config('services.stripe.secret'));
+            
             //create token
             $token = \Stripe\Token::create([
                 "card" => array(

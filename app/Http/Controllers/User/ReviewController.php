@@ -46,7 +46,8 @@ class ReviewController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'first_name' => 'rating',
+            'rating' => 'required',
+            'comment' => 'required',
         ]);
 
 

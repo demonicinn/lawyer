@@ -41,7 +41,7 @@
 
                                     <div class="add-litigations mt-2 location_profile-divs d-flex justify-content-spacebw align-items-center ">
                                 <button type="button" class="btn_court showModal "><i class="fa-solid fa-gavel"></i>  Courts</button>
-                                <a href="#">See Profile</a>
+                              <!--   <a href="#">See Profile</a> -->
                             </div>
 
 
@@ -54,12 +54,12 @@
                                     @if(auth()->check())
                                     @if(auth()->user()->role=='user')
                                     <div class="schedular_consultation">
-                                        <a href="{{route('schedule.consultation',$lawyerID)}}" class="schule_consultation-btn">Schedule Consultation</a>
+                                        <a href="{{route('schedule.consultation', $lawyerID)}}?type={{ request()->type }}&search={{ request()->search }}" class="schule_consultation-btn">Schedule Consultation</a>
                                     </div>
                                     @endif
                                     @else
                                     <div class="schedular_consultation">
-                                        <a href="{{route('schedule.consultation',$lawyerID)}}" class="schule_consultation-btn">Schedule Consultation</a>
+                                        <a href="{{route('schedule.consultation', $lawyerID)}}?type={{ request()->type }}&search={{ request()->search }}" class="schule_consultation-btn">Schedule Consultation</a>
                                     </div>
                                     @endif
 

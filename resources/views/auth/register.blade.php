@@ -66,7 +66,7 @@ $states = \App\Models\State::whereStatus('1')->pluck('name', 'id');
 					</div>
 					<div class="account-availblity-div text-center">
 						<p class="mb-3">Already have an account? <a href="{{ route('login') }}">Login</a></p>
-						<p>Looking for a lawyer? <a href="{{ route('home') }}">Click here</a></p>
+						<p>Looking for a lawyer? <a href="{{ route('narrow.down') }}">Click here</a></p>
 					</div>
 				</div>
 				{!! Form::close() !!}

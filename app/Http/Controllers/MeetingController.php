@@ -13,7 +13,7 @@ class MeetingController extends Controller
     use ZoomMeetingTrait;
 
    	const MEETING_TYPE_INSTANT = 1;
-    const MEETING_TYPE_SCHEDULE = 2;
+    const MEETING_TYPE_SCHEDULE = 1;
     const MEETING_TYPE_RECURRING = 3;
     const MEETING_TYPE_FIXED_RECURRING_FIXED = 8;
 
@@ -45,7 +45,9 @@ class MeetingController extends Controller
     public function destroy($meeting)
     {
         
-        return $this->delete($meeting->zoom_id);
+        $zoom_id = getZoomID($meeting->zoom_start_url);
+        
+        return $this->delete($zoom_id);
 
         //return $this->sendSuccess('Meeting deleted successfully.');
     }

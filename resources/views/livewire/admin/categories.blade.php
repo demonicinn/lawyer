@@ -9,6 +9,8 @@
     </div>
 
     <div class="table-responsive table-design">
+
+        @foreach($categories as $category)
         <table style="width:100%">
             <thead>
                 <tr>
@@ -18,14 +20,9 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($categories as $category)
                 <tr style="background: grey;">
-                    <td>@if ($category->is_category=='1' )
-                        <h5> Federal Court Admissions</h5>
-                        <h6>({{ $category->name }})</h6>
-                        @else
+                    <td>
                         <h6>{{ $category->name }}</h6>
-                        @endif
 
                         <a class="btn_add mr-2" wire:click="addItemTypes('{{$category->id}}')">
                             <i class="fas fa-plus-circle showItemModal"></i> Add Item
@@ -42,16 +39,21 @@
                         <a class="edit-icons" href="javascript::void(0)" wire:click="edit('{{$category->id}}')"><i class="fas fa-pen"></i></a>
                         <a class="view-icon" href="javascript::void(0)" wire:click="delete('{{$category->id}}')"><i class="fas fa-trash"></i></a>
                     </td>
-
-                    @if($category->items && count($category->items)>0)
-                <tr>
-                    <thead>
-                        <th>sno</th>
-                        <th>Item</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </thead>
                 </tr>
+            </tbody>
+        </table>
+
+        @if($category->items && count($category->items)>0)
+        <table style="width:100%" class="setTable">
+            <thead>
+                <tr>
+                    <th>sno</th>
+                    <th>Item</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
                 @foreach($category->items as $i => $list)
                 <tr>
                     <td>{{ $loop->iteration }} </td>
@@ -69,11 +71,12 @@
                     </td>
                 </tr>
                 @endforeach
-                @endif
-                </tr>
-                @endforeach
             </tbody>
         </table>
+        @endif
+
+        @endforeach
+
     </div>
     <div id="pagination-container" class="pagination-container-saved">{{$categories->links()}}</div>
 
@@ -98,6 +101,7 @@
 
                             </div>
                             <div class="status_search">
+                                {{--
                                 <div class="form-group">
                                     <label>Is Multiselect</label></br>
                                     <input type="radio" name="is_multiselect" wire:model="is_multiselect" value="1"> Yes
@@ -110,6 +114,7 @@
                                     <input type="radio" name="cat_search" wire:model="cat_search" value="0"> No
                                     {!! $errors->first('cat_search', '<span class="help-block">:message</span>') !!}
                                 </div>
+                                --}}
                                 <div class="form-group">
                                     <label>Status</label></br>
                                     <input type="radio" name="cat_status" wire:model="cat_status" value="1"> Active
@@ -203,6 +208,12 @@
             window.livewire.on('itemFormShow', () => {
                 $('#itemForm').modal('show');
             });
+            
+            window.livewire.on('callDatatable', () => {
+                $('.setTable').DataTable();
+            });
+             $('.setTable').DataTable();
+            
         });
         $(document).on('click', '.showItemModal', function(e) {
 
