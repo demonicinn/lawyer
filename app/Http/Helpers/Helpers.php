@@ -52,6 +52,28 @@
 			return '0';
 		}
 	}
+	
+	
+	function getZoomID($url){
+		$uri_path = parse_url($url, PHP_URL_PATH);
+        $uri_segments = explode('/', $uri_path);
+
+    //dd($uri_segments);
+        return $uri_segments[2];
+	}
+	
+	
+	function litigationsData($id){
+		$data = \App\Models\Litigation::find($id);
+	
+		return @$data->name;
+	}
+	
+	function contractsData($id){
+		$data = \App\Models\Contract::find($id);
+		
+		return @$data->name;
+	}
 
 
 

@@ -11,18 +11,18 @@
             
 
             {!! Form::open(['route' => ['review.store', encrypt($booking->id)], 'class'=>' form-design']) !!}
-            <div class="white-shadow-scnd-box">
-                <div class="form-flex">
+            <div class="">
+                <div class="form-flex row">
 
-                    <div class="col-md-6">
-                        <div class="list-item list-service-item">
+                    <div class="col-md-4 ">
+                        <div class="list-item list-service-item white-shadow-scnd-box">
                             <div class="lawyer-hire-block">
                                 <div class="lawyers-img-block">
                                     <img src="{{ $booking->lawyer->profile_pic }}">
                                 </div>
                                 <div class="lawyers-service-cntnt-block">
                                     <div class="lawyers-heading_service d-flex justify-content-spacebw align-items-center">
-                                        <h4 class="lawyer-name">{{ $booking->lawyer->name }}</h4>
+                                        <h4 class="lawyer-name text-center">{{ $booking->lawyer->name }}</h4>
                                     </div>
                                 </div>
                             </div>
@@ -30,7 +30,8 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-8 ">
+                        <div class="white-shadow-scnd-box">
                         <div class="form-grouph input-design{!! ($errors->has('rating') ? ' has-error' : '') !!}">
                             {!! Form::label('rating', 'Did the lawyer show up to the consultation', ['class' => 'form-label']) !!}
                             <div id="rateYo"></div>
@@ -38,11 +39,12 @@
                             {!! $errors->first('rating', '<span class="help-block">:message</span>') !!}
                         </div>
 
-                        <div class="form-grouph input-design{!! ($errors->has('comment') ? ' has-error' : '') !!}">
+                        <div class="textarea-design form-grouph input-design{!! ($errors->has('comment') ? ' has-error' : '') !!}">
                             {!! Form::label('comment', 'Comment', ['class' => 'form-label']) !!}
                             {!! Form::textarea('comment', null, ['placeholder'=>'Leave Comment', 'class' => ($errors->has('comment') ? ' is-invalid' : '')]) !!}
                             {!! $errors->first('comment', '<span class="help-block">:message</span>') !!}
                         </div>
+                    </div>
                     </div>
 
                 </div>

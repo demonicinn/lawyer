@@ -1,6 +1,7 @@
 @php
 $details = $user->details;
 $lawyer_details = $user->lawyerInfo;
+$lawyer_state_bar = $user->lawyerStateBar;
 
 @endphp
 
@@ -32,6 +33,7 @@ $lawyer_details = $user->lawyerInfo;
                     {!! $errors->first('bio', '<span class="help-block">:message</span>') !!}
                 </div>
 
+                {{--
                 <div class="form-grouph select-design">
                     @foreach ($categories as $category)
                     <div class="form-grouph input-design">
@@ -50,6 +52,7 @@ $lawyer_details = $user->lawyerInfo;
                     {!! $errors->first('lawyer_info.'.$category->id, '<span class="help-block">:message</span>') !!}
                     @endforeach
                 </div>
+                --}}
 
 
                 <div class="form-grouph checkbox-label-block">

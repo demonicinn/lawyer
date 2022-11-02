@@ -23,10 +23,10 @@
                     <td>{{ $lawyer->email }}</td>
                     <td>{{ $lawyer->contact_number }}</td>
                     <td>
-                        @if($lawyer->status=='1')
+                        @if(@$lawyer->details->is_verified=='yes')
                         <button type="button" class="accept_btn">Active</button>
                         @else
-                        <button type="button" class="decline-btn">De-active</button>
+                        <button type="button" class="decline-btn">In-active</button>
                         @endif
                     </td>
                     <td>

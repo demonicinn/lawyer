@@ -45,7 +45,7 @@ class WelcomeNotification extends Notification
             ->subject('Welcome Notification')
             ->greeting('Hi '.$this->user->first_name.',')
             ->line('Thank you for using our application!')
-            ->line('Your account has been successfully created, please click links below to complete your lawyer profile.')
+            ->line('Your account has been successfully created, please click link below to complete your lawyer profile.')
             ->action('Create profile',  $lawyerProfile);
     }
 

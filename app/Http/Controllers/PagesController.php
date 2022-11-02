@@ -63,6 +63,23 @@ class PagesController extends Controller
     //
     public function lawyers(Request $request)
     {
+        
+        
+        if($request->type == 'litigation'){
+            $request->validate([
+                'litigations' => 'required'
+            ],
+            [
+                //'litigations.required' => 'required'
+            ]);
+        }
+        else {
+            $request->validate([
+                'contracts' => 'required'
+            ]);
+        }
+        
+        
         $route = "narrow.litigations";
         if (@$request->contracts) {
             $route = "narrow.contracts";

@@ -12,7 +12,7 @@
 
 {{-- Intro Lines --}}
 @foreach ($introLines as $line)
-{!! $line !!}
+{!! html_entity_decode($line) !!}
 
 @endforeach
 
@@ -31,8 +31,7 @@
 
 {{-- Outro Lines --}}
 @foreach ($outroLines as $line)
-{!! $line !!}
-
+{!! html_entity_decode($line) !!}
 @endforeach
 
 {{-- Salutation --}}

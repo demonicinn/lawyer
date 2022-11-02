@@ -80,7 +80,7 @@
 
 
                             <div class="add-litigations">
-                                <button type="button" class="accept_btn showModal mt-2" wire:click="modalData({{$lawyer}})">Courts</button>
+                                <button type="button" class="btn_court showModal mt-2" wire:click="modalData({{$lawyer}})"><i class="fa-solid fa-gavel"></i> Courts</button>
                             </div>
                             <div class="schedular_consultation">
 
@@ -126,16 +126,18 @@
                             <div>
                                 @foreach ($modal['lawyer_info'] as $lawyerInfo)
                                 @if($lawyerInfo['categories']['is_multiselect'])
-                                <h6>{{$lawyerInfo['items']['name']}}</h6>
+                                  <div class="mb-4 courts_data">
+                                <h6 class="pt-3">{{$lawyerInfo['items']['name']}}</h6>
                                 <div class="federal-court">
-                                    <div class="form-grouph select-design">
-                                        <label>Bar Number</label>
-                                        <div>{{($lawyerInfo['bar_number'])?$lawyerInfo['bar_number']:'--'}}</div>
+                                    <div class="form-grouph select-design name_data_p">
+                                        <h6>Bar Number</h6>
+                                        <p class="mb-0">{{($lawyerInfo['bar_number'])?$lawyerInfo['bar_number']:'--'}}</p>
                                     </div>
-                                    <div class="form-grouph select-design">
-                                        <label>Year Admitted</label>
-                                        <div>{{($lawyerInfo['year_admitted'])?$lawyerInfo['year_admitted']:'--'}}</div>
+                                    <div class="form-grouph select-design name_data_p">
+                                        <h6>Year Admitted</h6>
+                                        <p class="mb-0">{{($lawyerInfo['year_admitted'])?$lawyerInfo['year_admitted']:'--'}}</p>
                                     </div>
+                                </div>
                                 </div>
                                 @endif
                                 @endforeach

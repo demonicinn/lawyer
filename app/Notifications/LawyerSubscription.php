@@ -47,7 +47,7 @@ class LawyerSubscription extends Notification
                     ->subject('Thank you for Purchasing Subscription')
                     ->greeting('Hi ' . $this->user->name.',')
                     ->line('You have Purchased '.$this->plan->subscription->name)
-                    ->line('Your Membership Expires on '.$this->plan->to_date);
+                    ->line('Your Membership Expires on '. date('m-d-Y', strtotime($this->plan->to_date)));
     }
 
     /**

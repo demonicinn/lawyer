@@ -39,8 +39,8 @@
                             <img src="{{ asset('assets/images/schedule.svg') }}">
                         </div> -->
                         <div class="portal-cntnt-wrapper">
-                            <a href="{{ route('consultations.complete') }}">Account</a>
-                            <p>{{ $completeConsultations }}</p>
+                            <a href="{{ route('user.profile') }}">Account</a>
+                            <p></p>
                         </div>
                         <span class="three_dots">...</span>
                     </div>

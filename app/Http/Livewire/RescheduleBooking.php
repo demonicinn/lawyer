@@ -8,7 +8,7 @@ use Carbon\CarbonPeriod;
 use App\Models\Booking;
 use App\Models\Leave;
 use App\Models\User;
-use App\Notifications\RescheduleBookingMail;
+use App\Notifications\RescheduleMail;
 use Illuminate\Support\Facades\Notification;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use App\Http\Controllers\MeetingController;
@@ -186,12 +186,12 @@ class RescheduleBooking extends Component
 
 
         if ($rescheduleBooking) {
-            $user = 'user';
-            $lawyer = 'lawyer';
+            $user = $rescheduleBooking->user;
+            $lawyer = $rescheduleBooking->lawyer;
             //send notification to User
-            Notification::route('mail', $rescheduleBooking->user_email)->notify(new RescheduleBookingMail($rescheduleBooking, $user));
+            Notification::route('mail', $rescheduleBooking->user_email)->notify(new RescheduleMail($rescheduleBooking, $user));
             //send notification to lawyer
-            Notification::route('mail', $rescheduleBooking->lawyer->email)->notify(new RescheduleBookingMail($rescheduleBooking, $lawyer));
+            Notification::route('mail', $rescheduleBooking->lawyer->email)->notify(new RescheduleMail($rescheduleBooking, $lawyer));
 
             //...
             $this->flash('success', 'Booking reschedule successfully.');

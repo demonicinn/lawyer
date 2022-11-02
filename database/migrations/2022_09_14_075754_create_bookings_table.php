@@ -28,6 +28,9 @@ return new class extends Migration
             $table->string('user_contact', 100);
             $table->date('booking_date');
             $table->time('booking_time');
+            
+            $table->string('search_type')->nullable();;
+            $table->string('search_data')->nullable();;
 
             $table->enum('appointment_fee', ['free', 'paid']);
 

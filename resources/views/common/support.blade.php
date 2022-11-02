@@ -21,7 +21,7 @@
                         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                             <div class="form-grouph input-design">
                                 <label>Last Name</label>
-                                <input class="@error('last_name') is-invalid @enderror" type="text" name="last_name" value="{{auth()->user()->first_name}}" placeholder="Last Name">
+                                <input class="@error('last_name') is-invalid @enderror" type="text" name="last_name" value="{{auth()->user()->last_name}}" placeholder="Last Name">
                                 @error('last_name')<div class="help-block">{{ $message }}</div>@enderror
                             </div>
                         </div>
@@ -59,7 +59,7 @@
                     </div>
                 </div>
 
-                <div class="form-group row mt-3">
+                <div class="form-group justify-content-center row mt-3">
 
                     <div class="col-md-6"> {!! htmlFormSnippet() !!} </div>
 

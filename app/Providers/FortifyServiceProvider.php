@@ -53,8 +53,8 @@ class FortifyServiceProvider extends ServiceProvider
 		Fortify::authenticateUsing(function (Request $request) {
 			
 			$request->validate([
-				'email' => 'required',
-				'password' => 'required',
+				'email' => 'required|email',
+				'password' => 'required|min:8',
 			]);
 			
 			
@@ -65,6 +65,8 @@ class FortifyServiceProvider extends ServiceProvider
 				Hash::check($request->password, $user->password)) {
 				return $user;
 			}
+			
+			//return redirect()->back()->with('error', 'Invalid Credientials.');
 		});
 		
 		Fortify::registerView(function () {

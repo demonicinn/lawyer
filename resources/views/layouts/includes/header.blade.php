@@ -46,6 +46,7 @@ $user = auth()->user();
             --}}
 
             <li><a class="dropdown-item" href="{{ route('lawyer.subscription') }}">Subscription</a></li>
+            <li><a class="dropdown-item" href="{{ route('lawyer.banking.success') }}">Bank Info</a></li>
 
             @else
             <li><a class="dropdown-item" href="{{ route('user.dashboard') }}">Dashboard</a></li>

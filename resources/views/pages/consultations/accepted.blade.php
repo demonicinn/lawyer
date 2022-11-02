@@ -20,13 +20,12 @@
                                     <table style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th>First Name</th>
-                                                <th>Last Name</th>
+                                                <th>Name</th>
                                                 <th>Email</th>
+                                                <th>Practice Area</th>
                                                 <th>Date Accepted</th>
                                                 <th>Details</th>
                                                 <th>Phone</th>
-                                                <th>Practice Area</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -39,10 +38,23 @@
                                             @endphp
                                             @forelse ($accptedConsultations as $accepted)
                                             <tr>
-                                                <td>{{$accepted->$role->first_name}}</td>
-                                                <td>{{$accepted->$role->last_name}}</td>
+                                                <td>{{$accepted->$role->first_name}} {{$accepted->$role->last_name}}</td>
                                                 <td>{{$accepted->$role->email}}</td>
-                                                <td>{{date('d-m-y', strtotime($accepted->updated_at)) }}</td>
+                                                <td>
+                                                    @if($accepted->search_data)
+                                                    @php
+                                                        $search = json_decode($accepted->search_data);
+                                                    @endphp
+                                                        @foreach($search as $id)
+                                                            @if($accepted->search_type == 'litigations')
+                                                            {{ litigationsData($id) }}
+                                                            @else
+                                                            {{ contractsData($id) }}
+                                                            @endif
+                                                        @endforeach
+                                                    @endif
+                                                </td>
+                                                <td>{{date('m-d-Y', strtotime($accepted->updated_at)) }}</td>
                                                 <td>
                                                     @if (@$accepted->notes->note != null)
                                                     <a class="view-icon info_icns mdl" href="javascript:void(0)" data-id="myNoteModal_{{ $accepted->id }}" data-type="view"><i class="fas fa-eye"></i></a>
@@ -85,7 +97,7 @@
                                                             </div>
 
                                                               </div>
-                                                              <div class="modal-footer">
+                                                              <div class="modal-footer justify-content-center">
                                                                 <button type="submit" class="   btn-design-first edit">
                                                                     @if (@$accepted->notes->note !=null)
                                                                     Update
@@ -94,7 +106,7 @@
                                                                     @endif
                                                                 </button>
 
-                                                                    <button type="button" class="btn btn-default cloaseModal">Close</button>
+                                                                    <!-- <button type="button" class="btn btn-default cloaseModal">Close</button> -->
                                                                 </div>
                                                           @else
 
@@ -120,7 +132,6 @@
 
                                                 </td>
                                                 <td>{{$accepted->$role->contact_number}}</td>
-                                                <td>Car Accident</td>
                                             </tr>
 
                                             @empty

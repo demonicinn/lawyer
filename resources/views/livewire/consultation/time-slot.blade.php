@@ -8,7 +8,7 @@
 
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 text-center go-back-wrap my-5">
                 <div class="form-grouph submit-design text-center">
-                    <a href="{{ url()->previous() }}" class="go-back border-0"><i class="fa-solid fa-arrow-left-long"></i> go back</a>
+                    <a href="{{ $prevUrl }}" class="go-back border-0"><i class="fa-solid fa-arrow-left-long"></i> go back</a>
                 </div>
             </div>
 
