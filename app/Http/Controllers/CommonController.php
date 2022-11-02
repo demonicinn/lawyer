@@ -286,12 +286,19 @@ class CommonController extends Controller
     {
 
         //dd("rechdule by admin");
-        $booking = Booking::where('id', $id)->with('user', 'lawyer')->first();
-        $booking->reschedule = '1';
-        $booking->update();
+        $booking = Booking::where('id', $id)
+                        ->where('is_call', 'pending')
+                        ->where('is_accepted', '0')
+                        ->where('is_canceled', '0')
+                        ->first();
+
+        
 
 
-        if ($booking) {
+        if (@$booking) {
+            $booking->reschedule = '1';
+            $booking->update();
+
             if (auth()->user()->role == 'user') {
                 //send reschedule mail to lawyer
                 $lawyerInfo = $booking->lawyer;
@@ -305,6 +312,11 @@ class CommonController extends Controller
             $this->flash('success', 'Reschedule done successfully');
             return back();
         }
+        
+
+        $this->flash('error', 'Invalid Consultation.');
+        return redirect()->route('consultations.upcoming');
+
     }
 
     public function addNote(Request $request, $id)

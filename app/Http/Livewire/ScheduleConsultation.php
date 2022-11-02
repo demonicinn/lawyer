@@ -205,7 +205,7 @@ class ScheduleConsultation extends Component
 
         $lawyerHours = $this->lawyer->lawyerHours()->where('day', $this->dateDay)->get();
 
-        $getLeaves = $this->lawyer->booking()->whereDate('booking_date', $date)->pluck('booking_time')->toArray();
+        $getLeaves = $this->lawyer->booking()->whereDate('booking_date', $date)->where('is_canceled', '0')->pluck('booking_time')->toArray();
 
 
         $checkLeave = $this->lawyer->leave()->where('date', $date)->first();

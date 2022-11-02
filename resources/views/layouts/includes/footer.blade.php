@@ -47,7 +47,7 @@
           <h4 class="footer-heading">Company</h4>
           <ul class="list-unstyled menu-footer-ul">
           <li><a href="{{route('about')}}">About Us</a></li>
-            <li><a href="">Join the Team</a></li>
+            <li><a href="{{route('joinTeam')}}">Join the Team</a></li>
             <li><a href="">Privacy Policy</a></li>
             <li><a href="">Terms of Service</a></li>
             <li><a href="">Accessibility</a></li>
