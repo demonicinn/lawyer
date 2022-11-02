@@ -2960,7 +2960,7 @@ input[type="checkbox"]#term:before{
 .modal-design {
     padding: 15px;
 }
-.hourly-range-design .n-slider input {
+.range-design .n-slider input {
     background: transparent;
     width: 100%;
     text-align: center;
@@ -2969,16 +2969,23 @@ input[type="checkbox"]#term:before{
     color: #3E3E3E;
     font-size: 14px;
 }
-.hourly-range-design .n-slider .slider {
+.range-design .n-slider .slider {
     width: 100%;
     margin: 10px auto;
     position: relative;
     padding: 0px 15px;
     height: 3px;
-    background-color: #D8D8D8;
+    background: #d8d8d8;
     border: none;
+    border-radius: 50px;
 }
-.hourly-range-design .n-slider .slider .ui-slider-handle {
+.range-design .n-slider .slider>.ui-slider-range {
+    background: #ed3c62 !important;
+    height: 8px;
+    border-radius: 50px;
+    margin-top: -1px;
+}
+.range-design .n-slider .slider .ui-slider-handle {
     width: 20px;
     height: 20px;
     border-radius: 50%;
@@ -2986,7 +2993,10 @@ input[type="checkbox"]#term:before{
     background-color: #fff !important;
     border: 3px solid #ed3c62;
     background-image: none !important;
-    margin-top: -4px;
+    margin-top: -3px;
+}
+.range-design .h5-design {
+    margin-bottom: 20px;
 }
 
 /* responsive */
