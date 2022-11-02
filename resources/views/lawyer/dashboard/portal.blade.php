@@ -35,7 +35,7 @@
                   <img src="assets/images/saved-lawyers.svg">
                 </div>
                 <div class="portal-cntnt-wrapper">
-                   <a href="{{ route('user.saved.lawyer') }}">Saved Lawyers</a>
+                   <a href="{{ route('lawyer.subscription') }}">Subscription</a>
                 </div>
               </div>
             </div>
@@ -45,7 +45,7 @@
                   <img src="assets/images/account-portal.svg">
                 </div>
                 <div class="portal-cntnt-wrapper">
-                   <a href="{{ route('user.profile') }}">Account</a>
+                   <a href="{{ route('lawyer.profile') }}">Account</a>
                 </div>
               </div>
             </div>
@@ -55,7 +55,7 @@
                   <img src="assets/images/services-portal.svg">
                 </div>
                 <div class="portal-cntnt-wrapper">
-                   <a href="{{route('support')}}">Support</a>
+                   <a href="{{ route('lawyer.dashboard') }}">Dashboard</a>
                 </div>
               </div>
             </div>

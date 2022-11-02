@@ -83,7 +83,7 @@
                 <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12">
                     <div class="data-white-box position-relative">
                         <a class="data-content-box" href="{{ route('admin.categories.index') }}">
-                            <h4>Federal Court</h4>
+                            <h4>Federal Court Admissions</h4>
                         </a>
                         <span class="three_dots">...</span>
                     </div>
@@ -92,7 +92,7 @@
                 <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12">
                     <div class="data-white-box position-relative">
                         <a class="data-content-box" href="{{ route('admin.state_bar.index') }}">
-                            <h4>State Bar</h4>
+                            <h4>State Bar Admissions</h4>
                         </a>
                         <span class="three_dots">...</span>
                     </div>
