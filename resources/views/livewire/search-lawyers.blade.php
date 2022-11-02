@@ -7,10 +7,10 @@
                     <div class="hourly-range-design range-design mb-5">
                         <h5 class="h5-design">Hourly Rate</h5>
                         <div class="n-slider" wire:ignore>
-                            <p class="min-value">$0</p>
-                            <input type="text" id="hourlyRange" readonly style="display:none">
+                            <!-- <p class="min-value">$0</p> -->
+                            <input type="text" id="hourlyRange" readonly>
                             <div id="hourly-range" class="slider"></div>
-                            <p class="max-value">$500</p>
+                            <!-- <p class="max-value">$500</p> -->
                         </div>
                         
                         {{--
@@ -45,10 +45,10 @@
                         <h5 class="h5-design">Years Experience</h5>
                         
                         <div class="n-slider" wire:ignore>
-                            <p class="min-value">1</p>
-                            <input type="text" id="yearsRange" readonly style="display:none">
+                            <!-- <p class="min-value">1</p> -->
+                            <input type="text" id="yearsRange" readonly>
                             <div id="years-range" class="slider"></div>
-                            <p class="max-value">20</p>
+                            <!-- <p class="max-value">20</p> -->
                         </div>
                         
                         {{--
@@ -85,10 +85,10 @@
                     <div class="distance-within-design range-design form-grouph mb-5">
                         <h5 class="h5-design">Within Distance</h5>
                         <div class="n-slider" wire:ignore>
-                            <p class="min-value">1 mi</p>
-                            <input type="text" id="distanceRange" readonly style="display:none">
+                            <!-- <p class="min-value">1 mi</p> -->
+                            <input type="text" id="distanceRange" readonly>
                             <div id="distance-range" class="slider"></div>
-                            <p class="max-value">100 mi</p>
+                            <!-- <p class="max-value">100 mi</p> -->
                         </div>
                         
                         {{--
