@@ -20,7 +20,7 @@
                 </thead>
                 <tbody>
                     @foreach($data as $item)
-                    <tr style="background: grey;">
+                    <tr>
                         <td>{{ @$item->name }}</td>
                         <td>{{ @$item->email }}</td>
                         <td>{{ @$item->created_at->format('Y-m-d') }}</td>

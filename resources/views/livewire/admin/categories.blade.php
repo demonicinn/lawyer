@@ -20,7 +20,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr style="background: grey;">
+                <tr>
                     <td>
                         <h6>{{ $category->name }}</h6>
 
