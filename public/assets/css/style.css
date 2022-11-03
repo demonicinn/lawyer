@@ -1638,6 +1638,7 @@ label.second-label-design {
     margin-bottom: 0px;
     padding: 20px 15px;
     position: relative;
+    cursor: pointer;
 }
 .modal-design .nav-tabs li button.active::before {
     content: '';
@@ -2566,7 +2567,7 @@ img {
 }
 .box_checkbox .form-grouph.input-design input#term {
     position: absolute;
-    left: 23px;
+    left: 18px;
     cursor: pointer;
     width: auto;
     top: 7px;
@@ -2998,6 +2999,41 @@ input[type="checkbox"]#term:before{
 .range-design .h5-design {
     margin-bottom: 20px;
 }
+.form-design .form-grouph label {
+    width: 100%;
+}
+.modal-header ul li button {
+    position: relative !important;
+    border: none !important;
+    font-size: 16px !important;
+    padding: 20px 15px !important;
+    color: #3e3e3e !important;
+}
+.table-design table {
+    min-width: 1000px;
+}
+.data-white-box .heading-design-flex form {
+    width: 40%;
+}
+.data-white-box .heading-design-flex form .form-char-flext {
+    display: flex;
+    flex-direction: row;
+}
+.data-white-box .heading-design-flex form .form-char-flext .form-group.input-design {
+    width: 80%;
+    padding-right: 15px;
+}
+.data-white-box .heading-design-flex form .form-char-flext .form-group.submit-design {
+    width: 20%;
+}
+.data-white-box .heading-design-flex form .form-char-flext .form-group.submit-design .btn {
+    width: 100%;
+    height: 100%;
+}
+.data-white-box.no-hover-box:hover {
+    background-color: #f8f8f8 !important;
+    border-color: #979797 !important;
+}
 
 /* responsive */
 /* responsive */
@@ -3342,7 +3378,7 @@ input[type="checkbox"]#term:before{
         padding: 10px 20px !important;
     }
     .box_checkbox .form-grouph.input-design input#term{
-        left: -20px;
+        left: -35px;
     }
     .accept_btn{  
         padding: 3px 10px;
@@ -3441,4 +3477,17 @@ input[type="checkbox"]#term:before{
         width: 33%;
         padding: 0px 15px;
     }
+}
+.form-grouph.checkbox-label-block label.form-label {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    padding-right: 15px;
+}
+#pagination-container ul .page-link {
+    padding: 3px 15px;
+}
+.page-item.active .page-link {
+    background-color: #a4caa5;
+    color: #fff !important;
 }
