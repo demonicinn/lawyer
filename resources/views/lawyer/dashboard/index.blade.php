@@ -149,9 +149,13 @@ rel="Stylesheet"type="text/css"/>
             legend: { position: 'top' },
             colors: ['#f93f64'],
             chartArea: {'width': '85%'},
-            backgroundColor: '#f8f8f8',
             border: '1px solid #979797',
-            is3D: true
+            is3D: true,
+            backgroundColor: {
+                'fill': '#f8f8f8',
+                'stroke': '#979797',
+                'strokeWidth': '1',
+            },
         };
         
         var chart = new google.visualization.ComboChart(document.getElementById('bookingChart'));

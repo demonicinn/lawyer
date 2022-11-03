@@ -52,7 +52,7 @@ $user = auth()->user();
             <li><a class="dropdown-item" href="{{ route('lawyer.banking.success') }}">Bank Info</a></li>
 
             @else
-            <li><a class="dropdown-item" href="{{ route('user.dashboard') }}">My Portal</a></li>
+            <li><a class="dropdown-item" href="{{ route('user') }}">My Portal</a></li>
             <li><a class="dropdown-item" href="{{ route('user.profile') }}">My profile</a></li>
             <li><a class="dropdown-item" href="{{ route('user.saved.lawyer') }}">Saved Lawyers</a></li>
             <li><a class="dropdown-item" href="{{ route('consultations.upcoming') }}">Consultations</a></li>
