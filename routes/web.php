@@ -372,7 +372,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         Route::group(['prefix' => 'user'], function () {
             //...dashboard
-            Route::get('/', [User\DashboardController::class, 'index'])->name('user.dashboard');
+            Route::get('/', [User\DashboardController::class, 'index'])->name('user');
+            //Route::get('/', [User\DashboardController::class, 'index'])->name('user.dashboard');
 
 
             //...profile
