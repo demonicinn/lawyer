@@ -3034,6 +3034,9 @@ input[type="checkbox"]#term:before{
     background-color: #f8f8f8 !important;
     border-color: #979797 !important;
 }
+.white-shadow-scnd-box .layout {
+    margin-top: 15px;
+}
 
 /* responsive */
 /* responsive */
