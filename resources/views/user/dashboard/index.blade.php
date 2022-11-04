@@ -13,7 +13,7 @@
                   <img src="assets/images/schedule.svg">
                 </div>
                 <div class="portal-cntnt-wrapper">
-                   <a href="{{ route('consultations.upcoming') }}">Consultation</a>
+                   <a href="{{ route('consultations.upcoming') }}">Consultations</a>
                 </div>
              </div>
             </div>

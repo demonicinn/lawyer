@@ -4,7 +4,7 @@
     <div class="container">
         <div class="heading-paragraph-design text-center position-relative go-back-wrap mb-4">
             <h2>{{ @$title['title'] }}</h2>
-            <a href="" class="go-back"><i class="fa-solid fa-arrow-left-long"></i> Go Back</a>
+            
         </div>
         <div class="user_acc_info-wrapper review-account-wrapper">
 
