@@ -24,8 +24,8 @@ class PracticeAreas extends Component
 
     public function mount()
     {
-        $this->contracts = Contract::whereStatus('1')->get();
-        $this->litigations = Litigation::whereStatus('1')->get();
+        $this->contracts = Contract::whereStatus('1')->orderBy('name', 'asc')->get();
+        $this->litigations = Litigation::whereStatus('1')->orderBy('name', 'asc')->get();
         $this->user = auth()->user();
 
         //...
