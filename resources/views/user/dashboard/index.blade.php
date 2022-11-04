@@ -13,7 +13,7 @@
                   <img src="assets/images/schedule.svg">
                 </div>
                 <div class="portal-cntnt-wrapper">
-                   <a href="{{ route('consultations.upcoming') }}">Schedule Consultations</a>
+                   <a href="{{ route('consultations.upcoming') }}">Consultation</a>
                 </div>
                 {{--
                 <div class="dropdown">
@@ -46,6 +46,16 @@
                 </div>
                 <div class="portal-cntnt-wrapper">
                    <a href="{{ route('user.profile') }}">Account</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+              <div class="portal-div-design position-relative">
+                <div class="portal-div-img">
+                  <img src="assets/images/account-portal.svg">
+                </div>
+                <div class="portal-cntnt-wrapper">
+                   <a href="{{ route('user.profile') }}">Billing</a>
                 </div>
               </div>
             </div>

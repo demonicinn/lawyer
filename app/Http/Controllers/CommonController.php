@@ -91,7 +91,7 @@ class CommonController extends Controller
 
         //dd($request->all());
 
-        $this->flash('success', 'Support added successfully pp');
+        $this->flash('success', 'Support added successfully');
         return back();
     }
 

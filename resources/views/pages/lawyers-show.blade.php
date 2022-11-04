@@ -40,7 +40,7 @@
                                     </div>
 
                                     <div class="add-litigations mt-2 location_profile-divs d-flex justify-content-spacebw align-items-center ">
-                                <button type="button" class="btn_court showModal "><i class="fa-solid fa-gavel"></i>  Courts</button>
+                                <button type="button" class="btn_court showModal "><i class="fa-solid fa-gavel"></i>  Admission</button>
                               <!--   <a href="#">See Profile</a> -->
                             </div>
 
