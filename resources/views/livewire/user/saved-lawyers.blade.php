@@ -120,7 +120,7 @@
                 </button>
                     <form>
                         <div class="modal-header modal_h">
-                            <h3>Courts</h3>
+                            <h3>Admission</h3>
                         </div>
                         <div class="modal-body">
                             <div>
