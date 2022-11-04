@@ -1,5 +1,5 @@
 <div>
-    <section class="body-banner schdule-consultation-page-sec min-height-100vh">
+    <section class="schdule-consultation-page-sec">
         <div class="container">
             <div class="heading-paragraph-design text-center position-relative go-back-wrap mb-4">
                 <h2>Schedule a Consultation</h2>

@@ -66,10 +66,10 @@
 
                                                     <div id="myNoteModal_{{ $accepted->id }}" class="modal fade common_modal  noteModal" role="dialog">
                                                     
-                                                      <div class="modal-dialog">
-                                                      <button type="button" class="btn btn-default close cloaseModal">  <i class="fas fa-close"></i></button>
+                                                      <div class="modal-dialog modal-dialog-centered">
                                                         <!-- Modal content-->
                                                         <div class="modal-content">
+                                                        <button type="button" class="btn btn-default close cloaseModal">  <i class="fas fa-close"></i></button>
                                                           <div class="modal-header modal_h">
                                                             <h3 class="modal-title">Notes</h3>
                                                           </div>

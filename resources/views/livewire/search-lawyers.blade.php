@@ -183,10 +183,10 @@
                 <!-- Accept Modal Start Here-->
                 <div wire:ignore.self class="modal fade courts_modal common_modal modal-design" id="courtModal" tabindex="-1" aria-labelledby="courtModal" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
                         <button type="button" class="btn btn-default close closeModal">
                             <i class="fas fa-close"></i>
                         </button>
-                        <div class="modal-content">
                             <div class="modal-header modal_h">
 
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">

@@ -84,10 +84,10 @@
     <!-- Accept Category Modal Start Here-->
     <div wire:ignore.self class="modal fade common_modal modal-design" id="categoryForm" tabindex="-1" aria-labelledby="categoryForm" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
             <button type="button" class="btn btn-default close closeModal">
                 <i class="fas fa-close"></i>
             </button>
-            <div class="modal-content">
                 <form>
                     <div class="modal-header modal_h">
                         <h3>Add/Edit Category</h3>
@@ -144,10 +144,10 @@
 
     <div wire:ignore.self class="modal fade common_modal modal-design" id="itemForm" tabindex="-1" aria-labelledby="itemForm" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
             <button type="button" class="btn btn-default close closeModal">
                 <i class="fas fa-close"></i>
             </button>
-            <div class="modal-content">
                 <form>
                     <div class="modal-header modal_h">
                         <h3>Add/Edit Item</h3>

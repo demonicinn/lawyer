@@ -709,12 +709,6 @@ input:focus, select:focus, textarea:focus{
     padding-right: 30px;
     padding-left: 30px;
 }
-.lawyers-img-block img {
-    width: 100%;
-    object-fit: cover;
-    border-radius: 8px;
-    height: 240px;
-}
 .hire-price-btn {
     color: #3E3E3E;
     font-size: 14px;
@@ -1098,6 +1092,10 @@ input:focus, select:focus, textarea:focus{
     border-radius: 50%;
     margin: 0 auto;
     box-shadow: 1px 2px 38px -27px #979797;
+    object-fit: cover;
+}
+.list-item.list-service-item .lawyer-hire-block .lawyers-img-block img {
+    width: 100%;
 }
 .lawyers-img-block {
     text-align: center;
@@ -1555,7 +1553,7 @@ label.second-label-design {
     border: 1px solid #979797;
     font-size: 16px;
     border-radius: 8px !important;
-    padding: 12px 18px !important;
+    padding: 12px 35px 12px 18px !important;
     font-weight: 500;
     appearance: none;
     -webkit-appearance: none;
@@ -1595,7 +1593,7 @@ label.second-label-design {
 }
 .modal-design .modal-dialog {
     width: 100%;
-    max-width: 966px;
+    max-width: 800px;
 }
 .modal-design .modal-dialog .modal-content {
     background: transparent;
@@ -1671,7 +1669,7 @@ label.second-label-design {
     padding-top: 42px;
 }
 #practiceModal {
-    padding: 40px 0px;
+    padding: 40px 20px;
 }
 #practiceModal .modal-dialog .modal-content .btn-close {
     position: absolute;
@@ -1735,7 +1733,7 @@ label.second-label-design {
 }
 .accept_btn {
     background-color: #828282;
-    color: #fff;
+    color: #fff !important;
     border: none;
     font-size: 16px;
     font-weight: 600;
@@ -1812,7 +1810,7 @@ label.second-label-design {
 }
 .cancel_dropdown-btn {
     background-color: #f93f64;
-    color: #fff;
+    color: #fff !important;
     border: none;
     font-size: 16px;
     font-weight: 600;
@@ -2535,8 +2533,19 @@ img {
     min-width: 1000px;
 }
 
-
-
+#pagination-container {
+    margin: 30px 0px;
+}
+.schedule-form-design .booking-info_profile-flex {
+    background-color: #fff;
+    border-radius: 35px;
+    padding: 42px 49px;
+    margin: 0px;
+    width: 100%;
+    max-width: 100%;
+    box-shadow: 1px 2px 38px -27px #979797;
+    margin-bottom: 25px;
+}
 
 
 .dashboard_wrapper .data-white-box.position-relative a.data-content-box {
@@ -2545,6 +2554,7 @@ img {
 }
 .dashboard_wrapper .data-white-box.position-relative h4{
     font-family: 'Lato-Medium';
+    text-transform: uppercase;
 }
 .calendar-container div#celender .calendar .day {
     cursor: pointer;
@@ -2659,19 +2669,24 @@ a.btn_add.mr-2{
 .working_hours .addNewHoursLayout {
     max-height: 223px;
     overflow: auto;
-    padding-right: 25px;
+    padding-right: 35px;
     margin-bottom: 20px;
 }
 .layout  span.btn_close {
     padding: 0px 7px;
     border-radius: 50%;
-    width: 23.4px;
-    height: 23.4px;
+    width: 21.4px;
+    height: 21.4px;
     position: absolute;
     cursor: pointer;
-    right: -17px;
-    top: 13px;
+    right: -28px;
     color: red;
+    font-family: 'FontAwesome';
+    bottom: 27px;
+    font-size: 14px;
+}
+.layout span.btn_close:hover {
+    opacity: 0.6;
 }
 .appned_inputs .form-flex {
     position: relative;
@@ -2751,17 +2766,19 @@ a.btn_add.mr-2{
   color: inherit;
   font-style: italic;
 }
-    .btn_court {
-        padding: 0px;
-        border: 0;
-        background-color: transparent;
-        font-size: 14px;
-        color: #FE3F65;
-        font-size: 14px;
-        text-decoration: underline;
-    }
+.btn_court {
+    padding: 0px;
+    border: 0;
+    background-color: transparent;
+    font-size: 14px;
+    text-decoration: none;
+}
     .btn_court svg{
         margin-right: 5px;
+        color: #ed3c62;
+    }
+    .btn_court:hover {
+        color: #ed3c62;
     }
 .border-10{
     border-radius: 10px;
@@ -2913,7 +2930,7 @@ input[type="checkbox"]#term:before{
     border-bottom:0px;
 }
 .common_modal button.close{
-    top:-30px;
+    top:-20px;
     color:#fff;
 }
 .common_modal .modal-dialog{
@@ -3037,6 +3054,54 @@ input[type="checkbox"]#term:before{
 .white-shadow-scnd-box .layout {
     margin-top: 15px;
 }
+.g-recaptcha>div {
+    margin-left: auto;
+    margin-right: auto;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    margin-top: 0px !important;
+    background-color: #ed3c63;
+    font-size: 12px !important;
+    border: none !important;
+    color: #fff;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+    color: #fff !important;
+    border-color: #fff !important;
+    background: transparent !important;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover {
+    opacity: 0.8;
+}
+.noteModal .modal-content {
+    padding: 20px !important;
+}
+.common_modal.noteModal button.close {
+    top: -50px !important;
+    font-size: 24px;
+}
+.review-account-wrapper .lawyers-service-cntnt-block .lawyers-heading_service .lawyer-name {
+    font-size: 24px;
+    padding-right: 0px;
+    margin-bottom: 8px;
+}
+
+.rating-div-design .jq-ry-container svg {
+    margin: 0px 10px;
+}
+.rating-div-design .jq-ry-container {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100% !important;
+    max-width: 260px;
+}
+.review-account-wrapper .list-item.list-service-item .lawyer-hire-block .lawyers-img-block img {
+    width: 200px;
+}
+.rating-div-design .jq-ry-container>.jq-ry-group-wrapper>.jq-ry-normal-group.jq-ry-group:first-child svg {
+    fill: #ccc;
+}
+
 
 /* responsive */
 /* responsive */
@@ -3106,6 +3171,7 @@ input[type="checkbox"]#term:before{
     }
     .go-back-wrap {
         padding: 0px;
+        margin: 15px 0px 30px 0px !important;
     }
     .form-design .mt-5 {
         margin-top: 15px !important;
@@ -3162,6 +3228,12 @@ input[type="checkbox"]#term:before{
 @media (max-width: 767px){
     .why-choose-img {
         text-align: center;
+    }
+    .schedule-form-design .booking-info_profile-flex {
+        padding: 20px;
+    }
+    .login-right-column .login-header-btn.btn_sign_up {
+        margin-right: 5px !important;
     }
     .modal-design .nav-tabs li button {
         font-size: 14px;
