@@ -40,12 +40,14 @@
                             <input type="hidden" name="rating" value="">
                             {!! $errors->first('rating', '<span class="help-block">:message</span>') !!}
                         </div>
+
                     </div>
                     <div class="form-grouph checkbox-design position-relative clear-both">
                     <input type="checkbox" name="narrow-litigations">
                     <button class="checkbox-btn"></button>
                     <label>Lawyer did not show</label>
                   </div>
+
                         <div class="textarea-design form-grouph input-design{!! ($errors->has('comment') ? ' has-error' : '') !!}">
                             {!! Form::label('comment', 'Comment', ['class' => 'form-label']) !!}
                             {!! Form::textarea('comment', null, ['placeholder'=>'Leave Comment', 'class' => ($errors->has('comment') ? ' is-invalid' : '')]) !!}

@@ -47,6 +47,7 @@
             <button type="button" class="btn btn-default close closeModal">
                 <i class="fas fa-close"></i>
             </button>
+
                 <form>
                     <div class="modal-header modal_h">
                         <h3>Add/Edit Contract</h3>
