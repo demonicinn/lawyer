@@ -82,3 +82,13 @@
 </section>
 
 @endsection
+
+@section('script')
+<style>
+    .invalid-feedback {
+        display: block;
+        text-align: center;
+        display: inline-block;
+    }
+</style>
+@endsection

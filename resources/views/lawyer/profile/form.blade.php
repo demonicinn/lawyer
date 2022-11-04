@@ -136,7 +136,7 @@ $lawyer_state_bar = $user->lawyerStateBar;
                 <div class="form-flex">
                     <div class="form-grouph input-design{!! ($errors->has('contact_number') ? ' has-error' : '') !!}">
                         {!! Form::label('contact_number','Phone', ['class' => 'form-label']) !!}
-                        {!! Form::number('contact_number', $user->contact_number ?? null, ['class' => ($errors->has('contact_number') ? ' is-invalid' : '')]) !!}
+                        {!! Form::text('contact_number', $user->contact_number ?? null, ['class' => 'phone '.($errors->has('contact_number') ? ' is-invalid' : '')]) !!}
                         {!! $errors->first('contact_number', '<span class="help-block">:message</span>') !!}
                     </div>
                     <div class="form-grouph input-design{!! ($errors->has('email') ? ' has-error' : '') !!}">

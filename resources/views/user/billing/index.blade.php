@@ -23,7 +23,7 @@
                         <td>{{ @$card->card_name }}</td>
                         <td>{{ @$card->card_number }}</td>
                         <td>
-                            <a href="{{ route('user.billing.destroy', $card->id) }}">Delete</a>
+                            <a href="{{ route('user.billing.destroy', $card->id) }}" class="btn-design-first">Delete</a>
                         </td>
                     </tr>
                     @endforeach

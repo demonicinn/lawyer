@@ -28,7 +28,7 @@
                    
                     <div class="form-grouph input-design{!! ($errors->has('contact_number') ? ' has-error' : '') !!}">
                         {!! Form::label('contact_number','Phone*', ['class' => 'form-label']) !!}
-                        {!! Form::number('contact_number', $user->contact_number ?? null, ['placeholder'=>'Phone', 'class' => ($errors->has('contact_number') ? ' is-invalid' : '')]) !!}
+                        {!! Form::text('contact_number', $user->contact_number ?? null, ['placeholder'=>'Phone', 'class' => 'phone '.($errors->has('contact_number') ? ' is-invalid' : '')]) !!}
                         {!! $errors->first('contact_number', '<span class="help-block">:message</span>') !!}
                     </div>
                  
@@ -46,4 +46,15 @@
         </div>
     </div>
 </section>
+
 @endsection
+
+@section('script')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/jquery.inputmask.bundle.min.js"></script>
+
+<script>
+$('.phone').inputmask('(99)-9999-9999');
+
+</script>
+@endsection
+

@@ -133,7 +133,7 @@
 
 
                                                 </td>
-                                                <td>{{$accepted->$role->contact_number}}</td>
+                                                <td class="phone">{{$accepted->$role->contact_number}}</td>
                                             </tr>
 
                                             @empty
@@ -164,6 +164,8 @@
 @endsection
 
 @section('script')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/jquery.inputmask.bundle.min.js"></script>
+
 <script>
 $('.info_icns.mdl').on('click', function (){
     var id = $(this).attr('data-id');
@@ -183,6 +185,9 @@ $('.info_icns.mdl').on('click', function (){
 $('.cloaseModal').on('click', function (){
     $('.noteModal').modal('hide');
 });
+
+
+$('.phone').inputmask('(99)-9999-9999');
 
 </script>
 @endsection

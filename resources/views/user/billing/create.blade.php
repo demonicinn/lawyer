@@ -24,7 +24,7 @@
 	            </div>
 
 	            <div class="form-grouph input-design{!! ($errors->has('card_number') ? ' has-error' : '') !!}">
-	                {!! Form::label('card_number', 'Card Numbe', ['class' => 'form-label']) !!}
+	                {!! Form::label('card_number', 'Card Number', ['class' => 'form-label']) !!}
 	                {!! Form::number('card_number', null, ['class' => ($errors->has('card_number') ? ' is-invalid' : '')]) !!}
 	                {!! $errors->first('card_number', '<span class="help-block">:message</span>') !!}
 	            </div>

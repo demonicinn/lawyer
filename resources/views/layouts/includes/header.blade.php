@@ -37,12 +37,12 @@ $user = auth()->user();
           <ul class="dropdown-menu">
             @if(Auth::user()->role=="admin")
             <li><a class="dropdown-item" href="{{ route($user->role) }}">Dashboard</a></li>
-            <li><a class="dropdown-item" href="{{ route('admin.profile') }}">My profile</a></li>
+            <li><a class="dropdown-item" href="{{ route('admin.profile') }}">My Profile</a></li>
             <li><a class="dropdown-item" href="{{ route('admin.transactions') }}">Transactions</a></li>
             <li><a class="dropdown-item" href="{{ route('admin.joinTeam') }}">Join the Team</a></li>
             @elseif(Auth::user()->role=="lawyer")
             <li><a class="dropdown-item" href="{{ route($user->role) }}">My Portal</a></li>
-            <li><a class="dropdown-item" href="{{ route('lawyer.profile') }}">My profile</a></li>
+            <li><a class="dropdown-item" href="{{ route('lawyer.profile') }}">My Profile</a></li>
             
             {{--
             <li><a class="dropdown-item" href="{{ route('lawyer.leave') }}">Leave</a></li>
@@ -53,7 +53,7 @@ $user = auth()->user();
 
             @else
             <li><a class="dropdown-item" href="{{ route('user') }}">My Portal</a></li>
-            <li><a class="dropdown-item" href="{{ route('user.profile') }}">My profile</a></li>
+            <li><a class="dropdown-item" href="{{ route('user.profile') }}">My Profile</a></li>
             <li><a class="dropdown-item" href="{{ route('user.saved.lawyer') }}">Saved Lawyers</a></li>
             <li><a class="dropdown-item" href="{{ route('consultations.upcoming') }}">Consultations</a></li>
 
@@ -61,7 +61,7 @@ $user = auth()->user();
             
 
             @endif
-            <li><a class="dropdown-item" href="{{route('change.password')}}">Change password</a></li>
+            <li><a class="dropdown-item" href="{{route('change.password')}}">Change Password</a></li>
             <li><a class="dropdown-item" href="{{route('support')}}">Support</a></li>
             <li>
               <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
