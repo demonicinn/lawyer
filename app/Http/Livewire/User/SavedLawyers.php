@@ -26,9 +26,10 @@ class SavedLawyers extends Component
         $this->search = null;
     }
 
-    public function modalData($userData)
+    public function modalData($id)
     {
-        $this->modal = $userData;
+        $user = User::findOrFail($id);
+        $this->modal = $user;
         $this->emit('courtModalShow');
     }
 

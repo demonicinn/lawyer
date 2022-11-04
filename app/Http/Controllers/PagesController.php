@@ -101,13 +101,15 @@ class PagesController extends Controller
         abort(404);
     }
 
-    public function saveLaywer($id)
+    public function saveLaywer(Request $request, $id)
     {
         $lawyerID = Crypt::decrypt($id);
         $authUser = auth()->user();
         $saveLawyer = new SavedLawyer;
         $saveLawyer->user_id = $authUser->id;
         $saveLawyer->lawyer_id = $lawyerID;
+        $saveLawyer->type = $request->type;
+        $saveLawyer->data = $request->search;
         $saveLawyer->save();
 
         if ($authUser) {

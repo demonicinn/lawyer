@@ -390,11 +390,25 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('review/{id}', [User\ReviewController::class, 'index'])->name('review.lawyer');
             Route::post('review/{id}/store', [User\ReviewController::class, 'store'])->name('review.store');
 
+
+            //billing
+            Route::prefix('billing')->group(function () {
+                Route::controller(User\BillingController::class)->group(function () {
+                    Route::get('/', 'index')->name('user.billing.index');
+                    Route::get('/create', 'create')->name('user.billing.create');
+                    Route::post('/store', 'store')->name('user.billing.store');
+                    Route::get('{id}/destroy', 'destroy')->name('user.billing.destroy');
+                });
+            });
+            
         });
 
         Route::get('thank-you/{id}', [CommonController::class, 'thankYou'])->name('thankYou');
 
         
+
+        
+
 
     });
 });

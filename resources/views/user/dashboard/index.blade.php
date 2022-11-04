@@ -55,7 +55,7 @@
                   <img src="assets/images/account-portal.svg">
                 </div>
                 <div class="portal-cntnt-wrapper">
-                   <a href="{{ route('user.profile') }}">Billing</a>
+                   <a href="{{ route('user.billing.index') }}">Billing</a>
                 </div>
               </div>
             </div>

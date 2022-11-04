@@ -87,7 +87,7 @@
                                     </div>
                                     @else
                                     <div class="save_btn text-center">
-                                        <a href="{{route('user.save.lawyer',$lawyerID)}}" class="btn-design-first">Save Attorney</a>
+                                        <a href="{{route('user.save.lawyer',$lawyerID)}}?type={{ request()->type }}&search={{ request()->search }}" class="btn-design-first">Save Attorney</a>
                                     </div>
                                     @endif
                                 @else

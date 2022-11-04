@@ -53,7 +53,7 @@
                         </div>
                         <div class="lawyers-service-cntnt-block">
                             <div class="lawyers-heading_service d-flex justify-content-spacebw align-items-center">
-                                <h4 class="lawyer-name">{{$lawyer->lawyer->first_name}} {{$lawyer->lawyer->last_name}}</h4>
+                                <h4 class="lawyer-name">{{$lawyer->lawyer->name}}</h4>
                                 <button class="hire-price-btn">${{$lawyer->lawyer->details->hourly_fee}}/hr.</button>
 
                             </div>
@@ -74,17 +74,17 @@
                             <p class="school_name"><i class="fa-solid fa-school-flag"></i>{{ @$lawyer->lawyerCategory->items->name }}</p>
                             <div class="location_profile-divs d-flex justify-content-spacebw align-items-center">
                                 <address><i class="fa-solid fa-location-dot"></i> {{ @$lawyer->lawyer->details->city }}, {{ @$lawyer->lawyer->details->states->code }}</address>
-                                <a href="{{ route('lawyer.show', $lawyer->lawyer->id)}}">See Profile</a>
+                                <a href="{{ route('lawyer.show', $lawyer->lawyer->id)}}?type={{ $lawyer->type }}&search={{ $lawyer->data }}">See Profile</a>
                             </div>
                             @php $lawyerID= Crypt::encrypt($lawyer->lawyer->id); @endphp
 
 
                             <div class="add-litigations">
-                                <button type="button" class="btn_court showModal mt-2" wire:click="modalData({{$lawyer}})"><i class="fa-solid fa-gavel"></i> Courts</button>
+                                <button type="button" class="btn_court showModal mt-2" wire:click="modalData({{$lawyer->lawyer->id}})"><i class="fa-solid fa-gavel"></i> Admission</button>
                             </div>
                             <div class="schedular_consultation">
 
-                                <a href="{{route('schedule.consultation',$lawyerID)}}" class="schule_consultation-btn">Schedule Consultation</a>
+                                <a href="{{route('schedule.consultation', $lawyerID)}}?type={{ $lawyer->type }}&search={{ $lawyer->data }}" class="schule_consultation-btn">Schedule Consultation</a>
                             </div>
                             @php
                                 $tdate = date('Y-m-d');
@@ -120,28 +120,69 @@
                 <div class="modal-content">
                     <form>
                         <div class="modal-header modal_h">
-                            <h3>Courts</h3>
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                              @if($modal->lawyerInfo)
+                              <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Federal Court Admissions</button>
+                              </li>
+                              @endif
+
+                              @if($modal->lawyerStateBar)
+                              <li class="nav-item" role="presentation">
+                                <button class="nav-link {{ !$modal->lawyerInfo ? 'active' : '' }}" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">State Bar Admissions</button>
+                              </li>
+                              @endif
+                            </ul>
                         </div>
                         <div class="modal-body">
-                            <div>
-                                @foreach ($modal['lawyer_info'] as $lawyerInfo)
-                                @if($lawyerInfo['categories']['is_multiselect'])
-                                  <div class="mb-4 courts_data">
-                                <h6 class="pt-3">{{$lawyerInfo['items']['name']}}</h6>
-                                <div class="federal-court">
-                                    <div class="form-grouph select-design name_data_p">
-                                        <h6>Bar Number</h6>
-                                        <p class="mb-0">{{($lawyerInfo['bar_number'])?$lawyerInfo['bar_number']:'--'}}</p>
+                            
+                            <div class="tab-content" id="myTabContent">
+                                    @if($modal->lawyerInfo)
+                                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                        @foreach ($modal->lawyerInfo as $lawyerInfo)
+                                        <div class="mb-4 courts_data">
+                                           <div class="name_data_p">
+                                             <h6>{{ @$lawyerInfo->items->name }}</h6>
+                                            <p class="mb-0">{{ @$lawyerInfo->items->category->name }} {{ @$lawyerInfo->items->category->mainCat->name ? ' - '.$lawyerInfo->items->category->mainCat->name : ''  }}</p>
+                                           </div>
+                                            <div class="federal-court">
+                                                <div class="form-grouph select-design">
+                                                    <label>Bar Number</label>
+                                                    <div>{{ @$lawyerInfo->bar_number ?? '--' }}</div>
+                                                </div>
+                                                <div class="form-grouph select-design">
+                                                    <label>Year Admitted</label>
+                                                    <div>{{ $lawyerInfo->year_admitted ?? '--'}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @endforeach
                                     </div>
-                                    <div class="form-grouph select-design name_data_p">
-                                        <h6>Year Admitted</h6>
-                                        <p class="mb-0">{{($lawyerInfo['year_admitted'])?$lawyerInfo['year_admitted']:'--'}}</p>
+                                    @endif
+
+                                    @if($modal->lawyerStateBar)
+                                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                        @foreach ($modal->lawyerStateBar as $item)
+                                        <div class="mb-4 courts_data">
+                                           <div class="name_data_p">
+                                             <h6>{{ @$item->statebar->name }}</h6>
+                                           </div>
+                                            <div class="federal-court">
+                                                <div class="form-grouph select-design">
+                                                    <label>Bar Number</label>
+                                                    <div>{{ @$item->bar_number ?? '--' }}</div>
+                                                </div>
+                                                <div class="form-grouph select-design">
+                                                    <label>Year Admitted</label>
+                                                    <div>{{ $item->year_admitted ?? '--'}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @endforeach
                                     </div>
+                                    @endif
                                 </div>
-                                </div>
-                                @endif
-                                @endforeach
-                            </div>
+
                         </div>
                     </form>
                 </div>
