@@ -108,6 +108,8 @@ class PagesController extends Controller
         $saveLawyer = new SavedLawyer;
         $saveLawyer->user_id = $authUser->id;
         $saveLawyer->lawyer_id = $lawyerID;
+        $saveLawyer->type = $request->type;
+        $saveLawyer->data = $request->search;
         $saveLawyer->save();
 
         if ($authUser) {
