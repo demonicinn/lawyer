@@ -152,7 +152,7 @@ p{
 }
 .input-design input ,.input-design select{
     width: 100%;
-    border: 1px solid #979797;
+    border: 1px solid #979797;r
     font-size: 16px;
     border-radius: 8px;
     padding: 12px 18px;
@@ -3101,7 +3101,6 @@ input[type="checkbox"]#term:before{
 .rating-div-design .jq-ry-container>.jq-ry-group-wrapper>.jq-ry-normal-group.jq-ry-group:first-child svg {
     fill: #ccc;
 }
-
 
 /* responsive */
 /* responsive */

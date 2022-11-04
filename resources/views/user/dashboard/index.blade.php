@@ -15,19 +15,7 @@
                 <div class="portal-cntnt-wrapper">
                    <a href="{{ route('consultations.upcoming') }}">Consultation</a>
                 </div>
-                {{--
-                <div class="dropdown">
-                  <button type="button" class="options-dropdown dropdown-toggle" data-bs-toggle="dropdown">
-                    <i class="fas fa-ellipsis-v"></i>
-                  </button>                  
-                  <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Link 1</a></li>
-                    <li><a class="dropdown-item" href="#">Link 2</a></li>
-                    <li><a class="dropdown-item" href="#">Link 3</a></li>
-                  </ul>
-                </div>
-                --}}
-              </div>
+             </div>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
               <div class="portal-div-design position-relative">
