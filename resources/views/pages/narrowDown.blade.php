@@ -3,8 +3,8 @@
 <section class="body-banner narrow-down-cand-sec min-height-100vh">
     <div class="container">
         <div class="heading-paragraph-design text-center">
-            <h2>Let’s narrow down the candidates…</h2>
-            <p>What do you need your lawyer to do?</p>
+            <h2>Select the type of contract...</h2>
+            <p>Check the box that best describes your needs.</p>
         </div>
         <div class="narrow-down-rows">
             <div class="row">

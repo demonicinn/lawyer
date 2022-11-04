@@ -2,10 +2,11 @@
 @section('content')
 <section class="body-banner user_account-info-sec min-height-100vh">
     <div class="container">
-        <div class="heading-paragraph-design text-center position-relative mb-5">
+        <div class="heading-paragraph-design text-center position-relative go-back-wrap mb-4">
             <h2>{{ @$title['title'] }}</h2>
+            <a href="" class="go-back"><i class="fa-solid fa-arrow-left-long"></i> Go Back</a>
         </div>
-        <div class="user_acc_info-wrapper">
+        <div class="user_acc_info-wrapper review-account-wrapper">
 
 
             
@@ -32,13 +33,19 @@
 
                     <div class="col-md-8 ">
                         <div class="white-shadow-scnd-box">
+                        <div class="rating-div-design">
                         <div class="form-grouph input-design{!! ($errors->has('rating') ? ' has-error' : '') !!}">
-                            {!! Form::label('rating', 'Did the lawyer show up to the consultation', ['class' => 'form-label']) !!}
+                            <!-- {!! Form::label('rating', 'Did the lawyer show up to the consultation', ['class' => 'form-label']) !!} -->
                             <div id="rateYo"></div>
                             <input type="hidden" name="rating" value="">
                             {!! $errors->first('rating', '<span class="help-block">:message</span>') !!}
                         </div>
-
+                    </div>
+                    <div class="form-grouph checkbox-design position-relative clear-both">
+                    <input type="checkbox" name="narrow-litigations">
+                    <button class="checkbox-btn"></button>
+                    <label>Lawyer did not show</label>
+                  </div>
                         <div class="textarea-design form-grouph input-design{!! ($errors->has('comment') ? ' has-error' : '') !!}">
                             {!! Form::label('comment', 'Comment', ['class' => 'form-label']) !!}
                             {!! Form::textarea('comment', null, ['placeholder'=>'Leave Comment', 'class' => ($errors->has('comment') ? ' is-invalid' : '')]) !!}
@@ -52,7 +59,7 @@
             <div class="row mt-3">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 text-center mt-5">
                     <div class="form-grouph submit-design text-center">
-                        <button type="submit" class="btn-design-second">Submit</button>
+                        <button type="submit" class="btn-design-second">Submit Rating</button>
                     </div>
                 </div>
             </div>
