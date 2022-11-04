@@ -100,7 +100,7 @@
             </div>
 
 
-
+            {{--
             <div class="row">
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-3">
                     <div class="portal-div-design position-relative">
@@ -138,5 +138,6 @@
                     </div>
                 </div>
             </div>
+            --}}
 </section>
 @endsection

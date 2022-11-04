@@ -13,7 +13,7 @@
                   <img src="assets/images/schedule.svg">
                 </div>
                 <div class="portal-cntnt-wrapper">
-                   <a href="{{ route('consultations.upcoming') }}">Schedule Consultations</a>
+                   <a href="{{ route('consultations.upcoming') }}">Consultation</a>
                 </div>
                 {{--
                 <div class="dropdown">
@@ -35,7 +35,7 @@
                   <img src="assets/images/saved-lawyers.svg">
                 </div>
                 <div class="portal-cntnt-wrapper">
-                   <a href="{{ route('lawyer.subscription') }}">Subscription</a>
+                   <a href="{{ route('lawyer.profile') }}">Profile</a>
                 </div>
               </div>
             </div>
@@ -45,7 +45,7 @@
                   <img src="assets/images/account-portal.svg">
                 </div>
                 <div class="portal-cntnt-wrapper">
-                   <a href="{{ route('lawyer.profile') }}">Account</a>
+                   <a href="{{ route('lawyer.banking.success') }}">Account</a>
                 </div>
               </div>
             </div>
@@ -56,6 +56,16 @@
                 </div>
                 <div class="portal-cntnt-wrapper">
                    <a href="{{ route('lawyer.dashboard') }}">Dashboard</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+              <div class="portal-div-design position-relative">
+                <div class="portal-div-img">
+                  <img src="assets/images/services-portal.svg">
+                </div>
+                <div class="portal-cntnt-wrapper">
+                   <a href="{{ route('support') }}">Support</a>
                 </div>
               </div>
             </div>

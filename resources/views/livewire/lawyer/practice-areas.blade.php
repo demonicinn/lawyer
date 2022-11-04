@@ -31,12 +31,22 @@
                                     
                                     @if($currentTab=='litigations')
                                     <div id="litigations" class="container tab-pane active">
-                                        <div class="form-flex">
-                                            @foreach($litigations as $j => $litigation)
-                                            <div class="form-grouph checkbox-design position-relative">
-                                                <input type="checkbox" value="{{ $litigation->id }}" wire:model="selectLitigations.{{$j}}">
-                                                <button class="checkbox-btn"></button>
-                                                <label>{{ @$litigation->name }}</label>
+                                        <div class="row">
+                                            
+                                            @php
+                                                $count = count($litigations) / 2;
+                                                $count = number_format($count);
+                                            @endphp
+
+                                            @foreach ($litigations->chunk($count) as $chunk)
+                                            <div class="col-md-6">
+                                                @foreach ($chunk as $j =>  $litigation)
+                                                <div class="form-grouph checkbox-design position-relative">
+                                                    <input type="checkbox" value="{{ $litigation->id }}" wire:model="selectLitigations.{{$j}}">
+                                                    <button class="checkbox-btn"></button>
+                                                    <label>{{ @$litigation->name }}</label>
+                                                </div>
+                                                @endforeach
                                             </div>
                                             @endforeach
                                         </div>
@@ -46,12 +56,21 @@
 
                                     @if($currentTab=='contracts')
                                     <div id="contracts" class="container tab-pane active"><br>
-                                        <div class="form-flex">
-                                            @foreach($contracts as $i => $contract)
-                                            <div class="form-grouph checkbox-design position-relative">
-                                                <input type="checkbox" value="{{ $contract->id }}" wire:model="selectContracts.{{$i}}">
-                                                <button class="checkbox-btn"></button>
-                                                <label>{{ @$contract->name }}</label>
+                                        <div class="row">
+                                            @php
+                                                $countCon = count($contracts) / 2;
+                                                $countCon = number_format($countCon);
+                                            @endphp
+
+                                            @foreach ($contracts->chunk($countCon) as $chunk)
+                                            <div class="col-md-6">
+                                                @foreach ($chunk as $i => $contract)
+                                                    <div class="form-grouph checkbox-design position-relative">
+                                                        <input type="checkbox" value="{{ $contract->id }}" wire:model="selectContracts.{{$i}}">
+                                                        <button class="checkbox-btn"></button>
+                                                        <label>{{ @$contract->name }}</label>
+                                                    </div>
+                                                @endforeach
                                             </div>
                                             @endforeach
                                         </div>
