@@ -101,7 +101,7 @@ class PagesController extends Controller
         abort(404);
     }
 
-    public function saveLaywer($id)
+    public function saveLaywer(Request $request, $id)
     {
         $lawyerID = Crypt::decrypt($id);
         $authUser = auth()->user();
@@ -200,5 +200,24 @@ class PagesController extends Controller
         return back();
     }
 
+
+    public function lawyersHome(Request $request){
+
+        $data = array();
+
+        if(@$request->type=='contract'){
+            $data['contracts'][] = $request->search;
+        }
+
+        if(@$request->type=='litigation'){
+            $data['litigations'][] = $request->search;
+        }
+
+        $data['latitude'] = @$request->latitude;
+        $data['longitude'] = @$request->longitude;
+        $data['type'] = @$request->type;
+
+        return redirect()->route('lawyers', $data);
+    }
 
 }

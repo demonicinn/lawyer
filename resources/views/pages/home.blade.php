@@ -25,7 +25,7 @@
           <div class="service_block-cntnt">
             <h4>Personal Injury (Plaintiff)</h4>
             <!-- <p>Est voluptatum placeat est maxime architecto eum.</p> -->
-            <a href="#" class="check-price-btn">See Available Lawyers</a>
+            <a href="{{ route('lawyers.home') }}?litigations[0]=21&type=litigation" class="check-price-btn search-ho" data-search="21" data-type="litigation">See Available Lawyers</a>
           </div>
         </div>
         
@@ -36,7 +36,7 @@
           <div class="service_block-cntnt">
             <h4>Divorce/Family</h4>
             <!-- <p>Est voluptatum placeat est maxime architecto eum.</p> -->
-            <a href="#" class="check-price-btn">See Available Lawyers</a> 
+            <a href="{{ route('lawyers.home') }}?litigations[0]=14&type=litigation" class="check-price-btn search-ho" data-search="14" data-type="litigation">See Available Lawyers</a> 
           </div>
         </div>
         <div class="service_blocks">
@@ -46,7 +46,7 @@
           <div class="service_block-cntnt"> 
             <h4>Wills, Trusts, & Estates</h4>
             <!-- <p>Est voluptatum placeat est maxime architecto eum.</p> -->
-            <a href="#" class="check-price-btn">See Available Lawyers</a>
+            <a href="{{ route('lawyers.home') }}?contracts[0]=24&type=contract" class="check-price-btn search-ho" data-search="24" data-type="contract">See Available Lawyers</a>
           </div>
         </div>
         <div class="service_blocks">
@@ -56,7 +56,7 @@
           <div class="service_block-cntnt">
             <h4>Criminal Defense (Felony)</h4>
             <!-- <p>Est voluptatum placeat est maxime architecto eum.</p> -->
-            <a href="#" class="check-price-btn">See Available Lawyers</a>
+            <a href="{{ route('lawyers.home') }}?litigations[0]=10&type=litigation" class="check-price-btn search-ho" data-search="10" data-type="litigation">See Available Lawyers</a>
           </div>
         </div>
         <div class="service_blocks">
@@ -66,7 +66,7 @@
           <div class="service_block-cntnt">
             <h4>Criminal Defense (Misdemeanor/ Traffic Offenses)</h4>
             <!-- <p>Est voluptatum placeat est maxime architecto eum.</p> -->
-            <a href="#" class="check-price-btn">See Available Lawyers</a>
+            <a href="{{ route('lawyers.home') }}?litigations[0]=11&type=litigation" class="check-price-btn search-ho" data-search="11" data-type="litigation">See Available Lawyers</a>
           </div>
         </div>
 
@@ -78,7 +78,7 @@
           <div class="service_block-cntnt">
             <h4> Commercial Litigation </h4>
             <!-- <p>Est voluptatum placeat est maxime architecto eum.</p> -->
-            <a href="#" class="check-price-btn">See Available Lawyers</a>
+            <a href="{{ route('lawyers.home') }}?litigations[0]=8&type=litigation" class="check-price-btn search-ho" data-search="8" data-type="litigation">See Available Lawyers</a>
           </div>
         </div>
 
@@ -89,7 +89,7 @@
           <div class="service_block-cntnt">
             <h4> Landlord/Tenant (Tenant)  </h4>
             <!-- <p>Est voluptatum placeat est maxime architecto eum.</p> -->
-            <a href="#" class="check-price-btn">See Available Lawyers</a>
+            <a href="{{ route('lawyers.home') }}?litigations[0]=28&type=litigation" class="check-price-btn search-ho" data-search="28" data-type="litigation">See Available Lawyers</a>
           </div>
         </div>
         <div class="service_blocks">
@@ -99,7 +99,7 @@
           <div class="service_block-cntnt">
             <h4> Class Action/Mass Tort   </h4>
             <!-- <p>Est voluptatum placeat est maxime architecto eum.</p> -->
-            <a href="#" class="check-price-btn">See Available Lawyers</a>
+            <a href="{{ route('lawyers.home') }}?litigations[0]=7&type=litigation" class="check-price-btn search-ho" data-search="7" data-type="litigation">See Available Lawyers</a>
           </div>
         </div>
         <div class="service_blocks">
@@ -110,7 +110,7 @@
           <div class="service_block-cntnt">
             <h4> Defamation/ Libel/ Slander    </h4>
             <!-- <p>Est voluptatum placeat est maxime architecto eum.</p> -->
-            <a href="#" class="check-price-btn">See Available Lawyers</a>
+            <a href="{{ route('lawyers.home') }}?litigations[0]=13&type=litigation" class="check-price-btn search-ho" data-search="13" data-type="litigation">See Available Lawyers</a>
           </div>
         </div>
         <div class="service_blocks">
@@ -120,13 +120,13 @@
           <div class="service_block-cntnt">
             <h4> Small Business Contracts     </h4>
             <!-- <p>Est voluptatum placeat est maxime architecto eum.</p> -->
-            <a href="#" class="check-price-btn">See Available Lawyers</a>
+            <a href="{{ route('lawyers.home') }}?contracts[0]=10&type=contract" class="check-price-btn search-ho" data-search="10" data-type="contract">See Available Lawyers</a>
           </div>
         </div>
       </div>
     </div>
     <div class="text-center service-practice_link">
-      <a href="#">See All Practice Areas</a>
+      <a href="{{ route('narrow.down') }}">See All Practice Areas</a>
     </div>
   </div>
   </div>
@@ -210,4 +210,9 @@
     </div>
   </div>
 </section>
+
+
+
 @endsection
+
+

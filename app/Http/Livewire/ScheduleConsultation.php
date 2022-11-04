@@ -324,7 +324,7 @@ class ScheduleConsultation extends Component
             return [
                 'first_name' => ['required', 'string', 'max:100'],
                 'last_name' => ['required', 'string', 'max:100'],
-                'phone' => ['nullable', 'numeric', 'digits_between:10,12'],
+                'phone' => ['nullable', 'numeric'],
                 'email' => ['required', 'string', 'email', 'max:255'],
             ];
         }
@@ -334,7 +334,7 @@ class ScheduleConsultation extends Component
                 return [
                     'first_name' => ['required', 'string', 'max:100'],
                     'last_name' => ['required', 'string', 'max:100'],
-                    'phone' => ['nullable', 'numeric', 'digits_between:10,12'],
+                    'phone' => ['nullable', 'numeric'],
                     'email' => ['required', 'string', 'email', 'max:255'],
                 ];
             }
@@ -342,7 +342,7 @@ class ScheduleConsultation extends Component
             return [
                 'first_name' => ['required', 'string', 'max:100'],
                 'last_name' => ['required', 'string', 'max:100'],
-                'phone' => ['nullable', 'numeric', 'digits_between:10,12'],
+                'phone' => ['nullable', 'numeric'],
                 'email' => ['required', 'string', 'email', 'max:255'],
                 'card_name' => 'required|max:50',
                 'card_number' => 'required|numeric|digits_between:12,16',
@@ -356,7 +356,7 @@ class ScheduleConsultation extends Component
             return [
                 'first_name' => ['required', 'string', 'max:100'],
                 'last_name' => ['required', 'string', 'max:100'],
-                'phone' => ['nullable', 'numeric', 'digits_between:10,12'],
+                'phone' => ['nullable', 'numeric'],
                 'email' => ['required', 'string', 'email', 'max:255', Rule::unique(User::class)],
                 'password' => 'required|min:8',
                 'password_confirmation' => 'required_with:password|same:password',
@@ -366,7 +366,8 @@ class ScheduleConsultation extends Component
         return [
             'first_name' => ['required', 'string', 'max:100'],
             'last_name' => ['required', 'string', 'max:100'],
-            'phone' => ['nullable', 'numeric', 'digits_between:10,12'],
+            //'phone' => ['nullable', 'numeric', 'digits_between:10,12'],
+            'phone' => ['nullable', 'numeric'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique(User::class)],
             'password' => 'required|min:8',
             'password_confirmation' => 'required_with:password|same:password',
@@ -612,6 +613,10 @@ class ScheduleConsultation extends Component
         if ($this->selectDate) {
             $this->slotAvailability();
         }
+
+
+
+        $this->emit('phoneMask');
 
         return view('livewire.schedule-consultation');
     }

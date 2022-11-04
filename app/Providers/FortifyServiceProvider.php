@@ -41,7 +41,12 @@ class FortifyServiceProvider extends ServiceProvider
 			);
 
 			if(@request()->redirect==true){
-				session(['link' => url()->previous()]);
+				if(@request()->goto){
+					session(['link' => request()->goto]);
+				}
+				else {
+					session(['link' => url()->previous()]);
+				}
 			}
 			else {
 				session(['link' => '']);

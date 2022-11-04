@@ -111,6 +111,8 @@ Route::get('/narrow-down-litigations', [PagesController::class, 'litigations'])-
 Route::get('/narrow-down-contracts', [PagesController::class, 'contracts'])->name('narrow.contracts');
 
 Route::get('/narrow-lawyers', [PagesController::class, 'lawyers'])->name('lawyers');
+Route::post('/narrow-lawyers-home', [PagesController::class, 'lawyersHome'])->name('lawyers.home');
+
 Route::get('/narrow-lawyers/{user}', [PagesController::class, 'lawyerShow'])->name('lawyer.show');
 
 

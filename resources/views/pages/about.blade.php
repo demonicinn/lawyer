@@ -22,7 +22,7 @@
     <div class="heading-paragraph-design m-text-center">
       <h2>Why choose us</h2>
       <p>Prickly Pear simplifies the process of finding a lawyer. You only see lawyers that practice the area of law you need, are seeking new clients, and have availability for a video consultation to address your concerns and answer your questions before moving forward. We make it as simple as possible to make a decision you’re happy with, and we are always looking for ways to be better. </p>
-      <a href="#" class="btn-design-four">Find a Lawyer</a>
+      <a href="{{ route('narrow.down') }}" class="btn-design-four">Find a Lawyer</a>
     </div>
     </div>
     </div>

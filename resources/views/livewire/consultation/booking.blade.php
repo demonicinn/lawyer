@@ -41,7 +41,7 @@
                             </div>
                             <div class="form-grouph input-design">
                                 <label>Phone</label>
-                                <input type="number" wire:model='phone' placeholder="Phone Number (optional)">
+                                <input type="text" class="phone" wire:model='phone' placeholder="Phone Number (optional)">
                                 {!! $errors->first('phone', '<span class="help-block">:message</span>') !!}
                             </div>
 

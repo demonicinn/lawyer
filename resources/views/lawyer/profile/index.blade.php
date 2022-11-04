@@ -49,6 +49,13 @@
 
 @section('script')
 @include('common.crop_image')
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/jquery.inputmask.bundle.min.js"></script>
+
+<script>
+$('.phone').inputmask('(99)-9999-9999');
+
+</script>
 <div class="layoutHtml" style="display: none;">
     <div>
         <div class="layout layout_0id0">

@@ -19,13 +19,13 @@
         <div class="footer-widget footer-widget-second">
           <h4 class="footer-heading">Practice Areas</h4>
           <ul class="list-unstyled menu-footer-ul">
-            <li><a href="">Personal Injury – Plaintiff</a></li>
-            <li><a href="">Divorce/Family</a></li>
-            <li><a href="">Wills, Trusts, & Estates</a></li>
-            <li><a href="">Class Action/Mass Tort</a></li>
-            <li><a href="">Small Business Contracts</a></li>
-            <li><a href="">Commercial Litigation</a></li>
-            <li><a href="" class="see-all">See All</a></li>
+            <li><a href="{{ route('lawyers.home') }}?litigations[0]=21&type=litigation" class="search-ho" data-search="21" data-type="litigation">Personal Injury – Plaintiff</a></li>
+            <li><a href="{{ route('lawyers.home') }}?litigations[0]=14&type=litigation" class="search-ho" data-search="14" data-type="litigation">Divorce/Family</a></li>
+            <li><a href="{{ route('lawyers.home') }}?litigations[0]=24&type=contract" class="search-ho" data-search="24" data-type="contract">Wills, Trusts, & Estates</a></li>
+            <li><a href="{{ route('lawyers.home') }}?litigations[0]=7&type=litigation" class="search-ho" data-search="7" data-type="litigation">Class Action/Mass Tort</a></li>
+            <li><a href="{{ route('lawyers.home') }}?litigations[0]=10&type=contract" class="search-ho" data-search="10" data-type="contract">Small Business Contracts</a></li>
+            <li><a href="{{ route('lawyers.home') }}?litigations[0]=8&type=litigation" class="search-ho" data-search="8" data-type="litigation">Commercial Litigation</a></li>
+            <li><a href="{{ route('narrow.down') }}" class="see-all">See All</a></li>
           </ul>
         </div>
       </div>
@@ -33,12 +33,30 @@
         <div class="footer-widget footer-widget-third">
           <h4 class="footer-heading">Resources</h4>
           <ul class="list-unstyled menu-footer-ul">
+            {{--
             <li><a href="">Articles</a></li>
             <li><a href="">FAQ</a></li>
-            <li><a href="{{route('support')}}">Support</a></li>
-            <li><a href="">Client Portal</a></li>
-            <li><a href="">Lawyer Sign Up</a></li>
-            <li><a href="">Lawyer Portal</a></li>
+            --}}
+            <li><a href="{{ auth()->check() ? route('support') : route('login', ['redirect'=>'true', 'goto'=>'support']) }}">Support</a></li>
+            
+            @if(auth()->check())
+              @if(auth()->user()->role=='user')
+                <li><a href="{{ route('user') }}">Client Portal</a></li>
+              @endif
+
+              @if(auth()->user()->role=='lawyer')
+              <li><a href="{{ route('lawyer') }}">Lawyer Portal</a></li>
+              @endif
+
+              @if(auth()->user()->role=='admin')
+              <li><a href="{{ route('admin') }}">Dashboard</a></li>
+              @endif
+            @else
+              <li><a href="{{ route('user') }}">Client Portal</a></li>
+              <li><a href="{{ route('register') }}">Lawyer Sign Up</a></li>
+              <li><a href="{{ route('lawyer') }}">Lawyer Portal</a></li>
+            @endif
+
           </ul>
         </div>
       </div>

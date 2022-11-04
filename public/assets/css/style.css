@@ -1706,7 +1706,7 @@ label.second-label-design {
     height: 50px;
 }
 .table-design tbody tr td a {
-    color: #3E3E3E;
+    /*color: #3E3E3E;*/
     text-decoration: none;
 }
 /* .table-design tbody tr td a:hover {

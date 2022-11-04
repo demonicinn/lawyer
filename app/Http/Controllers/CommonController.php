@@ -72,7 +72,7 @@ class CommonController extends Controller
                 'email' => ['required', 'email', 'max:255', 'not_regex:/(' . implode("|", $banned) . ')/i'],
                 'reason' => ['required', 'string', 'max:255', 'not_regex:/(' . implode("|", $banned) . ')/i'],
                 'message' => ['required', 'string', 'not_regex:/(' . implode("|", $banned) . ')/i'],
-                //'g-recaptcha-response' => 'recaptcha|required',
+                'g-recaptcha-response' => 'required|recaptcha',
 
             ]
         );
