@@ -13,7 +13,9 @@
                   <img src="assets/images/schedule.svg">
                 </div>
                 <div class="portal-cntnt-wrapper">
+
                    <a href="{{ route('consultations.upcoming') }}">Consultation</a>
+
                 </div>
                 {{--
                 <div class="dropdown">
