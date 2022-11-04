@@ -80,7 +80,7 @@
 
 
                             <div class="add-litigations">
-                                <button type="button" class="btn_court showModal mt-2" wire:click="modalData({{$lawyer}})"><i class="fa-solid fa-gavel"></i> Courts</button>
+                                <button type="button" class="btn_court showModal mt-2" wire:click="modalData({{$lawyer}})"><i class="fa-solid fa-gavel"></i> Admission</button>
                             </div>
                             <div class="schedular_consultation">
 
@@ -114,10 +114,10 @@
         <!-- Accept Modal Start Here-->
         <div wire:ignore.self class="modal fade courts_modal common_modal modal-design" id="courtModal" tabindex="-1" aria-labelledby="courtModal" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
                 <button type="button" class="btn btn-default close closeModal">
                     <i class="fas fa-close"></i>
                 </button>
-                <div class="modal-content">
                     <form>
                         <div class="modal-header modal_h">
                             <h3>Courts</h3>
