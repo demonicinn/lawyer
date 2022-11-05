@@ -66,8 +66,8 @@
           <ul class="list-unstyled menu-footer-ul">
           <li><a href="{{route('about')}}">About Us</a></li>
             <li><a href="{{route('joinTeam')}}">Join the Team</a></li>
-            <li><a href="">Privacy Policy</a></li>
-            <li><a href="">Terms of Service</a></li>         
+            <li><a href="{{ route('privacyPolicy') }}">Privacy Policy</a></li>
+            <li><a href="{{ route('termsService') }}">Terms of Service</a></li>         
           </ul>
         </div>
       </div>
