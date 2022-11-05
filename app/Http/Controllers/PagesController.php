@@ -220,4 +220,25 @@ class PagesController extends Controller
         return redirect()->route('lawyers', $data);
     }
 
+
+    public function privacyPolicy()
+    {
+        $title = array(
+            'title' => 'Privacy Policy',
+            'active' => 'privacyPolicy',
+        );
+
+        return view('pages.privacyPolicy', compact('title'));
+    }
+
+    public function termsService()
+    {
+        $title = array(
+            'title' => 'Terms of Service',
+            'active' => 'termsService',
+        );
+
+        return view('pages.termsService', compact('title'));
+    }
+
 }
