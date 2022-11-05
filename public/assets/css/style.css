@@ -152,7 +152,7 @@ p{
 }
 .input-design input ,.input-design select{
     width: 100%;
-    border: 1px solid #979797;r
+    border: 1px solid #979797;
     font-size: 16px;
     border-radius: 8px;
     padding: 12px 18px;
@@ -3426,7 +3426,7 @@ input[type="checkbox"]#term:before{
         justify-content: center;
     }
     .logo-left-column img {
-        max-width: 165px;
+        max-width: 145px;
     }
     #header {
         padding: 15px 0px;
@@ -3449,7 +3449,8 @@ input[type="checkbox"]#term:before{
         margin-bottom: 15px;   
     }
     a.login-header-btn.btn_sign_up.mb-3.me-3.py-3, a.login-header-btn.btn_login.py-3,.btn_sign_up, .btn_login{
-        padding: 10px 20px !important;
+        padding: 8px 15px !important;
+        font-size: 12px;
     }
     .box_checkbox .form-grouph.input-design input#term{
         left: -35px;
@@ -3564,4 +3565,18 @@ input[type="checkbox"]#term:before{
 .page-item.active .page-link {
     background-color: #a4caa5;
     color: #fff !important;
+}
+
+@media (max-width: 991px){
+    .step-main-sec .step .d-image {
+        display: none;
+    }
+    .step-main-sec .step .m-image {
+        display: block !important;
+    }
+}
+@media (min-width: 992px){
+    .step-main-sec .step .m-image {
+        display: none;
+    }
 }

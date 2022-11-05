@@ -204,7 +204,8 @@
         </div>
         <div class="step third-step">
           <h4>Step 3</h4>
-          <img src="{{ asset('assets/images/phone.png') }}">
+          <img src="{{ asset('assets/images/phone.png') }}" class="d-image">
+          <img src="{{ asset('assets/images/phone-video-mobile.png') }}" class="m-image">
         </div>
       </div>
     </div>

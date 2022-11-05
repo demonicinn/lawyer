@@ -6,13 +6,13 @@
           <div class="footer-logo">
             <a href="#"><img src="{{ asset('assets/images/logo/footer_logo.png') }}"></a>
           </div>
-          <h4 class="footer-heading">Follow Us</h4>
+          <!-- <h4 class="footer-heading">Follow Us</h4>
           <div class="footer-social-icons">
             <a href="#" class="twitter"><i class="fa-brands fa-twitter"></i></a>
             <a href="#" class="facebook"><i class="fa-brands fa-facebook-f"></i></a>
             <a href="#" class="instagram"><i class="fa-brands fa-instagram"></i></a>
             <a href="#" class="linkedin"><i class="fa-brands fa-linkedin"></i></a>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="footer-column footer-column-2">
@@ -67,10 +67,7 @@
           <li><a href="{{route('about')}}">About Us</a></li>
             <li><a href="{{route('joinTeam')}}">Join the Team</a></li>
             <li><a href="">Privacy Policy</a></li>
-            <li><a href="">Terms of Service</a></li>
-            <li><a href="">Accessibility</a></li>
-            <li><a href="">Partners Program</a></li>
-         
+            <li><a href="">Terms of Service</a></li>         
           </ul>
         </div>
       </div>
