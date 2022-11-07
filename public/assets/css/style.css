@@ -717,8 +717,8 @@ input:focus, select:focus, textarea:focus{
     border: none;
     font-weight: 700;
     padding: 2px 11px;
-    /* min-width: 75px; */
     text-align: center;
+    cursor: default !important;
 }
 .lawyers-heading_service {
     flex-wrap: nowrap;
@@ -3101,6 +3101,20 @@ input[type="checkbox"]#term:before{
 .rating-div-design .jq-ry-container>.jq-ry-group-wrapper>.jq-ry-normal-group.jq-ry-group:first-child svg {
     fill: #ccc;
 }
+.content-heading_description-wrapper {
+    padding: 60px 0px;
+}
+.content-heading_description h2 {
+    text-align: center;
+    color: #3E3E3E;
+    font-size: 55px;
+    margin-bottom: 32px;
+}
+.content-heading_description p {
+    font-size: 16px;
+    margin-bottom: 16px;
+}
+
 
 /* responsive */
 /* responsive */
@@ -3227,6 +3241,9 @@ input[type="checkbox"]#term:before{
 @media (max-width: 767px){
     .why-choose-img {
         text-align: center;
+    }
+    .content-heading_description h2 {
+        font-size: 30px;
     }
     .schedule-form-design .booking-info_profile-flex {
         padding: 20px;
