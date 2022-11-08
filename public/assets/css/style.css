@@ -2626,6 +2626,17 @@ a.btn_add.mr-2{
     bottom: 50px;
     color: red;
 }
+/* .layout  span.btn_close {
+    padding: 0px 7px;
+    border-radius: 50%;
+    width: 23.4px;
+    height: 23.4px;
+    position: absolute;
+    cursor: pointer;
+    right: -17px;
+    bottom: 50px;
+    color: red;
+} */
 .appned_inputs .form-flex {
     position: relative;
 }
