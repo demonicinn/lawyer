@@ -2006,6 +2006,7 @@ label.second-label-design {
     max-width: 245px;
     margin-left: auto;
     margin-right: auto;
+    font-family: 'lato-medium';
 }
 .btn-banner-design:hover{
     background-color: #333;
@@ -2559,7 +2560,7 @@ img {
     display: block;
 } */
 form .help-block,form span.help-block {
-    color: red;
+    color: #F93F64;
 }
 .block_blocked{
     display: flex;
@@ -2598,7 +2599,7 @@ a.btn_add.mr-2{
     gap: 10px;
 }
 .custom-control.custom-switch.input_add button{
-    padding: 2.3px 7px 3px 7px;
+    padding: 1.3px 7px 3px 7px;
     font-weight: bold;
     line-height: normal;
     background: #F93F64;
@@ -2606,6 +2607,7 @@ a.btn_add.mr-2{
     border-radius: 50%;
     height: 25px;
     width: 25px;
+    font-family: 'Lato-Medium';
 }
 .working_hours .addNewHoursLayout {
     max-height: 223px;
@@ -2786,6 +2788,9 @@ a.login-header-btn.btn_sign_up.mb-3.me-3.py-3 ,a.login-header-btn.btn_login.py-3
 }
 .hour_rate_form .input-grouph.input-design {
     position: relative;
+}
+a:hover{
+    color: #F93F64;
 }
 /* responsive */
 /* responsive */
