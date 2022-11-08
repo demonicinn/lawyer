@@ -38,10 +38,12 @@
           <p>Unlike other legal directories, we provide advanced filters that help narrow down which lawyer is right for you. We also provide the opportunity to easily schedule a video consultation with the lawyer to determine if they are the right fit. Additionally, we won’t ask for your personal information until you schedule a consultation. </p>
           <a href="#" class="btn-design-four">See The Difference</a>
         </div>
+
+        
         </div>
     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
        <div class="why-choose-img text-center half-mobile-img">
-        <img src="{{ asset('assets/images/phone1.png') }}">
+        <img src="{{ asset('assets/images/phone_about.png') }}">
        </div>
     </div>
     </div>
