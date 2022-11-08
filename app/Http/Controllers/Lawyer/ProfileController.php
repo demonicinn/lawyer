@@ -11,6 +11,10 @@ use App\Models\UserDetails;
 use App\Models\State;
 use App\Models\LawyerHours;
 use App\Models\BankInfo;
+
+use App\Models\StateBar;
+use App\Models\LawyerStateBar;
+
 use App\Notifications\MailToAdminForLawyerStatus;
 use Illuminate\Support\Facades\Notification;
 
@@ -39,13 +43,14 @@ class ProfileController extends Controller
         $states = State::whereStatus('1')->pluck('name', 'id');
         // dd($user);
 
-        $categories = Category::whereStatus('1')->where('is_multiselect', '0')->get();
-        $categoriesMulti = Category::whereStatus('1')->where('is_multiselect', '1')->orderBy('name','ASC')->get();
+        $categories = Category::whereStatus('1')->get();
+        $categoriesMulti = Category::whereStatus('1')->orderBy('name','ASC')->get();
         
+        $stateBar = StateBar::whereStatus('1')->get();
 
 
         //  dd($categoriesMulti);
-        return view('lawyer.profile.index', compact('user', 'title', 'states', 'categories', 'categoriesMulti'));
+        return view('lawyer.profile.index', compact('user', 'title', 'states', 'categories', 'categoriesMulti', 'stateBar'));
     }
 
     //
@@ -209,11 +214,7 @@ class ProfileController extends Controller
         //.........
         if ($request->lawyer_address) {
             // on update
-            Lawyer_info::where('user_id', auth()->user()->id)
-                        ->whereHas('categories', function ($query) {
-                            $query->where('is_multiselect', '1');
-                        })
-                        ->delete();
+            Lawyer_info::where('user_id', auth()->user()->id)->delete();
 
             foreach ($request->lawyer_address as $cat_id => $items) {
                 foreach ($items['data'] as $itemId => $item) {
@@ -226,6 +227,24 @@ class ProfileController extends Controller
                         $storeInfo->bar_number = @$item['bar_number'];
                         $storeInfo->save();
                     }
+                }
+            }
+        }
+
+        ///....state bar
+        //lawyer_state
+        if ($request->lawyer_state) {
+            // on update
+            LawyerStateBar::where('user_id', auth()->user()->id)->delete();
+
+            foreach ($request->lawyer_state as $state_id => $item) {
+                if(@$item['year_admitted'] && @$item['bar_number']){
+                    $storeStateBar = new LawyerStateBar();
+                    $storeStateBar->user_id = auth()->user()->id;
+                    $storeStateBar->state_bar_id = $state_id;
+                    $storeStateBar->year_admitted = @$item['year_admitted'];
+                    $storeStateBar->bar_number = @$item['bar_number'];
+                    $storeStateBar->save();
                 }
             }
         }
@@ -243,11 +262,22 @@ class ProfileController extends Controller
         $user = auth()->user();
         $record = BankInfo::where(['user_id' =>  $user->id])->first();
         
+        if(@$record->account_number){
+            $this->flash('error', 'Account already connected with stripe');
+            return redirect()->back();
+        }
+        
         try {
-            if(!$record) {
-                $stripe = new \Stripe\StripeClient(
-                    config('services.stripe.secret')
-                );
+            $accountId = '';
+            
+            $stripe = new \Stripe\StripeClient(
+                config('services.stripe.secret')
+            );
+            
+            if(@$record->account_id){
+                $accountId = $record->account_id;
+            }
+            else {
                 $account = $stripe->accounts->create([
                     'type' => 'custom',
                     'country' => 'US',
@@ -257,33 +287,42 @@ class ProfileController extends Controller
                         'transfers' => ['requested' => true],
                     ],
                 ]);
-
-
+                
                 if(@$account->id) {
-                    //save bank account..
-                    $info = new BankInfo();
-                    $info->user_id = $user->id;
-                    $info->account_id = $account->id;
-                    $info->status = "pending";
-                    $info->payouts_enabled = "pending";
-                    $info->save();
-                    // create link for account update and send
-                    $link = $stripe->accountLinks->create([
-                        'account' => $account->id,
-                        'refresh_url' => route('lawyer.banking.error'),
-                        'return_url' => route('lawyer.banking.success'),
-                        'type' => 'account_onboarding',
-                    ]);
-                    //dd($link);
-                    return redirect($link->url);
-                } else {
-                    $this->flash('error', 'Error in account create.');
-                    return redirect()->back();
+                    $accountId = $account->id;   
                 }
-            }else {
-                $this->flash('error', 'Account has already connected with stripe.');
+            }
+            
+            
+
+
+            if(@$accountId) {
+                //save bank account..
+                $info = new BankInfo();
+                if(@$record){
+                    $info->id = $record->id;
+                    $info->exists = true;
+                }
+                $info->user_id = $user->id;
+                $info->account_id = $accountId;
+                $info->status = "pending";
+                $info->payouts_enabled = "pending";
+                $info->save();
+                // create link for account update and send
+                $link = $stripe->accountLinks->create([
+                    'account' => $accountId,
+                    'refresh_url' => route('lawyer.banking.error'),
+                    'return_url' => route('lawyer.banking.success'),
+                    'type' => 'account_onboarding',
+                ]);
+                //dd($link);
+                return redirect($link->url);
+            } else {
+                $this->flash('error', 'Error in account create.');
                 return redirect()->back();
             }
+                
+                
         } catch (\Stripe\Exception\RateLimitException $e) {
         // Too many requests made to the API too quickly
             $error = $e->getMessage();
@@ -311,36 +350,93 @@ class ProfileController extends Controller
         return redirect()->back();
     }
 
-    public function bankingInfoSuccess()
-    {
+    public function bankingInfoSuccess(){
         $user = auth()->user();
         $record = BankInfo::where(['user_id' => $user->id])->first();
 
+        if(@$record){
+            $record->status = "active";
+            $record->save();
+        }
+        return view('lawyer.profile.account', compact('user', 'record'));
+    }
+
+    public function bankingInfoStore(Request $request)
+    {
+
+        $request->validate([
+            'account_number' => 'required',
+            'routing_number' => 'required|min:9',
+            'account_holder_name' => 'required',
+        ]);
+
+
+
+        $user = auth()->user();
+        $record = BankInfo::where(['user_id' => $user->id])->first();
 
         try {
-            if($record) {
-                $stripe = new \Stripe\StripeClient(
-                    config('services.stripe.secret')
-                );
-                $account = $stripe->accounts->retrieve($record->account_id);
+            $stripe = new \Stripe\StripeClient(
+                config('services.stripe.secret')
+            );
 
-                if(@$account && $account->payouts_enabled) {
-                    $record->payouts_enabled = 'active';              
-                } else {
-                    $record->payouts_enabled = 'inactive'; 
-                }
-                
+            $bank = $stripe->accounts->createExternalAccount(
+                $record->account_id,
+                [
+                    'external_account' => [
+                        "currency" => "usd",
+                        "country" => "us",
+                        "object" => "bank_account",
+                        "account_holder_name" => $request->account_holder_name,
+                        "routing_number" => $request->routing_number,
+                        "account_number" => $request->account_number,
+                    ],
+                ]
+            );
+
+            //dd($bank['id']);
+
+            
+            if($bank) {
+
+                $record->bid = @$bank['id'];
+                $record->account_holder_name = $request->account_holder_name;
+                $record->routing_number = $request->routing_number;
+                $record->account_number = $request->account_number;
                 $record->save();
-
-                $this->flash('success', 'Account added successfully');
+                
             }
 
-        } catch (\Exception $e) {
-            $this->flash('error', $e->getMessage());
-        }
-        
+            $this->flash('success', 'Your bank info added successfully');
+            return redirect()->route('lawyer.profile');
+            
 
-        return redirect()->route('lawyer.profile');
+        } catch (\Stripe\Exception\RateLimitException $e) {
+            // Too many requests made to the API too quickly
+            $error = $e->getMessage();
+        } catch (\Stripe\Exception\InvalidRequestException $e) {
+            // Invalid parameters were supplied to Stripe's API
+            $error = $e->getMessage();
+        } catch (\Stripe\Exception\AuthenticationException $e) {
+            // Authentication with Stripe's API failed
+            $error = $e->getMessage();
+            // (maybe you changed API keys recently)
+        } catch (\Stripe\Exception\ApiConnectionException $e) {
+            // Network communication with Stripe failed
+            $error = $e->getMessage();
+        } catch (\Stripe\Exception\ApiErrorException $e) {
+            // Display a very generic error to the user, and maybe send
+            $error = $e->getMessage();
+            // yourself an email
+        } catch (Exception $e) {
+            // Something else happened, completely unrelated to Stripe
+            $error = $e->getMessage();
+        }
+
+        //dd($error);
+        $this->flash('error', $error);
+
+        return redirect()->back();
     }
 
     public function bankingInfoError()

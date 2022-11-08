@@ -22,6 +22,11 @@ return new class extends Migration
             $table->string('status', 30);
             $table->string('payouts_enabled', 30);
 
+            $table->string('bid')->nullable();
+            $table->string('account_number', 20)->nullable();
+            $table->bigInteger('routing_number')->nullable();
+            $table->string('account_holder_name', 50)->nullable();
+
             $table->timestamps();
         });
     }

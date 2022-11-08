@@ -1,4 +1,4 @@
-<section class="body-banner schdule-consultation-page-sec min-height-100vh">
+<section class="schdule-consultation-page-sec">
     <div class="container">
         <div class="heading-paragraph-design text-center position-relative go-back-wrap mb-4">
             <h2>Schedule a Consultation</h2>
@@ -8,15 +8,15 @@
 
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 text-center go-back-wrap my-5">
                 <div class="form-grouph submit-design text-center">
-                    <a href="{{ url()->previous() }}" class="go-back border-0"><i class="fa-solid fa-arrow-left-long"></i> go back</a>
+                    <a href="{{ $prevUrl }}" class="go-back border-0"><i class="fa-solid fa-arrow-left-long"></i> go back</a>
                 </div>
             </div>
 
 
             <form class="schedule-form-design">
-                <div class="row pb-5">
-                <div class="col-md-4">
-                            <div class="booking-info_profile-flex">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                    <div class="booking-info_profile-flex">
                                 @if(@$lawyer->profile_pic)
                                 <div class="booking-info-left_column">
                                     <img src="{{ $lawyer->profile_pic }}">
@@ -25,17 +25,7 @@
                                 <div class="booking-info-right_column">
                                     <h4 class="booking_name pt-3">{{ $lawyer->name }}</h4>
                                 </div>
-                            </div>
                         </div>
-                </div>
-                <div class="row">
-
-                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-
-
-                       
-
-
                         <div wire:ignore class="calendar-container">
                             <div id="celender"></div>
                         </div>
@@ -63,7 +53,7 @@
                                 @endforeach
                             </ul>
                             @else
-                            <h5>Oops! Slot not available.</h5>
+                            <h5>Please select the date to show the availability.</h5>
                             @endif
 
                             {!! $errors->first('selectDateTimeSlot', '<span class="help-block">:message</span>')  !!}

@@ -13,11 +13,13 @@
 					<div class="form-grouph input-design{!! ($errors->has('email') ? ' has-error' : '') !!}">
 						{!! Form::label('email','Email', ['class' => 'form-label']) !!}
 						{!! Form::email('email', request()->email ?? null, ['class' => ($errors->has('email') ? ' is-invalid' : '')]) !!}
+						{!! $errors->first('email', '<span class="help-block">:message</span>') !!}
 					</div>
 
 					<div class="form-grouph input-design{!! ($errors->has('email') ? ' has-error' : '') !!}">
 						{!! Form::label('password','Password', ['class' => 'form-label']) !!}
 						<input type="password" id="password" name="password" class="{!! ($errors->has('email') ? ' is-invalid' : '') !!}" />
+						{!! $errors->first('password', '<span class="help-block">:message</span>') !!}
 					</div>
 
 

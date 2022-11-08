@@ -7,6 +7,8 @@ use App\Models\Booking;
 use App\Models\User;
 use App\Models\UserCard;
 use App\Models\Payment;
+use App\Models\Contract;
+use App\Models\Litigation;
 
 
 
@@ -31,7 +33,7 @@ class ScheduleConsultation extends Component
     //....
 
     public $currentTab = 'tab1';
-
+    public $prevUrl;
 
     public $lawyerID, $lawyer;
     public $month, $year;
@@ -52,7 +54,7 @@ class ScheduleConsultation extends Component
 
     public $cardId = null;
     public $totalCharges = 0;
-    public $searchType, $searchData;
+    public $searchType, $searchDataRaw, $searchData;
 
 
     public function mount()
@@ -60,9 +62,15 @@ class ScheduleConsultation extends Component
         if(Auth::check()){
             $this->authUser = auth()->user();
         }
+        
+        
 
         $date = date('Y-m-d');
         $this->lawyer = User::where('id', $this->lawyerID)->first();
+        
+        
+        $this->prevUrl = url()->previous() ?? route('lawyer.show', $this->lawyer->id);
+        
 
         $subscription = $this->lawyer->lawyerSubscription()
                         ->where('from_date', '<=', $date)
@@ -92,23 +100,15 @@ class ScheduleConsultation extends Component
         $this->getWorkingDays($this->todayDate);
 
 
-        $this->searchType = session('search_type');
-        $search_data = session('search_data');
+        $this->searchType = request()->type;
+        $search_data = request()->search;
+        $this->searchDataRaw = $search_data;
+        
         if(@$this->searchType=='litigations' && $search_data){
-            $this->searchData = $this->lawyer->lawyerLitigations()
-                        ->whereHas('litigation', function($query) use($search_data) {
-                            $query->whereIn('id', $search_data);
-                        })
-                        ->get()
-                        ->pluck('litigation.name');
+            $this->searchData = Litigation::whereIn('id', json_decode($search_data))->pluck('name');
         }
         if(@$this->searchType=='contracts' && $search_data){
-            $this->searchData = $this->lawyer->lawyerContracts()
-                        ->whereHas('contract', function($query) use($search_data) {
-                            $query->whereIn('id', $search_data);
-                        })
-                        ->get()
-                        ->pluck('contract.name');
+            $this->searchData = Contract::whereIn('id', json_decode($search_data))->pluck('name');
         }
         //dd($search_data);
         //dd($this->searchData);
@@ -205,7 +205,7 @@ class ScheduleConsultation extends Component
 
         $lawyerHours = $this->lawyer->lawyerHours()->where('day', $this->dateDay)->get();
 
-        $getLeaves = $this->lawyer->booking()->whereDate('booking_date', $date)->pluck('booking_time')->toArray();
+        $getLeaves = $this->lawyer->booking()->whereDate('booking_date', $date)->where('is_canceled', '0')->pluck('booking_time')->toArray();
 
 
         $checkLeave = $this->lawyer->leave()->where('date', $date)->first();
@@ -268,12 +268,12 @@ class ScheduleConsultation extends Component
     {
         $this->validate([
             'uemail' => 'required|email',
-            'upassword' => 'required|min:6',
+            'upassword' => 'required|min:8',
 
         ], [
             'uemail.required' => 'Email field is required.',
             'upassword.required' => 'Password field is required.',
-            'upassword.min' => 'The password must be at least 6 characters.',
+            'upassword.min' => 'The password must be at least 8 characters.',
         ]);
 
         $email = $this->uemail;
@@ -283,19 +283,28 @@ class ScheduleConsultation extends Component
 
         if (!Auth::attempt($credentials)) {
             $this->alert('error', 'Invalid credentials');
-        } else {
+        } 
+        else {
 
-            $this->authUser = auth()->user();
-
-            $this->first_name = $this->authUser->first_name;
-            $this->last_name = $this->authUser->last_name;
-            $this->email = $this->authUser->email;
-            $this->phone = $this->authUser->contact_number;
-            
-
-            $this->alert('success', 'Login successfully');
-            $this->emit('loginFormClose');
-            $this->resetLoginfields();
+            if(auth()->user()->role != 'user'){
+                auth()->logout();
+                $this->alert('error', 'Invalid credentials');
+            }
+            else {
+                
+                
+                $this->authUser = auth()->user();
+    
+                $this->first_name = $this->authUser->first_name;
+                $this->last_name = $this->authUser->last_name;
+                $this->email = $this->authUser->email;
+                $this->phone = $this->authUser->contact_number;
+                
+    
+                $this->alert('success', 'Login successfully');
+                $this->emit('loginFormClose');
+                $this->resetLoginfields();
+            }
             
         }
     }
@@ -315,7 +324,7 @@ class ScheduleConsultation extends Component
             return [
                 'first_name' => ['required', 'string', 'max:100'],
                 'last_name' => ['required', 'string', 'max:100'],
-                'phone' => ['nullable', 'numeric', 'digits_between:10,12'],
+                'phone' => ['nullable', 'numeric'],
                 'email' => ['required', 'string', 'email', 'max:255'],
             ];
         }
@@ -325,7 +334,7 @@ class ScheduleConsultation extends Component
                 return [
                     'first_name' => ['required', 'string', 'max:100'],
                     'last_name' => ['required', 'string', 'max:100'],
-                    'phone' => ['nullable', 'numeric', 'digits_between:10,12'],
+                    'phone' => ['nullable', 'numeric'],
                     'email' => ['required', 'string', 'email', 'max:255'],
                 ];
             }
@@ -333,7 +342,7 @@ class ScheduleConsultation extends Component
             return [
                 'first_name' => ['required', 'string', 'max:100'],
                 'last_name' => ['required', 'string', 'max:100'],
-                'phone' => ['nullable', 'numeric', 'digits_between:10,12'],
+                'phone' => ['nullable', 'numeric'],
                 'email' => ['required', 'string', 'email', 'max:255'],
                 'card_name' => 'required|max:50',
                 'card_number' => 'required|numeric|digits_between:12,16',
@@ -347,9 +356,9 @@ class ScheduleConsultation extends Component
             return [
                 'first_name' => ['required', 'string', 'max:100'],
                 'last_name' => ['required', 'string', 'max:100'],
-                'phone' => ['nullable', 'numeric', 'digits_between:10,12'],
+                'phone' => ['nullable', 'numeric'],
                 'email' => ['required', 'string', 'email', 'max:255', Rule::unique(User::class)],
-                'password' => 'required',
+                'password' => 'required|min:8',
                 'password_confirmation' => 'required_with:password|same:password',
             ];
         }
@@ -357,9 +366,10 @@ class ScheduleConsultation extends Component
         return [
             'first_name' => ['required', 'string', 'max:100'],
             'last_name' => ['required', 'string', 'max:100'],
-            'phone' => ['nullable', 'numeric', 'digits_between:10,12'],
+            //'phone' => ['nullable', 'numeric', 'digits_between:10,12'],
+            'phone' => ['nullable', 'numeric'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique(User::class)],
-            'password' => 'required',
+            'password' => 'required|min:8',
             'password_confirmation' => 'required_with:password|same:password',
             'card_name' => 'required|max:50',
             'card_number' => 'required|numeric|digits_between:12,16',
@@ -473,11 +483,11 @@ class ScheduleConsultation extends Component
                 /// generate meeting
                 $meeting = new MeetingController;
                 $a = $meeting->store($dateTime);
-                // dd($a);
+                //dd($a);
 
 
-                if (@$a) {
-                    $zoom_id = $a['data']['id'];
+                if (@$a['data']) {
+                    $zoom_ids = $a['data']['id'];
                     $zoom_password = @$a['data']['password'];
                     $zoom_start_url = @$a['data']['start_url'];
 
@@ -527,10 +537,14 @@ class ScheduleConsultation extends Component
                     $booking->lawyer_amount = @$lawyer_amount;
                     $booking->total_amount = $fee;
 
-                    $booking->zoom_id = @$zoom_id;
+                    $booking->zoom_id = @$zoom_ids;
                     $booking->zoom_password = @$zoom_password;
                     $booking->zoom_start_url = @$zoom_start_url;
+                    $booking->search_type = @$this->searchType;
+                    $booking->search_data = @$this->searchDataRaw;
                     $booking->save();
+
+
 
                     if ($booking) {
 
@@ -599,6 +613,10 @@ class ScheduleConsultation extends Component
         if ($this->selectDate) {
             $this->slotAvailability();
         }
+
+
+
+        $this->emit('phoneMask');
 
         return view('livewire.schedule-consultation');
     }

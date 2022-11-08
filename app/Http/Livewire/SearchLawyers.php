@@ -17,8 +17,15 @@ class SearchLawyers extends Component
     public $categories;
 
     public $latitude, $longitude;
+    public $search_data=[], $search_type;
 
-    public $free_consultation, $contingency_cases, $year_exp = '20', $category, $distance = '0', $rate = '0', $search, $modal;
+    public $free_consultation, $contingency_cases, $category, $search, $modal;
+    
+    public $year_exp_min = '1', $year_exp = '20';
+    public $distance_min = '1', $distance = '100';
+    public $rate_min = '0', $rate = '500';
+    
+    
 
     public function mount()
     {
@@ -32,12 +39,22 @@ class SearchLawyers extends Component
 
 
         if (request()->litigations) {
+            
+            $this->search_data = request()->litigations;
+            $this->search_type = 'litigations';
+            
             session(['search_data' => request()->litigations, 'search_type' => 'litigations']);
         }
 
         if (request()->contracts) {
+            
+            $this->search_data = request()->contracts;
+            $this->search_type = 'contracts';
+            
             session(['search_data' => request()->contracts, 'search_type' => 'contracts']);
         }
+        
+        
 
     }
 
@@ -57,24 +74,26 @@ class SearchLawyers extends Component
 
             //search filter
             if ($this->search) {
-                $user->where(function ($query) {
-                    $query->where('id', $this->search);
-                    $query->orWhere('first_name', $this->search);
-                    $query->orWhere('last_name', $this->search);
-                    $query->orWhere('contact_number', $this->search);
+                $search = $this->search;
+                $user->where(function ($query) use ($search) {
+                    $query->where('id', 'like', '%'.$search.'%');
+                    $query->orWhere('first_name', 'like', '%'.$search.'%');
+                    $query->orWhere('last_name', 'like', '%'.$search.'%');
+                    $query->orWhere('contact_number', 'like', '%'.$search.'%');
                 });
             }
 
 
-            if (request()->litigations) {
+            if ($this->search_type=='litigations') {
+                //dd('f');
                 $user = $user->whereHas('lawyerLitigations', function ($query) {
-                    $query->whereIn('litigations_id', request()->litigations);
+                    $query->whereIn('litigations_id', $this->search_data);
                 });
             }
 
-            if (request()->contracts) {
+            if ($this->search_type=='contracts') {
                 $user = $user->whereHas('lawyerContracts', function ($query) {
-                    $query->whereIn('contracts_id', request()->contracts);
+                    $query->whereIn('contracts_id', $this->search_data);
                 });
             }
 
@@ -89,21 +108,29 @@ class SearchLawyers extends Component
                         $query->where('contingency_cases', 'yes');
                     }
 
-                    if ($this->year_exp < '20') {
-                        $query->whereBetween('year_experience', ['1', $this->year_exp]);
-                    }
+                    //if ($this->year_exp < '20') {
+                        $query->whereBetween('year_experience', [$this->year_exp_min, $this->year_exp]);
+                    //}
 
-                    if ($this->rate > 0) {
-                        $query->where('hourly_fee', '<=', (int)$this->rate);
-                    }
+                    //if ($this->rate > 0) {
+                        $query->where(function($q) {
+                            $q->where('hourly_fee', '>=', (int)$this->rate_min);
+                            $q->where('hourly_fee', '<=', (int)$this->rate);
+                        });
+                        
+                    //}
 
-                    if ($this->distance && $this->latitude && $this->longitude) {
+                    if ($this->latitude && $this->longitude) {
 
                         $query->selectRaw('(((acos(sin((' . $this->latitude . '*pi()/180)) * sin((`latitude`*pi()/180))+cos((' . $this->latitude . '*pi()/180)) * cos((`latitude`*pi()/180)) * cos(((' . $this->longitude . '- `longitude`)*pi()/180))))*180/pi())*60*1.1515) AS distance');
 
-                        if($this->distance > 0){
-                            $query->havingRaw("distance <= ?", [$this->distance]);
-                        }
+                        //if($this->distance > 0){
+                            //$query->havingRaw("distance > ?", [$this->distance_min]);
+                            //$query->orHavingRaw("distance <= ?", [$this->distance]);
+                            
+                            //need this
+                            //$query->havingRaw("distance <= ?", [$this->distance]);
+                        //}
                     }
 
 
@@ -119,10 +146,12 @@ class SearchLawyers extends Component
             $user = $user->whereHas('lawyerInfo', function ($query) {
                     if ($this->category) {
                         foreach ($this->category as $cat => $item) {
-                            $query->where(function ($que) use ($cat, $item) {
-                                $que->where('category_id', (int)$cat);
-                                $que->where('item_id', (int)$item);
-                            });
+                            if($cat && $item){
+                                $query->where(function ($que) use ($cat, $item) {
+                                    $que->where('category_id', (int)$cat);
+                                    $que->where('item_id', (int)$item);
+                                });
+                            }
                         }
                     }
                 });

@@ -6,6 +6,14 @@
                     <h4>Filter by:</h4>
                     <div class="hourly-range-design range-design mb-5">
                         <h5 class="h5-design">Hourly Rate</h5>
+                        <div class="n-slider" wire:ignore>
+                            <!-- <p class="min-value">$0</p> -->
+                            <input type="text" id="hourlyRange" readonly>
+                            <div id="hourly-range" class="slider"></div>
+                            <!-- <p class="max-value">$500</p> -->
+                        </div>
+                        
+                        {{--
                         <div class="range-wrapper position-relative">
                             <p class="min-value">$0</p>
                             <div id="hourly-rate-slider" class="range-slider">
@@ -14,6 +22,7 @@
                             </div>
                             <p class="max-value">$500</p>
                         </div>
+                        --}}
                     </div>
 
                     <div class="toggle-design-wrapper d-flex flex-wrap align-items-center mb-4 justify-content-spacebw">
@@ -34,14 +43,25 @@
 
                     <div class="year-exp-design range-design mb-5">
                         <h5 class="h5-design">Years Experience</h5>
+                        
+                        <div class="n-slider" wire:ignore>
+                            <!-- <p class="min-value">1</p> -->
+                            <input type="text" id="yearsRange" readonly>
+                            <div id="years-range" class="slider"></div>
+                            <!-- <p class="max-value">20</p> -->
+                        </div>
+                        
+                        {{--
                         <div class="range-wrapper position-relative">
                             <p class="min-value">1</p>
                             <div id="years-experience-slider" class="range-slider">
                                 <div id="experience-range-tooltip" class="tooltip-range"></div>
                                 <input wire:model="year_exp" class="range_design-input" type="range" step="1" min="0" max="20" title="{{$year_exp}}">
+                                <input wire:model="year_exp" class="range_design-input" type="range" step="1" min="0" max="20" title="{{$year_exp}}">
                             </div>
                             <p class="max-value">20</p>
                         </div>
+                        --}}
                     </div>
 
                     <div class="form-group select-design form-grouph mb-4">
@@ -64,6 +84,14 @@
 
                     <div class="distance-within-design range-design form-grouph mb-5">
                         <h5 class="h5-design">Within Distance</h5>
+                        <div class="n-slider" wire:ignore>
+                            <!-- <p class="min-value">1 mi</p> -->
+                            <input type="text" id="distanceRange" readonly>
+                            <div id="distance-range" class="slider"></div>
+                            <!-- <p class="max-value">100 mi</p> -->
+                        </div>
+                        
+                        {{--
                         <div class="range-wrapper position-relative">
                             <p class="min-value">1 mi</p>
                             <div id="distance-range-slides" class="range-slider">
@@ -72,6 +100,7 @@
                             </div>
                             <p class="max-value">100 mi</p>
                         </div>
+                        --}}
                     </div>
 
                     <div class="form-group input-design form-grouph icon-input-design dark-placehiolder">
@@ -122,8 +151,8 @@
                             </div>
 
                             <div class="add-litigations mt-2 location_profile-divs d-flex justify-content-spacebw align-items-center ">
-                                <button type="button" class="btn_court showModal " wire:click="modalData({{$lawyer->id}})"><i class="fa-solid fa-gavel"></i>  Courts</button>
-                                <a href="{{ route('lawyer.show', $lawyer->id) }}">See Profile</a>
+                                <button type="button" class="btn_court showModal " wire:click="modalData({{$lawyer->id}})"><i class="fa-solid fa-gavel"></i>  Admission</button>
+                                <a href="{{ route('lawyer.show', $lawyer->id) }}?type={{ $search_type }}&search={{ json_encode($search_data) }}">See Profile</a>
                             </div>
 
                             @php $lawyerID = Crypt::encrypt($lawyer->id); @endphp
@@ -131,12 +160,12 @@
                             @if(auth()->check())
                             @if(auth()->user()->role=='user')
                             <div class="schedular_consultation">
-                                <a href="{{route('schedule.consultation',$lawyerID)}}" class="schule_consultation-btn">Schedule Consultation</a>
+                                <a href="{{route('schedule.consultation', $lawyerID)}}?type={{ $search_type }}&search={{ json_encode($search_data) }}" class="schule_consultation-btn">Schedule Consultation</a>
                             </div>
                             @endif
                             @else
                             <div class="schedular_consultation">
-                                <a href="{{route('schedule.consultation',$lawyerID)}}" class="schule_consultation-btn">Schedule Consultation</a>
+                                <a href="{{route('schedule.consultation', $lawyerID)}}?type={{ $search_type }}&search={{ json_encode($search_data) }}" class="schule_consultation-btn">Schedule Consultation</a>
                             </div>
                             @endif
 
@@ -152,20 +181,35 @@
 
                 @if($modal)
                 <!-- Accept Modal Start Here-->
-                <div wire:ignore.self class="modal fade courts_modal common_modal" id="courtModal" tabindex="-1" aria-labelledby="courtModal" aria-hidden="true">
-                    <div class="modal-dialog modal_style">
+                <div wire:ignore.self class="modal fade courts_modal common_modal modal-design" id="courtModal" tabindex="-1" aria-labelledby="courtModal" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
                         <button type="button" class="btn btn-default close closeModal">
                             <i class="fas fa-close"></i>
                         </button>
-                        <div class="modal-content">
-                            <form>
-                                <div class="modal-header modal_h">
-                                    <h3>Courts</h3>
-                                </div>
-                                <div class="modal-body">
-                                    <div>
+                            <div class="modal-header modal_h">
+
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                  @if($modal->lawyerInfo)
+                                  <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Federal Court Admissions</button>
+                                  </li>
+                                  @endif
+
+                                  @if($modal->lawyerStateBar)
+                                  <li class="nav-item" role="presentation">
+                                    <button class="nav-link {{ !$modal->lawyerInfo ? 'active' : '' }}" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">State Bar Admissions</button>
+                                  </li>
+                                  @endif
+                                </ul>
+
+                            </div>
+                            <div class="modal-body">
+
+                                <div class="tab-content" id="myTabContent">
+                                    @if($modal->lawyerInfo)
+                                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                         @foreach ($modal->lawyerInfo as $lawyerInfo)
-                                        @if($lawyerInfo->categories->is_multiselect)
                                         <div class="mb-4 courts_data">
                                            <div class="name_data_p">
                                              <h6>{{ @$lawyerInfo->items->name }}</h6>
@@ -182,11 +226,34 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        @endif
                                         @endforeach
                                     </div>
+                                    @endif
+
+                                    @if($modal->lawyerStateBar)
+                                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                        @foreach ($modal->lawyerStateBar as $item)
+                                        <div class="mb-4 courts_data">
+                                           <div class="name_data_p">
+                                             <h6>{{ @$item->statebar->name }}</h6>
+                                           </div>
+                                            <div class="federal-court">
+                                                <div class="form-grouph select-design">
+                                                    <label>Bar Number</label>
+                                                    <div>{{ @$item->bar_number ?? '--' }}</div>
+                                                </div>
+                                                <div class="form-grouph select-design">
+                                                    <label>Year Admitted</label>
+                                                    <div>{{ $item->year_admitted ?? '--'}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @endforeach
+                                    </div>
+                                    @endif
                                 </div>
-                            </form>
+
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -214,6 +281,74 @@
             $(document).on('click', '.closeModal', function(e) {
                 $('#courtModal').modal('hide');
             });
+            
+            
+            //...
+  
+            $(function() {
+                $("#hourly-range").slider({
+                    step: 5,
+                    range: true, 
+                    min: 0, 
+                    max: 500, 
+                    values: [0, 500], 
+                    slide: function(event, ui)
+                    {
+                        $("#hourlyRange").val(ui.values[0] + " - " + ui.values[1]);
+                        
+                        @this.set('rate_min', ui.values[0]);
+                        @this.set('rate', ui.values[1]);
+                    }
+                });
+                
+                $("#hourlyRange").val($("#hourly-range").slider("values", 0) + " - " + $("#hourly-range").slider("values", 1));
+            
+            });
+            
+            
+            $(function() {
+                $("#years-range").slider({
+                    step: 1,
+                    range: true, 
+                    min: 1, 
+                    max: 20, 
+                    values: [1, 20], 
+                    slide: function(event, ui)
+                    {
+                        $("#yearsRange").val(ui.values[0] + " - " + ui.values[1]);
+                        
+                        @this.set('year_exp_min', ui.values[0]);
+                        @this.set('year_exp', ui.values[1]);
+                    }
+                });
+                
+                $("#yearsRange").val($("#years-range").slider("values", 0) + " - " + $("#years-range").slider("values", 1));
+            
+            });
+            
+            
+            $(function() {
+                $("#distance-range").slider({
+                    step: 1,
+                    range: true, 
+                    min: 0, 
+                    max: 100, 
+                    values: [0, 100], 
+                    slide: function(event, ui)
+                    {
+                        $("#distanceRange").val(ui.values[0] + " - " + ui.values[1]);
+                        
+                        @this.set('distance_min', ui.values[0]);
+                        @this.set('distance', ui.values[1]);
+                    }
+                });
+                
+                $("#yearsRange").val($("#distance-range").slider("values", 0) + " - " + $("#distance-range").slider("values", 1));
+            
+            });
+            
+            
+
         </script>
         @endpush
     </div>

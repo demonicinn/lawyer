@@ -1,6 +1,7 @@
 @php
 $details = $user->details;
 $lawyer_details = $user->lawyerInfo;
+$lawyer_state_bar = $user->lawyerStateBar;
 
 @endphp
 
@@ -32,6 +33,7 @@ $lawyer_details = $user->lawyerInfo;
                     {!! $errors->first('bio', '<span class="help-block">:message</span>') !!}
                 </div>
 
+                {{--
                 <div class="form-grouph select-design">
                     @foreach ($categories as $category)
                     <div class="form-grouph input-design">
@@ -50,6 +52,7 @@ $lawyer_details = $user->lawyerInfo;
                     {!! $errors->first('lawyer_info.'.$category->id, '<span class="help-block">:message</span>') !!}
                     @endforeach
                 </div>
+                --}}
 
 
                 <div class="form-grouph checkbox-label-block">
@@ -133,7 +136,7 @@ $lawyer_details = $user->lawyerInfo;
                 <div class="form-flex">
                     <div class="form-grouph input-design{!! ($errors->has('contact_number') ? ' has-error' : '') !!}">
                         {!! Form::label('contact_number','Phone', ['class' => 'form-label']) !!}
-                        {!! Form::number('contact_number', $user->contact_number ?? null, ['class' => ($errors->has('contact_number') ? ' is-invalid' : '')]) !!}
+                        {!! Form::text('contact_number', $user->contact_number ?? null, ['class' => 'phone '.($errors->has('contact_number') ? ' is-invalid' : '')]) !!}
                         {!! $errors->first('contact_number', '<span class="help-block">:message</span>') !!}
                     </div>
                     <div class="form-grouph input-design{!! ($errors->has('email') ? ' has-error' : '') !!}">

@@ -11,7 +11,10 @@
 
     @push('scripts')
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/jquery.inputmask.bundle.min.js"></script>
     <script>
+
+
         let workingDates = @json(@$workingDates);
 
         $(document).ready(function() {
@@ -22,6 +25,12 @@
             $(document).on('click', '.closeLoginModal', function(){
                 $('#loginForm').modal('hide');
             });
+
+
+            window.livewire.on('phoneMask', () => {
+                $('.phone').inputmask('(99)-9999-9999');
+            });
+            $('.phone').inputmask('(99)-9999-9999');
 
             getDates(workingDates);
 

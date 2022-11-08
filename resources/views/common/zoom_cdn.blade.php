@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 	
-	<input type="hidden" id="meeting_number" value="{{ @$booking->zoom_id }}">
+	<input type="hidden" id="meeting_number" value="{{ @$zoom_id }}">
 	<input type="hidden" id="meeting_pwd" value="{{ @$booking->zoom_password }}">
 	<input type="hidden" id="display_name" value="{{ $user->name }}">
 	<input type="hidden" id="meeting_email" value="{{ $user->email }}">

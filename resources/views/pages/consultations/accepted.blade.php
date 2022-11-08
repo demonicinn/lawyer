@@ -20,13 +20,12 @@
                                     <table style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th>First Name</th>
-                                                <th>Last Name</th>
+                                                <th>Name</th>
                                                 <th>Email</th>
+                                                <th>Practice Area</th>
                                                 <th>Date Accepted</th>
                                                 <th>Details</th>
                                                 <th>Phone</th>
-                                                <th>Practice Area</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -39,23 +38,38 @@
                                             @endphp
                                             @forelse ($accptedConsultations as $accepted)
                                             <tr>
-                                                <td>{{$accepted->$role->first_name}}</td>
-                                                <td>{{$accepted->$role->last_name}}</td>
+                                                <td>{{$accepted->$role->first_name}} {{$accepted->$role->last_name}}</td>
                                                 <td>{{$accepted->$role->email}}</td>
-                                                <td>{{date('d-m-y', strtotime($accepted->updated_at)) }}</td>
                                                 <td>
+                                                    @if($accepted->search_data)
+                                                    @php
+                                                        $search = json_decode($accepted->search_data);
+                                                    @endphp
+                                                        @foreach($search as $id)
+                                                            @if($accepted->search_type == 'litigations')
+                                                            {{ litigationsData($id) }}
+                                                            @else
+                                                            {{ contractsData($id) }}
+                                                            @endif
+                                                        @endforeach
+                                                    @endif
+                                                </td>
+                                                <td>{{date('m-d-Y', strtotime($accepted->updated_at)) }}</td>
+                                                <td>
+                                                    @if (@$accepted->notes->note != null)
                                                     <a class="view-icon info_icns mdl" href="javascript:void(0)" data-id="myNoteModal_{{ $accepted->id }}" data-type="view"><i class="fas fa-eye"></i></a>
-                                                    
+                                                    @endif
+
                                                     @if (Auth::user()->role=="lawyer")
                                                     <a class="view-icon info_icns mdl" href="javascript:void(0)" data-id="myNoteModal_{{ $accepted->id }}" data-type="edit"><i class="fas fa-edit"></i></a>
                                                     @endif
 
                                                     <div id="myNoteModal_{{ $accepted->id }}" class="modal fade common_modal  noteModal" role="dialog">
                                                     
-                                                      <div class="modal-dialog">
-                                                      <button type="button" class="btn btn-default close cloaseModal">  <i class="fas fa-close"></i></button>
+                                                      <div class="modal-dialog modal-dialog-centered">
                                                         <!-- Modal content-->
                                                         <div class="modal-content">
+                                                        <button type="button" class="btn btn-default close cloaseModal">  <i class="fas fa-close"></i></button>
                                                           <div class="modal-header modal_h">
                                                             <h3 class="modal-title">Notes</h3>
                                                           </div>
@@ -83,7 +97,7 @@
                                                             </div>
 
                                                               </div>
-                                                              <div class="modal-footer">
+                                                              <div class="modal-footer justify-content-center">
                                                                 <button type="submit" class="   btn-design-first edit">
                                                                     @if (@$accepted->notes->note !=null)
                                                                     Update
@@ -92,7 +106,7 @@
                                                                     @endif
                                                                 </button>
 
-                                                                    <button type="button" class="btn btn-default cloaseModal">Close</button>
+                                                                    <!-- <button type="button" class="btn btn-default cloaseModal">Close</button> -->
                                                                 </div>
                                                           @else
 
@@ -110,6 +124,8 @@
                                                                 </div>
                                                             </div>
                                                           @endif
+
+                                                      </form>
                                                         </div>
 
                                                       </div>
@@ -117,8 +133,7 @@
 
 
                                                 </td>
-                                                <td>{{$accepted->$role->contact_number}}</td>
-                                                <td>Car Accident</td>
+                                                <td class="phone">{{$accepted->$role->contact_number}}</td>
                                             </tr>
 
                                             @empty
@@ -149,6 +164,8 @@
 @endsection
 
 @section('script')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/jquery.inputmask.bundle.min.js"></script>
+
 <script>
 $('.info_icns.mdl').on('click', function (){
     var id = $(this).attr('data-id');
@@ -168,6 +185,9 @@ $('.info_icns.mdl').on('click', function (){
 $('.cloaseModal').on('click', function (){
     $('.noteModal').modal('hide');
 });
+
+
+$('.phone').inputmask('(99)-9999-9999');
 
 </script>
 @endsection

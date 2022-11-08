@@ -43,12 +43,12 @@
     <div id="pagination-container" class="pagination-container-saved">{{$states->links()}}</div>
 
     <!-- Accept Modal Start Here-->
-    <div wire:ignore.self class="modal fade common_modal" id="stateForm" tabindex="-1" aria-labelledby="stateForm" aria-hidden="true">
-        <div class="modal-dialog modal_style">
+    <div wire:ignore.self class="modal fade common_modal modal-design" id="stateForm" tabindex="-1" aria-labelledby="stateForm" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
             <button type="button" class="btn btn-default close closeModal">
                 <i class="fas fa-close"></i>
             </button>
-            <div class="modal-content">
                 <form>
                     <div class="modal-header modal_h">
                         <h3>Add/Edit Contract</h3>

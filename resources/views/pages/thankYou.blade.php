@@ -4,7 +4,7 @@
   <div class="container">
   <div class="white-shadow-third-box">
          <div class="heading-paragraph-design text-center mb-5">
-          <h2>Thank you for your booking</h2>
+          <h2>Thank you for booking</h2>
          </div>
         <div class="booking-info_profile-flex">
           <div class="booking-info-left_column">

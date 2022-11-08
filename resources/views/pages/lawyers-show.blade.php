@@ -40,8 +40,10 @@
                                     </div>
 
                                     <div class="add-litigations mt-2 location_profile-divs d-flex justify-content-spacebw align-items-center ">
-                                <button type="button" class="btn_court showModal "><i class="fa-solid fa-gavel"></i>  Courts</button>
-                                <a href="#">See Profile</a>
+
+                                <button type="button" class="btn_court showModal "><i class="fa-solid fa-gavel"></i>  Admission</button>
+
+                              <!--   <a href="#">See Profile</a> -->
                             </div>
 
 
@@ -54,12 +56,12 @@
                                     @if(auth()->check())
                                     @if(auth()->user()->role=='user')
                                     <div class="schedular_consultation">
-                                        <a href="{{route('schedule.consultation',$lawyerID)}}" class="schule_consultation-btn">Schedule Consultation</a>
+                                        <a href="{{route('schedule.consultation', $lawyerID)}}?type={{ request()->type }}&search={{ request()->search }}" class="schule_consultation-btn">Schedule Consultation</a>
                                     </div>
                                     @endif
                                     @else
                                     <div class="schedular_consultation">
-                                        <a href="{{route('schedule.consultation',$lawyerID)}}" class="schule_consultation-btn">Schedule Consultation</a>
+                                        <a href="{{route('schedule.consultation', $lawyerID)}}?type={{ request()->type }}&search={{ request()->search }}" class="schule_consultation-btn">Schedule Consultation</a>
                                     </div>
                                     @endif
 
@@ -107,38 +109,75 @@
 @endsection
 
 @section('script')
-<div class="modal fade courts_modal common_modal" id="courtModal" tabindex="-1" aria-labelledby="courtModal" aria-hidden="true">
+<div class="modal fade courts_modal common_modal modal-design" id="courtModal" tabindex="-1" aria-labelledby="courtModal" aria-hidden="true">
     <div class="modal-dialog modal_style">
+        <div class="modal-content">
         <button type="button" class="btn btn-default close closeModal">
             <i class="fas fa-close"></i>
         </button>
-        <div class="modal-content">
             <form>
                 <div class="modal-header modal_h">
-                    <h3>Courts</h3>
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                      @if($user->lawyerInfo)
+                      <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Federal Court Admissions</button>
+                      </li>
+                      @endif
+
+                      @if($user->lawyerStateBar)
+                      <li class="nav-item" role="presentation">
+                        <button class="nav-link {{ !$user->lawyerInfo ? 'active' : '' }}" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">State Bar Admissions</button>
+                      </li>
+                      @endif
+                    </ul>
+
                 </div>
                 <div class="modal-body">
-                    <div>
-                        @foreach ($user->lawyerInfo as $lawyerInfo)
-                        @if($lawyerInfo->categories->is_multiselect)
-                        <div class="mb-4 courts_data">
-                           <div class="name_data_p">
-                             <h6>{{ @$lawyerInfo->items->name }}</h6>
-                            <p class="mb-0">{{ @$lawyerInfo->items->category->name }} {{ @$lawyerInfo->items->category->mainCat->name ? ' - '.$lawyerInfo->items->category->mainCat->name : ''  }}</p>
-                           </div>
-                            <div class="federal-court">
-                                <div class="form-grouph select-design">
-                                    <label>Bar Number</label>
-                                    <div>{{ @$lawyerInfo->bar_number ?? '--' }}</div>
-                                </div>
-                                <div class="form-grouph select-design">
-                                    <label>Year Admitted</label>
-                                    <div>{{ $lawyerInfo->year_admitted ?? '--'}}</div>
+                    <div class="tab-content" id="myTabContent">
+                        @if($user->lawyerInfo)
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            @foreach ($user->lawyerInfo as $lawyerInfo)
+                            <div class="mb-4 courts_data">
+                               <div class="name_data_p">
+                                 <h6>{{ @$lawyerInfo->items->name }}</h6>
+                                <p class="mb-0">{{ @$lawyerInfo->items->category->name }} {{ @$lawyerInfo->items->category->mainCat->name ? ' - '.$lawyerInfo->items->category->mainCat->name : ''  }}</p>
+                               </div>
+                                <div class="federal-court">
+                                    <div class="form-grouph select-design">
+                                        <label>Bar Number</label>
+                                        <div>{{ @$lawyerInfo->bar_number ?? '--' }}</div>
+                                    </div>
+                                    <div class="form-grouph select-design">
+                                        <label>Year Admitted</label>
+                                        <div>{{ $lawyerInfo->year_admitted ?? '--'}}</div>
+                                    </div>
                                 </div>
                             </div>
+                            @endforeach
                         </div>
                         @endif
-                        @endforeach
+
+                        @if($user->lawyerStateBar)
+                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            @foreach ($user->lawyerStateBar as $item)
+                            <div class="mb-4 courts_data">
+                               <div class="name_data_p">
+                                 <h6>{{ @$item->statebar->name }}</h6>
+                               </div>
+                                <div class="federal-court">
+                                    <div class="form-grouph select-design">
+                                        <label>Bar Number</label>
+                                        <div>{{ @$item->bar_number ?? '--' }}</div>
+                                    </div>
+                                    <div class="form-grouph select-design">
+                                        <label>Year Admitted</label>
+                                        <div>{{ $item->year_admitted ?? '--'}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+                        @endif
                     </div>
                 </div>
             </form>

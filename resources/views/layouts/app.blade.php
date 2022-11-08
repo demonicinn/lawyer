@@ -57,6 +57,31 @@
   @stack('scripts')
 
 
+
+<form id="search-form" action="{{ route('lawyers.home') }}" method="POST" class="d-none">          
+@csrf
+<input type="hidden" name="latitude">
+<input type="hidden" name="longitude">
+<input type="hidden" name="search">
+<input type="hidden" name="type">
+</form>
+
+<script>
+  $('.search-ho').on('click', function(event){
+    event.preventDefault();
+
+    var search = $(this).attr('data-search');
+    var type = $(this).attr('data-type');
+
+    $('input[name=search]').val(search);
+    $('input[name=type]').val(type);
+
+    document.getElementById('search-form').submit();
+  })
+</script>
+
+
+
   <script>
     function getLocation(){
       if ("geolocation" in navigator){ //check geolocation available 
@@ -79,6 +104,8 @@
         centerMode: false,
         slidesToShow: 3,
         slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 2000,
         responsive: [
     {
       breakpoint: 1199,

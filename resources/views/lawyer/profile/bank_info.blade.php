@@ -4,15 +4,26 @@
 		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
 		    <div class="white-shadow-scnd-box">
 		        <div class="form-heading">
-		            <h4 class="h4-design">Add Bank Details</h4>
+		            <h4 class="h4-design">Bank Details</h4>
 		        </div> 
 
-				{!! Form::open(['route' => 'lawyer.bank.connect', 'class'=>'lawyer_profile-information form-design']) !!}
+		        @if(!$user->bankInfo)
+					{!! Form::open(['route' => 'lawyer.bank.connect', 'class'=>'lawyer_profile-information form-design']) !!}
 
-				<button type="submit" class="btn-design-first btn_bank">Connect Bank Account</button>
+					<button type="submit" class="btn-design-first btn_bank">Connect Bank Account</button>
 
-				{!! Form::close() !!}
-  
+					{!! Form::close() !!}
+				@else
+					@php
+						$bankInfo = $user->bankInfo;
+					@endphp
+					<b>Your Account is Connected.</b>
+					<p><strong>Account Holder Name:</strong> {{ @$bankInfo->account_holder_name }}</p>
+					<p><strong>Account Number:</strong> {{ @$bankInfo->account_number }}</p>
+					<p><strong>Routing Number:</strong> {{ @$bankInfo->routing_number }}</p>
+
+					<a href="{{ route('lawyer.banking.success') }}" class="btn-design-first btn_bank">Edit Bank Account</a>
+  				@endif
 		    </div>
 		</div>
     </div>

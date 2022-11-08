@@ -111,11 +111,18 @@ Route::get('/narrow-down-litigations', [PagesController::class, 'litigations'])-
 Route::get('/narrow-down-contracts', [PagesController::class, 'contracts'])->name('narrow.contracts');
 
 Route::get('/narrow-lawyers', [PagesController::class, 'lawyers'])->name('lawyers');
+Route::post('/narrow-lawyers-home', [PagesController::class, 'lawyersHome'])->name('lawyers.home');
+
 Route::get('/narrow-lawyers/{user}', [PagesController::class, 'lawyerShow'])->name('lawyer.show');
+
+
 Route::get('/about', [PagesController::class, 'about'])->name('about');
+Route::get('/join-the-team', [PagesController::class, 'joinTeam'])->name('joinTeam');
+Route::post('/join-the-team/store', [PagesController::class, 'joinTeamStore'])->name('joinTeamStore');
 
 
-
+Route::get('/privacy-policy', [PagesController::class, 'privacyPolicy'])->name('privacyPolicy');
+Route::get('/terms-of-service', [PagesController::class, 'termsService'])->name('termsService');
 
 // schedule consultation
 Route::get('/schedule/consultation/{id}', [ScheduleConsultationController::class, 'index'])->name('schedule.consultation');
@@ -147,6 +154,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::post('/accept/case/{id}', [CommonController::class, 'acceptCase'])->name('accept.case');
     Route::post('/decline/case/{id}', [CommonController::class, 'declineCase'])->name('decline.case');
+    Route::post('/cancel/case/{id}', [CommonController::class, 'cancelCase'])->name('cancel.case');
 
 
     //..accepted
@@ -196,6 +204,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         //...dashboard
         Route::get('/', [Admin\DashboardController::class, 'index'])->name('admin');
         Route::get('/dashboard', [Admin\DashboardController::class, 'index'])->name('admin.dashboard');
+
+        Route::get('/join-team', [Admin\JoinTeamController::class, 'index'])->name('admin.joinTeam');
 
 
         //...profile 
@@ -280,10 +290,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
             return view('admin.subscriptions.index', compact('title'));
         })->name('admin.subscriptions.index');
 
-        //...categories
-        Route::get('/categories', function () {
+        //...state bar
+        Route::get('/state-bar', function () {
             $title = array(
-                'title' => 'Categories',
+                'title' => 'State Bar Admissions',
+                'active' => 'state-bar',
+            );
+            return view('admin.state_bar.index', compact('title'));
+        })->name('admin.state_bar.index');
+
+        //...categories
+        Route::get('/federal-court', function () {
+            $title = array(
+                'title' => 'Federal Court Admissions',
                 'active' => 'categories',
             );
             return view('admin.categories.index', compact('title'));
@@ -330,7 +349,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
             Route::get('/banking-info-error', [Lawyer\ProfileController::class, 'bankingInfoError'])->name('lawyer.banking.error');
-            Route::get('/banking-info-success', [Lawyer\ProfileController::class, 'bankingInfoSuccess'])->name('lawyer.banking.success');
+            Route::get('/banking-info', [Lawyer\ProfileController::class, 'bankingInfoSuccess'])->name('lawyer.banking.success');
+            Route::post('/banking-info/store', [Lawyer\ProfileController::class, 'bankingInfoStore'])->name('lawyer.banking.store');
 
 
             Route::post('/profile/submit', [Lawyer\ProfileController::class, 'submit'])->name('lawyer.profile.submit');
@@ -339,7 +359,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::group(['middleware' => 'profileVerified'], function () {
 
                 //...dashboard
-                Route::get('/', [Lawyer\DashboardController::class, 'index'])->name('lawyer');
+                Route::get('/', [Lawyer\DashboardController::class, 'portal'])->name('lawyer');
                 Route::get('/dashboard', [Lawyer\DashboardController::class, 'index'])->name('lawyer.dashboard');
 
                 //...
@@ -355,7 +375,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         Route::group(['prefix' => 'user'], function () {
             //...dashboard
-            Route::get('/', [User\DashboardController::class, 'index'])->name('user.dashboard');
+            Route::get('/', [User\DashboardController::class, 'index'])->name('user');
+            //Route::get('/', [User\DashboardController::class, 'index'])->name('user.dashboard');
 
 
             //...profile
@@ -372,6 +393,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('review/{id}', [User\ReviewController::class, 'index'])->name('review.lawyer');
             Route::post('review/{id}/store', [User\ReviewController::class, 'store'])->name('review.store');
 
+
+            //billing
+            Route::prefix('billing')->group(function () {
+                Route::controller(User\BillingController::class)->group(function () {
+                    Route::get('/', 'index')->name('user.billing.index');
+                    Route::get('/create', 'create')->name('user.billing.create');
+                    Route::post('/store', 'store')->name('user.billing.store');
+                    Route::get('{id}/destroy', 'destroy')->name('user.billing.destroy');
+                });
+            });
+            
         });
 
         Route::get('thank-you/{id}', [CommonController::class, 'thankYou'])->name('thankYou');

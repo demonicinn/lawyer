@@ -35,6 +35,7 @@
                     </div>
                 </div> -->
 
+            {{--    
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-3">
                     <div class="portal-div-design position-relative">
                         <!-- <div class="portal-div-img">
@@ -47,6 +48,7 @@
                         <span class="three_dots">...</span>
                     </div>
                 </div>
+            --}}
 
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-3">
                     <div class="portal-div-design position-relative">
@@ -54,7 +56,7 @@
                             <img src="{{ asset('assets/images/schedule.svg') }}">
                         </div> -->
                         <div class="portal-cntnt-wrapper">
-                            <a href="{{ route('lawyer.profile') }}">Profile</a>
+                            <a href="{{ route('lawyer.profile') }}">Account</a>
                             <p></p>
                         </div>
                         <span class="three_dots">...</span>
@@ -76,23 +78,25 @@
 
             </div>
 
-
-            {!! Form::open(['method'=>'get']) !!}
-            <div class="row py-4">
-                <div class="col-md-2 form-group">
+           <div class="row">
+            <div class="col-md-12">
+            <div class="data-white-box no-hover-box">
+            <div class="heading-design-flex d-flex justify-content-spacebw align-items-center">
+                  <h4>BOOKINGS BY MONTH</h4>
+                  {!! Form::open(['method'=>'get']) !!}
+            <div class="form-char-flext">
+                <div class="form-group input-design">
                     <input type="number" class="form-control" name="year" value="{{ $year = request()->year ?? date('Y') }}" min="2022" max="{{ date('Y') }}" required>
                 </div>
-
-                <div class="col-md-1 form-group">
+                <div class="form-group submit-design">
                     <button class="btn btn-primary" style="background-color: #f93f64; border-color:#f93f64;" type="submit">Search</button>
                 </div>
-
             </div>
             {!! Form::close() !!}
-
-
-           <div class="row">
-            <div id="bookingChart" class="col-md-6"></div>
+                </div>
+            <div id="bookingChart"></div>
+            </div>
+            </div>
            </div>
         </div>
 
@@ -136,20 +140,43 @@ rel="Stylesheet"type="text/css"/>
         
         var options = {
             hAxis: {
-                title: ''
+                title: '',
+                gridlines: {
+                  color: 'transparent'
+                },
+                textStyle: {
+            fontSize: 10,
+            color: '#979797'
+            }
             },
             vAxis: {
-                title: ''
+                title: '',
+                gridlines: {
+                  color: 'transparent'
+                },
+                textStyle: {
+            fontSize: 10,
+            color: '#979797'
+            }
             },
             seriesType: 'bars',
             series: {1: {type: 'line'}},
             tooltip: { isHtml: true },
-            legend: { position: 'top' },
+            legend: { position: 'none' },
             colors: ['#f93f64'],
             chartArea: {'width': '85%'},
-            backgroundColor: '#f8f8f8',
-            border: '1px solid #979797',
-            is3D: true
+            is3D: true,
+            backgroundColor: {
+                'fill': 'transparent',
+                'stroke': 'transparent',
+                'strokeWidth': '0',
+            },
+            annotations: {
+            textStyle: {
+            fontSize: 10,
+            color: '#979797'
+            }
+        }
         };
         
         var chart = new google.visualization.ComboChart(document.getElementById('bookingChart'));

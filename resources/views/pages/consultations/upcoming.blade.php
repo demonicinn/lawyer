@@ -20,8 +20,7 @@
                                     <table style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th>First Name</th>
-                                                <th>Last Name</th>
+                                                <th>Name</th>
                                                 <th>Practice Area</th>
                                                 <th>Date</th>
                                                 <th>Time</th>
@@ -42,10 +41,22 @@
                                             $end_time=date('g:i A', strtotime($upcoming->booking_time. ' +30 minutes'));
                                             @endphp
                                             <tr>
-                                                <td>{{$upcoming->$role->first_name}}</td>
-                                                <td>{{$upcoming->$role->last_name}}</td>
-                                                <td>Car Accident</td>
-                                                <td>{{date('d-m-y', strtotime($upcoming->booking_date)) }}</td>
+                                                <td>{{$upcoming->$role->first_name}} {{$upcoming->$role->last_name}}</td>
+                                                <td>
+                                                    @if($upcoming->search_data)
+                                                    @php
+                                                        $search = json_decode($upcoming->search_data);
+                                                    @endphp
+                                                        @foreach($search as $id)
+                                                            @if($upcoming->search_type == 'litigations')
+                                                            {{ litigationsData($id) }}
+                                                            @else
+                                                            {{ contractsData($id) }}
+                                                            @endif
+                                                        @endforeach
+                                                    @endif
+                                                </td>
+                                                <td>{{date('m-d-Y', strtotime($upcoming->booking_date)) }}</td>
                                                 <td>{{$start_time}} - {{$end_time}}</td>
                                                 <td>
                                                     <div class="dropdown reshedule_dropdowns">

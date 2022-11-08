@@ -8,7 +8,7 @@ use Carbon\CarbonPeriod;
 use App\Models\Booking;
 use App\Models\Leave;
 use App\Models\User;
-use App\Notifications\RescheduleBookingMail;
+use App\Notifications\RescheduleMail;
 use Illuminate\Support\Facades\Notification;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use App\Http\Controllers\MeetingController;
@@ -64,31 +64,47 @@ class RescheduleBooking extends Component
 
 
 
-        $lawyerHours = $this->lawyer->lawyerHours()->where('day', $this->dateDay)->first();
+        $lawyerHours = $this->lawyer->lawyerHours()->where('day', $this->dateDay)->get();
 
-        $getLeaves = Leave::where('user_id', $this->lawyerId)
-            ->where('date', $date)
-            ->get();
+        $getLeaves = $this->lawyer->booking()->whereDate('booking_date', $date)->where('is_canceled', '0')->pluck('booking_time')->toArray();
 
-        //  dd( $getLeaves);
-        if (!count($getLeaves) > 0) {
-            if (@$lawyerHours && $date > date('Y-m-d')) {
 
-                $startTime = strtotime($lawyerHours->from_time);
-                $endTime = strtotime($lawyerHours->to_time);
+        $checkLeave = $this->lawyer->leave()->where('date', $date)->first();
+
+
+
+        ///,.....available current date
+        if(!$checkLeave){
+            if (@$lawyerHours && $date >= date('Y-m-d')) {
+
+                
                 $duration = '30';
 
                 //...
                 $time_slots = array();
                 $add_mins  = $duration * 60;
 
-                while ($startTime <= $endTime) {
-                    $time_slots[] = date("H:i", $startTime);
-                    $startTime += $add_mins;
-                }
+                foreach($lawyerHours as $lawyerHour){
+                    $startTime = strtotime($lawyerHour->from_time);
+                    $endTime = strtotime($lawyerHour->to_time);
+                    while ($startTime <= $endTime) {
+                        $timeSlot = [];
+                        if(in_array(date("H:i:s", $startTime), $getLeaves)) {
+                            $timeSlot['is_free'] = 'no';
+                        }
+                        else {
+                            $timeSlot['is_free'] = 'yes';
+                        }
 
+
+                        $timeSlot['time'] = date("H:i", $startTime);
+                        $time_slots[] = $timeSlot;
+
+                        $startTime += $add_mins;
+
+                    }
+                }
                 $this->workingDatesTimeSlot = $time_slots;
-                // dd( $this->workingDatesTimeSlot );
             }
         }
 
@@ -186,12 +202,12 @@ class RescheduleBooking extends Component
 
 
         if ($rescheduleBooking) {
-            $user = 'user';
-            $lawyer = 'lawyer';
+            $user = $rescheduleBooking->user;
+            $lawyer = $rescheduleBooking->lawyer;
             //send notification to User
-            Notification::route('mail', $rescheduleBooking->user_email)->notify(new RescheduleBookingMail($rescheduleBooking, $user));
+            Notification::route('mail', $rescheduleBooking->user_email)->notify(new RescheduleMail($rescheduleBooking, $user));
             //send notification to lawyer
-            Notification::route('mail', $rescheduleBooking->lawyer->email)->notify(new RescheduleBookingMail($rescheduleBooking, $lawyer));
+            Notification::route('mail', $rescheduleBooking->lawyer->email)->notify(new RescheduleMail($rescheduleBooking, $lawyer));
 
             //...
             $this->flash('success', 'Booking reschedule successfully.');

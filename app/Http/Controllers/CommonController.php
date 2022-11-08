@@ -72,7 +72,7 @@ class CommonController extends Controller
                 'email' => ['required', 'email', 'max:255', 'not_regex:/(' . implode("|", $banned) . ')/i'],
                 'reason' => ['required', 'string', 'max:255', 'not_regex:/(' . implode("|", $banned) . ')/i'],
                 'message' => ['required', 'string', 'not_regex:/(' . implode("|", $banned) . ')/i'],
-                //'g-recaptcha-response' => 'recaptcha|required',
+                'g-recaptcha-response' => 'required|recaptcha',
 
             ]
         );
@@ -86,12 +86,12 @@ class CommonController extends Controller
         $contact->message = $request->message;
         $contact->save();
 
-        //Notification::route('mail', env('ADMIN_EMAIL'))->notify(new SupportNotification($contact));
-        Notification::route('mail', 'info.gurpreetsaini@gmail.com')->notify(new SupportNotification($contact));
+        Notification::route('mail', env('ADMIN_EMAIL'))->notify(new SupportNotification($contact));
+        //Notification::route('mail', 'info.gurpreetsaini@gmail.com')->notify(new SupportNotification($contact));
 
         //dd($request->all());
 
-        $this->flash('success', 'Support added successfully pp');
+        $this->flash('success', 'Support added successfully');
         return back();
     }
 
@@ -239,7 +239,7 @@ class CommonController extends Controller
             $completeConsultations = Booking::where('lawyer_id', $authUser->id)
                 ->where('is_call', 'completed')
                 ->where('is_accepted', '0')
-                ->where('is_canceled', '0')
+                //->where('is_canceled', '0')
                 ->with('user', 'notes')->latest('id')->get();
             //   dd( $completeConsultations);
         } else {
@@ -247,7 +247,7 @@ class CommonController extends Controller
             $completeConsultations = Booking::where('user_id', $authUser->id)
                 ->where('is_call', 'completed')
                 ->where('is_accepted', '0')
-                ->where('is_canceled', '0')
+                //->where('is_canceled', '0')
                 ->with('lawyer')->latest('id')->get();
         }
         return view('pages.consultations.completed', compact('title', 'completeConsultations'));
@@ -286,12 +286,19 @@ class CommonController extends Controller
     {
 
         //dd("rechdule by admin");
-        $booking = Booking::where('id', $id)->with('user', 'lawyer')->first();
-        $booking->reschedule = '1';
-        $booking->update();
+        $booking = Booking::where('id', $id)
+                        ->where('is_call', 'pending')
+                        ->where('is_accepted', '0')
+                        ->where('is_canceled', '0')
+                        ->first();
+
+        
 
 
-        if ($booking) {
+        if (@$booking) {
+            $booking->reschedule = '1';
+            $booking->update();
+
             if (auth()->user()->role == 'user') {
                 //send reschedule mail to lawyer
                 $lawyerInfo = $booking->lawyer;
@@ -305,6 +312,11 @@ class CommonController extends Controller
             $this->flash('success', 'Reschedule done successfully');
             return back();
         }
+        
+
+        $this->flash('error', 'Invalid Consultation.');
+        return redirect()->route('consultations.upcoming');
+
     }
 
     public function addNote(Request $request, $id)
@@ -353,6 +365,8 @@ class CommonController extends Controller
             // send mail to lawyer
             //Notification::route('mail', $authUser->email)->notify(new LawyerMailForCaseStatus($acceptCase, $status));
             
+            
+            $this->flash('success', 'Case Accepted');
             return redirect()->route('consultations.accepted');
             
         }
@@ -385,6 +399,24 @@ class CommonController extends Controller
         return back();
         return redirect()->route('consultations.accepted');
     }
+    
+    
+    public function cancelCase($id)
+    {
+        $booking = Booking::where('id', $id)->first();
+        //$booking->is_call = "completed";
+        $booking->is_canceled = '1';
+        $booking->update();
+
+        
+        
+        $this->flash('success', 'Case canceled successfully');
+        
+        return back();
+        return redirect()->route('consultations.complete');
+    }
+    
+    
 
     public function reschedule($id)
    {
@@ -442,15 +474,17 @@ class CommonController extends Controller
         $meeting = new MeetingController;
         $a = $meeting->destroy($booking);
 
+        //dd($a);
         ///
-        if($a){
+        //if($a){
             $booking->is_canceled = '1';
             $booking->save();
 
             $this->flash('success', 'Booking Canceled');
+            return redirect()->back();
 
-        }
-        $this->flash('error', 'Something went wrong');
+        //}
+        //$this->flash('error', 'Something went wrong');
     }
 
 

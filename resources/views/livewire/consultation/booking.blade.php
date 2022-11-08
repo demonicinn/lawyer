@@ -26,48 +26,7 @@
                                     </a>
                                 </div>
                                 @endif
-                                <!--Login Modal -->
-                                <div wire:ignore.self class="modal fade login_modal" id="loginForm" tabindex="-1" aria-labelledby="loginFormLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-
-                                                <button type="button" class="btn-close closeLoginModal"></button>
-                                            
-                                            <div class="modal-body">
-                                                <div class="container">
-                                                    <div class="authentication-container">
-                                                        <div class="authentication-header">
-                                                            <h2>User Login </h2>
-                                                        </div>
-                                                        @if(Session::has('error'))
-                                                        <p class="alert alert-info">{{ Session::get('error') }}</p>
-                                                        @endif
-                                                        <div class="lawyer-login">
-
-                                                            <div class="">
-
-                                                                <div class="form-grouph input-design">
-                                                                    <input type="email" wire:model="uemail" placeholder="Enter email">
-                                                                    {!! $errors->first('uemail', '<span class="help-block">:message</span>') !!}
-                                                                </div>
-
-                                                                <div class="form-grouph input-design">
-                                                                    <input type="password" wire:model="upassword" placeholder="Enter password">
-                                                                    {!! $errors->first('upassword', '<span class="help-block">:message</span>') !!}
-                                                                </div>
-                                                                <div class="form-grouph submit-design text-center">
-                                                                    <button type="button" class="btn-design-first" wire:click="login">{{__ ('Login') }}</button>
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
+                                
                             </div>
 
                             <div class="form-grouph input-design">
@@ -82,7 +41,7 @@
                             </div>
                             <div class="form-grouph input-design">
                                 <label>Phone</label>
-                                <input type="number" wire:model='phone' placeholder="Phone Number (optional)">
+                                <input type="text" class="phone" wire:model='phone' placeholder="Phone Number (optional)">
                                 {!! $errors->first('phone', '<span class="help-block">:message</span>') !!}
                             </div>
 
@@ -262,6 +221,53 @@
         </div>
     </div>
 </section>
+
+
+
+<!--Login Modal -->
+<div wire:ignore.self class="modal fade login_modal" id="loginForm" tabindex="-1" aria-labelledby="loginFormLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+                <button type="button" class="btn-close closeLoginModal"></button>
+            
+            <div class="modal-body">
+                <div class="container">
+                    <div class="authentication-container">
+                        <div class="authentication-header">
+                            <h2>User Login </h2>
+                        </div>
+                        @if(Session::has('error'))
+                        <p class="alert alert-info">{{ Session::get('error') }}</p>
+                        @endif
+                        <div class="lawyer-login">
+
+                            <form action="#">
+
+                                <div class="form-grouph input-design mb-3">
+                                    <input type="email" wire:model="uemail" placeholder="Enter email">
+                                    {!! $errors->first('uemail', '<span class="help-block">:message</span>') !!}
+                                </div>
+                                
+
+                                <div class="form-grouph input-design mb-3">
+                                    <input type="password" wire:model="upassword" placeholder="Enter password">
+                                    {!! $errors->first('upassword', '<span class="help-block">:message</span>') !!}
+                                </div>
+                                <div class="form-grouph submit-design text-center">
+                                    <button type="button" class="btn-design-first" wire:click="login">{{__ ('Login') }}</button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 
 <div wire:loading wire:target="useSavedCard">
     <div class="loading"><div class="loader"></div></div>                     

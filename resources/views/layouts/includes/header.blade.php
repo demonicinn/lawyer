@@ -12,6 +12,7 @@ $user = auth()->user();
       </div>
       <div class="login-right-column">
         @guest
+        {{--
         <!-- <div class="login_signup-btns dropdown">
         <button type="button" class="dropdown-toggle login-header-btn" data-bs-toggle="dropdown">
             <span class="drop-icon"><i class="fa-solid fa-angle-down"></i></span>
@@ -23,6 +24,7 @@ $user = auth()->user();
           <a class="dropdown-item btn_login" href="{{ route('login') }}">Login</a>
           </ul>
         </div> -->
+        --}}
         <a class="login-header-btn btn_sign_up mb-3 me-3 py-3" href="{{ route('register') }}">Sign Up</a>
           <a class="login-header-btn btn_login py-3" href="{{ route('login') }}">Login</a>
         @else
@@ -35,21 +37,23 @@ $user = auth()->user();
           <ul class="dropdown-menu">
             @if(Auth::user()->role=="admin")
             <li><a class="dropdown-item" href="{{ route($user->role) }}">Dashboard</a></li>
-            <li><a class="dropdown-item" href="{{ route('admin.profile') }}">My profile</a></li>
+            <li><a class="dropdown-item" href="{{ route('admin.profile') }}">My Profile</a></li>
             <li><a class="dropdown-item" href="{{ route('admin.transactions') }}">Transactions</a></li>
+            <li><a class="dropdown-item" href="{{ route('admin.joinTeam') }}">Join the Team</a></li>
             @elseif(Auth::user()->role=="lawyer")
-            <li><a class="dropdown-item" href="{{ route($user->role) }}">Dashboard</a></li>
-            <li><a class="dropdown-item" href="{{ route('lawyer.profile') }}">My profile</a></li>
+            <li><a class="dropdown-item" href="{{ route($user->role) }}">My Portal</a></li>
+            <li><a class="dropdown-item" href="{{ route('lawyer.profile') }}">My Profile</a></li>
             
             {{--
             <li><a class="dropdown-item" href="{{ route('lawyer.leave') }}">Leave</a></li>
             --}}
 
             <li><a class="dropdown-item" href="{{ route('lawyer.subscription') }}">Subscription</a></li>
+            <li><a class="dropdown-item" href="{{ route('lawyer.banking.success') }}">Bank Info</a></li>
 
             @else
-            <li><a class="dropdown-item" href="{{ route('user.dashboard') }}">Dashboard</a></li>
-            <li><a class="dropdown-item" href="{{ route('user.profile') }}">My profile</a></li>
+            <li><a class="dropdown-item" href="{{ route('user') }}">My Portal</a></li>
+            <li><a class="dropdown-item" href="{{ route('user.profile') }}">My Profile</a></li>
             <li><a class="dropdown-item" href="{{ route('user.saved.lawyer') }}">Saved Lawyers</a></li>
             <li><a class="dropdown-item" href="{{ route('consultations.upcoming') }}">Consultations</a></li>
 
@@ -57,7 +61,7 @@ $user = auth()->user();
             
 
             @endif
-            <li><a class="dropdown-item" href="{{route('change.password')}}">Change password</a></li>
+            <li><a class="dropdown-item" href="{{route('change.password')}}">Change Password</a></li>
             <li><a class="dropdown-item" href="{{route('support')}}">Support</a></li>
             <li>
               <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>

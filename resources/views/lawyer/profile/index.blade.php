@@ -42,7 +42,6 @@
 
         @include('lawyer.profile.form')
 
-        @include('lawyer.profile.bank_info')
 
     </div>
 </section>
@@ -51,6 +50,12 @@
 @section('script')
 @include('common.crop_image')
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/jquery.inputmask.bundle.min.js"></script>
+
+<script>
+$('.phone').inputmask('(99)-9999-9999');
+
+</script>
 <div class="layoutHtml" style="display: none;">
     <div>
         <div class="layout layout_0id0">
@@ -73,15 +78,41 @@
 </div>
 
 
+<div class="stateHtmlDom" style="display: none;">
+    <div>
+        <div class="layout layout_0id0">
+            <div class="grey-light-heading">
+                <h4>0itemTitle0</h4>
+            </div>
+            <div class="form-flex">
+                <div class="form-grouph input-design">
+                    <label for="bar_number" class="form-label">Bar Number*</label>
+                    <input maxlength="20" required="required" name="lawyer_state[0key0][bar_number]" type="text" value="0bar0">
+                    
+                </div>
+                <div class="form-grouph input-design">
+                    <label for="year_admitted" class="form-label">Year Admitted*</label>
+                    <input maxlength="4" required="required" name="lawyer_state[0key0][year_admitted]" type="text" value="0year0">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@php
+$getTime = \App\Models\User::getTime();
+@endphp
 <div class="layoutHours" style="display: none;">
     <div class="appned_inputs">
         <div class="form-flex layout layout_0key0">
             <div class="form-grouph input-design{!! ($errors->has('from_time') ? ' has-error' : '') !!}">
-                {!! Form::time('day[0day0][data][0key0][from_time]', null, ['class' => ($errors->has('from_time') ? ' is-invalid' : '')]) !!}
+                {!! Form::select('day[0day0][data][0key0][from_time]', $getTime, null, ['class' => ($errors->has('from_time') ? ' is-invalid' : '')]) !!}
                 {!! $errors->first('from_time', '<span class="help-block">:message</span>') !!}
             </div>
             <div class="form-grouph input-design{!! ($errors->has('to_time') ? ' has-error' : '') !!}">
-                {!! Form::time('day[0day0][data][0key0][to_time]', null, ['class' => ($errors->has('to_time') ? ' is-invalid' : '')]) !!}
+                {!! Form::select('day[0day0][data][0key0][to_time]', $getTime, null, ['class' => ($errors->has('to_time') ? ' is-invalid' : '')]) !!}
                 {!! $errors->first('to_time', '<span class="help-block">:message</span>') !!}
             </div>
               <span class="btn_close">X</span>
@@ -117,16 +148,19 @@
     })
 
     //multiBoxes
-    $('.multiBoxes').on('change', function (){
+    $('#mcategory').on('change', function (){
+        ///let id = $(this).attr("data-cat");
+        //$('.admissionHtml.cat_'+id).html("");
+        
         callAdmission();
     });
 
     function callAdmission(){
 
-        //let newHtml = '';
+        let newHtml = '';
         var html = $('.layoutHtml').html();
 
-        $.each($('.multiBoxes').find(":selected"), function (i, item) { 
+        $.each($('#mcategory').find(":selected"), function (i, item) { 
             let id = $(item).attr("data-cat");
             let itemId = $(item).attr("value");
             let name = $(item).attr("data-name");
@@ -145,17 +179,53 @@
             html1 = html1.replace(/0year0/g, year ?? '');
             html1 = html1.replace(/0bar0/g, bar ?? '');
 
-            //newHtml += html1;
+            newHtml += html1;
 
 
-            //...
-            $('.admissionHtml.cat_'+id).append(html1);
+            
         });
-
+        
+        //...
+        $('.admissionHtml.cat').html(newHtml);
 
     }
     //...
     callAdmission();
+
+
+    //...state bar
+    //stateHtml
+    $('#mstate').on('change', function (){        
+        callStateAdmission();
+    });
+
+    function callStateAdmission(){
+
+        let newHtmlState = '';
+        var html = $('.stateHtmlDom').html();
+
+        $.each($('#mstate').find(":selected"), function (i, item) { 
+            let id = $(item).attr("value");
+            let name = $(item).attr("data-name");
+            let year = $(item).attr("data-year");
+            let bar = $(item).attr("data-bar");
+
+            //...
+            let html1 = html.replace(/0key0/g, id);
+            html1 = html1.replace(/0id0/g, id);
+            html1 = html1.replace(/0itemTitle0/g, name);
+            html1 = html1.replace(/0year0/g, year ?? '');
+            html1 = html1.replace(/0bar0/g, bar ?? '');
+
+            newHtmlState += html1;
+        });
+        
+        //...
+        $('.stateHtml.cat').html(newHtmlState);
+
+    }
+    //...
+    callStateAdmission();
 
 
     $('.clickHours').on('click', function (){

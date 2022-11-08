@@ -12,3 +12,25 @@
     </div>
 </section>
 @endsection
+
+
+@section('script')
+{{--
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="{{ asset('assets/css/price_range_style.css') }}">
+<script src="{{ asset('assets/js/price_range_script.js') }}"></script>
+--}}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css">
+
+
+
+<style>
+    .slider-box {width: 90%; margin: 25px auto}
+label, input {border: none; display: inline-block; margin-right: -4px; vertical-align: top; width: 30%}
+input {width: 70%}
+.slider {margin: 25px 0}
+</style>
+@endsection

@@ -22,7 +22,7 @@
                 </thead>
                 <tbody>
                     @foreach($transactions as $transaction)
-                    <tr style="background: grey;">
+                    <tr>
                         <td>{{ @$transaction->user->name }}</td>
                         <td>${{ @$transaction->amount }}</td>
                         <td>{{ @$transaction->payment_type ? ucfirst($transaction->payment_type) : '' }}</td>
