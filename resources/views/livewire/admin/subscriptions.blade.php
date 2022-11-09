@@ -15,7 +15,6 @@
                     <th>Name</th>
                     <th>Type</th>
                     <th>Price</th>
-                    <th>Savings</th>
                     <th>Status</th>
                     <th>Action</th>
                 </tr>
@@ -26,7 +25,6 @@
                     <td>{{ $subscription->name }}</td>
                     <td>{{ ucfirst($subscription->type) }}</td>
                     <td>{{ $subscription->price ? '$'.$subscription->price : '' }}</td>
-                    <td>{{ $subscription->savings ? '$'.$subscription->savings : '' }}</td>
                     <td>
                         @if($subscription->status=='1')
                         <button type="button" class="accept_btn">Active</button>
@@ -68,7 +66,7 @@
                                 <label>Type</label>
                                 <select wire:model="type">
                                     <option value="">Select Type</option>
-                                    <option value="free">Free</option>
+                                    {{--<option value="free">Free</option>--}}
                                     <option value="monthly">Monthly</option>
                                     <option value="yearly">Yearly</option>
                                 </select>
@@ -79,11 +77,6 @@
                                 <label>Price</label>
                                 <input type="text" wire:model="price" maxlength="8">
                                 {!! $errors->first('price', '<span class="help-block">:message</span>') !!}
-                            </div>
-                            <div class="form-grouph input-design">
-                                <label>Savings</label>
-                                <input type="text" wire:model="savings" maxlength="8">
-                                {!! $errors->first('savings', '<span class="help-block">:message</span>') !!}
                             </div>
                             <div class="form-grouph">
                                 <label>Status</label></br>

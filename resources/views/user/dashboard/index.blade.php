@@ -16,6 +16,7 @@
                    <a href="{{ route('consultations.upcoming') }}">Consultations</a>
                 </div>
              </div>
+
             </div>
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
               <div class="portal-div-design position-relative">
@@ -40,6 +41,7 @@
             <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
               <div class="portal-div-design position-relative">
                 <div class="portal-div-img">
+
                   <img src="assets/images/account-portal.svg">
                 </div>
                 <div class="portal-cntnt-wrapper">

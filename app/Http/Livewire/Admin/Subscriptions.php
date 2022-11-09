@@ -15,7 +15,7 @@ class Subscriptions extends Component
 
     // public $subscriptions = [];
 
-    public $name,$search, $type, $price, $savings;
+    public $name,$search, $type, $price;
     public $status = '1';
 
     public $subscriptionId;
@@ -26,7 +26,6 @@ class Subscriptions extends Component
         $this->name = '';
         $this->type = '';
         $this->price = '';
-        $this->savings = '';
         $this->status = '1';
         $this->subscriptionId = '';
     }
@@ -37,7 +36,6 @@ class Subscriptions extends Component
             'name' => 'required|max:255',
             'type' => 'required',
             'price' => 'nullable|numeric',
-            'savings' => 'nullable|numeric',
             'status' => 'required',
         ];
     }
@@ -56,9 +54,6 @@ class Subscriptions extends Component
 
         if (@$this->price) {
             $store->price = $this->price;
-        }
-        if (@$this->savings) {
-            $store->savings = $this->savings;
         }
 
         $store->status = $this->status;
@@ -79,7 +74,6 @@ class Subscriptions extends Component
         $this->name = $data->name;
         $this->type = $data->type;
         $this->price = $data->price;
-        $this->savings = $data->savings;
         $this->status = $data->status;
 
         $this->emit('subscriptionFormShow');

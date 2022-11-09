@@ -16,6 +16,8 @@
 
                 @if(@$user->auto_renew=='1')
                 <button type="button" class="btn-design-first" wire:click="removeSubscription">Remove Subscription</button>
+                @else
+                <button type="button" class="btn-design-first">Subscription Removed</button>
                 @endif
             </div>
             @endif
@@ -40,13 +42,18 @@
                                     @endif
                                 </div>
                                 <span class="payment_confirmation-form"><i class="fa-solid fa-check"></i></span>
-                                @if(@$subscription->savings)
-                                <span class="price_saving-tag">${{ $subscription->savings }} Savings</span>
+                                
+                                @if(@$subscription->type=='yearly' && $subscriptionMonthly > 0)
+                                <span class="price_saving-tag">${{ $subscriptionMonthly - $subscription->price }} Savings</span>
                                 @endif
+
+
                             </div>
                             @endforeach
                             
                             {!! $errors->first('subscription', '<span class="help-block">:message</span>') !!}
+
+                            <p>You will be on {{ env('FREE_SUBSCRIPTION') }} days trial after that you will get charged based on your plan selection if you have not canceled your plan</p>
                         </div>
                     </div>
                 </div>

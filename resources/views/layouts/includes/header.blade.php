@@ -45,6 +45,7 @@ $user = auth()->user();
             @elseif(Auth::user()->role=="lawyer")
             <li><a class="dropdown-item" href="{{ route($user->role) }}">My Portal</a></li>
             <li><a class="dropdown-item" href="{{ route('lawyer.profile') }}">My Profile</a></li>
+
             
             {{--
             <li><a class="dropdown-item" href="{{ route('lawyer.leave') }}">Leave</a></li>
@@ -56,6 +57,7 @@ $user = auth()->user();
             @else
             <li><a class="dropdown-item" href="{{ route('user') }}">My Portal</a></li>
             <li><a class="dropdown-item" href="{{ route('user.profile') }}">My Profile</a></li>
+
             <li><a class="dropdown-item" href="{{ route('user.saved.lawyer') }}">Saved Lawyers</a></li>
             <li><a class="dropdown-item" href="{{ route('consultations.upcoming') }}">Consultations</a></li>
 

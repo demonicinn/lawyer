@@ -80,7 +80,7 @@
 
 
                             <div class="add-litigations">
-                                <button type="button" class="btn_court showModal mt-2" wire:click="modalData({{$lawyer->lawyer->id}})"><i class="fa-solid fa-gavel"></i> Admission</button>
+                                <button type="button" class="btn_court showModal mt-2" wire:click="modalData({{$lawyer->lawyer->id}})"><i class="fa-solid fa-gavel"></i> Admissions</button>
                             </div>
                             <div class="schedular_consultation">
 

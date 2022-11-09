@@ -7,6 +7,48 @@
         </div>
 
 
+
+
+
+        <div class="dashboard_wrapper">
+           <div class="row">
+             <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12">
+              <div class="data-white-box position-relative">
+                <div class="data-content-box">
+                <a href="{{ route('consultations.upcoming') }}">
+                    <h4>UPCOMING CONSULTATIONS</h4>
+                </a>
+                <h2 class="number-value">{{ $upcomingConsultations }}</h2>
+                </div>
+              </div>
+             </div>
+             <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12">
+              <div class="data-white-box position-relative">
+                <div class="data-content-box">
+                <a href="{{ route('consultations.complete') }}">
+                <h4>COMPLETED CONSULTATIONS</h4>
+                </a>
+                <h2 class="number-value">{{ $completeConsultations }}</h2>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12">
+              <div class="data-white-box position-relative">
+                <div class="data-content-box">
+                <a href="{{ route('consultations.accepted') }}">
+                <h4>CURRENT <br>CASES</h4>
+                </a>
+                <h2 class="number-value">1,586</h2>
+                </div>
+              </div>
+            </div>
+           </div>
+        </div>
+
+
+
+
+
         <div class="">
             <div class="row ">
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-3">

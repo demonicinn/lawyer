@@ -151,8 +151,8 @@
                             </div>
 
                             <div class="add-litigations mt-2 location_profile-divs d-flex justify-content-spacebw align-items-center ">
-                                <button type="button" class="btn_court showModal btn_adm" wire:click="modalData({{$lawyer->id}})"><i class="fa-solid fa-gavel"></i>  Admissions</button>
-                               
+                                <button type="button" class="btn_court showModal " wire:click="modalData({{$lawyer->id}})"><i class="fa-solid fa-gavel"></i>  Admissions</button>
+                                <a href="{{ route('lawyer.show', $lawyer->id) }}?type={{ $search_type }}&search={{ json_encode($search_data) }}">See Profile</a>
                             </div>
 
                             @php $lawyerID = Crypt::encrypt($lawyer->id); @endphp
@@ -187,6 +187,7 @@
                         <button type="button" class="btn btn-default close closeModal">
                             <i class="fas fa-close"></i>
                         </button>
+
                             <div class="modal-header modal_h">
 
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">

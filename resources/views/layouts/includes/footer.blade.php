@@ -33,10 +33,10 @@
         <div class="footer-widget footer-widget-third">
           <h4 class="footer-heading">Resources</h4>
           <ul class="list-unstyled menu-footer-ul">
-            {{--
+            
             <li><a href="">Articles</a></li>
-            <li><a href="">FAQ</a></li>
-            --}}
+            <li><a href="{{ route('faq') }}">FAQ</a></li>
+            
             <li><a href="{{ auth()->check() ? route('support') : route('login', ['redirect'=>'true', 'goto'=>'support']) }}">Support</a></li>
             
             @if(auth()->check())

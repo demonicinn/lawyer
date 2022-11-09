@@ -241,4 +241,14 @@ class PagesController extends Controller
         return view('pages.termsService', compact('title'));
     }
 
+    public function faq()
+    {
+        $title = array(
+            'title' => "FAQS",
+            'active' => 'faq',
+        );
+
+        return view('pages.faq', compact('title'));
+    }
+
 }
