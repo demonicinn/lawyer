@@ -145,14 +145,14 @@
                                 </div>
                             </div>
                             <p class="school_name"><i class="fa-solid fa-school-flag"></i>{{ @$lawyer->lawyerCategory->items->name }}</p>
-                            <div class="location_profile-divs border-bottom pb-2">
+                            <div class="location_profile-divs border-bottom pb-2 d-flex justify-content-spacebw align-items-center">
                                 <address><i class="fa-solid fa-location-dot"></i> {{ @$lawyer->details->city }}, {{ @$lawyer->details->states->code }}</address>
-                                
+                                <a href="{{ route('lawyer.show', $lawyer->id) }}?type={{ $search_type }}&search={{ json_encode($search_data) }}">See Profile</a>
                             </div>
 
                             <div class="add-litigations mt-2 location_profile-divs d-flex justify-content-spacebw align-items-center ">
-                                <button type="button" class="btn_court showModal " wire:click="modalData({{$lawyer->id}})"><i class="fa-solid fa-gavel"></i>  Admission</button>
-                                <a href="{{ route('lawyer.show', $lawyer->id) }}?type={{ $search_type }}&search={{ json_encode($search_data) }}">See Profile</a>
+                                <button type="button" class="btn_court showModal btn_adm" wire:click="modalData({{$lawyer->id}})"><i class="fa-solid fa-gavel"></i>  Admissions</button>
+                               
                             </div>
 
                             @php $lawyerID = Crypt::encrypt($lawyer->id); @endphp
@@ -181,7 +181,7 @@
 
                 @if($modal)
                 <!-- Accept Modal Start Here-->
-                <div wire:ignore.self class="modal fade courts_modal common_modal modal-design" id="courtModal" tabindex="-1" aria-labelledby="courtModal" aria-hidden="true">
+                <div wire:ignore.self class="modal fade courts_modal common_modal modal-design fedral_court_modal" id="courtModal" tabindex="-1" aria-labelledby="courtModal" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                         <button type="button" class="btn btn-default close closeModal">
