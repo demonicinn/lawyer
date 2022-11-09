@@ -95,7 +95,7 @@
                                                         $cDate = date('Y-m-d h:i:s');
                                                     @endphp
                                                     @if (Auth::user()->role == 'user' && $cDate <= $date1Days)
-                                                    <button class="toggle_cstm-btn" type="button" onclick="cancelBooking(`{{$upcoming->id}}`)">Cancel Booking</button>
+                                                    <button class="toggle_cstm-btn" style="background-color:#f93f64;" type="button" onclick="cancelBooking(`{{$upcoming->id}}`)">Cancel Booking</button>
 
                                                     <form id="cancel-form-{{$upcoming->id}}" action="{{ route('consultations.upcoming.cancel', $upcoming->id) }}" method="POST" class="d-none">
                                                     @csrf
