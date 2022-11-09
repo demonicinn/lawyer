@@ -187,6 +187,7 @@
                         <button type="button" class="btn btn-default close closeModal">
                             <i class="fas fa-close"></i>
                         </button>
+
                             <div class="modal-header modal_h">
 
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
