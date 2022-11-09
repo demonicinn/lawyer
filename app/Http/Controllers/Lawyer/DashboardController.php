@@ -11,7 +11,7 @@ class DashboardController extends Controller
     public function index()
     {
 		$title = array(
-			'title' => 'Lawyer Dashboard',
+			'title' => 'Dashboard',
 			'active' => 'dashboard',
 		);
 		
