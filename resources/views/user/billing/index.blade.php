@@ -5,7 +5,7 @@
         <div class="heading-paragraph-design text-center position-relative go-back-wrap mb-5">
             <h2>{{ @$title['title'] }}</h2>
             <a href="{{ route('user') }}" class="go-back"><i class="fa-solid fa-arrow-left-long"></i> Back to Portal</a>
-            <a href="{{ route('user.billing.create') }}" class="btn btn-success"> Add Card</a>
+            <a href="{{ route('user.billing.create') }}" class="btn btn-success" style="background-color:#F93F64;border:0px;"> Add Card</a>
         </div>
 
         <div class="table-responsive table-design">
