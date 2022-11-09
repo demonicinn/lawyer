@@ -25,6 +25,8 @@ class Subscriptions extends Component
 
     public $card_name, $card_number, $expire_month, $expire_year, $cvv;
 
+    public $subscriptionMonthly = 0;
+
     public $currentPlan;
     protected $listeners = ['confirmedSubscriptionAction'];
 
@@ -38,6 +40,11 @@ class Subscriptions extends Component
         
 
         $this->user = auth()->user();
+
+        $subscriptionMonthly = Subscription::where('type', 'monthly')->pluck('price')->first();
+
+        $this->subscriptionMonthly = $subscriptionMonthly * 12;
+
 
         $subscriptionCount = $this->user->lawyerSubscription->count();
         $lawyerSubscription = $this->user->lawyerSubscriptionLast;

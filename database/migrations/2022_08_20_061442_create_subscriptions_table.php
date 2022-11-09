@@ -21,7 +21,6 @@ return new class extends Migration
 			$table->enum('type', ['free', 'monthly', 'yearly'])->default('free');
 
             $table->decimal('price', 8,0)->nullable();
-            $table->decimal('savings', 8,0)->nullable();
 
 			$table->enum('status', ['0', '1'])->default('0');
 
