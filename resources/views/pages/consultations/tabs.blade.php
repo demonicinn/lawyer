@@ -7,7 +7,7 @@
             <a class="nav-link{{ request()->routeIs('consultations.complete') ? ' active' : '' }}" href="{{route('consultations.complete')}}">Completed</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link{{ request()->routeIs('consultations.accepted') ? ' active' : '' }}" href="{{route('consultations.accepted')}}">Accepted</a>
+            <a class="nav-link{{ request()->routeIs('consultations.accepted') ? ' active' : '' }}" href="{{route('consultations.accepted')}}">Cases</a>
         </li>
     </ul>
 </div>

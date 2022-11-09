@@ -1,22 +1,22 @@
 @extends('layouts.app')
 @section('content')
 <section class="body-banner portal-inner-page-sec">
-    <div class="container">
+    <div class="container lwyer_dashbord">
         <div class="heading-paragraph-design text-center position-relative mb-5">
             <h2>{{ @$title['title'] }}</h2>
         </div>
 
 
         <div class="">
-            <div class="row">
+            <div class="row ">
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-3">
                     <div class="portal-div-design position-relative">
                         <!-- <div class="portal-div-img">
                             <img src="{{ asset('assets/images/schedule.svg') }}">
                         </div> -->
                         <div class="portal-cntnt-wrapper">
-                            <a href="{{ route('consultations.upcoming') }}">Consultations</a>
-                            <p>{{ $upcomingConsultations }}</p>
+                            <a href="{{ route('consultations.upcoming') }}">UPCOMING CONSULTATIONS</a>
+                            <p class="number-value">{{ $upcomingConsultations }}</p>
                         </div>
                         <span class="three_dots">...</span>
                     </div>
@@ -35,20 +35,20 @@
                     </div>
                 </div> -->
 
-            {{--    
+           
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-3">
                     <div class="portal-div-design position-relative">
                         <!-- <div class="portal-div-img">
                             <img src="{{ asset('assets/images/schedule.svg') }}">
                         </div> -->
                         <div class="portal-cntnt-wrapper">
-                            <a href="{{ route('consultations.complete') }}">Account</a>
-                            <p>{{ $completeConsultations }}</p>
+                            <a href="{{ route('consultations.complete') }}">COMPLETED CONSULTATIONS</a>
+                            <p class="number-value">{{ $completeConsultations }}</p>
                         </div>
                         <span class="three_dots">...</span>
                     </div>
                 </div>
-            --}}
+         
 
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-3">
                     <div class="portal-div-design position-relative">
@@ -56,14 +56,14 @@
                             <img src="{{ asset('assets/images/schedule.svg') }}">
                         </div> -->
                         <div class="portal-cntnt-wrapper">
-                            <a href="{{ route('lawyer.profile') }}">Account</a>
-                            <p></p>
+                            <a href="{{ route('lawyer.profile') }}">CURRENT CASES</a>
+                            <p class="number-value"></p>
                         </div>
                         <span class="three_dots">...</span>
                     </div>
                 </div>
 
-                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-3">
+              {{--     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-3">
                     <div class="portal-div-design position-relative">
                         <!-- <div class="portal-div-img">
                             <img src="{{ asset('assets/images/schedule.svg') }}">
@@ -74,7 +74,7 @@
                         </div>
                         <span class="three_dots">...</span>
                     </div>
-                </div>
+                </div>   --}}
 
             </div>
 

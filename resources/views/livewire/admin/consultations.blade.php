@@ -13,7 +13,7 @@
                             <a class="nav-link{{ @$title['active']=='complete' ? ' active':'' }}" wire:click="completeConsultations('complete')">Complete</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link{{ @$title['active']=='accepted' ? ' active':'' }}" wire:click="acceptConsultations('accepted')">Accepted</a>
+                            <a class="nav-link{{ @$title['active']=='accepted' ? ' active':'' }}" wire:click="acceptConsultations('accepted')">Cases</a>
                         </li>
                     </ul>
                 </div>

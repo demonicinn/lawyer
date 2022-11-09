@@ -41,7 +41,7 @@
         </div>
     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
        <div class="why-choose-img text-center half-mobile-img">
-        <img src="{{ asset('assets/images/phone1.png') }}">
+        <img src="{{ asset('assets/images/phone_3.png') }}">
        </div>
     </div>
     </div>

@@ -12,21 +12,23 @@ $user = auth()->user();
       </div>
       <div class="login-right-column">
         @guest
-        {{--
-        <!-- <div class="login_signup-btns dropdown">
+      
+        <div class="login_signup-btns dropdown">
         <button type="button" class="dropdown-toggle login-header-btn" data-bs-toggle="dropdown">
             <span class="drop-icon"><i class="fa-solid fa-angle-down"></i></span>
-            <span class="user-span">login</span>
-            <span class="user-icon"><img class="header-pic" src="{{ asset('assets/images/sample-img.png')}}"></span> 
+            <span class="user-span">Menu </span>
+            <!-- <span class="user-icon"><img class="header-pic" src="{{ asset('assets/images/sample-img.png')}}"></span>  -->
           </button>
           <ul class="dropdown-menu p-3">
-          <a class="dropdown-item btn_sign_up mb-3" href="{{ route('register') }}">Sign Up</a>
-          <a class="dropdown-item btn_login" href="{{ route('login') }}">Login</a>
+            <a class="dropdown-item btn_login" href="{{ route('login') }}">Login</a>
+          <a class="dropdown-item btn_sign_up" href="{{ route('register') }}">Lawyer signup</a>
+          <a class="dropdown-item btn_sign_up mb-3" href="{{ route('narrow.down') }}" >Find My lawyer</a>
           </ul>
-        </div> -->
-        --}}
-        <a class="login-header-btn btn_sign_up mb-3 me-3 py-3" href="{{ route('register') }}">Sign Up</a>
-          <a class="login-header-btn btn_login py-3" href="{{ route('login') }}">Login</a>
+        </div>
+
+       
+        {{-- <a class="login-header-btn btn_sign_up mb-3 me-3 py-3" href="{{ route('register') }}">Sign Up</a>
+          <a class="login-header-btn btn_login py-3" href="{{ route('login') }}">Login</a> --}}
         @else
         <div class="dropdown">
           <button type="button" class="dropdown-toggle login-header-btn" data-bs-toggle="dropdown">
