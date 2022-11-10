@@ -1,5 +1,8 @@
 @extends('layouts.app')
 @section('content')
+@php
+    $authUser = auth()->user();
+@endphp
 <section class="lawyer_conultation-wrapper-sec">
     <div class="container">
         <div class="heading-paragraph-design text-center position-relative go-back-wrap mb-5">
@@ -20,7 +23,7 @@
                                     <table style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th>Name</th>
+                                                <th>{{$authUser->role=='user' ? 'Lawyer Name' : 'Client Name' }}</th>
                                                 <th>Practice Area</th>
                                                 <th>Date</th>
                                                 <th>Time</th>
@@ -30,7 +33,7 @@
                                         <tbody>
                                             @php
                                             $role = 'user';
-                                            if(Auth::user()->role == 'user'){
+                                            if($authUser->role == 'user'){
                                             $role = 'lawyer';
                                             }
                                             @endphp
@@ -62,7 +65,7 @@
                                                     <div class="dropdown reshedule_dropdowns">
                                                         <button class="toggle_cstm-btn" type="button">Reschedule</button>
 
-                                                        @if (Auth::user()->role == 'lawyer')
+                                                        @if ($authUser->role == 'lawyer')
 
                                                         <div class="reshedule_wrap-box">
                                                             <span class="info_icns"><i class="fa-solid fa-circle-info"></i></span>
@@ -94,7 +97,7 @@
 
                                                         $cDate = date('Y-m-d h:i:s');
                                                     @endphp
-                                                    @if (Auth::user()->role == 'user' && $cDate <= $date1Days)
+                                                    @if ($authUser->role == 'user' && $cDate <= $date1Days)
                                                     <button class="toggle_cstm-btn" style="background-color:#f93f64;" type="button" onclick="cancelBooking(`{{$upcoming->id}}`)">Cancel Booking</button>
 
                                                     <form id="cancel-form-{{$upcoming->id}}" action="{{ route('consultations.upcoming.cancel', $upcoming->id) }}" method="POST" class="d-none">

@@ -100,7 +100,7 @@ class Contracts extends Component
     {
         $contracts = Contract::where(function ($query) {
             return $query->where('name', 'like', '%' . $this->search . '%');
-        })->latest('id')->paginate(10);
+        })->orderBy('name', 'asc')->paginate(10);
 
         return view('livewire.admin.contracts',compact('contracts'));
     }
