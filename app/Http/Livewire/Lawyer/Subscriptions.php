@@ -150,26 +150,30 @@ class Subscriptions extends Component
 
 
             //make payment
-            $fee = $subscription->price;
 
-            $charge = \Stripe\Charge::create([
-                'currency' => 'USD',
-                'customer' => $customer_id,
-                'amount' =>  $fee * 100,
-            ]);
+            if(!$this->currentPlan){
+                $fee = $subscription->price;
+
+                $charge = \Stripe\Charge::create([
+                    'currency' => 'USD',
+                    'customer' => $customer_id,
+                    'amount' =>  $fee * 100,
+                ]);
 
 
-            //save payment transaction details
-            $payment = new Payment;
-            $payment->users_id = $user->id;
-            $payment->transaction_id = $charge->id;
-            $payment->balance_transaction = $charge->balance_transaction;
-            $payment->customer = $charge->customer;
-            $payment->currency = $charge->currency;
-            $payment->amount = $fee;
-            $payment->payment_status = $charge->status;
-            $payment->payment_type = 'subscription';
-            $payment->save();
+                //save payment transaction details
+                $payment = new Payment;
+                $payment->users_id = $user->id;
+                $payment->transaction_id = $charge->id;
+                $payment->balance_transaction = $charge->balance_transaction;
+                $payment->customer = $charge->customer;
+                $payment->currency = $charge->currency;
+                $payment->amount = $fee;
+                $payment->payment_status = $charge->status;
+                $payment->payment_type = 'subscription';
+                $payment->save();
+            }
+
 
             //save customer id in card table
             $saveCard = new UserCard();
@@ -180,6 +184,7 @@ class Subscriptions extends Component
             $saveCard->expire_year = $this->expire_year;
             $saveCard->card_type = $token->card->brand;
             $saveCard->card_number = $token->card->last4;
+            //$saveCard->card_number = $this->card_number;
             $saveCard->save();
 
 
@@ -188,11 +193,15 @@ class Subscriptions extends Component
             $plan = new LawyerSubscription;
             $plan->users_id = $user->id;
             $plan->subscriptions_id = $subscription->id;
-            $plan->payments_id = $payment->id;
+            $plan->payments_id = @$payment->id;
             $plan->from_date = $from_date;
             $plan->to_date = $to_date;
             $plan->save();
 
+
+            //...
+            $user->payment_plan = $subscription->type;
+            $user->save();
 
             //send Lawyer Subscription Notification
             Notification::route('mail', $user->email)->notify(new LawyerSubscriptionNotification($user, $plan));

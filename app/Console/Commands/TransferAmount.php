@@ -13,7 +13,7 @@ class TransferAmount extends Command
      *
      * @var string
      */
-    protected $signature = 'transfer.amount';
+    protected $signature = 'transfer:amount';
 
     /**
      * The console command description.

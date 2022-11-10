@@ -29,6 +29,7 @@ return new class extends Migration
 			$table->enum('profile_completed', ['0', '1'])->default('0');
             $table->enum('status', ['0', '1', '2'])->default('1');
             $table->enum('auto_renew', ['0', '1'])->default('1');
+            $table->string('payment_plan')->nullable();
             
             $table->rememberToken();
             $table->timestamps();

@@ -14,6 +14,8 @@ use App\Models\BankInfo;
 
 use App\Models\StateBar;
 use App\Models\LawyerStateBar;
+use App\Models\UserCard;
+use Stripe\Stripe;
 
 use App\Notifications\MailToAdminForLawyerStatus;
 use Illuminate\Support\Facades\Notification;
@@ -360,6 +362,91 @@ class ProfileController extends Controller
         }
         return view('lawyer.profile.account', compact('user', 'record'));
     }
+
+
+
+
+    public function cardRemove(Request $reuest){
+        $user = auth()->user();
+        $card = $user->userCards()->orderBy('id', 'desc')->first();
+
+        if(@$card){
+            
+            $card->delete();
+            $this->flash('success', 'Card Removed');
+            return redirect()->route('lawyer.banking.success');
+
+        }
+
+        $this->flash('error', 'Server Error');
+        return redirect()->route('lawyer.banking.success');
+    }
+
+
+    public function cardStore(Request $request){
+        $user = auth()->user();
+            
+            
+        $request->validate([
+            'card_name' => 'required',
+            'expire_month' => 'required',
+            'expire_year' => 'required',
+            'card_number' => 'required',
+            'cvv' => 'required',
+        ]);
+
+        $user = auth()->user();
+
+
+        try {
+            
+            Stripe::setApiKey(config('services.stripe.secret'));
+            
+            //create token
+            $token = \Stripe\Token::create([
+                "card" => array(
+                    "name" => $request->card_name,
+                    "number" => $request->card_number,
+                    "exp_month" => $request->expire_month,
+                    "exp_year" => $request->expire_year,
+                    "cvc" => $request->cvv
+                ),
+            ]);
+
+            $customer = \Stripe\Customer::create([
+                'source' => $token['id'],
+                'email' =>  $user->email,
+                'description' => 'My name is ' . $user->name,
+            ]);
+
+            $customer_id = $customer['id'];
+
+            $store = new UserCard;
+
+            $store->user_id = $user->id;
+            $store->card_name = $request->card_name;
+            $store->expire_month = $request->expire_month;
+            $store->expire_year = $request->expire_year;
+            $store->card_type = $token->card->brand;
+            $store->card_number = $token->card->last4;
+            $store->save();
+
+
+            $this->flash('success', 'Card Added');
+            return redirect()->route('lawyer.banking.success');
+
+        } catch (\Stripe\Exception\CardException $e) {
+            $error = $e->getMessage();
+        } catch (Exception $e) {
+            $error = $e->getMessage();
+        }
+
+        $this->flash('error', $error);
+            return redirect()->route('lawyer.banking.success');
+    }
+
+
+
 
     public function bankingInfoStore(Request $request)
     {
