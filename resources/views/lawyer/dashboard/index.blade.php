@@ -7,9 +7,7 @@
         </div>
 
 
-
-
-
+        {{--
         <div class="dashboard_wrapper">
            <div class="row">
              <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12">
@@ -44,7 +42,7 @@
             </div>
            </div>
         </div>
-
+        --}}
 
 
 
@@ -60,23 +58,8 @@
                             <a href="{{ route('consultations.upcoming') }}">UPCOMING CONSULTATIONS</a>
                             <p class="number-value">{{ $upcomingConsultations }}</p>
                         </div>
-                        <span class="three_dots">...</span>
                     </div>
                 </div>
-
-                <!-- <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-3">
-                    <div class="portal-div-design position-relative">
-                        <div class="portal-div-img">
-                            <img src="{{ asset('assets/images/schedule.svg') }}">
-                        </div>
-                        <div class="portal-cntnt-wrapper">
-                            <a href="#">Dashboard</a>
-                            <p></p>
-                        </div>
-                        <span class="three_dots">...</span>
-                    </div>
-                </div> -->
-
            
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-3">
                     <div class="portal-div-design position-relative">
@@ -87,10 +70,8 @@
                             <a href="{{ route('consultations.complete') }}">COMPLETED CONSULTATIONS</a>
                             <p class="number-value">{{ $completeConsultations }}</p>
                         </div>
-                        <span class="three_dots">...</span>
                     </div>
-                </div>
-         
+                </div>         
 
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-3">
                     <div class="portal-div-design position-relative">
@@ -98,10 +79,9 @@
                             <img src="{{ asset('assets/images/schedule.svg') }}">
                         </div> -->
                         <div class="portal-cntnt-wrapper">
-                            <a href="{{ route('lawyer.profile') }}">ACCEPTED CASES</a>
-                            <p class="number-value"></p>
+                            <a href="{{ route('consultations.accepted') }}">ACCEPTED CASES</a>
+                            <p class="number-value">{{ $acceptedConsultations }}</p>
                         </div>
-                        <span class="three_dots">...</span>
                     </div>
                 </div>
 
