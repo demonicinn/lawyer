@@ -36,7 +36,7 @@
               <div class="data-white-box position-relative">
                 <div class="data-content-box">
                 <a href="{{ route('consultations.accepted') }}">
-                <h4>CURRENT <br>CASES</h4>
+                <h4>Accepted  <br>CASES</h4>
                 </a>
                 <h2 class="number-value">1,586</h2>
                 </div>
@@ -98,7 +98,7 @@
                             <img src="{{ asset('assets/images/schedule.svg') }}">
                         </div> -->
                         <div class="portal-cntnt-wrapper">
-                            <a href="{{ route('lawyer.profile') }}">CURRENT CASES</a>
+                            <a href="{{ route('lawyer.profile') }}">ACCEPTED CASES</a>
                             <p class="number-value"></p>
                         </div>
                         <span class="three_dots">...</span>

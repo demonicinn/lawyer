@@ -11,17 +11,25 @@
             
 
             <div class="row">
-                <div class="col-md-6">
-                    <b>Card for Subscription</b>
+                <div class="col-md-6 form-design">
+                    <div class="white-shadow-scnd-box">
+                 <h3>   <b class="h4-design">Card for Subscription</b></h3>
                     
                     @php
                         $card = $user->userCards()->orderBy('id', 'desc')->first();
                     @endphp
 
                     @if(@$card)
-                    <p>Card Name: {{ $card->card_name }}</p>
-                    <p>Card Number: **** {{ $card->card_number }}</p>
-                    <p>Card Type: {{ $card->card_type }}</p>
+                    <div class="form-grouph input-design">
+                        <label>Card Name</label> {{ $card->card_name }}
+                    </div>
+                    <div class="form-grouph input-design">
+                    <label> Card Number</label> **** {{ $card->card_number }}
+                    </div>
+                    <div class="form-grouph input-design">
+                        <label>Card Type</label>
+                         {{ $card->card_type }}
+                    </div>
 
                     <form class="form-design row justify-content-center" method="post" action="{{route('lawyer.card.remove')}}">
                         @csrf
@@ -86,11 +94,11 @@
                         <button type="submit" class="btn-design-first btn_bank">Add Card</button>
                     </form>
                     @endif
-
+                </div>
                 </div>
 
                 <div class="col-md-6">
-
+                <div class="white-shadow-scnd-box">
 
                     @if(@$record)
                         @if(@$bankInfo->status=='active')
@@ -142,6 +150,7 @@
             			<button type="submit" class="btn-design-first btn_bank">Connect Bank Account</button>
             			{!! Form::close() !!}
                     @endif
+                </div>
                 </div>
             </div>
         </div>
