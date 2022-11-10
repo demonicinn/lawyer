@@ -1,5 +1,8 @@
 @extends('layouts.app')
 @section('content')
+@php
+    $authUser = auth()->user();
+@endphp
 <section class="lawyer_conultation-wrapper-sec">
     <div class="container">
         <div class="heading-paragraph-design text-center position-relative go-back-wrap mb-5">
@@ -20,7 +23,7 @@
                                     <table style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th>Name</th>
+                                                <th>{{$authUser->role=='user' ? 'Lawyer Name' : 'Client Name' }}</th>
                                                 <th>Email</th>
                                                 <th>Practice Area</th>
                                                 <th>Date Accepted</th>
@@ -31,9 +34,9 @@
                                         <tbody>
 
                                             @php
-                                            $role = 'user';
-                                            if(Auth::user()->role == 'user'){
-                                            $role = 'lawyer';
+                                                $role = 'user';
+                                            if($authUser->role == 'user'){
+                                                $role = 'lawyer';
                                             }
                                             @endphp
                                             @forelse ($accptedConsultations as $accepted)
@@ -60,7 +63,7 @@
                                                     <a class="view-icon info_icns mdl" href="javascript:void(0)" data-id="myNoteModal_{{ $accepted->id }}" data-type="view"><i class="fas fa-eye"></i></a>
                                                     @endif
 
-                                                    @if (Auth::user()->role=="lawyer")
+                                                    @if ($authUser->role=="lawyer")
                                                     <a class="view-icon info_icns mdl" href="javascript:void(0)" data-id="myNoteModal_{{ $accepted->id }}" data-type="edit"><i class="fas fa-edit"></i></a>
                                                     @endif
 
@@ -77,7 +80,7 @@
 
 
 
-                                                          @if (Auth::user()->role=="lawyer")
+                                                          @if ($authUser->role=="lawyer")
                                                             @if (@$accepted->notes->note != null)
                                                             <form method="post" action="{{route('edit.note',@$accepted->notes->id)}}">
                                                             @else

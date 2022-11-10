@@ -100,7 +100,7 @@ class Litigations extends Component
     {
         $litigations = Litigation::where(function ($query) {
             return $query->where('name', 'like', '%' . $this->search . '%');
-        })->latest('id')->paginate(10);
+        })->orderBy('name', 'asc')->paginate(10);
 
         return view('livewire.admin.litigations', compact('litigations'));
     }
