@@ -359,8 +359,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::post('/banking-info/store', [Lawyer\ProfileController::class, 'bankingInfoStore'])->name('lawyer.banking.store');
 
 
-            Route::post('/card/remove', [Lawyer\ProfileController::class, 'cardRemove'])->name('lawyer.card.remove');
+            Route::post('/card/remove/{id}', [Lawyer\ProfileController::class, 'cardRemove'])->name('lawyer.card.remove');
             Route::post('/card/store', [Lawyer\ProfileController::class, 'cardStore'])->name('lawyer.card.store');
+            Route::post('/card/primary/{id}', [Lawyer\ProfileController::class, 'cardPrimary'])->name('lawyer.card.primary');
 
 
 

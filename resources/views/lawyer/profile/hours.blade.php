@@ -108,7 +108,7 @@ $getTime = \App\Models\User::getTime();
             <select id="mcategory" name="lawyer_category" class="select-block multiBoxes" multiple>
     
     
-                @foreach ($categoriesMulti as $category)
+                @foreach ($categories as $category)
                     <optgroup label="{{ $category->name }}">
                         @foreach($category->items as $i => $list)
                         <option value="{{$list->id}}" data-cat="{{$category->id}}" data-name="{{$list->name}}" 

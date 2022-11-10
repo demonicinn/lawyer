@@ -45,7 +45,7 @@ class ProfileController extends Controller
         $states = State::whereStatus('1')->pluck('name', 'id');
         // dd($user);
 
-        $categories = Category::whereStatus('1')->get();
+        $categories = Category::whereStatus('1')->orderBy('id','ASC')->get();
         $categoriesMulti = Category::whereStatus('1')->orderBy('name','ASC')->get();
         
         $stateBar = StateBar::whereStatus('1')->get();
@@ -366,14 +366,38 @@ class ProfileController extends Controller
 
 
 
-    public function cardRemove(Request $reuest){
+    public function cardRemove(Request $request){
         $user = auth()->user();
-        $card = $user->userCards()->orderBy('id', 'desc')->first();
+        $card = UserCard::findOrFail($request->id);
 
         if(@$card){
             
             $card->delete();
             $this->flash('success', 'Card Removed');
+            return redirect()->route('lawyer.banking.success');
+
+        }
+
+        $this->flash('error', 'Server Error');
+        return redirect()->route('lawyer.banking.success');
+    }
+
+
+    public function cardPrimary(Request $request){
+        $user = auth()->user();
+        $card = UserCard::findOrFail($request->id);
+
+        if(@$card){
+
+            $acards = $user->userCards()->where('is_primary', '1')->get();
+            foreach($acards as $acard){
+                $acard->is_primary = '0';
+                $acard->save();
+            }
+            
+            $card->is_primary = '1';
+            $card->save();
+            $this->flash('success', 'Card set as primary');
             return redirect()->route('lawyer.banking.success');
 
         }

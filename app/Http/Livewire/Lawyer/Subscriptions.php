@@ -184,6 +184,7 @@ class Subscriptions extends Component
             $saveCard->expire_year = $this->expire_year;
             $saveCard->card_type = $token->card->brand;
             $saveCard->card_number = $token->card->last4;
+            $saveCard->is_primary = '1';
             //$saveCard->card_number = $this->card_number;
             $saveCard->save();
 
