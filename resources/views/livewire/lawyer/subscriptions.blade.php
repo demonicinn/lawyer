@@ -2,7 +2,7 @@
     $message = 'Monthly/Yearly Payment Plans';
 @endphp
 <div>
-    <div class="billing_account-wrapper form-design">
+    <div class="billing_account-wrapper form-design biling_btn_wrapr">
         <form>
 
 

@@ -32,7 +32,7 @@
 
                         {!! $errors->first('selectDate', '<span class="help-block">:message</span>') !!}
                     </div>
-                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 scheduled_right">
                         <div id="events-data">
                             <h4 class="event-date">
                                 <p>{{@$dateFormat}}</p>

@@ -72,15 +72,24 @@
                                 </div>
                             </div>
                             <p class="school_name"><i class="fa-solid fa-school-flag"></i>{{ @$lawyer->lawyerCategory->items->name }}</p>
-                            <div class="location_profile-divs d-flex justify-content-spacebw align-items-center">
+                            <div class="location_profile-divs d-flex justify-content-spacebw align-items-center border-bottom pb-2">
                                 <address><i class="fa-solid fa-location-dot"></i> {{ @$lawyer->lawyer->details->city }}, {{ @$lawyer->lawyer->details->states->code }}</address>
                                 <a href="{{ route('lawyer.show', $lawyer->lawyer->id)}}?type={{ $lawyer->type }}&search={{ $lawyer->data }}">See Profile</a>
                             </div>
                             @php $lawyerID= Crypt::encrypt($lawyer->lawyer->id); @endphp
 
 
-                            <div class="add-litigations">
-                                <button type="button" class="btn_court showModal mt-2" wire:click="modalData({{$lawyer->lawyer->id}})"><i class="fa-solid fa-gavel"></i> Admissions</button>
+                            <div class="add-litigations border-bottom pb-2">
+                                <button type="button" class="btn_court showModal btn_adm mt-2" wire:click="modalData({{$lawyer->lawyer->id}})"><i class="fa-solid fa-gavel"></i> Admissions</button>
+                            </div>
+                            <div class="practice_area_div">
+                             <div class="left_trash">
+                                 <span>PRACTICE AREA</span>
+                                 <h5>Tax</h5>
+                             </div>
+                             <div class="right_trash">
+                                <a href="#" class="trash_link"><i class="fa-regular fa-trash-can"></i></a>
+                             </div>
                             </div>
                             <div class="schedular_consultation">
 
@@ -112,7 +121,7 @@
 
         @if($modal)
         <!-- Accept Modal Start Here-->
-        <div wire:ignore.self class="modal fade courts_modal common_modal modal-design" id="courtModal" tabindex="-1" aria-labelledby="courtModal" aria-hidden="true">
+        <div wire:ignore.self class="modal fade courts_modal common_modal modal-design fedral_court_modal " id="courtModal" tabindex="-1" aria-labelledby="courtModal" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                 <button type="button" class="btn btn-default close closeModal">
