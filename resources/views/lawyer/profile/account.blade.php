@@ -13,29 +13,53 @@
             <div class="row">
                 <div class="col-md-6 form-design">
                     <div class="white-shadow-scnd-box">
-                 <h3>   <b class="h4-design">Card for Subscription</b></h3>
+                    <h3><b class="h4-design">Card for Subscription</b></h3>
                     
                     @php
-                        $card = $user->userCards()->orderBy('id', 'desc')->first();
+                        $cards = $user->userCards()->orderBy('id', 'desc')->get();
                     @endphp
 
-                    @if(@$card)
-                    <div class="form-grouph input-design">
-                        <label>Card Name</label> {{ $card->card_name }}
-                    </div>
-                    <div class="form-grouph input-design">
-                    <label> Card Number</label> **** {{ $card->card_number }}
-                    </div>
-                    <div class="form-grouph input-design">
-                        <label>Card Type</label>
-                         {{ $card->card_type }}
+
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Card Number</th>
+                                    <th>Card Type</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($cards as $card)
+                                <tr>
+                                    <td>{{ @$card->card_name }}</td>
+                                    <td>**** {{ @$card->card_number }}</td>
+                                    <td>{{ @$card->card_type }}</td>
+                                    <td>
+                                        @if($card->is_primary=='0')
+                                        <form class="form-design row justify-content-center" method="post" action="{{route('lawyer.card.primary', $card->id)}}">
+                                            @csrf
+                                            <button type="submit" class="btn-design-first btn_bank">Set as Primary</button>
+                                        </form>
+                                        @else
+                                        <button type="button" class="btn-design-first btn_bank" disabled>Primary</button>
+                                        @endif
+
+                                        <form class="form-design row justify-content-center" method="post" action="{{route('lawyer.card.remove', $card->id)}}">
+                                            @csrf
+                                            <button type="submit" class="btn-design-first btn_bank">Remove Card</button>
+                                        </form>
+
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
 
-                    <form class="form-design row justify-content-center" method="post" action="{{route('lawyer.card.remove')}}">
-                        @csrf
-                        <button type="submit" class="btn-design-first btn_bank">Remove Card</button>
-                    </form>
-                    @else
+                    
+
                     <form class="form-design row justify-content-center" method="post" action="{{route('lawyer.card.store')}}">
                         @csrf
 
@@ -93,7 +117,7 @@
 
                         <button type="submit" class="btn-design-first btn_bank">Add Card</button>
                     </form>
-                    @endif
+                    
                 </div>
                 </div>
 

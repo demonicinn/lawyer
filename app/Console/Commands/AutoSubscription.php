@@ -50,7 +50,7 @@ class AutoSubscription extends Command
         foreach($lawyers as $lawyer){
             $user = $lawyer->user;
 
-            $card = $user->userCards()->orderBy('id', 'desc')->first();
+            $card = $user->userCards()->where('is_primary', '1')->first();
 
             $subscription = Subscription::where('type', $user->payment_plan)->first();
 

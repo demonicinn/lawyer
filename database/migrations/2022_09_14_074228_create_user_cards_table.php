@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer('expire_year', 4);
             $table->string('card_type', 20)->nullable();
             $table->bigInteger('card_number');
+            $table->enum('is_primary', ['0', '1']);
             $table->timestamps();
         });
     }
