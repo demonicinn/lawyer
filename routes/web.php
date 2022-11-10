@@ -69,11 +69,15 @@ Route::group(['prefix' => 'cron'], function () {
         return 'done';
     });
     Route::get('/refund-amount', function () {
-        Artisan::call('refund.amount');
+        Artisan::call('refund:amount');
         return 'done';
     });
     Route::get('/transfer-amount', function () {
-        Artisan::call('transfer.amount');
+        Artisan::call('transfer:amount');
+        return 'done';
+    });
+    Route::get('/auto-subscription', function () {
+        Artisan::call('auto:subscription');
         return 'done';
     });
 
@@ -86,10 +90,11 @@ Route::group(['prefix' => 'cron'], function () {
     Route::get('/daily', function () {
         Artisan::call('case:3days');
         Artisan::call('reminder:1day');
-        Artisan::call('transfer.amount');
-        Artisan::call('refund.amount');
+        Artisan::call('transfer:amount');
+        Artisan::call('refund:amount');
         Artisan::call('lawyers:account');
         Artisan::call('rating:6months');
+        Artisan::call('auto:subscription');
         return 'done';
     });
 
@@ -352,6 +357,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/banking-info-error', [Lawyer\ProfileController::class, 'bankingInfoError'])->name('lawyer.banking.error');
             Route::get('/banking-info', [Lawyer\ProfileController::class, 'bankingInfoSuccess'])->name('lawyer.banking.success');
             Route::post('/banking-info/store', [Lawyer\ProfileController::class, 'bankingInfoStore'])->name('lawyer.banking.store');
+
+
+            Route::post('/card/remove', [Lawyer\ProfileController::class, 'cardRemove'])->name('lawyer.card.remove');
+            Route::post('/card/store', [Lawyer\ProfileController::class, 'cardStore'])->name('lawyer.card.store');
+
 
 
             Route::post('/profile/submit', [Lawyer\ProfileController::class, 'submit'])->name('lawyer.profile.submit');

@@ -13,7 +13,7 @@ class RefundAmount extends Command
      *
      * @var string
      */
-    protected $signature = 'refund.amount';
+    protected $signature = 'refund:amount';
 
     /**
      * The console command description.
