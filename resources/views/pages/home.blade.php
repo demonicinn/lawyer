@@ -133,25 +133,28 @@
 </section>
 <section class="rating-section position-relative">
   <div class="rating_container">
-    <div class="row">
-      <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
+    <div class="row align-items-center">
+      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
         <div class="heading-paragraph-design m-text-center">
           <h2>Providing everyone the opportunity to find a lawyer that fits their needs.</h2>
           <p>We strive to give potential clients the information and tools they need to find the
             best lawyer for their individual goals. We make it easy to filter through lawyers to
             find the right fit and provide the ability to schedule a video consultation with the
             lawyer in order to make an informed decision.</p>
-          <div class="five-star-blocks">
+          <!-- <div class="five-star-blocks">
             <img src="{{ asset('assets/images/stars.png') }}">
             <img src="{{ asset('assets/images/stars.png') }}">
             <img src="{{ asset('assets/images/stars.png') }}">
             <img src="{{ asset('assets/images/stars.png') }}">
             <img src="{{ asset('assets/images/stars.png') }}">
-          </div>
+          </div> -->
         </div>
       </div>
+      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 right_img_rt">
+      <img src="{{ asset('assets/images/desert_scene_small-01.png') }}">
+      </div>
     </div>
-    <div class="rating-slider-sec">
+    <!-- <div class="rating-slider-sec">
       <div class="slider rating-slider">
         <div class="rating_box">
           <h4 class="quote-icon-text">“</h4>
@@ -178,7 +181,7 @@
           <h6 class="user-name">Seth Brooks</h6>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </section>
 <section class="how-prickly-pear-works">

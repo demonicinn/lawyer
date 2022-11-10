@@ -150,9 +150,18 @@
                                 <a href="{{ route('lawyer.show', $lawyer->id) }}?type={{ $search_type }}&search={{ json_encode($search_data) }}">See Profile</a>
                             </div>
 
-                            <div class="add-litigations mt-2 location_profile-divs d-flex justify-content-spacebw align-items-center ">
-                                <button type="button" class="btn_court showModal " wire:click="modalData({{$lawyer->id}})"><i class="fa-solid fa-gavel"></i>  Admissions</button>
-                                <a href="{{ route('lawyer.show', $lawyer->id) }}?type={{ $search_type }}&search={{ json_encode($search_data) }}">See Profile</a>
+                            <div class="add-litigations mt-2 location_profile-divs d-flex justify-content-spacebw align-items-center border-bottom pb-2">
+                                <button type="button" class="btn_court btn_adm showModal " wire:click="modalData({{$lawyer->id}})"><i class="fa-solid fa-gavel"></i>  Admissions</button>
+                               {{--<a href="{{ route('lawyer.show', $lawyer->id) }}?type={{ $search_type }}&search={{ json_encode($search_data) }}">See Profile</a>--}} 
+                            </div>
+                            <div class="practice_area_div">
+                             <div class="left_trash">
+                                 <span>PRACTICE AREA</span>
+                                 <h5>Tax</h5>
+                             </div>
+                             <div class="right_trash">
+                                <a href="#" class="trash_link"><i class="fa-regular fa-trash-can"></i></a>
+                             </div>
                             </div>
 
                             @php $lawyerID = Crypt::encrypt($lawyer->id); @endphp

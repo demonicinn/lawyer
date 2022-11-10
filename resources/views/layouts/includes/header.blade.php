@@ -19,10 +19,10 @@ $user = auth()->user();
             <span class="user-span">Menu </span>
             <!-- <span class="user-icon"><img class="header-pic" src="{{ asset('assets/images/sample-img.png')}}"></span>  -->
           </button>
-          <ul class="dropdown-menu p-3">
-            <a class="dropdown-item btn_login" href="{{ route('login') }}">Login</a>
-          <a class="dropdown-item btn_sign_up" href="{{ route('register') }}">Lawyer signup</a>
-          <a class="dropdown-item btn_sign_up mb-3" href="{{ route('narrow.down') }}" >Find My lawyer</a>
+          <ul class="dropdown-menu py-3">
+            <a class="dropdown-item " href="{{ route('login') }}">Login</a>
+          <a class="dropdown-item " href="{{ route('register') }}">Lawyer Sign Up</a>
+          <a class="dropdown-item  mb-3" href="{{ route('narrow.down') }}" >Find a lawyer</a>
           </ul>
         </div>
 
