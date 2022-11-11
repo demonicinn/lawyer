@@ -14,6 +14,7 @@ class UserCard extends Model
         return ($value <= 9 ? '0'.$value : $value);
     }
 
+    //protected $with = ['users'];
 
     public function users()
     {

@@ -15,9 +15,13 @@
                 <p>Expires on: <strong>{{ $currentPlan->to_date }}</strong></p>
 
                 @if(@$user->auto_renew=='1')
-                <button type="button" class="btn-design-first" wire:click="removeSubscription">Cancel Subscription</button>
+                <button type="button" class="btn-design-first" wire:click="removeSubscription">Cancel</button>
                 @else
-                <button type="button" class="btn-design-first">Subscription Canceled</button>
+                <button type="button" class="btn-design-first">Canceled</button>
+                
+                @if($currentPlan->to_date >= date('Y-m-d'))
+                <button type="button" class="btn-design-first" wire:click="renewSubscription">Renew</button>
+                @endif
                 @endif
             </div>
             @endif

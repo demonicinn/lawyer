@@ -9,6 +9,8 @@ class Leave extends Model
 {
     use HasFactory;
 
+    //protected $with = ['users'];
+
     public function users()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');

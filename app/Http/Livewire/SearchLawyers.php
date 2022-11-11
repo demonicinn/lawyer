@@ -6,6 +6,8 @@ use App\Models\Category;
 use App\Models\Item;
 use Livewire\Component;
 use App\Models\User;
+use App\Models\Litigation;
+use App\Models\Contract;
 use Livewire\WithPagination;
 
 class SearchLawyers extends Component
@@ -25,7 +27,7 @@ class SearchLawyers extends Component
     public $distance_min = '1', $distance = '100';
     public $rate_min = '0', $rate = '500';
     
-    
+    public $practice_area='';
 
     public function mount()
     {
@@ -43,6 +45,14 @@ class SearchLawyers extends Component
             $this->search_data = request()->litigations;
             $this->search_type = 'litigations';
             
+
+            $practices = Litigation::whereIn('id', request()->litigations)->get();
+
+            foreach($practices as $practice){
+                $this->practice_area = $this->practice_area ? $this->practice_area.', '.$practice->name : $practice->name;
+            }
+            //dd($this->practice_area);
+
             session(['search_data' => request()->litigations, 'search_type' => 'litigations']);
         }
 
@@ -51,6 +61,14 @@ class SearchLawyers extends Component
             $this->search_data = request()->contracts;
             $this->search_type = 'contracts';
             
+
+            $practices = Contract::whereIn('id', request()->litigations)->get();
+
+            foreach($practices as $practice){
+                $this->practice_area = $this->practice_area ? $this->practice_area.', '.$practice->name : $practice->name;
+            }
+            
+
             session(['search_data' => request()->contracts, 'search_type' => 'contracts']);
         }
         

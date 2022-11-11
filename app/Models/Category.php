@@ -9,6 +9,8 @@ class Category extends Model
 {
     use HasFactory;
 
+    //protected $with = ['items', 'mainCat'];
+
     public function items()
     {
         return $this->hasMany(Item::class, 'category_id', 'id');

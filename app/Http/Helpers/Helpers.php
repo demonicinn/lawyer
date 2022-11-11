@@ -76,6 +76,28 @@
 	}
 
 
+	function practiceArea($type, $id){
+
+		$ids = json_decode($id);
+		//$id = json_decode($id);
+		if($type=='litigations'){
+			$practices = \App\Models\Litigation::whereIn('id', $ids)->get();
+		}
+		else {
+			$practices = \App\Models\Contract::whereIn('id', $ids)->get();
+		}
+
+
+		$data = '';
+
+		foreach(@$practices as $practice){
+            $data = $data ? $data.', '.$practice->name : $practice->name;
+        }
+
+        return $data;
+	}
+
+
 
 	
 	
