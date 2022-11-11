@@ -135,8 +135,8 @@
                             <form class="form-design row justify-content-center" method="post" action="{{route('lawyer.banking.store')}}">
                                 @csrf
                 
-                                <div class="col-md-7">
-                                <div class="white-shadow-scnd-box ">
+                                <div class="">
+                                <div class="">
                                     <div class="form">
                                         <div class="form-grouph input-design">
                                             <label>Account Holder Name*</label>

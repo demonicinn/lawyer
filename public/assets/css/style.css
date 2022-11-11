@@ -3174,7 +3174,7 @@ a.view-icon.info_icns.mdl {
 }
 .btn_save_remove{
     display: flex;
-    gap: 15px;
+    gap: 25px;
 }
 .subscription_div {
     display: flex;
@@ -3186,6 +3186,7 @@ a.view-icon.info_icns.mdl {
     text-transform: uppercase;
     font-family: 'Lato-Medium';
     color: #f93f64;
+    padding-right: 15px;
 }
 .form-grouph.input-design.icon-input-design.right-icn-design.mt-1 a.btn.clear-btn {
     border: 1px solid;
@@ -3193,6 +3194,15 @@ a.view-icon.info_icns.mdl {
     margin-left: 10px;
     background: #ff3974;
     border-radius: 50px;
+}
+button.btn-design-renew {
+    background: #F93F64;
+    color: #fff;
+    padding: 7px 20px;
+    font-size: 18px;
+    font-weight: 500;
+    border-radius: 8px;
+    border: none;
 }
 /* responsive */
 /* responsive */
