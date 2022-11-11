@@ -19,11 +19,12 @@
                 <button type="button" class="btn-design-first" wire:click="removeSubscription">Cancel</button>
                 @else
 
+               <div class=""> 
                 <span class="cancel_subcript"> Canceled</span>
                 @if($currentPlan->to_date >= date('Y-m-d'))
-                <button type="button" class="btn-design-first" wire:click="renewSubscription">Renew</button>
+                <button type="button" class="btn-design-renew" wire:click="renewSubscription">Renew</button>
                 @endif
-
+              </div>
                 @endif
                 </div>
             </div>
