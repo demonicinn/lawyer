@@ -3204,6 +3204,12 @@ button.btn-design-renew {
     border-radius: 8px;
     border: none;
 }
+.btn_sr{
+    padding: 10px !important;
+    display: inline-block !important;
+    margin-top: 7px;
+    margin-right: 4px;
+}
 /* responsive */
 /* responsive */
 /* responsive */

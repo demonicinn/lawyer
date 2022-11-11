@@ -42,10 +42,10 @@
                                         @if($card->is_primary=='0')
                                         <form class="form-design row justify-content-center" method="post" action="{{route('lawyer.card.primary', $card->id)}}">
                                             @csrf
-                                            <button type="submit" class="btn-design-first btn_bank">Set as Primary</button>
+                                            <button type="submit" class="btn-design-first btn_bank btn_sr">Set as Primary</button>
                                         </form>
                                         @else
-                                        <button type="button" class="btn-design-first btn_bank" disabled>Primary</button>
+                                        <button type="button" class="btn-design-first btn_bank btn_sr" disabled>Primary</button>
                                         @endif
 
                                         <form class="form-design row justify-content-center" method="post" action="{{route('lawyer.card.remove', $card->id)}}">
