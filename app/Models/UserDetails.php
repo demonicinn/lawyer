@@ -9,6 +9,8 @@ class UserDetails extends Model
 {
     use HasFactory;
 
+    //protected $with = ['states'];
+    
     public function states()
     {
         return $this->belongsTo(State::class, 'states_id', 'id');

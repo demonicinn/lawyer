@@ -13,7 +13,7 @@
             <div class="row">
                 <div class="col-md-6 form-design">
                     <div class="white-shadow-scnd-box">
-                    <h3><b class="h4-design">Card for Subscription</b></h3>
+                    <h3><b class="h4-design">Saved Cards</b></h3>
                     
                     @php
                         $cards = $user->userCards()->orderBy('id', 'desc')->get();
@@ -59,7 +59,7 @@
                     </div>
 
                     
-
+                    <h3>Add New Card</h3>
                     <form class="form-design row justify-content-center" method="post" action="{{route('lawyer.card.store')}}">
                         @csrf
 
@@ -124,11 +124,12 @@
                 <div class="col-md-6">
                 <div class="white-shadow-scnd-box">
 
-                    @if(@$record)
-                        @if(@$bankInfo->status=='active')
+                        @if(@$record->status=='active')
+
                             @if(!$record->account_number)
                                 <p class="text-center pb-3">Please fill the bank account to complete your bank account verification.</p>
                             @endif
+
                             <form class="form-design row justify-content-center" method="post" action="{{route('lawyer.banking.store')}}">
                                 @csrf
                 
@@ -169,11 +170,6 @@
                 			<button type="submit" class="btn-design-first btn_bank">Connect Bank Account</button>
                 			{!! Form::close() !!}
                         @endif
-                    @else
-                        {!! Form::open(['route' => 'lawyer.bank.connect', 'class'=>'form-design row justify-content-center']) !!}
-            			<button type="submit" class="btn-design-first btn_bank">Connect Bank Account</button>
-            			{!! Form::close() !!}
-                    @endif
                 </div>
                 </div>
             </div>

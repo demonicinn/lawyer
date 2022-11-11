@@ -9,6 +9,8 @@ class LawyerStateBar extends Model
 {
     use HasFactory;
 
+    //protected $with = ['statebar'];
+    
     public function statebar()
     {
         return $this->belongsTo(StateBar::class, 'state_bar_id', 'id');

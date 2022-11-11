@@ -9,6 +9,8 @@ class SavedLawyer extends Model
 {
     use HasFactory;
 
+    //protected $with = ['lawyer', 'lawyerCategory', 'lawyerInfo'];
+
     public function lawyer()
     {
         return $this->belongsTo(User::class, 'lawyer_id', 'id');

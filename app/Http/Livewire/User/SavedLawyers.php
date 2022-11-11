@@ -17,7 +17,7 @@ class SavedLawyers extends Component
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
 
-    public  $authUser, $search, $practices, $practiceArea, $areaId, $modal;
+    public $authUser, $search, $practices, $practiceArea, $areaId, $modal;
 
 
     public function clear()

@@ -17,6 +17,9 @@ class Booking extends Model
         'zoom_zak'
     ];
 
+
+    //protected $with = ['user', 'lawyer', 'notes', 'cardDetails', 'payments'];
+
     public function getZoomZakAttribute(){
     	parse_str(parse_url($this->zoom_start_url, PHP_URL_QUERY), $result);
 		if(@$result['zak']){

@@ -9,7 +9,8 @@ class LawyerLitigations extends Model
 {
     use HasFactory;
 
-
+    //protected $with = ['litigation'];
+    
     public function litigation()
     {
         return $this->belongsTo(Litigation::class, 'litigations_id', 'id');
