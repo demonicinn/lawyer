@@ -22,7 +22,7 @@ $user = auth()->user();
           <ul class="dropdown-menu py-3">
             <a class="dropdown-item " href="{{ route('login') }}">Login</a>
           <a class="dropdown-item " href="{{ route('register') }}">Lawyer Sign Up</a>
-          <a class="dropdown-item  mb-3" href="{{ route('narrow.down') }}" >Find a lawyer</a>
+          <a class="dropdown-item  mb-3" href="{{ route('narrow.down') }}" >Find a Lawyer</a>
           </ul>
         </div>
 

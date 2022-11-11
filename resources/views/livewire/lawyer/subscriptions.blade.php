@@ -12,13 +12,15 @@
             @endphp
             <div class="alert alert-warning">
                 <p>Current Subscription Plan <strong>{{ $currentPlan->subscription->name }}</strong></p>
+                <div class="subscription_div">
                 <p>Expires on: <strong>{{ $currentPlan->to_date }}</strong></p>
 
                 @if(@$user->auto_renew=='1')
                 <button type="button" class="btn-design-first" wire:click="removeSubscription">Cancel Subscription</button>
                 @else
-                <button type="button" class="btn-design-first">Subscription Canceled</button>
+                <span class="cancel_subcript">Subscription Canceled</button>
                 @endif
+                </div>
             </div>
             @endif
 

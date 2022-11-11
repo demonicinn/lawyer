@@ -5,7 +5,7 @@
             <form class="form-design">
                 <div class="d-flex justify-content-spacebw">
                     <div class="form-grouph select-design select-design-2 d-flex">
-                        <label>Practice:</label>
+                        <label style="width:auto; padding-right:15px;font-weight:bold;font-family: 'P22 Mackinac';"><b>Practice:</b></label>
                         <select wire:model="practiceArea">
                             <option value="" selected>Practice Area</option>
                             <option value="Litigations">Litigations</option>
@@ -16,7 +16,7 @@
 
                     @if (!empty($practices))
                     <div class="form-grouph select-design select-design-2 d-flex">
-                        <label>Area:</label>
+                        <label style="width:auto; padding-right:15px;font-weight:bold;font-family: 'P22 Mackinac';"><b>Area:</b></label>
                         <select wire:model="areaId">
                             <option value="" selected disabled>{{$practiceArea}}</option>
                             @foreach ($practices as $practice)
@@ -42,7 +42,7 @@
         </div>
 
         <div class="user_saved-lawyers_list">
-            <div class="list-wrapper list-wrapper-saved four-layout">
+            <div class="list-wrapper list-wrapper-saved four-layout m-0">
 
 
                 @forelse ($lawyers as $lawyer)

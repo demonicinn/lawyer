@@ -13,7 +13,7 @@
             <div class="row">
                 <div class="col-md-6 form-design">
                     <div class="white-shadow-scnd-box">
-                    <h3><b class="h4-design">Card for Subscription</b></h3>
+                    <h3><b class="h4-design">Saved Card</b></h3>
                     
                     @php
                         $cards = $user->userCards()->orderBy('id', 'desc')->get();
@@ -36,7 +36,7 @@
                                     <td>{{ @$card->card_name }}</td>
                                     <td>**** {{ @$card->card_number }}</td>
                                     <td>{{ @$card->card_type }}</td>
-                                    <td>
+                                    <td class="btn_save_remove">
                                         @if($card->is_primary=='0')
                                         <form class="form-design row justify-content-center" method="post" action="{{route('lawyer.card.primary', $card->id)}}">
                                             @csrf
@@ -63,7 +63,7 @@
                     <form class="form-design row justify-content-center" method="post" action="{{route('lawyer.card.store')}}">
                         @csrf
 
-
+                        <h3 class="pt-2"><b class="h4-design m-0 d-block  pt-3">Add New Card</b></h3>
                         <div class="billing-info_form-inputs">
 
                             <div class="form-grouph input-design{!! ($errors->has('card_name') ? ' has-error' : '') !!}">
