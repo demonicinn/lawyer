@@ -157,11 +157,16 @@
                             <div class="practice_area_div">
                              <div class="left_trash">
                                  <span>PRACTICE AREA</span>
-                                 <h5>Tax</h5>
+                                 <h5>{{ $practice_area }}</h5>
                              </div>
-                             <!-- <div class="right_trash">
+
+
+                             {{--
+                             <div class="right_trash">
                                 <a href="#" class="trash_link"><i class="fa-regular fa-trash-can"></i></a>
-                             </div> -->
+                             </div>
+                             --}}
+
                             </div>
 
                             @php $lawyerID = Crypt::encrypt($lawyer->id); @endphp

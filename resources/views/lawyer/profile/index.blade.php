@@ -125,15 +125,15 @@ $getTime = \App\Models\User::getTime();
 <script>
     $('input[name=is_consultation_fee]').on('click', function() {
         let fee = $(this).val();
-        $('#consultation_fee').hide();
+        $('#consultation_fee').attr('disabled', 'disabled');
 
         if (fee == 'yes') {
-            $('#consultation_fee').show();
+            $('#consultation_fee').removeAttr('disabled');
         }
     });
 
     @if(@$user->details->is_consultation_fee == 'no')
-    $('#consultation_fee').hide();
+    $('#consultation_fee').removeAttr('disabled');
     @endif
 
 

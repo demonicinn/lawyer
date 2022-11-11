@@ -9,6 +9,7 @@ class LawyerSubscription extends Model
 {
     use HasFactory;
 
+    //protected $with = ['subscription', 'user'];
 
     public function subscription()
     {

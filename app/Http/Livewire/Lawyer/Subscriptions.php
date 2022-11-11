@@ -28,7 +28,7 @@ class Subscriptions extends Component
     public $subscriptionMonthly = 0;
 
     public $currentPlan;
-    protected $listeners = ['confirmedSubscriptionAction'];
+    protected $listeners = ['confirmedSubscriptionAction', 'confirmedRenewSubscriptionAction'];
 
     /*public function __construct()
     {
@@ -242,6 +242,44 @@ class Subscriptions extends Component
         $this->flash('success', 'Subscription Removed');
         return redirect()->route('lawyer.subscription');
     }
+
+
+
+
+
+
+    public function renewSubscription()
+    {
+        $this->alert('warning', 'Are you sure', [
+            'toast' => false,
+            'position' => 'center',
+            'showCancelButton' => true,
+            'cancelButtonText' => 'Cancel',
+            'showConfirmButton' => true,
+            'confirmButtonText' => 'Yes',
+            'onConfirmed' => 'confirmedRenewSubscriptionAction',
+            'allowOutsideClick' => false,
+            'timer' => null
+        ]);
+    }
+
+    public function confirmedRenewSubscriptionAction()
+    {
+        $user = auth()->user();
+        $user->auto_renew = '1';
+        $user->save();
+
+        $this->flash('success', 'Subscription Activated');
+        return redirect()->route('lawyer.subscription');
+    }
+
+
+
+
+
+
+
+    
 
 
     public function render()

@@ -48,6 +48,8 @@ class User extends Authenticatable
         'name', 'profile_pic'
     ];
 
+    //protected $with = ['details', 'bankInfo', 'lawyerSubscription', 'lawyerSubscriptionLast', 'lawyerLitigations', 'lawyerContracts', 'lawyerHours', 'lawyerInfo', 'userCards', 'leave', 'savedLawyer', 'booking', 'bookingUser', 'lawyerCategory', 'lawyerReviews', 'lawyerStateBar'];
+
     public function getNameAttribute()
     {
         return $this->first_name . ' ' . $this->last_name;
@@ -147,7 +149,6 @@ class User extends Authenticatable
     {
         return $this->hasMany(LawyerStateBar::class, 'user_id', 'id');
     }
-
 
 
 

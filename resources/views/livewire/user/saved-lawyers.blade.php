@@ -84,11 +84,13 @@
                             </div>
                             <div class="practice_area_div">
                              <div class="left_trash">
+                                @if($lawyer->type && $lawyer->data)
                                  <span>PRACTICE AREA</span>
-                                 <h5>Tax</h5>
+                                 <h5>{{ practiceArea($lawyer->type, $lawyer->data) }}</h5>
+                                 @endif
                              </div>
                              <div class="right_trash">
-                                <a href="#" class="trash_link"><i class="fa-regular fa-trash-can"></i></a>
+                                <a href="{{route('user.lawyer.remove', $lawyerID)}}" class="trash_link"><i class="fa-regular fa-trash-can"></i></a>
                              </div>
                             </div>
                             <div class="schedular_consultation">
