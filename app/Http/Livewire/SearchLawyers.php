@@ -25,7 +25,7 @@ class SearchLawyers extends Component
     
     public $year_exp_min = '1', $year_exp = '20';
     public $distance_min = '1', $distance = '100';
-    public $rate_min = '0', $rate = '500';
+    public $rate_min = '0', $rate = '1000';
     
     public $practice_area='';
 
@@ -62,7 +62,7 @@ class SearchLawyers extends Component
             $this->search_type = 'contracts';
             
 
-            $practices = Contract::whereIn('id', request()->litigations)->get();
+            $practices = Contract::whereIn('id', request()->contracts)->get();
 
             foreach($practices as $practice){
                 $this->practice_area = $this->practice_area ? $this->practice_area.', '.$practice->name : $practice->name;
@@ -126,14 +126,26 @@ class SearchLawyers extends Component
                         $query->where('contingency_cases', 'yes');
                     }
 
+
+                    $query->where(function($q) {
+                        $q->where('year_experience', '>=', (int)$this->year_exp_min);
+
+                        if($this->year_exp < '20'){
+                            $q->where('year_experience', '<=', (int)$this->year_exp);
+                        }
+                    });
+
                     //if ($this->year_exp < '20') {
-                        $query->whereBetween('year_experience', [$this->year_exp_min, $this->year_exp]);
+                        //$query->whereBetween('year_experience', [$this->year_exp_min, $this->year_exp]);
                     //}
 
                     //if ($this->rate > 0) {
                         $query->where(function($q) {
                             $q->where('hourly_fee', '>=', (int)$this->rate_min);
-                            $q->where('hourly_fee', '<=', (int)$this->rate);
+
+                            if($this->rate < '1000'){
+                                $q->where('hourly_fee', '<=', (int)$this->rate);
+                            }
                         });
                         
                     //}
@@ -143,11 +155,17 @@ class SearchLawyers extends Component
                         $query->selectRaw('(((acos(sin((' . $this->latitude . '*pi()/180)) * sin((`latitude`*pi()/180))+cos((' . $this->latitude . '*pi()/180)) * cos((`latitude`*pi()/180)) * cos(((' . $this->longitude . '- `longitude`)*pi()/180))))*180/pi())*60*1.1515) AS distance');
 
                         //if($this->distance > 0){
-                            //$query->havingRaw("distance > ?", [$this->distance_min]);
-                            //$query->orHavingRaw("distance <= ?", [$this->distance]);
-                            
+                            /*$query->havingRaw("distance > ?", [$this->distance_min]);
+                            if($this->distance < '100'){
+                            $query->orHavingRaw("distance <= ?", [$this->distance]);
+                            }*/
                             //need this
-                            //$query->havingRaw("distance <= ?", [$this->distance]);
+                            if($this->distance < '100'){
+                                $query->havingRaw("distance <= ?", [$this->distance]);
+                            }
+                            else {
+                                $query->havingRaw("distance >= ?", [$this->distance_min]);
+                            }
                         //}
                     }
 
@@ -183,7 +201,7 @@ class SearchLawyers extends Component
 
             $user = $user->whereHas('lawyerSubscriptionLast', function ($query) {
 
-                    $query->where('to_date', '<=', date('Y-m-d'));
+                    $query->where('to_date', '>=', date('Y-m-d'));
                 });
 
 
@@ -192,7 +210,7 @@ class SearchLawyers extends Component
 
         //$user = $user->latest()->get();
         $user = $user->paginate(9);
-        // dd($user);
+         //dd($user);
         //$this->lawyers = $user;
 
         return $user;

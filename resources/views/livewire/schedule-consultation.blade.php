@@ -103,7 +103,7 @@
             $calendar.setEvents(eventArray)
 
 
-            console.log('fcdfcdx', $calendar)
+            //console.log('fcdfcdx', $calendar)
         }
 
     </script>

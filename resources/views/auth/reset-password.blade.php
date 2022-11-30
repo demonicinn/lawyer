@@ -14,6 +14,7 @@
 					<div class="form-grouph input-design{!! ($errors->has('email') ? ' has-error' : '') !!}">
 						{!! Form::label('email','Email', ['class' => 'form-label']) !!}
 						{!! Form::email('email', request()->email ?? null, ['class' => ($errors->has('email') ? ' is-invalid' : '')]) !!}
+						{!! $errors->first('email', '<span class="help-block">:message</span>') !!}
 					</div>
 
 					<div class="form-grouph input-design{!! ($errors->has('password') ? ' has-error' : '') !!}">

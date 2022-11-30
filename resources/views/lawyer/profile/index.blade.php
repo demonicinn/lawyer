@@ -121,6 +121,8 @@ $getTime = \App\Models\User::getTime();
     </div>
 </div>
 
+<script src="https://maps.googleapis.com/maps/api/js?key={{env('GOOGLE_MAPS_API_KEY')}}"></script>
+
 
 <script>
     $('input[name=is_consultation_fee]').on('click', function() {
@@ -267,5 +269,53 @@ $getTime = \App\Models\User::getTime();
         });
         @endforeach
     });
+    
+    
+    var geocoder = new google.maps.Geocoder();
+    $(document).on('change', '#zip_code', function(){
+        var zipcode = $(this).val();
+        var country = "United States";
+console.log(zipcode)
+        
+
+        //...
+
+        geocoder.geocode({ 'address': zipcode + ',' + country }, function (result, status) {
+
+            var stateName = '';
+            var cityName = '';
+
+            var addressComponent = result[0]['address_components'];
+
+            // find state data
+            var stateQueryable = $.grep(addressComponent, function (x) {
+                return $.inArray('administrative_area_level_1', x.types) != -1;
+            });
+
+            if (stateQueryable.length) {
+                stateName = stateQueryable[0]['long_name'];
+
+                var cityQueryable = $.grep(addressComponent, function (x) {
+                    return $.inArray('locality', x.types) != -1;
+                });
+
+                // find city data
+                if (cityQueryable.length) {
+                    cityName = cityQueryable[0]['long_name'];
+                    
+                    $('#city').val(cityName);
+                }
+                
+                
+                //console.log('stateName', stateName)
+                //console.log('cityName', cityName)
+        
+            }
+        });
+
+
+        
+    });
+    
 </script>
 @endsection

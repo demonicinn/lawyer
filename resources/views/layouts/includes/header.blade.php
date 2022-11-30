@@ -22,7 +22,7 @@ $user = auth()->user();
           <ul class="dropdown-menu py-3">
             <a class="dropdown-item " href="{{ route('login') }}">Login</a>
           <a class="dropdown-item " href="{{ route('register') }}">Lawyer Sign Up</a>
-          <a class="dropdown-item  mb-3" href="{{ route('narrow.down') }}" >Find a Lawyer</a>
+          <a class="dropdown-item " href="{{ route('narrow.down') }}" >Find a Lawyer</a>
           </ul>
         </div>
 
@@ -45,6 +45,8 @@ $user = auth()->user();
             @elseif(Auth::user()->role=="lawyer")
             <li><a class="dropdown-item" href="{{ route($user->role) }}">My Portal</a></li>
             <li><a class="dropdown-item" href="{{ route('lawyer.profile') }}">My Profile</a></li>
+            <li><a class="dropdown-item" href="{{ route('lawyer.dashboard') }}">Dashboard</a></li>
+            <li><a class="dropdown-item" href="{{ route('consultations.upcoming') }}">Consultations</a></li>
 
             
             {{--
@@ -52,14 +54,15 @@ $user = auth()->user();
             --}}
 
             <li><a class="dropdown-item" href="{{ route('lawyer.subscription') }}">Subscription</a></li>
-            <li><a class="dropdown-item" href="{{ route('lawyer.banking.success') }}">Bank Info</a></li>
+            <li><a class="dropdown-item" href="{{ route('lawyer.banking.success') }}">Account</a></li>
 
             @else
             <li><a class="dropdown-item" href="{{ route('user') }}">My Portal</a></li>
-            <li><a class="dropdown-item" href="{{ route('user.profile') }}">My Profile</a></li>
+            <li><a class="dropdown-item" href="{{ route('user.profile') }}">Account</a></li>
 
             <li><a class="dropdown-item" href="{{ route('user.saved.lawyer') }}">Saved Lawyers</a></li>
             <li><a class="dropdown-item" href="{{ route('consultations.upcoming') }}">Consultations</a></li>
+            <li><a class="dropdown-item" href="{{ route('user.billing.index') }}">Billing</a></li>
 
 
             

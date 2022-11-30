@@ -48,24 +48,24 @@
     </div>
   </div>
  </section>
- <section class="rating-section position-relative about-page-rating">
+ <section class="rating-section position-relative about-page-rating about_rf">
    <div class="rating_container">
       <div class="row align-items-center">
          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
            <div class="heading-paragraph-design m-text-center">
             <h2>Doing our best to provide five-star service</h2>
             <!-- <p>Lorem ipsum dolor sit amet. Et impedit similique et quibusdam quia est rerum eaque. Voluptatem eligendi est dicta adipisci sed voluptas deserunt.</p> -->
-            <!-- <div class="five-star-blocks">
+           <div class="five-star-blocks">
             <img src="{{ asset('assets/images/stars.png') }}">
             <img src="{{ asset('assets/images/stars.png') }}">
             <img src="{{ asset('assets/images/stars.png') }}">
             <img src="{{ asset('assets/images/stars.png') }}">
             <img src="{{ asset('assets/images/stars.png') }}">
-            </div> -->
+            </div> 
            </div>
          </div>
          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 right_img_rt">
-         <img src="{{ asset('assets/images/desert_scene_small-01.png') }}">
+         <img src="{{ asset('assets/images/about_f.png') }}">
          </div>
       </div>
 

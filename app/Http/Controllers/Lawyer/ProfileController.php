@@ -67,8 +67,10 @@ class ProfileController extends Controller
             'website_url' => 'nullable|url',
             'first_name' => 'required|max:50',
             'last_name' => 'required|max:50',
-            'contact_number' => 'required|numeric|digits_between:10,12',
+            //'contact_number' => 'required|numeric|digits_between:10,12',
+            'contact_number' => 'required',
             'address' => 'required',
+            'school_attendent' => 'required',
             'city' => 'required|max:100',
             'state' => 'required',
             'zip_code' => 'required|max:20',
@@ -135,6 +137,7 @@ class ProfileController extends Controller
         //$details->bar_number = $request->bar_number;
         //$details->year_admitted = $request->year_admitted;
         $details->year_experience = $request->year_experience;
+        $details->school_attendent = $request->school_attendent;
 
         $details->latitude = @$res['latitude'];
         $details->longitude = @$res['longitude'];
@@ -519,7 +522,7 @@ class ProfileController extends Controller
             }
 
             $this->flash('success', 'Your bank info added successfully');
-            return redirect()->route('lawyer.profile');
+            return redirect()->route('lawyer.banking.success');
             
 
         } catch (\Stripe\Exception\RateLimitException $e) {

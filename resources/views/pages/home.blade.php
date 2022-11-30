@@ -131,7 +131,7 @@
   </div>
   </div>
 </section>
-<section class="rating-section position-relative">
+<section class="rating-section position-relative about_rf">
   <div class="rating_container">
     <div class="row align-items-center">
       <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
@@ -151,7 +151,7 @@
         </div>
       </div>
       <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 right_img_rt">
-      <img src="{{ asset('assets/images/desert_scene_small-01.png') }}">
+      <img src="{{ asset('assets/images/about_f.png') }}">
       </div>
     </div>
     <!-- <div class="rating-slider-sec">

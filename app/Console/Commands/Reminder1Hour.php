@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Notification;
 use App\Notifications\Reminder1HourNotification;
 
 use App\Models\Booking;

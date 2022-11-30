@@ -6,6 +6,7 @@ use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use App\Models\Subscription;
 use Livewire\WithPagination;
+use App\Models\AdminSetting;
 
 class Subscriptions extends Component
 {
@@ -20,6 +21,17 @@ class Subscriptions extends Component
 
     public $subscriptionId;
     protected $listeners = ['confirmedAction'];
+
+    public $trial_days;
+
+    public function mount()
+    {
+	    $trial_days_setting = AdminSetting::where('type', 'trial_days')->first();
+	    if ( !is_null( $trial_days_setting ) ){
+		    $this->trial_days = $trial_days_setting->value;
+	    }
+
+    }
 
     public function resetFields()
     {
@@ -104,6 +116,16 @@ class Subscriptions extends Component
         $data->delete();
         $this->alert('success', 'Subscription deleted');
         $this->resetFields();
+    }
+
+    public function updateTrialDays()
+    {
+	    $this->validate(['trial_days' => 'required|numeric']);
+	    $trial_days_setting = AdminSetting::updateOrCreate(
+		    ['type' => 'trial_days' ],
+		    ['value' => $this->trial_days ],
+	    );
+	    $this->alert('success', 'Trial Days Updated');
     }
 
 

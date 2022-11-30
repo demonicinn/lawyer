@@ -28,7 +28,7 @@ class DashboardController extends Controller
 		$completeConsultations = $user->booking()
 									->where('is_call', 'completed')
 									->where('is_accepted', '0')
-                                    ->where('is_canceled', '0')
+                                    //->where('is_canceled', '0')
 									->count();
 
 		$acceptedConsultations = $user->booking()

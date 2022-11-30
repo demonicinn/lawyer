@@ -94,7 +94,9 @@ class ZoomController extends Controller
         $bookingDateTime = $booking->booking_date.' '.$booking->booking_time;
 
 		//...
-		if($user->role=='lawyer' && $dateTime > $bookingDateTime){
+		//if($user->role=='lawyer' && $dateTime > $bookingDateTime){
+		//if($dateTime > $bookingDateTime){
+		if($user->role=='lawyer'){
 		    $booking->is_call = 'completed';
 		    $booking->save();
 

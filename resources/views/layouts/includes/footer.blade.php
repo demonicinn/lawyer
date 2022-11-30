@@ -4,7 +4,7 @@
       <div class="footer-column footer-column-1">
         <div class="footer-widget footer-widget-first">
           <div class="footer-logo">
-            <a href="#"><img src="{{ asset('assets/images/logo/footer_logo.png') }}"></a>
+            <a href="/"><img src="{{ asset('assets/images/logo/footer_logo.png') }}"></a>
           </div>
           <!-- <h4 class="footer-heading">Follow Us</h4>
           <div class="footer-social-icons">

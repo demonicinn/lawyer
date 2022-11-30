@@ -4,26 +4,19 @@
             <form class="form-design">
                 <div class="filter-sidebar">
                     <h4>Filter by:</h4>
+
+
                     <div class="hourly-range-design range-design mb-5">
                         <h5 class="h5-design">Hourly Rate</h5>
-                        <div class="n-slider" wire:ignore>
-                            <!-- <p class="min-value">$0</p> -->
-                            <input type="text" id="hourlyRange" readonly>
-                            <div id="hourly-range" class="slider"></div>
-                            <!-- <p class="max-value">$500</p> -->
-                        </div>
-                        
-                        {{--
-                        <div class="range-wrapper position-relative">
-                            <p class="min-value">$0</p>
-                            <div id="hourly-rate-slider" class="range-slider">
-                                <div id="hourly-range" class="tooltip-range"></div>
-                                <input class="range_design-input" type="range" step="10" wire:model="rate" title="{{$rate}}" min="0" max="500">
+                        <div class="slider-area" wire:ignore>
+                            <div class="slider-area-wrapper">
+                                <p class="min-value">${{$rate_min}}</p>
+                                <div id="hourlyRange" class="slider"></div>
+                                <p class="max-value">${{$rate}}</p>
                             </div>
-                            <p class="max-value">$500</p>
                         </div>
-                        --}}
                     </div>
+
 
                     <div class="toggle-design-wrapper d-flex flex-wrap align-items-center mb-4 justify-content-spacebw">
                         <h5 class="h5-design">Free Consultation</h5>
@@ -41,29 +34,20 @@
                         </div>
                     </div>
 
-                    <div class="year-exp-design range-design mb-5">
+
+                    <div class="hourly-range-design range-design mb-5">
                         <h5 class="h5-design">Years Experience</h5>
-                        
-                        <div class="n-slider" wire:ignore>
-                            <!-- <p class="min-value">1</p> -->
-                            <input type="text" id="yearsRange" readonly>
-                            <div id="years-range" class="slider"></div>
-                            <!-- <p class="max-value">20</p> -->
-                        </div>
-                        
-                        {{--
-                        <div class="range-wrapper position-relative">
-                            <p class="min-value">1</p>
-                            <div id="years-experience-slider" class="range-slider">
-                                <div id="experience-range-tooltip" class="tooltip-range"></div>
-                                <input wire:model="year_exp" class="range_design-input" type="range" step="1" min="0" max="20" title="{{$year_exp}}">
-                                <input wire:model="year_exp" class="range_design-input" type="range" step="1" min="0" max="20" title="{{$year_exp}}">
+                        <div class="slider-area" wire:ignore>
+                            <div class="slider-area-wrapper">
+                                <p class="min-value">{{$year_exp_min}}</p>
+                                <div id="yearsRange" class="slider"></div>
+                                <p class="max-value">{{$year_exp}}+</p>
                             </div>
-                            <p class="max-value">20</p>
                         </div>
-                        --}}
                     </div>
 
+
+                    {{--
                     <div class="form-group select-design form-grouph mb-4">
                         @foreach ($categories as $category)
                         @if ($category->items_count)
@@ -81,26 +65,18 @@
                         @endif
                         @endforeach
                     </div>
+                    --}}
 
-                    <div class="distance-within-design range-design form-grouph mb-5">
-                        <h5 class="h5-design">Within Distance</h5>
-                        <div class="n-slider" wire:ignore>
-                            <!-- <p class="min-value">1 mi</p> -->
-                            <input type="text" id="distanceRange" readonly>
-                            <div id="distance-range" class="slider"></div>
-                            <!-- <p class="max-value">100 mi</p> -->
-                        </div>
-                        
-                        {{--
-                        <div class="range-wrapper position-relative">
-                            <p class="min-value">1 mi</p>
-                            <div id="distance-range-slides" class="range-slider">
-                                <div class="tooltip-range"></div>
-                                <input class="range_design-input" wire:model="distance" type="range" step="1" min="0" max="100" title="{{$distance}}">
+
+                    <div class="hourly-range-design range-design mb-5">
+                        <h5 class="h5-design">Distance</h5>
+                        <div class="slider-area" wire:ignore>
+                            <div class="slider-area-wrapper">
+                                <p class="min-value">{{$distance_min}}mi</p>
+                                <div id="distanceRange" class="slider"></div>
+                                <p class="max-value">{{$distance}}+mi</p>
                             </div>
-                            <p class="max-value">100 mi</p>
                         </div>
-                        --}}
                     </div>
 
                     <div class="form-group input-design form-grouph icon-input-design dark-placehiolder">
@@ -144,14 +120,16 @@
                                     <h4>{{ @$lawyer->details->is_consultation_fee=='yes' ? '$'.$lawyer->details->consultation_fee : 'Free' }}</h4>
                                 </div>
                             </div>
-                            <p class="school_name"><i class="fa-solid fa-school-flag"></i>{{ @$lawyer->lawyerCategory->items->name }}</p>
+                            @if(@$lawyer->details->school_attendent)
+                            <p class="school_name"><i class="fa-solid fa-school-flag"></i>{{ @$lawyer->details->school_attendent }}</p>
+                            @endif
                             <div class="location_profile-divs border-bottom pb-2 d-flex justify-content-spacebw align-items-center">
                                 <address><i class="fa-solid fa-location-dot"></i> {{ @$lawyer->details->city }}, {{ @$lawyer->details->states->code }}</address>
                                 <a href="{{ route('lawyer.show', $lawyer->id) }}?type={{ $search_type }}&search={{ json_encode($search_data) }}">See Profile</a>
                             </div>
 
                             <div class="add-litigations mt-2 location_profile-divs d-flex justify-content-spacebw align-items-center border-bottom pb-2">
-                                <button type="button" class="btn_court btn_adm showModal " wire:click="modalData({{$lawyer->id}})"><i class="fa-solid fa-gavel"></i>  Admissions</button>
+                                <button type="button" class="btn_court btn_adm showModal " wire:click="modalData({{$lawyer->id}})"><i class="fa-solid fa-gavel"></i>Admissions</button>
                                {{--<a href="{{ route('lawyer.show', $lawyer->id) }}?type={{ $search_type }}&search={{ json_encode($search_data) }}">See Profile</a>--}} 
                             </div>
                             <div class="practice_area_div">
@@ -195,7 +173,7 @@
 
                 @if($modal)
                 <!-- Accept Modal Start Here-->
-                <div wire:ignore.self class="modal fade courts_modal common_modal modal-design fedral_court_modal" id="courtModal" tabindex="-1" aria-labelledby="courtModal" aria-hidden="true">
+                <div wire:ignore.self class="modal fade courts_modal common_modal modal-design fedral_court_modal court_modal" id="courtModal" tabindex="-1" aria-labelledby="courtModal" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                         <button type="button" class="btn btn-default close closeModal">
@@ -228,7 +206,7 @@
                                         <div class="mb-4 courts_data">
                                            <div class="name_data_p">
                                              <h6>{{ @$lawyerInfo->items->name }}</h6>
-                                            <p class="mb-0">{{ @$lawyerInfo->items->category->name }} {{ @$lawyerInfo->items->category->mainCat->name ? ' - '.$lawyerInfo->items->category->mainCat->name : ''  }}</p>
+                                            {{--<p class="mb-0">{{ @$lawyerInfo->items->category->name }} {{ @$lawyerInfo->items->category->mainCat->name ? ' - '.$lawyerInfo->items->category->mainCat->name : ''  }}</p>--}}
                                            </div>
                                             <div class="federal-court">
                                                 <div class="form-grouph select-design">
@@ -299,68 +277,123 @@
             
             
             //...
-  
+            
             $(function() {
-                $("#hourly-range").slider({
+                var hourlyRange = document.getElementById("hourlyRange");
+                noUiSlider.create(hourlyRange, {
+                    start: [{{$rate_min}}, {{$rate}}],
+                    connect: true,
+                    behaviour: "drag",
+                    tooltips: true,
+                    step: 10,
+                    range: {
+                        min: 0,
+                        max: 1000
+                    },
+                    format: {
+                        from: function (value) {
+                            var from = parseInt(value);
+                            return from;
+                        },
+                        to: function (value) {
+                            var to = parseInt(value);
+                            return "$"+to;
+                        }
+                    }
+                });
+                
+                
+                hourlyRange.noUiSlider.on('change', function (values){
+                    
+                        var from = parseInt(values[0].replace("$", ""));
+                        var to = parseInt(values[1].replace("$", ""));
+                        @this.set('rate_min', from);
+                        @this.set('rate', to);
+                    
+                });
+            });
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            $(function() {
+                var yearsRange = document.getElementById("yearsRange");
+                noUiSlider.create(yearsRange, {
+                    start: [{{$year_exp_min}}, {{$year_exp}}],
+                    connect: true,
+                    behaviour: "drag",
+                    tooltips: true,
+                    step: 1,
+                    range: {
+                        min: 1,
+                        max: 20
+                    },
+                    format: {
+                        from: function (value) {
+                            var from = parseInt(value);
+                            return from;
+                        },
+                        to: function (value) {
+                            var to = parseInt(value);
+                            return to+" yrs";
+                        }
+                    }
+                });
+                
+                yearsRange.noUiSlider.on('change', function (values){
+                        var from = parseInt(values[0].replace(" yrs", ""));
+                        var to = parseInt(values[1].replace(" yrs", ""));
+                    
+                        @this.set('year_exp_min', from);
+                        @this.set('year_exp', to);
+                    
+                });
+            });
+            
+            
+            $(function() {
+                var distanceRange = document.getElementById("distanceRange");
+                noUiSlider.create(distanceRange, {
+                    start: [{{$distance_min}}, {{$distance}}],
+                    connect: true,
+                    behaviour: "drag",
+                    tooltips: true,
                     step: 5,
-                    range: true, 
-                    min: 0, 
-                    max: 500, 
-                    values: [0, 500], 
-                    slide: function(event, ui)
-                    {
-                        $("#hourlyRange").val(ui.values[0] + " - " + ui.values[1]);
-                        
-                        @this.set('rate_min', ui.values[0]);
-                        @this.set('rate', ui.values[1]);
-                    }
+                    range: {
+                        min: 1,
+                        max: 100
+                    },
+                    format: {
+                        from: function (value) {
+                            var from = parseInt(value);
+                            return from;
+                        },
+                        to: function (value) {
+                            
+                            var to = parseInt(value);
+                            return to+" miles";
+                        }
+                    },
                 });
                 
-                $("#hourlyRange").val($("#hourly-range").slider("values", 0) + " - " + $("#hourly-range").slider("values", 1));
-            
-            });
-            
-            
-            $(function() {
-                $("#years-range").slider({
-                    step: 1,
-                    range: true, 
-                    min: 1, 
-                    max: 20, 
-                    values: [1, 20], 
-                    slide: function(event, ui)
-                    {
-                        $("#yearsRange").val(ui.values[0] + " - " + ui.values[1]);
-                        
-                        @this.set('year_exp_min', ui.values[0]);
-                        @this.set('year_exp', ui.values[1]);
-                    }
-                });
                 
-                $("#yearsRange").val($("#years-range").slider("values", 0) + " - " + $("#years-range").slider("values", 1));
-            
-            });
-            
-            
-            $(function() {
-                $("#distance-range").slider({
-                    step: 1,
-                    range: true, 
-                    min: 0, 
-                    max: 100, 
-                    values: [0, 100], 
-                    slide: function(event, ui)
-                    {
-                        $("#distanceRange").val(ui.values[0] + " - " + ui.values[1]);
-                        
-                        @this.set('distance_min', ui.values[0]);
-                        @this.set('distance', ui.values[1]);
-                    }
+                distanceRange.noUiSlider.on('change', function (values){
+                        var from = parseInt(values[0].replace(" miles", ""));
+                        var to = parseInt(values[1].replace(" miles", ""));
+                    
+                        @this.set('distance_min', from);
+                        @this.set('distance', to);
+                    
                 });
-                
-                $("#yearsRange").val($("#distance-range").slider("values", 0) + " - " + $("#distance-range").slider("values", 1));
-            
             });
+            
             
             
 

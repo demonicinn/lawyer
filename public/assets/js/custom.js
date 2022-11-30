@@ -27,7 +27,8 @@ $(document).ready(function(){
 });
 $(document).ready(function(){
     $('.toggle_cstm-btn').click(function(){
-    $(this).next().toggleClass('active');
+        for ( item of $(".reshedule_wrap-box") ){ console.log( $(item).removeClass('active') ); }
+        $(this).next().toggleClass('active');
     });
     $('.cancel_btn').click(function(){
         $(this).parents('.reshedule_wrap-box').removeClass('active');
