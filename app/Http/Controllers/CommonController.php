@@ -389,7 +389,7 @@ class CommonController extends Controller
             Notification::route('mail', $declineCase->user_email)->notify(new CaseAcceptReviewNotification($declineCase, $authUser));
 
 
-            Notification::route('mail', $authUser->email)->notify(new LawyerMailForCaseStatus($declineCase, $status));
+            //Notification::route('mail', $authUser->email)->notify(new LawyerMailForCaseStatus($declineCase, $status));
 
 
             $this->flash('success', 'Case declined successfully');
