@@ -161,8 +161,25 @@ class ScheduleConsultation extends Component
         $period = CarbonPeriod::create($fromDate, $toDate);
 
 
-        $lawyerHoursDay = $this->lawyer->lawyerHours->pluck('day')->toArray();
-        // dd($lawyerHoursDay);
+        $lawyerHoursDayAll = $this->lawyer->lawyerHours()->where('day', '!=', '')->get()->pluck('days_array')->toArray();
+        
+        
+        $lawyerHoursDates = $this->lawyer->lawyerHours()->where('day', null)
+                                ->where(function($query) use ($fromDate, $toDate) {
+                                    $query->where('date', '>=', $fromDate);
+                                    $query->where('date', '<=', $toDate);
+                                })->get()->pluck('date')->toArray();
+        
+        
+
+        $lawyerHoursDayArray = [];
+        foreach($lawyerHoursDayAll as $days){
+            foreach($days as $day){
+            array_push($lawyerHoursDayArray, $day);
+            }
+        }
+
+        $lawyerHoursDay = array_values(array_unique($lawyerHoursDayArray));
 
         $getLeaves = $this->lawyer->leave()->whereMonth('date', $Month)
                         ->whereYear('date', $Year)
@@ -179,9 +196,15 @@ class ScheduleConsultation extends Component
                 array_push($dates, $ndate);
             }
         }
-        //  dd($dates);
-        $result = array_diff($dates, $getLeaves);
-        // dd($result);
+        
+        
+        $nDates = array_merge($dates, $lawyerHoursDates);
+        
+        
+        
+        $result = array_diff($nDates, $getLeaves);
+        
+        $result = array_unique($result);
         $this->workingDates = $result;
 
 
@@ -203,12 +226,25 @@ class ScheduleConsultation extends Component
 
 
 
-        $lawyerHours = $this->lawyer->lawyerHours()->where('day', $this->dateDay)->get();
+        $lawyerHoursDay = $this->lawyer->lawyerHours()->where('day', 'like', '%'.$this->dateDay.'%')
+                        ->where('date', null)
+                        ->get();
+                        
+                        
+                        
+        $lawyerHoursDate = $this->lawyer->lawyerHours()->where('day', null)
+                        ->where('date', $date)
+                        ->get();
+        
+        $lawyerHours = $lawyerHoursDate->push(...$lawyerHoursDay);
 
         $getLeaves = $this->lawyer->booking()->whereDate('booking_date', $date)->where('is_canceled', '0')->pluck('booking_time')->toArray();
 
 
         $checkLeave = $this->lawyer->leave()->where('date', $date)->first();
+        
+        
+        //$checkDate = $this->lawyer->lawyerHours()->where('date', $date)->first();
 
 
 
@@ -243,7 +279,14 @@ class ScheduleConsultation extends Component
 
                     }
                 }
-                $this->workingDatesTimeSlot = $time_slots;
+                
+                
+                
+                $temp = array_unique(array_column($time_slots, 'time'));
+                $unique_arr = array_intersect_key($time_slots, $temp);
+
+
+                $this->workingDatesTimeSlot = $unique_arr;
             }
         }
     }

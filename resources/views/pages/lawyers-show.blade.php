@@ -34,16 +34,28 @@
                                             <h4>{{ @$user->details->is_consultation_fee=='yes' ? '$'.$user->details->consultation_fee : 'Free' }}</h4>
                                         </div>
                                     </div>
-                                    <p class="school_name"><i class="fa-solid fa-school-flag"></i> Harvard Law School</p>
+                                    @if(@$user->details->school_attendent)
+                                    <p class="school_name"><i class="fa-solid fa-school-flag"></i>{{ @$user->details->school_attendent }}</p>
+                                    @endif
                                     <div class="location_profile-divs school_name border-bottom px-0 pb-2">
                                         <address><i class="fa-solid fa-location-dot"></i> {{ @$user->details->city }}, {{ @$user->details->states->code }}</address>
                                     </div>
 
-                                    <div class="add-litigations mt-2 location_profile-divs d-flex justify-content-spacebw align-items-center ">
+                                    <div class="add-litigations mt-2 location_profile-divs d-flex justify-content-spacebw align-items-center border-bottom pb-2 px-0 mx-3">
 
-                                <button type="button" class="btn_court showModal "><i class="fa-solid fa-gavel"></i>  Admissions</button>
+                                <button type="button" class="btn_court showModal btn_adm "><i class="fa-solid fa-gavel"></i>Admissions</button>
 
                               <!--   <a href="#">See Profile</a> -->
+                            </div>
+                            
+                            
+                            <div class="practice_area_div px-3">
+                             <div class="left_trash">
+                                @if(request()->type && request()->search)
+                                 <span>PRACTICE AREA</span>
+                                 <h5>{{ practiceArea(request()->type, request()->search) }}</h5>
+                                 @endif
+                             </div>
                             </div>
 
 
@@ -109,7 +121,7 @@
 @endsection
 
 @section('script')
-<div class="modal fade courts_modal common_modal modal-design" id="courtModal" tabindex="-1" aria-labelledby="courtModal" aria-hidden="true">
+<div class="modal fade courts_modal common_modal modal-design court_modal fedral_court_modal " id="courtModal" tabindex="-1" aria-labelledby="courtModal" aria-hidden="true">
     <div class="modal-dialog modal_style">
         <div class="modal-content">
         <button type="button" class="btn btn-default close closeModal">
@@ -140,7 +152,7 @@
                             <div class="mb-4 courts_data">
                                <div class="name_data_p">
                                  <h6>{{ @$lawyerInfo->items->name }}</h6>
-                                <p class="mb-0">{{ @$lawyerInfo->items->category->name }} {{ @$lawyerInfo->items->category->mainCat->name ? ' - '.$lawyerInfo->items->category->mainCat->name : ''  }}</p>
+                                {{--<p class="mb-0">{{ @$lawyerInfo->items->category->name }} {{ @$lawyerInfo->items->category->mainCat->name ? ' - '.$lawyerInfo->items->category->mainCat->name : ''  }}</p>--}}
                                </div>
                                 <div class="federal-court">
                                     <div class="form-grouph select-design">

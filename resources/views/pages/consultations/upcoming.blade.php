@@ -28,6 +28,7 @@
                                                 <th>Date</th>
                                                 <th>Time</th>
                                                 <th>Action</th>
+                                                <th>Cost</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -105,6 +106,7 @@
                                                     </form>
                                                      @endif
                                                 </td>
+                                                <td>${{$upcoming->total_amount}}</td>
                                             </tr>
                                         </tbody>
                                         @empty

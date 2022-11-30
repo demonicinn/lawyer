@@ -71,7 +71,9 @@
                                     <h4>${{$lawyer->lawyer->details->consultation_fee}}</h4>
                                 </div>
                             </div>
-                            <p class="school_name"><i class="fa-solid fa-school-flag"></i>{{ @$lawyer->lawyerCategory->items->name }}</p>
+                            @if(@$lawyer->lawyer->details->school_attendent)
+                            <p class="school_name"><i class="fa-solid fa-school-flag"></i>{{ @$lawyer->lawyer->details->school_attendent }}</p>
+                            @endif
                             <div class="location_profile-divs d-flex justify-content-spacebw align-items-center border-bottom pb-2">
                                 <address><i class="fa-solid fa-location-dot"></i> {{ @$lawyer->lawyer->details->city }}, {{ @$lawyer->lawyer->details->states->code }}</address>
                                 <a href="{{ route('lawyer.show', $lawyer->lawyer->id)}}?type={{ $lawyer->type }}&search={{ $lawyer->data }}">See Profile</a>
@@ -80,7 +82,7 @@
 
 
                             <div class="add-litigations border-bottom pb-2">
-                                <button type="button" class="btn_court showModal btn_adm mt-2" wire:click="modalData({{$lawyer->lawyer->id}})"><i class="fa-solid fa-gavel"></i> Admissions</button>
+                                <button type="button" class="btn_court showModal btn_adm mt-2" wire:click="modalData({{$lawyer->lawyer->id}})"><i class="fa-solid fa-gavel"></i>Admissions</button>
                             </div>
                             <div class="practice_area_div">
                              <div class="left_trash">
@@ -123,7 +125,7 @@
 
         @if($modal)
         <!-- Accept Modal Start Here-->
-        <div wire:ignore.self class="modal fade courts_modal common_modal modal-design fedral_court_modal " id="courtModal" tabindex="-1" aria-labelledby="courtModal" aria-hidden="true">
+        <div wire:ignore.self class="modal fade courts_modal common_modal modal-design fedral_court_modal court_modal" id="courtModal" tabindex="-1" aria-labelledby="courtModal" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                 <button type="button" class="btn btn-default close closeModal">
@@ -154,7 +156,7 @@
                                         <div class="mb-4 courts_data">
                                            <div class="name_data_p">
                                              <h6>{{ @$lawyerInfo->items->name }}</h6>
-                                            <p class="mb-0">{{ @$lawyerInfo->items->category->name }} {{ @$lawyerInfo->items->category->mainCat->name ? ' - '.$lawyerInfo->items->category->mainCat->name : ''  }}</p>
+                                            {{--<p class="mb-0">{{ @$lawyerInfo->items->category->name }} {{ @$lawyerInfo->items->category->mainCat->name ? ' - '.$lawyerInfo->items->category->mainCat->name : ''  }}</p>--}}
                                            </div>
                                             <div class="federal-court">
                                                 <div class="form-grouph select-design">

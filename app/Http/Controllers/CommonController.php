@@ -22,7 +22,7 @@ use App\Notifications\CaseAcceptReviewNotification;
 use Session;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Stripe\Charge;
-
+use Exception;
 
 use App\Http\Controllers\MeetingController;
 
@@ -41,9 +41,9 @@ class CommonController extends Controller
         ]);
 
         $user = auth()->user();
-        if (Hash::check($request->old_password, auth()->user()->password)) {
+        if (Hash::check($request->old_password, $user->password)) {
 
-            if (!Hash::check($request->newpassword, auth()->user()->password)) {
+            if (!Hash::check($request->password, $user->password)) {
                 $user->password = Hash::make($request->password);
                 $user->save();
                 $this->flash('success', 'password updated successfully');
@@ -420,7 +420,17 @@ class CommonController extends Controller
 
     public function reschedule($id)
    {
-
+        
+        $booking = Booking::where('id', $id)
+                        ->where('is_call', 'pending')
+                        ->where('is_accepted', '0')
+                        ->where('is_canceled', '0')
+                        ->first();
+        if(!$booking){
+            $this->flash('error', 'Invalid Consultation.');
+            return redirect()->route('consultations.upcoming');
+        }
+        
        $bookingId=$id;
         $title = array(
             'title' => 'Schedule a Consultation',
@@ -471,9 +481,13 @@ class CommonController extends Controller
             abort(404);
         }
 
-        $meeting = new MeetingController;
-        $a = $meeting->destroy($booking);
-
+        try {
+            $meeting = new MeetingController;
+            $a = $meeting->destroy($booking);
+        } catch (Exception $e) {
+            //$error = $e->getMessage();
+        }
+        
         //dd($a);
         ///
         //if($a){

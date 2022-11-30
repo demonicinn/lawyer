@@ -14,55 +14,9 @@
                 <div class="col-md-6 form-design">
                     <div class="white-shadow-scnd-box">
 
-                    <h3><b class="h4-design">Saved Cards</b></h3>
-
                     
-                    @php
-                        $cards = $user->userCards()->orderBy('id', 'desc')->get();
-                    @endphp
-
-
-                    <div class="table-responsive">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Card Number</th>
-                                    <th>Card Type</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($cards as $card)
-                                <tr>
-                                    <td>{{ @$card->card_name }}</td>
-                                    <td>**** {{ @$card->card_number }}</td>
-                                    <td>{{ @$card->card_type }}</td>
-                                    <td class="btn_save_remove">
-                                        @if($card->is_primary=='0')
-                                        <form class="form-design row justify-content-center" method="post" action="{{route('lawyer.card.primary', $card->id)}}">
-                                            @csrf
-                                            <button type="submit" class="btn-design-first btn_bank btn_sr">Set as Primary</button>
-                                        </form>
-                                        @else
-                                        <button type="button" class="btn-design-first btn_bank btn_sr" disabled>Primary</button>
-                                        @endif
-
-                                        <form class="form-design row justify-content-center" method="post" action="{{route('lawyer.card.remove', $card->id)}}">
-                                            @csrf
-                                            <button type="submit" class="btn-design-first btn_bank">Remove Card</button>
-                                        </form>
-
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-
-                    
-                    <h3>Add New Card</h3>
-                    <form class="form-design row justify-content-center" method="post" action="{{route('lawyer.card.store')}}">
+                    <!--<h3>Add New Card</h3>-->
+                    <form class="form-design row justify-content-center pb-5" method="post" action="{{route('lawyer.card.store')}}">
                         @csrf
 
                         <h3 class="pt-2"><b class="h4-design m-0 d-block  pt-3">Add New Card</b></h3>
@@ -117,19 +71,65 @@
 
 
 
-                        <button type="submit" class="btn-design-first btn_bank">Add Card</button>
+                        <button type="submit" class="btn-design-first btn_bank mt-3">Add Card</button>
                     </form>
+                    
+                    
+                    <h3><b class="h4-design">Saved Cards</b></h3>
+
+                    
+                    @php
+                        $cards = $user->userCards()->orderBy('id', 'desc')->get();
+                    @endphp
+
+
+                    @foreach($cards as $card)
+                    <div class="left_form_3">
+                        <div class="form-grouph input-design">
+                            <label><b>Card Name</b></label> {{ $card->card_name }}
+                        </div>
+                        <div class="form-grouph input-design">
+                        <label> <b>Card Number</b></label> **** {{ $card->card_number }}
+                        </div>
+                        <div class="form-grouph input-design">
+                            <label><b>Card Type</b></label>
+                             {{ $card->card_type }}
+                        </div>
+                        
+                        <div class="d-flex btn_als3">
+                        @if($card->is_primary=='0')
+                        <form class="form-design" method="post" action="{{route('lawyer.card.primary', $card->id)}}">
+                            @csrf
+                            <button type="submit" class="btn-design-first btn_bank btn_sr">Set as Primary</button>
+                        </form>
+                        @else
+                        <button type="button" class="btn-design-first btn_bank btn_sr btn_primry" disabled>Primary</button>
+                        @endif
+                       
+    
+                        <form class="form-design row justify-content-center " method="post" action="{{route('lawyer.card.remove', $card->id)}}">
+                            @csrf
+                            <button type="submit" class="btn-design-first btn_bank btn_sr">Remove Card</button>
+                        </form>
+                     </div>
+                     </div>
+                    @endforeach
+               
+    
+
+                    
+                    
                     
                 </div>
                 </div>
 
                 <div class="col-md-6">
                 <div class="white-shadow-scnd-box">
-
+                           <h3 class="pt-2"><b class="h4-design m-0 d-block  pt-3">Deposit Information</b></h3>
                         @if(@$record->status=='active')
 
                             @if(!$record->account_number)
-                                <p class="text-center pb-3">Please fill the bank account to complete your bank account verification.</p>
+                                <p class=" pb-3">Please fill the bank account to complete your bank account verification.</p>
                             @endif
 
                             <form class="form-design row justify-content-center" method="post" action="{{route('lawyer.banking.store')}}">
@@ -158,7 +158,7 @@
                                 </div>
                                 </div>
                                 <div class="col-12 mt-3">
-                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 text-center mt-5">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 text-center mt-3">
                                         <div class="form-grouph submit-design text-center">
                                             
                                             <input type="submit" value="{{ @$record->account_number ? 'Edit' : 'Add' }} Account" class="btn-design-second">

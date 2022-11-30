@@ -27,10 +27,37 @@
 
 
 
+
+
+
+
 <style>
     .slider-box {width: 90%; margin: 25px auto}
 label, input {border: none; display: inline-block; margin-right: -4px; vertical-align: top; width: 30%}
 input {width: 70%}
 .slider {margin: 25px 0}
 </style>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.5.0/nouislider.css">
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.5.0/nouislider.min.js"></script>
+<script>
+
+
+
+
+
+
+
+
+</script>
 @endsection

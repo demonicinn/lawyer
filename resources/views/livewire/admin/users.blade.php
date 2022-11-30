@@ -1,12 +1,12 @@
 <div>
-    <div class="add-search-box">
+  <!--   <div class="add-search-box">
         <div class="form-group ">
             <input wire:model="search" class="form-control search-box" type="text" placeholder="Search">
         </div>
-    </div>
+    </div> -->
 
-    <div class="table-responsive table-design">
-        <table style="width:100%">
+    <div >
+        <table id="clients-table" class="table table-striped" style="width:100%">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -33,5 +33,5 @@
     </div>
 
 
-    <div id="pagination-container" class="pagination-container-saved">{{$users->links()}}</div>
+    {{-- <div id="pagination-container" class="pagination-container-saved">{{$users->links()}}</div> --}}
 </div>

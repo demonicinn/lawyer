@@ -19,7 +19,8 @@ return new class extends Migration
 
             $table->foreignId('users_id')->references('id')->on('users')->onDelete('cascade');
 			
-            $table->string('day');
+            $table->string('day')->nullable();
+            $table->string('date')->nullable();
             $table->time('from_time');
             $table->time('to_time');
 

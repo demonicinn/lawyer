@@ -25,9 +25,10 @@ return new class extends Migration
             $table->text('bio')->nullable();
             $table->enum('contingency_cases', ['yes', 'no'])->default('no');
             $table->enum('is_consultation_fee', ['yes', 'no'])->default('no');
-            $table->decimal('hourly_fee', 8,2)->nullable();
-            $table->decimal('consultation_fee', 8,2)->nullable();
+            $table->decimal('hourly_fee', 8,0)->nullable();
+            $table->decimal('consultation_fee', 8,0)->nullable();
             $table->string('website_url')->nullable();
+            $table->string('school_attendent')->nullable();
             $table->text('address')->nullable();
             $table->integer('year_experience')->nullable();
 

@@ -29,6 +29,7 @@
                                                 <th>Date Accepted</th>
                                                 <th>Details</th>
                                                 <th>Phone</th>
+                                                <th>Cost</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -40,6 +41,9 @@
                                             }
                                             @endphp
                                             @forelse ($accptedConsultations as $accepted)
+                                            @php
+                                                $notes = $accepted->notes()->where('user_id', $authUser->id)->first();
+                                            @endphp
                                             <tr>
                                                 <td>{{$accepted->$role->first_name}} {{$accepted->$role->last_name}}</td>
                                                 <td>{{$accepted->$role->email}}</td>
@@ -59,13 +63,12 @@
                                                 </td>
                                                 <td>{{date('m-d-Y', strtotime($accepted->updated_at)) }}</td>
                                                 <td>
-                                                    @if (@$accepted->notes->note != null)
+                                                    @if (@$notes->note != null)
                                                     <a class="view-icon info_icns mdl" href="javascript:void(0)" data-id="myNoteModal_{{ $accepted->id }}" data-type="view"><i class="fas fa-eye"></i></a>
                                                     @endif
 
-                                                    @if ($authUser->role=="lawyer")
                                                     <a class="view-icon info_icns mdl" href="javascript:void(0)" data-id="myNoteModal_{{ $accepted->id }}" data-type="edit"><i class="fas fa-edit"></i></a>
-                                                    @endif
+                                                
 
                                                     <div id="myNoteModal_{{ $accepted->id }}" class="modal fade common_modal  noteModal" role="dialog">
                                                     
@@ -78,11 +81,8 @@
                                                           </div>
 
 
-
-
-                                                          @if ($authUser->role=="lawyer")
-                                                            @if (@$accepted->notes->note != null)
-                                                            <form method="post" action="{{route('edit.note',@$accepted->notes->id)}}">
+                                                            @if (@$notes->note != null)
+                                                            <form method="post" action="{{route('edit.note',@$notes->id)}}">
                                                             @else
                                                             <form method="post" action="{{route('add.note',$accepted->id)}}">
                                                             @endif
@@ -91,18 +91,18 @@
 
                                                               <div class="modal-body">
                                                                 
-                                                                @if (@$accepted->notes->note !=null)
-                                                                <div class="view">{{@$accepted->notes->note}}</div>
+                                                                @if (@$notes->note !=null)
+                                                                <div class="view">{{@$notes->note}}</div>
                                                                 @endif
 
                                                                 <div class="edit">
-                                                                <textarea required name="note" class="form-control">{{@$accepted->notes->note}}</textarea>
+                                                                <textarea required name="note" class="form-control">{{@$notes->note}}</textarea>
                                                             </div>
 
                                                               </div>
                                                               <div class="modal-footer justify-content-center">
                                                                 <button type="submit" class="   btn-design-first edit">
-                                                                    @if (@$accepted->notes->note !=null)
+                                                                    @if (@$notes->note !=null)
                                                                     Update
                                                                     @else
                                                                     Save
@@ -111,22 +111,6 @@
 
                                                                     <!-- <button type="button" class="btn btn-default cloaseModal">Close</button> -->
                                                                 </div>
-                                                          @else
-
-                                                          <div class="modal-body">
-                                                                
-                                                                @if (@$accepted->notes->note !=null)
-                                                                <p>{{@$accepted->notes->note}}</p>
-                                                                @endif
-
-                                                              </div>
-
-                                                            <div class="modal-footer">
-                                                                <div class="modal-footer">
-                                                                    <!-- <button type="button" class="btn btn-default cloaseModal">Close</button> -->
-                                                                </div>
-                                                            </div>
-                                                          @endif
 
                                                       </form>
                                                         </div>
@@ -137,6 +121,7 @@
 
                                                 </td>
                                                 <td class="phone">{{$accepted->$role->contact_number}}</td>
+                                                <td>${{$accepted->total_amount}}</td>
                                             </tr>
 
                                             @empty

@@ -62,7 +62,7 @@
                             {!! $errors->first('subscription', '<span class="help-block">:message</span>') !!}
 
                             @if(!$currentPlan)
-                            <p>You will be on {{ env('FREE_SUBSCRIPTION') }} days trial after that you will get charged based on your plan selection if you have not canceled your plan</p>
+                            <p>You will be on {{ $trial_days }} days trial after that you will get charged based on your plan selection if you have not canceled your plan</p>
                             @endif
                         </div>
                     </div>

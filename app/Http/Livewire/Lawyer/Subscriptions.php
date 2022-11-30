@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Lawyer;
 
+use App\Models\AdminSetting;
 use Livewire\Component;
 use Stripe\Stripe;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
@@ -29,6 +30,8 @@ class Subscriptions extends Component
 
     public $currentPlan;
     protected $listeners = ['confirmedSubscriptionAction', 'confirmedRenewSubscriptionAction'];
+
+    public $trial_days = 0;
 
     /*public function __construct()
     {
@@ -61,6 +64,11 @@ class Subscriptions extends Component
             ->get();
 
         $this->currentPlan = $this->user->lawyerSubscription()->orderBy('id', 'desc')->first();
+
+        $trial_days_setting = AdminSetting::where('type', 'trial_days')->first();
+        if ( ! is_null( $trial_days_setting ) ){
+            $this->trial_days = $trial_days_setting->value;
+        }
     }
 
     public function setSubscription($id, $type)
@@ -96,7 +104,8 @@ class Subscriptions extends Component
 
         //Free Plans
         if ($subscription->type == "free") {
-            $period = env('FREE_SUBSCRIPTION') . 'days';
+            $trial_days = AdminSetting::where('type', 'trial_days')->first()->value;
+            $period =  "$trial_days days";
             $to_date = date('Y-m-d', strtotime($from_date . $period));
 
             //...

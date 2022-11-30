@@ -4,7 +4,10 @@ $getTime = \App\Models\User::getTime();
 @endphp
 
 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 working_hours">
-    <div class="white-shadow-scnd-box" style="height:auto;">
+    <div class="white-shadow-scnd-box mb-3" style="height:auto;">
+        
+
+        {{--
         <div class="form-heading">
             <h4 class="h4-design">Working Hours</h4>
         </div>
@@ -66,9 +69,9 @@ $getTime = \App\Models\User::getTime();
 
             </div>
         @endforeach
+        --}}
 
-
-
+        @livewire('lawyer.hours')
 
 
 
@@ -132,10 +135,20 @@ $getTime = \App\Models\User::getTime();
         
         
         <div class="form-grouph input-design{!! ($errors->has('year_experience') ? ' has-error' : '') !!}">
-            <label>Years of Experience <span class="label_color">?</span></label>
+              <div class="question_div">
+            <label class="w-auto">Years of Experience </label> 
+            <div class="tooltip_div">
+                         <span  class="tooltip1">?</span>
+                         <p class="cntent_txt">Consultation Fee</p>
+                         </div>
+                         </div>
             {!! Form::text('year_experience', $details->year_experience ?? null, ['class' => ($errors->has('year_experience') ? ' is-invalid' : ''), 'maxlength'=>'2']) !!}
             {!! $errors->first('year_experience', '<span class="help-block">:message</span>') !!}
         </div>
 
     </div>
+    
+
+    
+
 </div>

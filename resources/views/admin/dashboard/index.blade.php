@@ -39,7 +39,7 @@
                 <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12">
                     <div class="data-white-box position-relative">
                         <a class="data-content-box" href="{{ route('admin.contracts.index') }}">
-                            <h4>Transactional Practice Areas</h4>
+                            <h4>Contract Practice Areas</h4>
                             <h2 class="number-value">{{$contracts}}</h2>
                         </a>
                         <span class="three_dots">...</span>

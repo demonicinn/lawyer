@@ -64,7 +64,22 @@ class RescheduleBooking extends Component
 
 
 
-        $lawyerHours = $this->lawyer->lawyerHours()->where('day', $this->dateDay)->get();
+        //$lawyerHours = $this->lawyer->lawyerHours()->where('day', $this->dateDay)->get();
+        //$lawyerHours = $this->lawyer->lawyerHours()->where('day', 'like', '%'.$this->dateDay.'%')->get();
+        
+        $lawyerHoursDay = $this->lawyer->lawyerHours()->where('day', 'like', '%'.$this->dateDay.'%')
+                        ->where('date', null)
+                        ->get();
+                        
+                        
+                        
+        $lawyerHoursDate = $this->lawyer->lawyerHours()->where('day', null)
+                        ->where('date', $date)
+                        ->get();
+        
+        
+        $lawyerHours = $lawyerHoursDate->push(...$lawyerHoursDay);
+        
 
         $getLeaves = $this->lawyer->booking()->whereDate('booking_date', $date)->where('is_canceled', '0')->pluck('booking_time')->toArray();
 
@@ -104,7 +119,12 @@ class RescheduleBooking extends Component
 
                     }
                 }
-                $this->workingDatesTimeSlot = $time_slots;
+                
+                
+                $temp = array_unique(array_column($time_slots, 'time'));
+                $unique_arr = array_intersect_key($time_slots, $temp);
+                
+                $this->workingDatesTimeSlot = $unique_arr;
             }
         }
 
@@ -121,8 +141,27 @@ class RescheduleBooking extends Component
 
         $dates = [];
         $period = CarbonPeriod::create($fromDate, $toDate);
-        $lawyerHoursDay = $this->lawyer->lawyerHours->pluck('day')->toArray();
-        // dd($lawyerHoursDay);
+        
+
+        //$lawyerHoursDayAll = $this->lawyer->lawyerHours()->get()->pluck('days_array')->toArray();
+        $lawyerHoursDayAll = $this->lawyer->lawyerHours()->where('day', '!=', '')->get()->pluck('days_array')->toArray();
+
+        $lawyerHoursDates = $this->lawyer->lawyerHours()->where('day', null)
+                                ->where(function($query) use ($fromDate, $toDate) {
+                                    $query->where('date', '>=', $fromDate);
+                                    $query->where('date', '<=', $toDate);
+                                })->get()->pluck('date')->toArray();
+                                
+                                
+        $lawyerHoursDayArray = [];
+        foreach($lawyerHoursDayAll as $days){
+            foreach($days as $day){
+            array_push($lawyerHoursDayArray, $day);
+            }
+        }
+
+        $lawyerHoursDay = array_values(array_unique($lawyerHoursDayArray));
+        
         $getLeaves = Leave::where('user_id', $this->lawyerId)
             ->whereMonth('date', $Month)
             ->whereYear('date', $Year)
@@ -139,7 +178,12 @@ class RescheduleBooking extends Component
             }
         }
         // dd($dates);
-        $result = array_diff($dates, $getLeaves);
+        
+        $nDates = array_merge($dates, $lawyerHoursDates);
+        
+        $result = array_diff($nDates, $getLeaves);
+        
+        $result = array_unique($result);
         // dd($result);
         $this->workingDates = $result;
 

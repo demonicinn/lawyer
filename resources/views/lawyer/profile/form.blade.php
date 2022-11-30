@@ -32,6 +32,15 @@ $lawyer_state_bar = $user->lawyerStateBar;
                     {!! Form::textarea('bio', $details->bio ?? null, ['class' => ($errors->has('bio') ? ' is-invalid' : ''), 'placeholder'=>'Tell us about yourself']) !!}
                     {!! $errors->first('bio', '<span class="help-block">:message</span>') !!}
                 </div>
+                
+                
+                <div class="form-grouph input-design{!! ($errors->has('school_attendent') ? ' has-error' : '') !!}">
+                    {!! Form::label('school_attendent','School Attended*', ['class' => 'form-label']) !!}
+                    {!! Form::text('school_attendent', $details->school_attendent ?? null, ['class' => ($errors->has('bio') ? ' is-invalid' : '')]) !!}
+                    {!! $errors->first('school_attendent', '<span class="help-block">:message</span>') !!}
+                </div>
+                
+                
 
                 {{--
                 <div class="form-grouph select-design">
@@ -62,12 +71,12 @@ $lawyer_state_bar = $user->lawyerStateBar;
                             <div class="checkbox-design position-relative">
                                 <input type="radio" name="contingency_cases" value="yes" {{ @$details->contingency_cases=='yes'?'checked':'' }}>
                                 <button class="checkbox-btn"></button>
-                                <label>Yes</label>
+                                <label class="w-auto">Yes</label>
                             </div>
                             <div class="checkbox-design position-relative">
                                 <input type="radio" name="contingency_cases" value="no" {{ @$details->contingency_cases=='no'?'checked':'' }}>
                                 <button class="checkbox-btn"></button>
-                                <label>No</label>
+                                <label class="w-auto">No</label>
                             </div>
                         </div>
                     </div>
@@ -79,12 +88,12 @@ $lawyer_state_bar = $user->lawyerStateBar;
                             <div class="checkbox-design position-relative">
                                 <input type="radio" name="is_consultation_fee" value="yes" {{ @$details->is_consultation_fee=='yes'?'checked':'' }}>
                                 <button class="checkbox-btn"></button>
-                                <label>Yes</label>
+                                <label class="w-auto">Yes</label>
                             </div>
                             <div class="checkbox-design position-relative">
                                 <input type="radio" name="is_consultation_fee" value="no" {{ @$details->is_consultation_fee=='no'?'checked':'' }}>
                                 <button class="checkbox-btn"></button>
-                                <label>No</label>
+                                <label class="w-auto">No</label>
                             </div>
                         </div>
                     </div>
@@ -94,7 +103,7 @@ $lawyer_state_bar = $user->lawyerStateBar;
                 <div class="form-flex hour_rate_form">
                     
                     <div class="form-grouph input-grouph input-design{!! ($errors->has('hourly_fee') ? ' has-error' : '') !!}">
-                        {!! Form::label('hourly_fee','Hourly Rate*', ['class' => 'form-label']) !!}
+                        {!! Form::label('hourly_fee','Hourly Rate*', ['class' => 'form-label ']) !!}
                     <div class="input-group-prepend">
                             <span class="">$</span>
                         </div> 
@@ -104,7 +113,11 @@ $lawyer_state_bar = $user->lawyerStateBar;
 
                     <div class=" form-grouph  input-grouph input-design{!! ($errors->has('consultation_fee') ? ' has-error' : '') !!}">
                        <div class="question_div">
-                         {!! Form::label('consultation_fee','Consultation Fee*', ['class' => 'form-label']) !!}<span>?</span>
+                         {!! Form::label('consultation_fee','Consultation Fee*', ['class' => 'form-label w-auto']) !!}
+                         <div class="tooltip_div">
+                         <span  class="tooltip1">?</span>
+                         <p class="cntent_txt">Consultation Fee</p>
+                         </div>
                        </div>
                         <div class="input-group-prepend">
                             <span class="">$</span>
@@ -153,6 +166,11 @@ $lawyer_state_bar = $user->lawyerStateBar;
                 </div>
 
                 <div class="form-flex three-columns">
+                    <div class="form-grouph input-design{!! ($errors->has('zip_code') ? ' has-error' : '') !!}">
+                        {!! Form::label('zip_code','Zip Code*', ['class' => 'form-label']) !!}
+                        {!! Form::text('zip_code', $details->zip_code ?? null, ['class' => ($errors->has('zip_code') ? ' is-invalid' : '')]) !!}
+                        {!! $errors->first('zip_code', '<span class="help-block">:message</span>') !!}
+                    </div>
                     <div class="form-grouph input-design{!! ($errors->has('city') ? ' has-error' : '') !!}">
                         {!! Form::label('city','City*', ['class' => 'form-label']) !!}
                         {!! Form::text('city', $details->city ?? null, ['class' => ($errors->has('city') ? ' is-invalid' : '')]) !!}
@@ -162,11 +180,6 @@ $lawyer_state_bar = $user->lawyerStateBar;
                         {!! Form::label('state','State*', ['class' => 'form-label']) !!}
                         {!! Form::select('state', $states, $details->state ?? null, ['class' => ($errors->has('state') ? ' is-invalid' : '')]) !!}
                         {!! $errors->first('state', '<span class="help-block">:message</span>') !!}
-                    </div>
-                    <div class="form-grouph input-design{!! ($errors->has('zip_code') ? ' has-error' : '') !!}">
-                        {!! Form::label('zip_code','Zip Code*', ['class' => 'form-label']) !!}
-                        {!! Form::text('zip_code', $details->zip_code ?? null, ['class' => ($errors->has('zip_code') ? ' is-invalid' : '')]) !!}
-                        {!! $errors->first('zip_code', '<span class="help-block">:message</span>') !!}
                     </div>
                 </div>
 

@@ -43,6 +43,21 @@
     </div>
     <div id="pagination-container" class="pagination-container-saved">{{$subscriptions->links()}}</div>
 
+<!-- Trial period -->
+<hr>
+<form class="form-inline"  wire:submit.prevent="updateTrialDays">
+  <div class="row">
+    <div class="form-group mb-2 col-md-4">
+      <input wire:model="trial_days" type="number" class="form-control" id="trial_days" placeholder="Trial days" value="{{ isset( $trial_days ) ? $trial_days : '' }}">
+	@error ('trial_days') <span class="help-block">{{ $message }}</span> @enderror
+    </div>
+    <div class="col-md-4">
+	<button type="submit" class="btn btn-primary mb-2">Update Trial Days</button>
+    </div>
+ </div>
+</form>
+<!-- Trial period End -->
+
 
     <!-- Accept Modal Start Here-->
     <div wire:ignore.self class="modal fade common_modal modal-design" id="subscriptionForm" tabindex="-1" aria-labelledby="subscriptionForm" aria-hidden="true">

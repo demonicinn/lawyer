@@ -104,7 +104,7 @@
             <div class="col-md-12">
             <div class="data-white-box no-hover-box">
             <div class="heading-design-flex d-flex justify-content-spacebw align-items-center">
-                  <h4>BOOKINGS BY MONTH</h4>
+                  <h4>BOOKINGS PER MONTH</h4>
                   {!! Form::open(['method'=>'get']) !!}
             <div class="form-char-flext">
                 <div class="form-group input-design">
@@ -151,7 +151,7 @@ rel="Stylesheet"type="text/css"/>
         
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Months');
-        data.addColumn('number', 'Bookings by Months');
+        data.addColumn('number', 'BOOKINGS PER MONTH');
         
         data.addRows([
         @foreach($months as $k => $month)

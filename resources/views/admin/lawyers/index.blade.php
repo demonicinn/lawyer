@@ -1,4 +1,9 @@
 @extends('layouts.app')
+
+@section ('style')
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.13.1/datatables.min.css"/>
+@endsection
+
 @section('content')
 <section class="body-banner dashboard_profile-sec min-height-100vh">
     <div class="container">
@@ -11,4 +16,20 @@
 
     </div>
 </section>
+
+@section ('script')
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.13.1/datatables.min.js"></script>
+<script>
+
+    function integrateDataTableInTable() {
+        $('#lawyers-table').DataTable({
+        });
+    }
+    $(document).ready( function () {
+        integrateDataTableInTable();
+    });
+</script>
+
+@endsection
+
 @endsection
