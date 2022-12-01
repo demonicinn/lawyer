@@ -27,8 +27,8 @@
                                                 <th>Practice Area</th>
                                                 <th>Date</th>
                                                 <th>Details</th>
-                                                <th>Action</th>
                                                 <th>Cost</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -117,6 +117,7 @@
                                                     </div>
                                                 </td>
 
+                                                <td>${{$complete->total_amount}}</td>
                                                 <td class="form_td">
                                                     @if($complete->is_canceled=='1')
                                                         <button type="submit" class="decline-btn disabled">Rejected</button>
@@ -139,7 +140,6 @@
                                                         @endif
                                                     @endif
                                                 </td>
-                                                <td>${{$complete->total_amount}}</td>
 
                                             </tr>
                                             @empty

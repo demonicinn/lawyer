@@ -27,8 +27,8 @@
                                                 <th>Practice Area</th>
                                                 <th>Date</th>
                                                 <th>Time</th>
-                                                <th>Action</th>
                                                 <th>Cost</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -62,6 +62,7 @@
                                                 </td>
                                                 <td>{{date('m-d-Y', strtotime($upcoming->booking_date)) }}</td>
                                                 <td>{{$start_time}} - {{$end_time}}</td>
+                                                <td>${{$upcoming->total_amount}}</td>
                                                 <td>
                                                     <div class="dropdown reshedule_dropdowns">
                                                         <button class="toggle_cstm-btn" type="button">Reschedule</button>
@@ -106,7 +107,6 @@
                                                     </form>
                                                      @endif
                                                 </td>
-                                                <td>${{$upcoming->total_amount}}</td>
                                             </tr>
                                         </tbody>
                                         @empty
