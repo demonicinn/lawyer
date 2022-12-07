@@ -48,6 +48,7 @@
 <form class="form-inline"  wire:submit.prevent="updateTrialDays">
   <div class="row">
     <div class="form-group mb-2 col-md-4">
+        
       <input wire:model="trial_days" type="number" class="form-control" id="trial_days" placeholder="Trial days" value="{{ isset( $trial_days ) ? $trial_days : '' }}">
 	@error ('trial_days') <span class="help-block">{{ $message }}</span> @enderror
     </div>

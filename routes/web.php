@@ -129,6 +129,7 @@ Route::post('/join-the-team/store', [PagesController::class, 'joinTeamStore'])->
 Route::get('/privacy-policy', [PagesController::class, 'privacyPolicy'])->name('privacyPolicy');
 Route::get('/terms-of-service', [PagesController::class, 'termsService'])->name('termsService');
 Route::get('/faq', [PagesController::class, 'faq'])->name('faq');
+Route::get('/style-guide', [PagesController::class, 'styleGuide'])->name('styleGuide');
 
 // schedule consultation
 Route::get('/schedule/consultation/{id}', [ScheduleConsultationController::class, 'index'])->name('schedule.consultation');
