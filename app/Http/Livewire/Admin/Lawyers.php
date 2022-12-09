@@ -67,11 +67,30 @@ class Lawyers extends Component
         Notification::route('mail', $data->email)->notify(new MailToLawyerForStatus($data, $this->action));
     }
 
+    public function deactivate($lawyerId)
+    {
+        $lawyer = User::findOrFail( $lawyerId );
+        $lawyer->status = '0';
+        $lawyer->save();
+
+        $this->alert('success', 'Lawyer Deactivated');
+    }
+    public function activate($lawyerId)
+    {
+        $lawyer = User::findOrFail( $lawyerId );
+        $lawyer->status = '1';
+        $lawyer->save();
+
+        $this->alert('success', 'Lawyer Activated');
+    }
+
+
     public function render()
     {
         $lawyers = User::where('role', 'lawyer')->where(function ($query) {
             return  $query->where(DB::raw("concat(first_name, ' ', last_name)"), 'LIKE', "%" . $this->search . "%");
         })->latest('id')->get();
+
         
         return view('livewire.admin.lawyers', compact('lawyers'));
     }
