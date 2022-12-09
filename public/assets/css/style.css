@@ -3378,6 +3378,10 @@ p.cntent_txt {
 .tooltip_div:hover p.cntent_txt{
     display:block;
 }
+.admin_laywer_table table {
+    width: 100% !important;
+    min-width: 100% !important;
+}
 /*tooltip css*/
 /* responsive */
 /* responsive */

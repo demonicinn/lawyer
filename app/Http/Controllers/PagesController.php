@@ -250,5 +250,14 @@ class PagesController extends Controller
 
         return view('pages.faq', compact('title'));
     }
+    
+   public function styleGuide()
+    {
+        $title = array(
+            'title' => "Style Guide",
+            'active' => 'styleGuide',
+        );
 
+        return view('pages.style-guide', compact('title'));
+    }
 }
