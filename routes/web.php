@@ -45,6 +45,9 @@ Route::get('/storage-link', function () {
     return "storage:link";
 });
 
+Route::get('/time', function () {
+    dd(date('Y-m-d h:ma'));
+});
 
 //cronjobs
 Route::group(['prefix' => 'cron'], function () {
@@ -80,10 +83,20 @@ Route::group(['prefix' => 'cron'], function () {
         Artisan::call('auto:subscription');
         return 'done';
     });
+    Route::get('/auto-charge', function () {
+        Artisan::call('auto:charge');
+        return 'done';
+    });
+    Route::get('/lawyer-reviews', function () {
+        Artisan::call('lawyer:reviews');
+        return 'done';
+    });
 
     //....
     Route::get('/hourly', function () {
         Artisan::call('reminder:1hour');
+        Artisan::call('auto:charge');
+        Artisan::call('lawyer:reviews');
         return 'done';
     });
 
@@ -105,7 +118,7 @@ Route::group(['prefix' => 'cron'], function () {
 
 
 
-
+ 
 
 //home
 Route::get('/', [PagesController::class, 'home'])->name('home');
@@ -115,10 +128,12 @@ Route::get('/narrow-down-candidates', [PagesController::class, 'narrowDown'])->n
 Route::get('/narrow-down-litigations', [PagesController::class, 'litigations'])->name('narrow.litigations');
 Route::get('/narrow-down-contracts', [PagesController::class, 'contracts'])->name('narrow.contracts');
 
-Route::get('/narrow-lawyers', [PagesController::class, 'lawyers'])->name('lawyers');
+Route::get('/lawyers', [PagesController::class, 'lawyers'])->name('lawyers');
 Route::post('/narrow-lawyers-home', [PagesController::class, 'lawyersHome'])->name('lawyers.home');
 
-Route::get('/narrow-lawyers/{user}', [PagesController::class, 'lawyerShow'])->name('lawyer.show');
+Route::get('/profile/{slug}/{user}', [PagesController::class, 'lawyerShow'])->name('lawyer.url');
+   
+Route::get('/p/{user}', [PagesController::class, 'lawyerShow'])->name('lawyer.show');
 
 
 Route::get('/about', [PagesController::class, 'about'])->name('about');
@@ -134,7 +149,7 @@ Route::get('/style-guide', [PagesController::class, 'styleGuide'])->name('styleG
 // schedule consultation
 Route::get('/schedule/consultation/{id}', [ScheduleConsultationController::class, 'index'])->name('schedule.consultation');
 
-
+Route::get('/how-to-add-lawyer-link', [PagesController::class, 'lawyerLink'])->name('lawyer.link');
 
 //------------------------------------------------------
 //------------------------After Login-------------------
@@ -232,12 +247,24 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/accept/lawyer/{id}', [CommonController::class, 'acceptLawyer'])->name('admin.accept.lawyer');
 
         Route::post('/declined/lawyer/{id}', [CommonController::class, 'declinedLawyer'])->name('admin.declined.lawyer');
+        Route::post('/subscription/offer/{id}', [CommonController::class, 'offerLawyer'])->name('admin.subscription.offer');
 
 
         //...users
         Route::get('/user/view/{id}', [CommonController::class, 'viewUserDetails'])->name('admin.user.view');
 
         Route::get('/transactions', [CommonController::class, 'adminTransactions'])->name('admin.transactions');
+
+
+		//...seo
+        Route::get('/seo', function () {
+            $title = array(
+                'title' => 'Seo',
+                'active' => 'seo',
+            );
+
+            return view('admin.seo.index', compact('title'));
+        })->name('admin.seo.index');
 
         //...lawyers
         Route::get('/lawyers', function () {
@@ -318,7 +345,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
     
-
+	Route::post('/card/remove/{id}', [Lawyer\ProfileController::class, 'cardRemove'])->name('lawyer.card.remove');
+	Route::post('/card/primary/{id}', [Lawyer\ProfileController::class, 'cardPrimary'])->name('lawyer.card.primary');
 
             
 
@@ -345,6 +373,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
             return view('lawyer.leave.index', compact('title'));
         })->name('lawyer.leave');
 
+
+        Route::get('/booking/{booking}/{action}', [Lawyer\ProfileController::class, 'bookingConfirmData'])->name('lawyer.booking.data');
+        
+        
         //subscription middleware
         Route::group(['middleware' => 'subscription'], function () {
 
@@ -357,13 +389,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
             Route::get('/banking-info-error', [Lawyer\ProfileController::class, 'bankingInfoError'])->name('lawyer.banking.error');
             Route::get('/banking-info', [Lawyer\ProfileController::class, 'bankingInfoSuccess'])->name('lawyer.banking.success');
+            Route::get('/banking-info/callback', [Lawyer\ProfileController::class, 'bankingInfoSuccessCallback'])->name('lawyer.banking.success.callback');
             Route::post('/banking-info/store', [Lawyer\ProfileController::class, 'bankingInfoStore'])->name('lawyer.banking.store');
+            Route::get('/banking-info/update', [Lawyer\ProfileController::class, 'connectedAccountUpdate'])->name('lawyer.banking.update');
 
 
-            Route::post('/card/remove/{id}', [Lawyer\ProfileController::class, 'cardRemove'])->name('lawyer.card.remove');
             Route::post('/card/store', [Lawyer\ProfileController::class, 'cardStore'])->name('lawyer.card.store');
-            Route::post('/card/primary/{id}', [Lawyer\ProfileController::class, 'cardPrimary'])->name('lawyer.card.primary');
-
+           
 
 
             Route::post('/profile/submit', [Lawyer\ProfileController::class, 'submit'])->name('lawyer.profile.submit');

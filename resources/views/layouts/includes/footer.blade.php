@@ -34,7 +34,7 @@
           <h4 class="footer-heading">Resources</h4>
           <ul class="list-unstyled menu-footer-ul">
             
-            <li><a href="https://pricklyblog.atxclients.com/">Articles</a></li>
+            <li><a href="https://pricklyblog.atxclients.com/">Blog</a></li>
             <li><a href="{{ route('faq') }}">FAQ</a></li>
             
             <li><a href="{{ auth()->check() ? route('support') : route('login', ['redirect'=>'true', 'goto'=>'support']) }}">Support</a></li>
@@ -67,7 +67,8 @@
           <li><a href="{{route('about')}}">About Us</a></li>
             <li><a href="{{route('joinTeam')}}">Join the Team</a></li>
             <li><a href="{{ route('privacyPolicy') }}">Privacy Policy</a></li>
-            <li><a href="{{ route('termsService') }}">Terms of Service</a></li>         
+            <li><a href="{{ route('termsService') }}">Terms of Service</a></li>
+            <li><a href="{{ route('lawyer.link') }}">How to add lawyer link</a></li>
           </ul>
         </div>
       </div>

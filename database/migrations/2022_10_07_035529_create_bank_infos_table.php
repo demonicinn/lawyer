@@ -24,7 +24,7 @@ return new class extends Migration
 
             $table->string('bid')->nullable();
             $table->string('account_number', 20)->nullable();
-            $table->bigInteger('routing_number')->nullable();
+            $table->string('routing_number', 20)->nullable();
             $table->string('account_holder_name', 50)->nullable();
 
             $table->timestamps();

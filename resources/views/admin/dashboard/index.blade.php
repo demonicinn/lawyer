@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<section class="body-banner dashboard_profile-sec min-height-100vh">
+<section class="dashboard_profile-sec min-height-100vh">
     <div class="container">
         <div class="heading-paragraph-design text-center position-relative go-back-wrap mb-5">
             <h2>Dashboard</h2>
@@ -98,6 +98,20 @@
                     </div>
                 </div>
             </div>
+			
+			
+			<div class="row">
+                <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12">
+                    <div class="data-white-box position-relative">
+                        <a class="data-content-box" href="{{ route('admin.seo.index') }}">
+                            <h4>SEO</h4> 
+                        </a>
+                        <span class="three_dots">...</span>
+                    </div>
+                </div>
+            </div>
+
+
 
 
             {{--

@@ -192,7 +192,8 @@ class ScheduleConsultation extends Component
             // dd($ndate );
 
             ///,.....available current date
-            if ($ndate >= date('Y-m-d') && in_array($day, $lawyerHoursDay)) {
+            //if ($ndate >= date('Y-m-d') && in_array($day, $lawyerHoursDay)) {
+            if ($ndate > date('Y-m-d') && in_array($day, $lawyerHoursDay)) {
                 array_push($dates, $ndate);
             }
         }
@@ -251,6 +252,7 @@ class ScheduleConsultation extends Component
         ///,.....available current date
         if(!$checkLeave){
             if (@$lawyerHours && $date >= date('Y-m-d')) {
+            //if (@$lawyerHours && $date > date('Y-m-d')) {
 
                 
                 $duration = '30';
@@ -367,7 +369,6 @@ class ScheduleConsultation extends Component
             return [
                 'first_name' => ['required', 'string', 'max:100'],
                 'last_name' => ['required', 'string', 'max:100'],
-                'phone' => ['nullable', 'numeric'],
                 'email' => ['required', 'string', 'email', 'max:255'],
             ];
         }
@@ -377,7 +378,6 @@ class ScheduleConsultation extends Component
                 return [
                     'first_name' => ['required', 'string', 'max:100'],
                     'last_name' => ['required', 'string', 'max:100'],
-                    'phone' => ['nullable', 'numeric'],
                     'email' => ['required', 'string', 'email', 'max:255'],
                 ];
             }
@@ -385,7 +385,6 @@ class ScheduleConsultation extends Component
             return [
                 'first_name' => ['required', 'string', 'max:100'],
                 'last_name' => ['required', 'string', 'max:100'],
-                'phone' => ['nullable', 'numeric'],
                 'email' => ['required', 'string', 'email', 'max:255'],
                 'card_name' => 'required|max:50',
                 'card_number' => 'required|numeric|digits_between:12,16',
@@ -399,7 +398,6 @@ class ScheduleConsultation extends Component
             return [
                 'first_name' => ['required', 'string', 'max:100'],
                 'last_name' => ['required', 'string', 'max:100'],
-                'phone' => ['nullable', 'numeric'],
                 'email' => ['required', 'string', 'email', 'max:255', Rule::unique(User::class)],
                 'password' => 'required|min:8',
                 'password_confirmation' => 'required_with:password|same:password',
@@ -410,7 +408,6 @@ class ScheduleConsultation extends Component
             'first_name' => ['required', 'string', 'max:100'],
             'last_name' => ['required', 'string', 'max:100'],
             //'phone' => ['nullable', 'numeric', 'digits_between:10,12'],
-            'phone' => ['nullable', 'numeric'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique(User::class)],
             'password' => 'required|min:8',
             'password_confirmation' => 'required_with:password|same:password',
@@ -489,18 +486,18 @@ class ScheduleConsultation extends Component
 
             $fee = $this->totalCharges;
 
-            $charge = \Stripe\Charge::create([
+            /*$charge = \Stripe\Charge::create([
                 'currency' => 'USD',
                 'customer' => $customer_id,
                 'amount' =>  $fee * 100,
-            ]);
+            ]);*/
 
 
-            if(@$charge){
+            //if(@$charge) {
 
                 //save customer id in card table
 
-                if($this->save_card){
+                //if($this->save_card){
                     $checkCard = UserCard::where('user_id', $authUser->id)
                                     ->where('card_number', $this->card_number)
                                     ->first();
@@ -521,7 +518,7 @@ class ScheduleConsultation extends Component
                     $saveCard->save();
 
                     $saveCardId = $saveCard->id;
-                }
+                //}
 
                 /// generate meeting
                 $meeting = new MeetingController;
@@ -546,12 +543,12 @@ class ScheduleConsultation extends Component
                     //...
                     $paymentStore = new Payment;
                     $paymentStore->users_id = $authUser->id;
-                    $paymentStore->transaction_id = $charge->id;;
-                    $paymentStore->balance_transaction = $charge->balance_transaction;
+                //    $paymentStore->transaction_id = $charge->id;;
+                //    $paymentStore->balance_transaction = $charge->balance_transaction;
                     $paymentStore->customer = $customer_id;
                     $paymentStore->currency = 'usd';
                     $paymentStore->amount = $fee;
-                    $paymentStore->payment_status = $charge->status;
+                    $paymentStore->payment_status = 'pending';
                     $paymentStore->payment_type = 'booking';
                     $paymentStore->save();
                     
@@ -603,10 +600,10 @@ class ScheduleConsultation extends Component
                     }
                 }
                 ///...........
-            }
+            /*}
             else {
                 $this->alert('error', 'Charge error');
-            }
+            }*/
 
         } catch (\Stripe\Exception\CardException $e) {
             $error = $e->getMessage();

@@ -44,7 +44,7 @@ class ResponseToLawyerRequest extends Notification
     {
         return (new MailMessage)
             ->subject('Your account is ' . $this->action)
-            ->greeting('Hello ,' .$this->user->first_name)
+            ->greeting('Hello ' .$this->user->first_name.',')
             ->line('Your account has been ' . $this->action . ' by admin.');
     }
 

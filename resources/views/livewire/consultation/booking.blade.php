@@ -126,7 +126,7 @@
                         <div class="white-shadow-scnd-box mt-4">
                                 
                                 @if(Auth::check())
-                                @if($authUser->userCards->count()>0)
+                                @if(count(auth()->user()->userCards)>0)
                                 <h3>Saved Card</h3>
 
                                 <table class="table">
@@ -139,7 +139,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>                                        
-                                        @foreach($authUser->userCards as $saveCard)
+                                        @foreach(auth()->user()->userCards as $saveCard)
                                         <tr>
                                             <td>**** {{ substr($saveCard->card_number, -4) }}</td>
                                             <td>{{$saveCard->card_type}}</td>

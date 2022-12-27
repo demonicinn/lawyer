@@ -45,7 +45,7 @@ class Case3DaysCancelNotification extends Notification
     {
         return (new MailMessage)
                     ->subject('Case has been canceled')
-                    ->greeting('Hello, '. $this->user->name)
+                    ->greeting('Hello '. $this->user->name.',')
                     ->line($this->message);
     }
 

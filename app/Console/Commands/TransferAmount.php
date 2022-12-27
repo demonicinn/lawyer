@@ -29,20 +29,97 @@ class TransferAmount extends Command
      */
     public function handle()
     {
-        $bookings = Booking::where('is_call','completed')
+        $bookingsL = Booking::where('is_call','completed')
                     ->where('is_accepted', '1')
                     ->where('is_canceled', '0')
-                    ->where('payment_process', '0')
+                    //->where('payment_process', '0')
+                    ->where('transfer_lawyer', '0')
                     ->get();
 
+        self::transferAmount($bookingsL);
 
+
+
+
+        $bookingsCc = Booking::where('is_call','completed')
+                    ->where('is_accepted', '1')
+                    ->where('is_canceled', '0')
+                    //->where('payment_process', '0')
+                    ->where('transfer_client', '0')
+                    ->get();
+
+        self::refundAmount($bookingsCc);
+
+
+
+        //............
+        $bookingsClient = Booking::where('is_call','pending')
+                    ->where('is_accepted', '0')
+                    ->where('is_canceled', '0')
+                    //->where('payment_process', '0')
+                    ->where('lawyer_res', '2')
+                    ->where('transfer_client', '0')
+                    ->get();
+    
+    
+        self::refundAmount($bookingsClient);
+            
+            
+        return 'done';
+    }
+
+
+
+
+
+
+
+    private function refundAmount($bookings){
+        \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
+
+        foreach($bookings as $booking){
+            if(@$booking->payments->transaction_id){
+                try {
+
+                    $refund = \Stripe\Refund::create([
+                        'charge' => $booking->payments->transaction_id,
+                        'amount' => $booking->consultation_fee * 100,
+                    ]);
+
+                    if(@$refund){
+
+                        //...
+                        $booking->payment_process = '1';
+                        $booking->transfer_client = '1';
+                        $booking->save();
+
+                        $store = new PaymentStatus;
+                        $store->bookings_id = $booking->id;
+                        $store->transaction_id = @$refund['id'];
+                        $store->status = 'succeeded';
+                        $store->amount = $booking->total_amount;
+                        $store->save();
+
+                    }
+
+                } catch (\Stripe\Exception\CardException $e) {
+                    $error = $e->getMessage();
+                } catch (Exception $e) {
+                    $error = $e->getMessage();
+                }
+            }
+        }
+
+        return 'done';
+    }
+
+
+    private function transferAmount($bookings){
         \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
 
         foreach($bookings as $booking){
 
-            if(@$booking->lawyer->bankInfo->account_id){
-
-
+            if(@$booking->payments->transaction_id && $booking->lawyer->bankInfo->account_id){
                 try {
 
                     $transfer = \Stripe\Transfer::create([
@@ -50,10 +127,11 @@ class TransferAmount extends Command
                         'currency' => 'usd',
                         'destination' => $booking->lawyer->bankInfo->account_id,
                     ]);
-
+//dd($transfer);
                     if(@$transfer){
-
+            
                         //...
+                        $booking->transfer_lawyer = '1';
                         $booking->payment_process = '1';
                         $booking->save();
 
@@ -71,10 +149,7 @@ class TransferAmount extends Command
                 } catch (Exception $e) {
                     $error = $e->getMessage();
                 }
-
-
             }
-
 
         }
 

@@ -45,7 +45,7 @@ class CaseAcceptReviewNotification extends Notification
         $url = route('review.lawyer', encrypt($this->bookingInfo->id));
         return (new MailMessage)
                     ->subject('Rate your consultation')
-                    ->greeting('Hello ,' . $this->bookingInfo->first_name)
+                    ->greeting('Hello ' . $this->bookingInfo->first_name.',')
                     ->line('Rate your lawyer')
                     ->action('Review now', $url)
                     ->line('Thank you');

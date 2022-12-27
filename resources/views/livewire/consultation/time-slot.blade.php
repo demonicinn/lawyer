@@ -37,9 +37,9 @@
                             <h4 class="event-date">
                                 <p>{{@$dateFormat}}</p>
                             </h4>
+                            
                             @if ($workingDatesTimeSlot)
                             <ul class="list-unstyled">
-
                                 @foreach($workingDatesTimeSlot as $key => $slot)
                                 <li>
                                     <div class="time-selection" >

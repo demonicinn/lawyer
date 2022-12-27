@@ -115,6 +115,9 @@ class Subscriptions extends Component
             $plan->from_date = $from_date;
             $plan->to_date = $to_date;
             $plan->save();
+            
+            $user->payment_plan = 'monthly';
+            $user->save();
 
             //send Lawyer Subscription Notification
             Notification::route('mail', $user->email)->notify(new LawyerSubscriptionNotification($user, $plan));
@@ -161,7 +164,17 @@ class Subscriptions extends Component
             //make payment
 
             if(!$this->currentPlan){
-                $fee = $subscription->price;
+                    if(@$user->offer_price || $user->offer_price_yearly){
+                        if($subscription->type=='yearly'){
+                            $fee = $user->offer_price_yearly;
+                        }
+                        else {
+                            $fee = $user->offer_price;
+                        }
+                    }
+                    else {
+                        $fee = $subscription->price;
+                    }
 
                 $charge = \Stripe\Charge::create([
                     'currency' => 'USD',
@@ -229,7 +242,7 @@ class Subscriptions extends Component
 
     public function removeSubscription()
     {
-        $this->alert('warning', 'Are you sure', [
+        $this->alert('', 'Are you sure to remove Subscription?', [
             'toast' => false,
             'position' => 'center',
             'showCancelButton' => true,
@@ -259,7 +272,7 @@ class Subscriptions extends Component
 
     public function renewSubscription()
     {
-        $this->alert('warning', 'Are you sure', [
+        $this->alert('warning', 'Are you sure to activate Subscription?', [
             'toast' => false,
             'position' => 'center',
             'showCancelButton' => true,

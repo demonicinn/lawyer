@@ -13,16 +13,22 @@ use Illuminate\Support\Facades\Notification;
 use App\Models\Supports;
 use App\Models\User;
 use App\Models\Category;
+use App\Models\StateBar;
 use App\Models\Note;
 use App\Models\Payment;
+use App\Models\Subscription;
+use App\Models\PaymentStatus;
+use App\Models\State;
 use App\Notifications\LawyerMailForCaseStatus;
 use App\Notifications\MailToAdminForLawyerStatus;
 use App\Notifications\UserMailForCaseStatus;
 use App\Notifications\CaseAcceptReviewNotification;
+use App\Notifications\OfferNotification;
 use Session;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Stripe\Charge;
 use Exception;
+use Carbon\Carbon;
 
 use App\Http\Controllers\MeetingController;
 
@@ -36,7 +42,7 @@ class CommonController extends Controller
     {
         $request->validate([
             'old_password' => 'required',
-            'password' => 'required',
+            'password' => 'required|min:8',
             'password_confirmation' => 'required|required_with:password|same:password'
         ]);
 
@@ -91,7 +97,7 @@ class CommonController extends Controller
 
         //dd($request->all());
 
-        $this->flash('success', 'Support added successfully');
+        $this->flash('success', 'Ticket Raised Successfully.');
         return back();
     }
 
@@ -113,12 +119,59 @@ class CommonController extends Controller
             $query->with('contract');
         })->first();
 
-    
         $categories = Category::with('items')->get();
 
+        $date = date('Y-m-d');
+        $date3Months = Carbon::parse($date)->subtract(3, 'months')->format('Y-m-d');
+        
+        $totalCount = $user->lawyerReviews()->count();
+        $totalRating = $user->lawyerReviews()->sum('rating');
+        
+        $checkRating = 0;
+        $overAllRating = 0;
+        
+        if($totalCount > 0){
+            $overAllRating = $totalRating / $totalCount;
+            
+            
+            $countCancleBookings = $user->booking()->where('is_canceled', '1')->where('booking_date', '>=', $date3Months)->count();
+            
+            
+            if($countCancleBookings > '0' && $countCancleBookings <= '2'){
+                $checkRating = 0.5;
+            }
+            if($countCancleBookings >= '3' && $countCancleBookings <= '9'){
+                $checkRating = 1;
+            }
+            if($countCancleBookings >= '10'){
+                $checkRating = 2;
+            }
+        
+            $newRating = $overAllRating - $checkRating;
+            //dd($newRating);
+        
+            $user->rating = number_format($newRating, 1);
+        }
+        else {
+            $user->rating = '';
+        }
+        
+        
+        $cancelBooking = Booking::where('lawyer_id', $user->id)
+                    ->where(function($query){
+                        $query->where('is_accepted', '2');
+                        $query->orWhere('is_canceled', '1');
+                    })
+                    ->get();
+        
+        $overAllRating = number_format($overAllRating, 1);
+		
+		
+        
+        $stateBar = StateBar::whereStatus('1')->get();
+        $states = State::whereStatus('1')->pluck('name', 'id');
 
-
-        return view('admin.lawyers.view-details', compact('title', 'user', 'categories'));
+        return view('admin.lawyers.view-details', compact('title', 'user', 'categories', 'cancelBooking', 'checkRating', 'overAllRating', 'stateBar', 'states'));
     }
 
     public function viewUserDetails($id)
@@ -128,7 +181,16 @@ class CommonController extends Controller
             'active' => 'client',
         );
         $user = User::where('id', $id)->first();
-        return view('admin.users.view-details', compact('title', 'user'));
+		  
+		
+		$cancelBooking = Booking::where('user_id', $user->id)
+                    ->where(function($query){
+                        $query->where('is_accepted', '2');
+                        $query->orWhere('is_canceled', '1');
+                    }) 
+                    ->get();
+					
+        return view('admin.users.view-details', compact('title', 'user', 'cancelBooking'));
     }
 
 
@@ -182,7 +244,8 @@ class CommonController extends Controller
         $this->flash('success', 'Lawyer accept successfully');
         return back();
     }
-    public function declinedLawyer(Request $request, $id)
+    
+        public function declinedLawyer(Request $request, $id)
     {
 
         $user = User::findOrFail($id);
@@ -383,6 +446,9 @@ class CommonController extends Controller
             $status = 'declined';
 
             $authUser = auth()->user();
+            
+            self::refundAmount($declineCase);
+            
 
             Notification::route('mail', $declineCase->user_email)->notify(new UserMailForCaseStatus($declineCase, $status));
 
@@ -401,6 +467,40 @@ class CommonController extends Controller
     }
     
     
+    
+    private function refundAmount($booking){
+        $stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
+        
+        try {
+                $refund = $stripe->refunds->create([
+                    'charge' => $booking->payments->transaction_id,
+                ]);
+
+                if(@$refund){
+
+                    //...
+                    $booking->payment_process = '1';
+                    $booking->transfer_client = '1';
+                    $booking->save();
+
+                    $store = new PaymentStatus;
+                    $store->bookings_id = $booking->id;
+                    $store->transaction_id = @$refund['id'];
+                    $store->status = 'succeeded';
+                    $store->amount = $booking->total_amount;
+                    $store->save();
+
+                }
+
+            } catch (\Stripe\Exception\CardException $e) {
+                $error = $e->getMessage();
+            } catch (Exception $e) {
+                $error = $e->getMessage();
+            }
+            
+    }
+    
+    
     public function cancelCase($id)
     {
         $booking = Booking::where('id', $id)->first();
@@ -408,7 +508,7 @@ class CommonController extends Controller
         $booking->is_canceled = '1';
         $booking->update();
 
-        
+        self::refundAmount($booking);
         
         $this->flash('success', 'Case canceled successfully');
         
@@ -488,21 +588,89 @@ class CommonController extends Controller
             //$error = $e->getMessage();
         }
         
-        //dd($a);
-        ///
-        //if($a){
-            $booking->is_canceled = '1';
-            $booking->save();
+        
+        \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
 
-            $this->flash('success', 'Booking Canceled');
-            return redirect()->back();
+        
+        $booking->is_canceled = '1';
+        $booking->save();
+        
+        
+        if(@$booking->payments->transaction_id){
+            //when user cancel the booking
+                    try {
+                        
+                        $refund = \Stripe\Refund::create([
+                            'charge' => $booking->payments->transaction_id,
+                            'amount' => $booking->consultation_fee * 100,
+                        ]);
+            
+            
+                        //dd($refund);
+                        if(@$refund){
 
-        //}
-        //$this->flash('error', 'Something went wrong');
+                            //...
+                            $booking->payment_process = '1';
+                            $booking->transfer_client = '1';
+                            $booking->save();
+        
+                            $store = new PaymentStatus;
+                            $store->bookings_id = $booking->id;
+                            $store->transaction_id = @$refund['id'];
+                            $store->status = 'succeeded';
+                            $store->amount = $booking->consultation_fee;
+                            $store->save();
+                            
+                            $this->flash('success', 'Booking Canceled');
+                            return redirect()->back();
+                        }
+                        
+                        $this->flash('error', 'Getting error in refund');
+                        return redirect()->back();
+                    } catch (\Stripe\Exception\CardException $e) {
+                        $error = $e->getMessage();
+                    } catch (Exception $e) {
+                        $error = $e->getMessage();
+                    }
+                    
+                    //self::refundAmount($booking);
+                    $this->flash('error', 'Getting error in refund');
+                    return redirect()->back();
+                        
+        
+        }
+        else {
+        
+        $this->flash('success', 'Booking Canceled');
+        return redirect()->back();
+        
+        }
     }
 
 
-
+        public function offerLawyer(Request $request, $id)
+    {
+        $request->validate([
+            'offer_price' => 'required|numeric',
+            'offer_price_yearly' => 'required|numeric',
+        ]);
+        
+        $user = User::findOrFail($id);
+        
+        $user->offer_price = $request->offer_price;
+        $user->offer_price_yearly = $request->offer_price_yearly;
+        $user->save();
+        
+        
+        $subscription = Subscription::where('type', $user->payment_plan)->first();
+        
+        ///sending email
+        Notification::route('mail', $user->email)->notify(new OfferNotification($user, $subscription));
+        
+        
+        $this->flash('success', 'Subscription offer added successfully');
+        return back();
+    }
 
     
 }

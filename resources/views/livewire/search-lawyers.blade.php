@@ -1,5 +1,5 @@
 <div>
-    <div class="lawyer-service-list-sec d-flex flex-wrap">
+    <div class="lawyer-service-list-sec d-flex flex-wrap lawyer_search px-0">
         <div id="filter-sidebar" class="sidebar-wrap">
             <form class="form-design">
                 <div class="filter-sidebar">
@@ -10,9 +10,10 @@
                         <h5 class="h5-design">Hourly Rate</h5>
                         <div class="slider-area" wire:ignore>
                             <div class="slider-area-wrapper">
-                                <p class="min-value">${{$rate_min}}</p>
+							{{--<p class="min-value">${{$rate_min}}</p>--}}
                                 <div id="hourlyRange" class="slider"></div>
-                                <p class="max-value">${{$rate}}</p>
+								<p class="min-value-fix">${{$rate_min}}</p>
+                                {{--<p class="max-value">${{$rate}}</p>--}}
                             </div>
                         </div>
                     </div>
@@ -33,15 +34,23 @@
                             <button class="cstm-toggle-btn"></button>
                         </div>
                     </div>
+                    
+                    <div class="toggle-design-wrapper d-flex flex-wrap align-items-center mb-4 justify-content-spacebw">
+                        <h5 class="h5-design">Available Within 48 Hours</h5>
+                        <div class="toggle-design_div">
+                            <input id="available2days" type="checkbox" wire:model="available2days" name="available2days">
+                            <button class="cstm-toggle-btn"></button>
+                        </div>
+                    </div>
 
 
                     <div class="hourly-range-design range-design mb-5">
                         <h5 class="h5-design">Years Experience</h5>
                         <div class="slider-area" wire:ignore>
                             <div class="slider-area-wrapper">
-                                <p class="min-value">{{$year_exp_min}}</p>
+							{{--<p class="min-value">{{$year_exp_min}}</p>--}}
                                 <div id="yearsRange" class="slider"></div>
-                                <p class="max-value">{{$year_exp}}+</p>
+                                {{--<p class="max-value">{{$year_exp}}+</p>--}}
                             </div>
                         </div>
                     </div>
@@ -72,9 +81,10 @@
                         <h5 class="h5-design">Distance</h5>
                         <div class="slider-area" wire:ignore>
                             <div class="slider-area-wrapper">
-                                <p class="min-value">{{$distance_min}}mi</p>
+							{{--<p class="min-value">{{$distance_min}}mi</p>--}}
                                 <div id="distanceRange" class="slider"></div>
-                                <p class="max-value">{{$distance}}+mi</p>
+								<p class="min-value-fix">{{$distance_min}}mi</p>
+                                {{--<p class="max-value">{{$distance}}+mi</p>--}}
                             </div>
                         </div>
                     </div>
@@ -91,46 +101,47 @@
         <div class="lawyers-list-sec">
             <div class="list-wrapper list-service">
 
-                @forelse($lawyers as $lawyer)
+                @forelse(@$lawyers as $lawyer)
                 <div class="list-item list-service-item">
                     <div class="lawyer-hire-block">
-                        @if(@$lawyer->profile_pic)
+                        @if(@$lawyer['profile_pic'])
                         <div class="lawyers-img-block border-10">
-                            <img src="{{ $lawyer->profile_pic }}">
+                            <img src="{{ $lawyer['profile_pic'] }}">
                         </div>
                         @endif
                         <div class="lawyers-service-cntnt-block">
                             <div class="lawyers-heading_service d-flex justify-content-spacebw align-items-center">
-                                <h4 class="lawyer-name">{{ @$lawyer->name }}</h4>
-                                <button class="hire-price-btn">${{ @$lawyer->details->hourly_fee }}/hr.</button>
+                                <h4 class="lawyer-name">{{ @$lawyer['rating'] }}</h4>
+                                <h4 class="lawyer-name">{{ @$lawyer['name'] }}</h4>
+                                <button class="hire-price-btn">${{ @$lawyer['details']->hourly_fee }}/hr.</button>
                             </div>
                             <div class="lawyers-desc_service d-flex justify-content-spacebw">
                                 <div class="years_experience_div">
                                     <p>YEARS EXP.</p>
-                                    <h4>{{ @$lawyer->details->year_experience }}</h4>
+                                    <h4>{{ @$lawyer['details']->year_experience }}</h4>
                                 </div>
                                 <div class="contingency-cases_div">
                                     <p>CONTINGENCY CASES</p>
-                                    <h4>{{ @ucfirst($lawyer->details->contingency_cases) }}</h4>
+                                    <h4>{{ @ucfirst($lawyer['details']->contingency_cases) }}</h4>
                                 </div>
                                 <div class="consult-fee_div">
                                     <p>CONSULT FEE</p>
 
 
-                                    <h4>{{ @$lawyer->details->is_consultation_fee=='yes' ? '$'.$lawyer->details->consultation_fee : 'Free' }}</h4>
+                                    <h4>{{ @$lawyer['details']->is_consultation_fee=='yes' ? '$'.$lawyer['details']->consultation_fee : 'Free' }}</h4>
                                 </div>
                             </div>
-                            @if(@$lawyer->details->school_attendent)
-                            <p class="school_name"><i class="fa-solid fa-school-flag"></i>{{ @$lawyer->details->school_attendent }}</p>
+                            @if(@$lawyer['details']->school_attendent)
+                            <p class="school_name"><i class="fa-solid fa-school-flag"></i>{{ @$lawyer['details']->school_attendent }}</p>
                             @endif
                             <div class="location_profile-divs border-bottom pb-2 d-flex justify-content-spacebw align-items-center">
-                                <address><i class="fa-solid fa-location-dot"></i> {{ @$lawyer->details->city }}, {{ @$lawyer->details->states->code }}</address>
-                                <a href="{{ route('lawyer.show', $lawyer->id) }}?type={{ $search_type }}&search={{ json_encode($search_data) }}">See Profile</a>
+                                <address><i class="fa-solid fa-location-dot"></i> {{ @$lawyer['details']->city }}, {{ @$lawyer['details']->states->code }}</address>
+                                <a href="{{ route('lawyer.show', $lawyer['id']) }}?type={{ $search_type }}&search={{ json_encode($search_data) }}">See Profile</a>
                             </div>
 
                             <div class="add-litigations mt-2 location_profile-divs d-flex justify-content-spacebw align-items-center border-bottom pb-2">
-                                <button type="button" class="btn_court btn_adm showModal " wire:click="modalData({{$lawyer->id}})"><i class="fa-solid fa-gavel"></i>Admissions</button>
-                               {{--<a href="{{ route('lawyer.show', $lawyer->id) }}?type={{ $search_type }}&search={{ json_encode($search_data) }}">See Profile</a>--}} 
+                                <button type="button" class="btn_court btn_adm showModal " wire:click="modalData({{$lawyer['id']}})"><i class="fa-solid fa-gavel"></i>Admissions</button>
+                               {{--<a href="{{ route('lawyer.show', $lawyer['id']) }}?type={{ $search_type }}&search={{ json_encode($search_data) }}">See Profile</a>--}} 
                             </div>
                             <div class="practice_area_div">
                              <div class="left_trash">
@@ -147,7 +158,7 @@
 
                             </div>
 
-                            @php $lawyerID = Crypt::encrypt($lawyer->id); @endphp
+                            @php $lawyerID = Crypt::encrypt($lawyer['id']); @endphp
                             
                             @if(auth()->check())
                             @if(auth()->user()->role=='user')
@@ -254,14 +265,14 @@
                 @endif
 
 
-                <div id="pagination-container" class="pagination-container-service">
-                    {!! $lawyers->links() !!}
-                </div>
+                
             </div>
         </div>
 
         @push('scripts')
         <script>
+			let type = '{{$search_type}}';
+
             $(document).ready(function() {
 
                 window.livewire.on('courtModalShow', () => {
@@ -281,8 +292,8 @@
             $(function() {
                 var hourlyRange = document.getElementById("hourlyRange");
                 noUiSlider.create(hourlyRange, {
-                    start: [{{$rate_min}}, {{$rate}}],
-                    connect: true,
+                    start: [{{$rate}}],
+					connect: [true, false],
                     behaviour: "drag",
                     tooltips: true,
                     step: 10,
@@ -297,7 +308,13 @@
                         },
                         to: function (value) {
                             var to = parseInt(value);
-                            return "$"+to;
+							
+							if(to=='1000'){
+								return "$"+to+"+";
+							}
+							else {
+								return "$"+to;
+							}
                         }
                     }
                 });
@@ -307,6 +324,10 @@
                     
                         var from = parseInt(values[0].replace("$", ""));
                         var to = parseInt(values[1].replace("$", ""));
+						
+						from = parseInt(from.replace("+", ""));
+                        to = parseInt(to.replace("+", ""));
+						
                         @this.set('rate_min', from);
                         @this.set('rate', to);
                     
@@ -342,7 +363,14 @@
                         },
                         to: function (value) {
                             var to = parseInt(value);
-                            return to+" yrs";
+                            
+							
+							if(to=='20'){
+								return to+"+ yrs";
+							}
+							else {
+								return to+" yrs";
+							}
                         }
                     }
                 });
@@ -351,6 +379,9 @@
                         var from = parseInt(values[0].replace(" yrs", ""));
                         var to = parseInt(values[1].replace(" yrs", ""));
                     
+						from = parseInt(from.replace("+", ""));
+                        to = parseInt(to.replace("+", ""));
+						
                         @this.set('year_exp_min', from);
                         @this.set('year_exp', to);
                     
@@ -361,8 +392,8 @@
             $(function() {
                 var distanceRange = document.getElementById("distanceRange");
                 noUiSlider.create(distanceRange, {
-                    start: [{{$distance_min}}, {{$distance}}],
-                    connect: true,
+                    start: [{{$distance}}],
+					connect: [true, false],
                     behaviour: "drag",
                     tooltips: true,
                     step: 5,
@@ -378,23 +409,32 @@
                         to: function (value) {
                             
                             var to = parseInt(value);
-                            return to+" miles";
+							
+							if(to=='100'){
+								return type=='litigations' ? to+"mi" : to+"+mi";
+							}
+							else {
+								return to+"mi";
+							}
+							
                         }
                     },
                 });
                 
                 
                 distanceRange.noUiSlider.on('change', function (values){
-                        var from = parseInt(values[0].replace(" miles", ""));
-                        var to = parseInt(values[1].replace(" miles", ""));
+                        var from = parseInt(values[0].replace("mi", ""));
+                        var to = parseInt(values[1].replace("mi", ""));
+						
+						from = parseInt(from.replace("+", ""));
+                        to = parseInt(to.replace("+", ""));
                     
                         @this.set('distance_min', from);
                         @this.set('distance', to);
-                    
                 });
             });
             
-            
+        
             
 
         </script>

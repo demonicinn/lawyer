@@ -43,7 +43,7 @@ class MailToAdminForLawyerStatus extends Notification
         return (new MailMessage)
         ->from($this->user->email)
         ->subject('Update Lawyer status')
-        ->greeting('Hi,Admin')
+        ->greeting('Hello Admin,')
         ->line('Profile has been updated by :'.$this->user->first_name);
             
     }

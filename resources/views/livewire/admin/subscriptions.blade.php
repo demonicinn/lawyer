@@ -46,14 +46,14 @@
 <!-- Trial period -->
 <hr>
 <form class="form-inline"  wire:submit.prevent="updateTrialDays">
-  <div class="row">
+  <div class="row justify-content-center trial_row">
     <div class="form-group mb-2 col-md-4">
         
       <input wire:model="trial_days" type="number" class="form-control" id="trial_days" placeholder="Trial days" value="{{ isset( $trial_days ) ? $trial_days : '' }}">
 	@error ('trial_days') <span class="help-block">{{ $message }}</span> @enderror
     </div>
-    <div class="col-md-4">
-	<button type="submit" class="btn btn-primary mb-2">Update Trial Days</button>
+    <div class="col-md-2">
+	<button type="submit" class="btn-design-first mb-2">Update Trial Days</button>
     </div>
  </div>
 </form>

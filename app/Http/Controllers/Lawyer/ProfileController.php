@@ -11,6 +11,7 @@ use App\Models\UserDetails;
 use App\Models\State;
 use App\Models\LawyerHours;
 use App\Models\BankInfo;
+use App\Models\Booking;
 
 use App\Models\StateBar;
 use App\Models\LawyerStateBar;
@@ -71,8 +72,8 @@ class ProfileController extends Controller
             'contact_number' => 'required',
             'address' => 'required',
             'school_attendent' => 'required',
-            'city' => 'required|max:100',
-            'state' => 'required',
+            //'city' => 'required|max:100',
+            //'states_id' => 'required',
             'zip_code' => 'required|max:20',
             //'bar_number' => 'required|numeric',
             //'year_admitted' => 'required|numeric',
@@ -83,7 +84,7 @@ class ProfileController extends Controller
 
         $user = auth()->user();
 
-        $state = State::findOrFail($request->state);
+        $state = State::findOrFail($request->states_id);
         $address = $request->address.', '.$request->city.', '.$state->name.', '.$request->zip_code;
         
         //dd($query);
@@ -132,7 +133,7 @@ class ProfileController extends Controller
         $details->website_url = $request->website_url;
         $details->address = $request->address;
         $details->city = $request->city;
-        $details->states_id = $request->state;
+        $details->states_id = $request->states_id;
         $details->zip_code = $request->zip_code;
         //$details->bar_number = $request->bar_number;
         //$details->year_admitted = $request->year_admitted;
@@ -317,7 +318,7 @@ class ProfileController extends Controller
                 $link = $stripe->accountLinks->create([
                     'account' => $accountId,
                     'refresh_url' => route('lawyer.banking.error'),
-                    'return_url' => route('lawyer.banking.success'),
+                    'return_url' => route('lawyer.banking.success.callback'),
                     'type' => 'account_onboarding',
                 ]);
                 //dd($link);
@@ -354,8 +355,9 @@ class ProfileController extends Controller
         $this->flash('error', $error);
         return redirect()->back();
     }
-
-    public function bankingInfoSuccess(){
+    
+    
+    public function bankingInfoSuccessCallback(){
         $user = auth()->user();
         $record = BankInfo::where(['user_id' => $user->id])->first();
 
@@ -363,6 +365,54 @@ class ProfileController extends Controller
             $record->status = "active";
             $record->save();
         }
+        
+        return redirect()->route('lawyer.banking.success');
+    }
+    
+
+    public function bankingInfoSuccess(){
+        $user = auth()->user();
+        $record = BankInfo::where(['user_id' => $user->id])->first();
+        
+        
+        if($record) {
+
+            $stripe = new \Stripe\StripeClient(
+                env('STRIPE_SECRET')
+            );
+            
+            
+            
+            try {
+                
+                $account = @$stripe->accounts->retrieve($record->account_id);
+//dd($account);
+                $status = ''; 
+                if($account && $account->payouts_enabled) {
+                    $status = 'active';              
+                } else {
+                    $status = 'inactive'; 
+                }
+
+                BankInfo::where('id', $record->id)->update(["payouts_enabled" => $status]);
+                $record = $record->refresh(); 
+
+                } catch (\Stripe\Exception\RateLimitException $e) {
+                    $message = $e->getMessage();
+                } catch (\Stripe\Exception\InvalidRequestException $e) {
+                    $message = $e->getMessage();
+                } catch (\Stripe\Exception\AuthenticationException $e) {
+                    $message = $e->getMessage();         
+                } catch (\Stripe\Exception\ApiConnectionException $e) {
+                    $message = $e->getMessage();
+                } catch (\Stripe\Exception\ApiErrorException $e) {
+                    $message = $e->getMessage();
+                } catch (Exception $e) {
+                    $message = $e->getMessage();
+                }
+        }
+        
+        
         return view('lawyer.profile.account', compact('user', 'record'));
     }
 
@@ -377,12 +427,13 @@ class ProfileController extends Controller
             
             $card->delete();
             $this->flash('success', 'Card Removed');
-            return redirect()->route('lawyer.banking.success');
+            return redirect()->back();
 
         }
 
         $this->flash('error', 'Server Error');
-        return redirect()->route('lawyer.banking.success');
+		return redirect()->back();
+        //return redirect()->route('lawyer.banking.success');
     }
 
 
@@ -401,12 +452,13 @@ class ProfileController extends Controller
             $card->is_primary = '1';
             $card->save();
             $this->flash('success', 'Card set as primary');
-            return redirect()->route('lawyer.banking.success');
+            return redirect()->back();
 
         }
 
         $this->flash('error', 'Server Error');
-        return redirect()->route('lawyer.banking.success');
+		return redirect()->back();
+        //return redirect()->route('lawyer.banking.success');
     }
 
 
@@ -473,7 +525,76 @@ class ProfileController extends Controller
     }
 
 
+    
+    
+    public function connectedAccountUpdate( Request $request ) 
+    {
+        $user = auth()->user();
+        $record = BankInfo::where(['user_id' =>  $user->id])->first();
+        
+        try {
 
+            if($record) {
+
+                $stripe = new \Stripe\StripeClient(
+                    env('STRIPE_SECRET')
+                );
+
+                $account = $stripe->accounts->retrieve(
+                    $record->account_id
+                );
+
+                if($account) {
+                    if(!$account->payouts_enabled) {
+                        $link = $stripe->accountLinks->create([
+                            'account' => $record->account_id,
+                            'refresh_url' => route('lawyer.banking.error'),
+                            'return_url' => route('lawyer.banking.success.callback'),
+                            'type' => 'account_update',
+                        ]);
+                        return redirect($link->url);
+                    } else {
+                        BankInfo::where('id', $record->id)->update(["payouts_enabled" => 'active']);
+                        
+
+                        $this->flash('success', "Payouts are enabled for your account.");
+                        return redirect()->back();
+                    }
+                }
+                
+            } else {
+                $this->flash('error', "No record found.");
+                return redirect()->back();
+            }
+        } catch (\Stripe\Exception\RateLimitException $e) {
+            // Too many requests made to the API too quickly
+            $error = $e->getMessage();
+        } catch (\Stripe\Exception\InvalidRequestException $e) {
+            // Invalid parameters were supplied to Stripe's API
+            $error = $e->getMessage();
+        } catch (\Stripe\Exception\AuthenticationException $e) {
+            // Authentication with Stripe's API failed
+            $error = $e->getMessage();
+            // (maybe you changed API keys recently)
+        } catch (\Stripe\Exception\ApiConnectionException $e) {
+            // Network communication with Stripe failed
+            $error = $e->getMessage();
+        } catch (\Stripe\Exception\ApiErrorException $e) {
+            // Display a very generic error to the user, and maybe send
+            $error = $e->getMessage();
+            // yourself an email
+        } catch (Exception $e) {
+            // Something else happened, completely unrelated to Stripe
+            $error = $e->getMessage();
+        }
+		
+		$this->flash('error', $error);
+
+        return redirect()->back();
+        
+    }
+    
+    
 
     public function bankingInfoStore(Request $request)
     {
@@ -565,7 +686,30 @@ class ProfileController extends Controller
 
 
 
+    public function bookingConfirmData(Request $request){
+        //$user = auth()->user();
+        $booking = Booking::findOrFail($request->booking);
 
+        if(@$booking){
+            
+            if(@$booking->lawyer_res){
+                $this->flash('error', "You've already confirmed client appearance");
+                return redirect()->route('lawyer.profile');
+            }
+            else {
+                $booking->lawyer_res = $request->action;
+                $booking->save();
+                
+                $this->flash('success', 'Client Appearance Confirmed');
+                return redirect()->route('lawyer.profile');
+            }
+             
+
+        }
+
+        $this->flash('error', 'Server Error');
+        return redirect()->route('lawyer.profile');
+    }
 
 
 

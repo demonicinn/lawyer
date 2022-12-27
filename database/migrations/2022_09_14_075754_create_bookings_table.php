@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('first_name', 100);
             $table->string('last_name', 100);
             $table->string('user_email', 100);
-            $table->string('user_contact', 100);
+            $table->string('user_contact', 100)->nullable();
             $table->date('booking_date');
             $table->time('booking_time');
             
@@ -48,6 +48,10 @@ return new class extends Migration
 
             $table->enum('payment_process', ['0', '1'])->default('0');
             $table->enum('is_canceled', ['0', '1'])->default('0');
+            $table->enum('lawyer_email', ['0', '1'])->default('0');
+            $table->enum('lawyer_res', ['0', '1', '2'])->default('0');
+            $table->enum('transfer_lawyer', ['0', '1'])->default('0');
+            $table->enum('transfer_client', ['0', '1'])->default('0');
 
             $table->timestamps();
         });

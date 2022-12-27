@@ -100,7 +100,7 @@ class Hours extends Component
         $this->hourId = $id;
 
 
-        $this->alert('warning', 'Are you sure', [
+        $this->alert('', 'Are you sure to delete?', [
             'toast' => false,
             'position' => 'center',
             'showCancelButton' => true,

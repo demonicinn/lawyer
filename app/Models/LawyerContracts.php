@@ -13,6 +13,6 @@ class LawyerContracts extends Model
 
     public function contract()
     {
-        return $this->belongsTo(Litigation::class, 'contracts_id','id');
+        return $this->belongsTo(Contract::class, 'contracts_id','id');
     }
 }

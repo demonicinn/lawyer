@@ -53,7 +53,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/jquery.inputmask.bundle.min.js"></script>
 
 <script>
-$('.phone').inputmask('(99)-9999-9999');
+$('.phone').inputmask('(999)-999-9999');
 
 </script>
 <div class="layoutHtml" style="display: none;">
@@ -275,7 +275,7 @@ $getTime = \App\Models\User::getTime();
     $(document).on('change', '#zip_code', function(){
         var zipcode = $(this).val();
         var country = "United States";
-console.log(zipcode)
+		//console.log(zipcode)
         
 
         //...
@@ -305,8 +305,10 @@ console.log(zipcode)
                     
                     $('#city').val(cityName);
                 }
-                
-                
+                 
+                if (stateName.length) {
+					$("#states_id option:contains("+stateName+")").attr('selected', 'selected');
+				}
                 //console.log('stateName', stateName)
                 //console.log('cityName', cityName)
         

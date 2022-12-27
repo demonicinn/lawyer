@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin;
 
+use App\Models\User;
 use App\Models\Booking;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
@@ -14,11 +15,14 @@ class Consultations extends Component
     public $completeTab = false;
     public $acceptTab = false;
     public $title = [];
+    public $user;
 
 
     public function mount($lawyerId)
     {
         $this->lawyerId = $lawyerId;
+		$this->user = User::findOrFail($this->lawyerId);
+		
         if ($this->tab == null) {
             $this->upcomingConsultations();
         }
@@ -54,7 +58,8 @@ class Consultations extends Component
         $upcoming = Booking::where('lawyer_id', $this->lawyerId)
             ->where('booking_Date', '>=', date('Y-m-d'))
             ->where('is_call', 'pending')
-            ->where('reschedule', '0');
+            ->where('reschedule', '0')
+            ->where('is_canceled', '0');
 
         if (!empty($this->search)) {
             $search = $this->search;
@@ -110,7 +115,8 @@ class Consultations extends Component
 
         $accept = Booking::where('lawyer_id', $this->lawyerId)
             ->where('is_call', 'completed')
-            ->where('is_accepted', '1');
+            ->where('is_accepted', '1')
+            ->where('is_canceled', '0');
 
         if (!empty($this->search)) {
 

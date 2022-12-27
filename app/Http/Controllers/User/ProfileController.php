@@ -26,7 +26,7 @@ class ProfileController extends Controller
         $request->validate([
             'first_name' => 'required|max:50',
             'last_name' => 'required|max:50',
-            'contact_number' => 'required|numeric|digits_between:10,12',
+            'contact_number' => 'required',
         ], [
             'contact_number.required' => 'The phone  field is required.',
         ]);

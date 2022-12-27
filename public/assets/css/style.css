@@ -114,7 +114,7 @@ p{
 .header-wrapper {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    /*align-items: center;*/
     justify-content: space-between;
 }
 #header {
@@ -696,7 +696,7 @@ input:focus, select:focus, textarea:focus{
     justify-content: space-between;
 }
 #filter-sidebar {
-    width: 25%;
+    width: 27%;
 }
 .lawyers-list-sec {
     width: 70%;
@@ -872,6 +872,8 @@ input:focus, select:focus, textarea:focus{
     font-size: 16px;
     font-weight: 700;
     margin-bottom: 25px;
+        font-family: 'Lato', sans-serif;
+    font-weight: 600;
 }
 .h5-design {
     font-size: 16px;
@@ -2879,7 +2881,8 @@ span.three_dots{
     display: none;
 }
 .logo-left-column img {
-    width: 264px;
+    /*width: 264px;*/
+    height:85px;
 }
 .btn_bank{
     max-width: 100%;
@@ -3220,12 +3223,13 @@ a.view-icon.info_icns.mdl {
     color: #f93f64;
     padding-right: 15px;
 }
-.form-grouph.input-design.icon-input-design.right-icn-design.mt-1 a.btn.clear-btn {
+.form-grouph.input-design.icon-input-design.right-icn-design.mt a.btn.clear-btn {
     border: 1px solid;
     color: #fff;
     margin-left: 10px;
     background: #ff3974;
-    border-radius: 50px;
+    border-radius: 10px;
+    padding: 12px 20px;
 }
 button.btn-design-renew {
     background: #F93F64;
@@ -3382,7 +3386,53 @@ p.cntent_txt {
     width: 100% !important;
     min-width: 100% !important;
 }
+.trial_row input{
+  height:45px;  
+}
 /*tooltip css*/
+.lawyer_view .col-xl-8.col-lg-8.col-md-12.col-sm-12.admin_laywer_table .grey-light-heading,
+.lawyer_view .col-xl-8.col-lg-8.col-md-12.col-sm-12.admin_laywer_table .form-grouph.input-design {
+    padding-top: 15px;
+}
+
+.practice_area ul .form-grouph.input-design {
+    padding-top: 5px !important;
+}
+.rating_block {
+    display: flex;
+    padding-top:10px;
+    gap:10px;
+}
+.rating_block p {
+    text-align: center;
+    font-size:13px;
+}
+.lawyer_view .col-md-12.col-sm-12.mt-3 h2 {
+    text-align: center;
+}
+.lawyer_view .col-md-12.col-sm-12.mt-3 input[type="search"] {
+    display: none;
+}
+.lawyer_search p.min-value-fix {
+    border: none;
+    font-size: 12px;
+    height: auto;
+    background-color: transparent;
+    color: #a3a3a3;
+    font-weight: 500;
+    position:relative;
+    top:-13px;
+}
+.gap-15{
+    gap:15px;
+}
+button.swal2-cancel.swal2-styled {
+    background-color: #f93f64;
+}
+button.swal2-confirm.swal2-styled {
+    background-color: #a4caa5;
+}
+.swal2-actions {}
 /* responsive */
 /* responsive */
 /* responsive */

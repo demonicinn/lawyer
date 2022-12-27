@@ -156,6 +156,13 @@
                 
                                     </div>
                                 </div>
+                                
+                                @if($record->account_number && $record->payouts_enabled!='active')
+                                    <p>You have to update your bank account details <a class="btn btn-primary" href="{{route('lawyer.banking.update')}}">Update Now</a></p>
+                                
+                                @endif
+                                
+                                
                                 </div>
                                 <div class="col-12 mt-3">
                                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 text-center mt-3">
