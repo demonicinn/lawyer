@@ -90,7 +90,7 @@ class Categories extends Component
     {
         $this->categoryId = $id;
 
-        $this->alert('warning', 'Are you sure', [
+        $this->alert('', 'Are you sure to Delete?', [
             'toast' => false,
             'position' => 'center',
             'showCancelButton' => true,
@@ -172,7 +172,7 @@ class Categories extends Component
     {
         $this->itemId = $id;
 
-        $this->alert('warning', 'Are you sure', [
+        $this->alert('', 'Are you sure to Delete?', [
             'toast' => false,
             'position' => 'center',
             'showCancelButton' => true,
