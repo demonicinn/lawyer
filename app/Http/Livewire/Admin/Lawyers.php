@@ -103,8 +103,31 @@ class Lawyers extends Component
         $this->sortField = $field;
     }
 
+    public function deactivate($lawyerId)
+    {
+        $lawyer = User::findOrFail( $lawyerId );
+        $lawyer->status = '0';
+        $lawyer->save();
+
+        $this->alert('success', 'Lawyer Deactivated');
+    }
+    public function activate($lawyerId)
+    {
+        $lawyer = User::findOrFail( $lawyerId );
+        $lawyer->status = '1';
+        $lawyer->save();
+
+        $this->alert('success', 'Lawyer Activated');
+    }
+
+
     public function render()
     {
+        /*
+        $lawyers = User::where('role', 'lawyer')->where(function ($query) {
+            return  $query->where(DB::raw("concat(first_name, ' ', last_name)"), 'LIKE', "%" . $this->search . "%");
+        })->latest('id')->get();
+        */
         
         $date = date('Y-m-d');
         $date3Months = Carbon::parse($date)->subtract(3, 'months')->format('Y-m-d');
