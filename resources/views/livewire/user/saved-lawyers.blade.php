@@ -3,7 +3,7 @@
     <div class="user_saved-lawyers_inner">
         <div class="user-saved_filter-sec pb-5">
             <form class="form-design">
-                <div class="d-flex justify-content-spacebw">
+                <div class="d-flex gap-15">
                     <div class="form-grouph select-design select-design-2 d-flex">
                         <label style="width:auto; padding-right:15px;font-weight:bold;font-family: 'P22 Mackinac';"><b>Practice:</b></label>
                         <select wire:model="practiceArea">
@@ -31,7 +31,7 @@
                         <input type="search" wire:model="search" placeholder="Search">
                         <span class="input_icn"><i class="fa-solid fa-magnifying-glass"></i></span>
                     </div>
-                    <div class="form-grouph input-design icon-input-design right-icn-design mt-1">
+                    <div class="form-grouph input-design icon-input-design right-icn-design mt">
                         <a class="btn clear-btn" wire:click="clear">Clear</a>
                     </div>
                   </div>

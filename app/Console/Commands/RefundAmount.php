@@ -30,31 +30,37 @@ class RefundAmount extends Command
     public function handle()
     {
         //refund when lawyer declined the request
-        $bookings = Booking::where('is_call','completed')
+        $bookings = Booking::with('payments')
+            ->where('is_call','completed')
                     ->where('is_accepted', '2')
                     ->where('payment_process', '0')
                     ->where('is_canceled', '0')
-                    ->whereHas('payments')
+                    ->whereHas('payments', function($query){
+                        $query->whereNotNull('transaction_id');
+                    })
                     ->get();
 
         self::refundAmount($bookings);
 
         //refund when user cancled the booking
-        $bookings1 = Booking::where('is_call','pending')
+        /*$bookings1 = Booking::with('payments')
+            ->where('is_call','pending')
                     ->where('is_accepted', '0')
                     ->where('payment_process', '0')
                     ->where('is_canceled', '1')
-                    ->whereHas('payments')
+                    ->whereHas('payments', function($query){
+                        $query->whereNotNull('transaction_id');
+                    })
                     ->get();
 
-        self::refundAmount($bookings1);
+        self::refundAmount($bookings1);*/
         
 
         return 'done';
     }
 
 
-    private function refundAmount(){
+    private function refundAmount($bookings){
         $stripe = new \Stripe\StripeClient(config('services.stripe.secret'));
 
         foreach($bookings as $booking){
@@ -68,6 +74,7 @@ class RefundAmount extends Command
 
                     //...
                     $booking->payment_process = '1';
+                    $booking->transfer_client = '1';
                     $booking->save();
 
                     $store = new PaymentStatus;

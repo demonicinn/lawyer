@@ -98,8 +98,10 @@
                                                         $date1Days = \Carbon\Carbon::parse($upcoming->booking_date.' '.$upcoming->booking_time)->subtract(1, 'days')->format('Y-m-d h:i:s');
 
                                                         $cDate = date('Y-m-d h:i:s');
+                                                        
+                                                        //&& $cDate <= $date1Days
                                                     @endphp
-                                                    @if ($authUser->role == 'user' && $cDate <= $date1Days)
+                                                    @if ($authUser->role == 'user' )
                                                     <button class="toggle_cstm-btn" style="background-color:#f93f64;" type="button" onclick="cancelBooking(`{{$upcoming->id}}`)">Cancel Booking</button>
 
                                                     <form id="cancel-form-{{$upcoming->id}}" action="{{ route('consultations.upcoming.cancel', $upcoming->id) }}" method="POST" class="d-none">
@@ -135,8 +137,8 @@
     function cancelBooking(id) {
 
         Swal.fire({
-            title: "Are you sure?",
-            text: "Cancel Booking",
+            title: "Are you sure you want to cancel this booking?",
+            //text: "Cancel Booking",
             type: "danger",
             showCancelButton: true,
             confirmButtonClass: "btn-danger",

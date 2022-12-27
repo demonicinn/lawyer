@@ -44,7 +44,7 @@ class SupportNotification extends Notification
     {
         return (new MailMessage)
             ->subject('Support Notification')
-            ->greeting('Hi, Admin')
+            ->greeting('Hello Admin,')
             //->from($this->contact->email)
             ->line('You have new message from : ' . $this->contact->first_name)
             ->line('Email : ' . $this->contact->email)

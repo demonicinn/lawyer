@@ -1,5 +1,8 @@
 @extends('layouts.app')
 @section('content')
+@php
+$lawyer = $booking->lawyer;
+@endphp
 <section class="body-banner user_account-info-sec min-height-100vh">
     <div class="container">
         <div class="heading-paragraph-design text-center position-relative go-back-wrap mb-4">
@@ -19,13 +22,41 @@
                         <div class="list-item list-service-item white-shadow-scnd-box">
                             <div class="lawyer-hire-block">
                                 <div class="lawyers-img-block">
-                                    <img src="{{ $booking->lawyer->profile_pic }}">
+                                    <img src="{{ $lawyer->profile_pic }}">
                                 </div>
                                 <div class="lawyers-service-cntnt-block">
                                     <div class="lawyers-heading_service d-flex justify-content-spacebw align-items-center">
-                                        <h4 class="lawyer-name text-center">{{ $booking->lawyer->name }}</h4>
+                                        <h4 class="lawyer-name text-center">{{ $lawyer->name }}</h4>
                                     </div>
+									
+									@if(@$lawyer->details->school_attendent)
+                                    <p class="school_name"><i class="fa-solid fa-school-flag"></i>{{ @$lawyer->details->school_attendent }}</p>
+                                    @endif
+                                    <div class="location_profile-divs school_name border-bottom px-0 pb-2">
+                                        <address><i class="fa-solid fa-location-dot"></i> {{ @$lawyer->details->city }}, {{ @$lawyer->details->states->code }}</address>
+                                    </div>
+									
+									
                                 </div>
+								
+								@if($booking->search_data)
+								@php
+									$search = json_decode($booking->search_data);
+								@endphp
+								<div class="practice_area_div px-3">
+									<div class="left_trash">
+										<span>PRACTICE AREA</span>
+										@foreach($search as $id)
+											@if($booking->search_type == 'litigations')
+											<h5>{{ litigationsData($id) }}</h5>
+											@else
+											<h5>{{ contractsData($id) }}</h5>
+											@endif
+										@endforeach
+									</div>
+								</div>
+								@endif
+								
                             </div>
                             
                         </div>
@@ -38,6 +69,9 @@
                             <!-- {!! Form::label('rating', 'Did the lawyer show up to the consultation', ['class' => 'form-label']) !!} -->
                             <div id="rateYo"></div>
                             <input type="hidden" name="rating" value="">
+                            
+                            <div class="show-rating"></div>
+                            
                             {!! $errors->first('rating', '<span class="help-block">:message</span>') !!}
                         </div>
 
@@ -79,8 +113,10 @@
     $(document).ready(function() {
         $("#rateYo").rateYo({
             starWidth: "40px",
+    halfStar: true,
             onSet: function (rating, rateYoInstance) {
                 $('input[name=rating]').val(rating);
+                $('.show-rating').html('You rated '+rating+' star');
             }
         });
     });

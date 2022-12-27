@@ -28,9 +28,9 @@
 
 
             window.livewire.on('phoneMask', () => {
-                $('.phone').inputmask('(99)-9999-9999');
+                $('.phone').inputmask('(999)-999-9999');
             });
-            $('.phone').inputmask('(99)-9999-9999');
+            $('.phone').inputmask('(999)-999-9999');
 
             getDates(workingDates);
 

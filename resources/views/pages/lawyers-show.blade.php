@@ -17,6 +17,7 @@
                                 </div>
                                 <div class="lawyers-service-cntnt-block">
                                     <div class="lawyers-heading_service d-block justify-content-spacebw align-items-center directory_h4_btn">
+									{{--<h4 class="lawyer-name text-center">{{ @$user->rating }}</h4>--}}
                                         <h4 class="lawyer-name text-center">{{ @$user->name }}</h4>
                                         <button class="hire-price-btn">${{ @$user->details->hourly_fee }}/hr.</button>
                                     </div>

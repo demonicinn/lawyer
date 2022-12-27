@@ -62,9 +62,9 @@
                                                 $countCon = number_format($countCon);
                                             @endphp
 
-                                            @foreach ($contracts->chunk($countCon) as $chunk)
+                                            @foreach ($contracts->chunk($countCon) as $chunkCon)
                                             <div class="col-md-6">
-                                                @foreach ($chunk as $i => $contract)
+                                                @foreach ($chunkCon as $i => $contract)
                                                     <div class="form-grouph checkbox-design position-relative">
                                                         <input type="checkbox" value="{{ $contract->id }}" wire:model="selectContracts.{{$i}}">
                                                         <button class="checkbox-btn"></button>

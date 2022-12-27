@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class BankInfo extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'payouts_enabled',
+    ];
 }

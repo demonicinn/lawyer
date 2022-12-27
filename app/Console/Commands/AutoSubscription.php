@@ -56,7 +56,19 @@ class AutoSubscription extends Command
 
 
             if(@$card){
-                $fee = $subscription->price;
+                
+                if(@$user->offer_price || $user->offer_price_yearly){
+                    if($subscription->type=='yearly'){
+                        $fee = $user->offer_price_yearly;
+                    }
+                    else {
+                        $fee = $user->offer_price;
+                    }
+                }
+                else {
+                    $fee = $subscription->price;
+                }
+                
 
                 $charge = \Stripe\Charge::create([
                     'currency' => 'USD',

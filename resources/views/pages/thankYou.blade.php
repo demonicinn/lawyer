@@ -13,7 +13,7 @@
           <div class="booking-info-right_column">
              <h4 class="booking_name">{{ $booking->lawyer->name }}</h4>
              <h5 class="booking_type-text">Admiralty/Maritime</h5>
-             <p class="booking_date-time">{{ date('l, F d Y', strtotime($booking->booking_date)) }} <span class="divider-horizonatl"></span> {{ date('H:i a', strtotime($booking->booking_time)) }}</p>
+             <p class="booking_date-time">{{ date('l, F d Y', strtotime($booking->booking_date)) }} <span class="divider-horizonatl"></span> {{ date('h:i a', strtotime($booking->booking_time)) }}</p>
          </div>
         </div>
       </div>

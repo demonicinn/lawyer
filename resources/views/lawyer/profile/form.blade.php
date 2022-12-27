@@ -25,8 +25,14 @@ $lawyer_state_bar = $user->lawyerStateBar;
                         <input type="hidden" name="image" id="upload-img" />
                     </div>
                 </div>
-
-
+				
+				<div class="form-grouph input-design{!! ($errors->has('profile_url') ? ' has-error' : '') !!}">
+                    {!! Form::label('profile_url','Profile URL', ['class' => 'form-label']) !!}
+                    {!! Form::text('profile_url', lawyerProfileUrl($user), ['class' => ($errors->has('profile_url') ? ' is-invalid' : ''), 'readonly']) !!}
+                    {!! $errors->first('profile_url', '<span class="help-block">:message</span>') !!}
+                </div>
+				
+				
                 <div class="form-grouph textarea-design{!! ($errors->has('bio') ? ' has-error' : '') !!}">
                     {!! Form::label('bio','Bio*', ['class' => 'form-label']) !!}
                     {!! Form::textarea('bio', $details->bio ?? null, ['class' => ($errors->has('bio') ? ' is-invalid' : ''), 'placeholder'=>'Tell us about yourself']) !!}
@@ -167,19 +173,25 @@ $lawyer_state_bar = $user->lawyerStateBar;
 
                 <div class="form-flex three-columns">
                     <div class="form-grouph input-design{!! ($errors->has('zip_code') ? ' has-error' : '') !!}">
-                        {!! Form::label('zip_code','Zip Code*', ['class' => 'form-label']) !!}
+                        <div class="question_div">
+                        {!! Form::label('zip_code','Zip Code*', ['class' => 'form-label w-auto']) !!}
+						<div class="tooltip_div">
+							<span  class="tooltip1">?</span>
+							<p class="cntent_txt">Enter your zip code and it will populate your city and state</p>
+						</div>
+						</div>
                         {!! Form::text('zip_code', $details->zip_code ?? null, ['class' => ($errors->has('zip_code') ? ' is-invalid' : '')]) !!}
                         {!! $errors->first('zip_code', '<span class="help-block">:message</span>') !!}
                     </div>
                     <div class="form-grouph input-design{!! ($errors->has('city') ? ' has-error' : '') !!}">
                         {!! Form::label('city','City*', ['class' => 'form-label']) !!}
-                        {!! Form::text('city', $details->city ?? null, ['class' => ($errors->has('city') ? ' is-invalid' : '')]) !!}
+                        {!! Form::text('city', $details->city ?? null, ['class' => ($errors->has('city') ? ' is-invalid' : ''), 'readonly']) !!}
                         {!! $errors->first('city', '<span class="help-block">:message</span>') !!}
                     </div>
-                    <div class="form-grouph select-design{!! ($errors->has('state') ? ' has-error' : '') !!}">
-                        {!! Form::label('state','State*', ['class' => 'form-label']) !!}
-                        {!! Form::select('state', $states, $details->state ?? null, ['class' => ($errors->has('state') ? ' is-invalid' : '')]) !!}
-                        {!! $errors->first('state', '<span class="help-block">:message</span>') !!}
+                    <div class="form-grouph select-design{!! ($errors->has('states_id') ? ' has-error' : '') !!}">
+                        {!! Form::label('states_id','State*', ['class' => 'form-label']) !!}
+                        {!! Form::select('states_id', $states, $details->states_id ?? null, ['class' => ($errors->has('states_id') ? ' is-invalid' : ''), 'disabled']) !!} 
+                        {!! $errors->first('states_id', '<span class="help-block">:message</span>') !!}
                     </div>
                 </div>
 

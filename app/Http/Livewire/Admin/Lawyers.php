@@ -9,6 +9,7 @@ use App\Notifications\MailToLawyerForStatus;
 use Illuminate\Support\Facades\Notification;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 
 class Lawyers extends Component
@@ -16,6 +17,11 @@ class Lawyers extends Component
     use LivewireAlert;
 
     use WithPagination;
+    
+	
+	public $perPage = 10;
+    public $sortField='first_name';
+    public $sortAsc = true;
 
     // public $lawyers = [];
     public $lawyerId;
@@ -29,7 +35,9 @@ class Lawyers extends Component
         $this->lawyerId = $id;
         $this->action = $action;
 
-        $this->alert('warning', 'Are you sure', [
+		$mess = $this->action == 'accept' ? 'Accept' : 'Declined';
+		
+        $this->alert('', 'Are you sure to '.$mess.' this lawyer?', [
             'toast' => false,
             'position' => 'center',
             'showCancelButton' => true,
@@ -66,6 +74,34 @@ class Lawyers extends Component
 
         Notification::route('mail', $data->email)->notify(new MailToLawyerForStatus($data, $this->action));
     }
+    
+    public function deactivate($lawyerId)
+    {
+        $lawyer = User::findOrFail( $lawyerId );
+        $lawyer->status = '0';
+        $lawyer->save();
+
+        $this->alert('success', 'Lawyer Deactivated');
+    }
+    public function activate($lawyerId)
+    {
+        $lawyer = User::findOrFail( $lawyerId );
+        $lawyer->status = '1';
+        $lawyer->save();
+
+        $this->alert('success', 'Lawyer Activated');
+    }
+    
+    public function sortBy($field)
+    {
+        if ($this->sortField === $field) {
+            $this->sortAsc = ! $this->sortAsc;
+        } else {
+            $this->sortAsc = true;
+        }
+
+        $this->sortField = $field;
+    }
 
     public function deactivate($lawyerId)
     {
@@ -87,11 +123,27 @@ class Lawyers extends Component
 
     public function render()
     {
+        /*
         $lawyers = User::where('role', 'lawyer')->where(function ($query) {
             return  $query->where(DB::raw("concat(first_name, ' ', last_name)"), 'LIKE', "%" . $this->search . "%");
         })->latest('id')->get();
-
+        */
         
-        return view('livewire.admin.lawyers', compact('lawyers'));
+        $date = date('Y-m-d');
+        $date3Months = Carbon::parse($date)->subtract(3, 'months')->format('Y-m-d');
+        
+        
+        $lawyers = User::with(['lawyerReviews', 'booking', 'details'])->where('role', 'lawyer')->where(function ($query) {
+            return  $query->where(DB::raw("concat(first_name, ' ', last_name)"), 'LIKE', "%" . $this->search . "%")
+                        ->orWhere('email', 'LIKE', "%" . $this->search . "%");
+        })
+		->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc')
+		->paginate($this->perPage);
+        
+        //$lawyers = lawyerDescWithRating($lawyersData, $date3Months);
+        
+        
+        
+        return view('livewire.admin.lawyers', compact('lawyers', 'date3Months'));
     }
 }

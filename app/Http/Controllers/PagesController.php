@@ -14,7 +14,7 @@ use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\JoinTeamNotification;
-
+use Carbon\Carbon;
 
 class PagesController extends Controller
 {
@@ -93,9 +93,49 @@ class PagesController extends Controller
     }
 
     //
-    public function lawyerShow(Request $request, User $user)
+    public function lawyerShow(Request $request)
     {
+        
+        $user = User::with(['lawyerReviews', 'booking', 'details'])->where('id', $request->user)->first();
+        
+        
+        $date = date('Y-m-d');
+        $date3Months = Carbon::parse($date)->subtract(3, 'months')->format('Y-m-d');
+        
         if (@$user->status == '1' && @$user->details->is_verified == 'yes') {
+            
+            
+            
+            $totalCount = $user->lawyerReviews()->count();
+            $totalRating = $user->lawyerReviews()->sum('rating');
+            
+            if($totalCount > 0){
+                $overAllRating = $totalRating / $totalCount;
+                
+                
+                $countCancleBookings = $user->booking()->where('is_canceled', '1')->where('booking_date', '>=', $date3Months)->count();
+                
+                $checkRating = 0;
+                if($countCancleBookings > '0' && $countCancleBookings <= '2'){
+                    $checkRating = 0.5;
+                }
+                if($countCancleBookings >= '3' && $countCancleBookings <= '9'){
+                    $checkRating = 1;
+                }
+                if($countCancleBookings >= '10'){
+                    $checkRating = 2;
+                }
+            
+                $newRating = $overAllRating - $checkRating;
+            
+                $user->rating = number_format($newRating, 1);
+            }
+            else {
+                $user->rating = '';
+            }
+            
+            
+            
             return view('pages.lawyers-show', compact('user'));
         }
         abort(404);
@@ -260,4 +300,18 @@ class PagesController extends Controller
 
         return view('pages.style-guide', compact('title'));
     }
+	
+	
+	public function lawyerLink()
+    {
+        $title = array(
+            'title' => 'How to add lawyer link',
+            'active' => 'how-to-add-lawyer-link',
+        );
+
+        return view('pages.lawyer_link', compact('title'));
+    }
+	
+	
+	
 }

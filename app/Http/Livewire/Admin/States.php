@@ -103,8 +103,12 @@ class States extends Component
     public function render()
     {
         $states = State::where(function ($query) {
-            return $query->where('name', 'like', '%' . $this->search . '%');
-        })->latest('id')->paginate(10);
-        return view('livewire.admin.states',\compact('states'));
+			if($this->search){
+				return $query->where('name', 'like', '%' . $this->search . '%');
+				}
+			})->orderBy('name', 'asc')->paginate(10);
+		
+		
+        return view('livewire.admin.states', ['states'=>$states]);
     }
 }

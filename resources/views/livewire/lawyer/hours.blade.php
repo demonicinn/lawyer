@@ -55,8 +55,8 @@
                     <label class="second-label-design w-auto">From</label>
                     <select class="form-grouph select-design" wire:model="from_time">
                         <option value="">Select From Time</option>
-                        @foreach($getTime as $time)
-                        <option value="{{ $time }}">{{ $time }}</option>
+                        @foreach($getTime as $ti => $time)
+                        <option value="{{ $ti }}">{{ $time }}</option>
                         @endforeach
                     </select>
                     {!! $errors->first('from_time', '<span class="help-block">:message</span>') !!}
@@ -66,8 +66,8 @@
                     <label class="second-label-design w-auto">To</label>
                     <select class="form-grouph select-design" wire:model="to_time">
                         <option value="">Select To Time</option>
-                        @foreach($getTime as $time)
-                        <option value="{{ $time }}">{{ $time }}</option>
+                        @foreach($getTime as $ti => $time)
+                        <option value="{{ $ti }}">{{ $time }}</option>
                         @endforeach
                     </select>
 
@@ -92,7 +92,7 @@
                         @foreach($hours as $hour)
                         <li>
                             <p>
-                                {{ $hour->day ? $hour->days : $hour->date }} from {{ date('h:i a', strtotime($hour->from_time)) }} - {{ date('h:i a', strtotime($hour->to_time)) }}
+                                {{ $hour->day ? $hour->days : $hour->date }} from {{ date('h:i A', strtotime($hour->from_time)) }} - {{ date('h:i A', strtotime($hour->to_time)) }}
                             </p>
                             {{--
                             <p><span class="bold week-day">Tuesdays</span> and <span class="bold week-day">Thursdays</span> every <span class="bold week-type">week</span> from <span class="bold time_rule">4:00 pm - 6:30 pm</span></p>
@@ -126,13 +126,13 @@
                     </div>
                     <div class="modal-body">
                         <div>
-                            <h4>{{ @$newDate }}</h4>
+                            <h4>{{ @$newDate ? date('m-d-Y', strtotime($newDate)) : '' }}</h4>
                             <div class="form-grouph select-design">
                                 <label>From</label>
                                 <select wire:model="from_time">
                                     <option value="">Select From Time</option>
-                                    @foreach($getTime as $time)
-                                    <option value="{{ $time }}">{{ $time }}</option>
+                                    @foreach($getTime as $i => $time)
+                                    <option value="{{ $i }}">{{ $time }}</option>
                                     @endforeach
                                 </select>
                                 {!! $errors->first('from_time', '<span class="help-block">:message</span>') !!}
@@ -142,8 +142,8 @@
                                 <label>To</label>
                                 <select wire:model="to_time">
                                     <option value="">Select To Time</option>
-                                    @foreach($getTime as $time)
-                                    <option value="{{ $time }}">{{ $time }}</option>
+                                    @foreach($getTime as $j => $time)
+                                    <option value="{{ $j }}">{{ $time }}</option>
                                     @endforeach
                                 </select>
                                 {!! $errors->first('to_time', '<span class="help-block">:message</span>') !!}

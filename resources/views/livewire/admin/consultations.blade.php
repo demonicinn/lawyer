@@ -1,6 +1,6 @@
 <div class="col-md-12 col-sm-12 mt-3">
     <div class="white-shadow-third-box">
-        <h2>{{ @$title['title'] }} Consultations</h2>
+        <h2 class="text-center">Consultations</h2>
         <div class="lawyer_conultation-wrapper">
           
             <div class="tabs_design-wrap three_tabs-layout">

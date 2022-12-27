@@ -109,8 +109,8 @@ class PracticeAreas extends Component
 						->get();
 
             if(count($deleteContract)>0){
-                foreach($deleteContract as $ids){
-                    $ids->delete();
+                foreach($deleteContract as $idsC){
+                    $idsC->delete();
                 }
             }
         }

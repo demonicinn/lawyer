@@ -29,28 +29,34 @@ $states = \App\Models\State::whereStatus('1')->pluck('name', 'id');
 							{!! Form::email('email', null, ['class' => ($errors->has('email') ? ' is-invalid' : '')]) !!}
 							{!! $errors->first('email', '<span class="help-block">:message</span>') !!}
 						</div>
+						<div class="form-grouph input-design{!! ($errors->has('zip_code') ? ' has-error' : '') !!}">
+						    <div class="question_div">
+							{!! Form::label('zip_code','Zip Code*', ['class' => 'form-label w-auto']) !!}
+							<div class="tooltip_div">
+								<span  class="tooltip1">?</span>
+								<p class="cntent_txt">Enter your zip code and it will populate your city and state</p>
+							</div>
+							</div>
+							{!! Form::text('zip_code', null, ['class' => ($errors->has('zip_code') ? ' is-invalid' : '')]) !!}
+							{!! $errors->first('zip_code', '<span class="help-block">:message</span>') !!}
+						</div>
 						<div class="form-grouph input-design{!! ($errors->has('city') ? ' has-error' : '') !!}">
 							{!! Form::label('city','City*', ['class' => 'form-label']) !!}
 							{!! Form::text('city', null, ['class' => ($errors->has('city') ? ' is-invalid' : '')]) !!}
 							{!! $errors->first('city', '<span class="help-block">:message</span>') !!}
 						</div>
 						<div class="form-grouph select-design{!! ($errors->has('state') ? ' has-error' : '') !!}">
-							{!! Form::label('state','State', ['class' => 'form-label']) !!}
+							{!! Form::label('state','State*', ['class' => 'form-label']) !!}
 							{!! Form::select('state', $states, null, ['class' => ($errors->has('state') ? ' is-invalid' : ''), 'placeholder'=>'Select State']) !!}
 							{!! $errors->first('state', '<span class="help-block">:message</span>') !!}
 						</div>
-						<div class="form-grouph input-design{!! ($errors->has('zip_code') ? ' has-error' : '') !!}">
-							{!! Form::label('zip_code','Zip Code', ['class' => 'form-label']) !!}
-							{!! Form::text('zip_code', null, ['class' => ($errors->has('zip_code') ? ' is-invalid' : '')]) !!}
-							{!! $errors->first('zip_code', '<span class="help-block">:message</span>') !!}
-						</div>
 						<div class="form-grouph input-design{!! ($errors->has('password') ? ' has-error' : '') !!}">
-							{!! Form::label('password','Password', ['class' => 'form-label']) !!}
+							{!! Form::label('password','Password*', ['class' => 'form-label']) !!}
 							<input type="password" id="password" name="password" class="{!! ($errors->has('password') ? ' is-invalid' : '') !!}" />
 							{!! $errors->first('password', '<span class="help-block">:message</span>') !!}
 						</div>
 						<div class="form-grouph input-design{!! ($errors->has('password') ? ' has-error' : '') !!}">
-							{!! Form::label('password_confirmation','Confirm Password', ['class' => 'form-label']) !!}
+							{!! Form::label('password_confirmation','Confirm Password*', ['class' => 'form-label']) !!}
 							<input type="password" id="password_confirmation" name="password_confirmation" class="{!! ($errors->has('password') ? ' is-invalid' : '') !!}" />
 							{!! $errors->first('password_confirmation', '<span class="help-block">:message</span>') !!}
 						</div>
@@ -74,4 +80,59 @@ $states = \App\Models\State::whereStatus('1')->pluck('name', 'id');
 		</div>
 	</div>
 </section>
+@endsection
+
+@section('script')
+<script src="https://maps.googleapis.com/maps/api/js?key={{env('GOOGLE_MAPS_API_KEY')}}"></script>
+
+<script>
+	var geocoder = new google.maps.Geocoder();
+    $(document).on('change', '#zip_code', function(){
+        var zipcode = $(this).val();
+        var country = "United States";
+		//console.log(zipcode)
+        
+
+        //...
+
+        geocoder.geocode({ 'address': zipcode + ',' + country }, function (result, status) {
+
+            var stateName = '';
+            var cityName = '';
+
+            var addressComponent = result[0]['address_components'];
+
+            // find state data
+            var stateQueryable = $.grep(addressComponent, function (x) {
+                return $.inArray('administrative_area_level_1', x.types) != -1;
+            });
+
+            if (stateQueryable.length) {
+                stateName = stateQueryable[0]['long_name'];
+
+                var cityQueryable = $.grep(addressComponent, function (x) {
+                    return $.inArray('locality', x.types) != -1;
+                });
+
+                // find city data
+                if (cityQueryable.length) {
+                    cityName = cityQueryable[0]['long_name'];
+                    
+                    $('#city').val(cityName);
+                }
+                 
+                if (stateName.length) {
+					$("#state option:contains("+stateName+")").attr('selected', 'selected');
+				}
+                //console.log('stateName', stateName)
+                //console.log('cityName', cityName)
+        
+            }
+        });
+
+
+        
+    });
+    
+</script>
 @endsection
