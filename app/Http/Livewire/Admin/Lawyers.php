@@ -103,22 +103,6 @@ class Lawyers extends Component
         $this->sortField = $field;
     }
 
-    public function deactivate($lawyerId)
-    {
-        $lawyer = User::findOrFail( $lawyerId );
-        $lawyer->status = '0';
-        $lawyer->save();
-
-        $this->alert('success', 'Lawyer Deactivated');
-    }
-    public function activate($lawyerId)
-    {
-        $lawyer = User::findOrFail( $lawyerId );
-        $lawyer->status = '1';
-        $lawyer->save();
-
-        $this->alert('success', 'Lawyer Activated');
-    }
 
 
     public function render()

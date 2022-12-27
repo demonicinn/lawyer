@@ -239,3 +239,14 @@
 				
 		return $profile_url;
 	}
+	
+	
+	function seo(){
+		$segment = request()->segment('1');
+		if($segment==''){
+			$segment = 'home';
+		}
+			
+		
+		return \App\Models\Seo::where('page', $segment)->first();
+	}

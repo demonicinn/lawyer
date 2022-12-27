@@ -96,7 +96,7 @@ class Subscriptions extends Component
     {
         $this->subscriptionId = $id;
 
-        $this->alert('warning', 'Are you sure', [
+        $this->alert('', 'Are you sure to Delete?', [
             'toast' => false,
             'position' => 'center',
             'showCancelButton' => true,

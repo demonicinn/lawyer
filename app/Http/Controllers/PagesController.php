@@ -104,7 +104,10 @@ class PagesController extends Controller
         
         if (@$user->status == '1' && @$user->details->is_verified == 'yes') {
             
-            
+            $title = array(
+				'title' => $user->name,
+				'active' => 'lawyers',
+			);
             
             $totalCount = $user->lawyerReviews()->count();
             $totalRating = $user->lawyerReviews()->sum('rating');
@@ -136,7 +139,7 @@ class PagesController extends Controller
             
             
             
-            return view('pages.lawyers-show', compact('user'));
+            return view('pages.lawyers-show', compact('user', 'title'));
         }
         abort(404);
     }
