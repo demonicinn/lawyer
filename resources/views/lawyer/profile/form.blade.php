@@ -190,7 +190,8 @@ $lawyer_state_bar = $user->lawyerStateBar;
                     </div>
                     <div class="form-grouph select-design{!! ($errors->has('states_id') ? ' has-error' : '') !!}">
                         {!! Form::label('states_id','State*', ['class' => 'form-label']) !!}
-                        {!! Form::select('states_id', $states, $details->states_id ?? null, ['class' => ($errors->has('states_id') ? ' is-invalid' : ''), 'disabled']) !!} 
+                        {!! Form::select('states', $states, $details->states_id ?? null, ['class' => ($errors->has('states_id') ? ' is-invalid' : ''), 'id'=>'states_id', 'disabled']) !!}
+                        {!! Form::hidden('states_id', $details->states_id ?? null, ['id'=>'states_ids']) !!}
                         {!! $errors->first('states_id', '<span class="help-block">:message</span>') !!}
                     </div>
                 </div>

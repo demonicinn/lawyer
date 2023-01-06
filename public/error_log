@@ -3,3 +3,5 @@
 [15-Dec-2022 06:58:32 UTC] PHP Fatal error:  Cannot redeclare App\Http\Livewire\Admin\Lawyers::$search in /home/texasbutchersmal/public_html/app/Http/Livewire/Admin/Lawyers.php on line 29
 [15-Dec-2022 06:59:09 UTC] PHP Fatal error:  Cannot redeclare App\Http\Livewire\Admin\Lawyers::$search in /home/texasbutchersmal/public_html/app/Http/Livewire/Admin/Lawyers.php on line 29
 [19-Dec-2022 20:00:06 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.1.0". You are running 7.4.33. in /home/texasbutchersmal/public_html/vendor/composer/platform_check.php on line 24
+[27-Dec-2022 07:30:03 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.1.0". You are running 7.4.33. in /home/texasbutchersmal/public_html/vendor/composer/platform_check.php on line 24
+[27-Dec-2022 07:30:05 UTC] PHP Fatal error:  Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.1.0". You are running 7.4.33. in /home/texasbutchersmal/public_html/vendor/composer/platform_check.php on line 24

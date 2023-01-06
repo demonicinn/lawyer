@@ -33,8 +33,15 @@ class Seo extends Component
 
     public function rules()
     {
+        if($this->seoId){
+			return [
+				'page_name' => 'required|unique:seos,page,'.$this->seoId,
+				'title' => 'required|max:255',
+			];
+		}
+		
         return [
-            'page_name' => 'required',
+            'page_name' => 'required|unique:seos,page',
             'title' => 'required|max:255',
         ];
     }
@@ -103,7 +110,9 @@ class Seo extends Component
     public function render()
     {
 		$data = SeoModel::where(function ($query) {
-            //return $query->where('name', 'like', '%' . $this->search . '%');
+            return $query->where('page', 'like', '%' . $this->search . '%')
+                    ->whereOr('title', 'like', '%' . $this->search . '%')
+                    ->whereOr('description', 'like', '%' . $this->search . '%');
         })->orderBy('id', 'desc')->paginate(10);
 		
         return view('livewire.admin.seo', ['data'=>$data]);

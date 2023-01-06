@@ -40,7 +40,11 @@
                                 @endforeach
                             </ul>
                             @else
+                            @if($clicked=='1')
+                            <h5>No time slots are available for the selected date.</h5>
+                            @else
                             <h5>Please select the date to show the availability.</h5>
+                            @endif
                             @endif
 
                             {!! $errors->first('selectDateTimeSlot', '<span class="help-block">:message</span>')  !!}
@@ -121,6 +125,8 @@
                     let newDate = (dateF.getMonth() + 1) + '/' + dateF.getDate() + '/' + dateF.getFullYear();
 
                     @this.set('selectDate', newDate);
+                    
+                    @this.set('clicked', '1');
                     @this.set('selectDateTimeSlot', '');
                 },
 
@@ -143,6 +149,13 @@
     <style>
         .day.wrong-month {
             display: none;
+        }
+        
+        #celender .day.active {
+            background: #A4CAA5 !important;
+            border-radius: 4px;
+            color: #fff !important;
+            border: none;
         }
     </style>
     @endpush

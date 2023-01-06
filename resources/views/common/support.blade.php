@@ -1,6 +1,12 @@
 @extends('layouts.app')
 @section('content')
 
+@php
+$user;
+if(auth()->check()){
+    $user = auth()->user();
+}
+@endphp
 <section class="body-banner support_main--sec min-height-100vh">
     <div class="container">
         <div class="heading-paragraph-design text-center position-relative mb-5">
@@ -14,21 +20,21 @@
                         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                             <div class="form-grouph input-design">
                                 <label>First Name</label>
-                                <input class="@error('first_name') is-invalid @enderror" type="text" name="first_name" value="{{auth()->user()->first_name}}" placeholder="First Name">
+                                <input class="@error('first_name') is-invalid @enderror" type="text" name="first_name" value="{{@$user->first_name}}" placeholder="First Name">
                                 @error('first_name')<div class="help-block">{{ $message }}</div>@enderror
                             </div>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                             <div class="form-grouph input-design">
                                 <label>Last Name</label>
-                                <input class="@error('last_name') is-invalid @enderror" type="text" name="last_name" value="{{auth()->user()->last_name}}" placeholder="Last Name">
+                                <input class="@error('last_name') is-invalid @enderror" type="text" name="last_name" value="{{@$user->last_name}}" placeholder="Last Name">
                                 @error('last_name')<div class="help-block">{{ $message }}</div>@enderror
                             </div>
                         </div>
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                             <div class="form-grouph input-design">
                                 <label>Email</label>
-                                <input class="@error('email') is-invalid @enderror" type="email" name="email" value="{{auth()->user()->email}}" placeholder="Email">
+                                <input class="@error('email') is-invalid @enderror" type="email" name="email" value="{{@$user->email}}" placeholder="Email">
                                 @error('email')<div class="help-block">{{ $message }}</div>@enderror
                             </div>
                         </div>

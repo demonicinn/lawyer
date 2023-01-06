@@ -730,7 +730,7 @@ class ProfileController extends Controller
 
             Notification::route('mail', env('MAIL_FROM_ADDRESS'))->notify(new MailToAdminForLawyerStatus($user));
 
-            $this->flash('success', 'Request Send');
+            $this->flash('success', 'Request Sent');
             return redirect()->back();
         }
 

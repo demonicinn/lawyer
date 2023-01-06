@@ -308,7 +308,16 @@ $getTime = \App\Models\User::getTime();
                  
                 if (stateName.length) {
 					$("#states_id option:contains("+stateName+")").attr('selected', 'selected');
+					
+					var selectedState = $('#states_id').find(":selected").val();
+					if(selectedState){
+					    $('#states_ids').val(selectedState);
+					}
 				}
+				
+				
+				
+				
                 //console.log('stateName', stateName)
                 //console.log('cityName', cityName)
         

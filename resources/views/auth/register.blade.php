@@ -37,18 +37,19 @@ $states = \App\Models\State::whereStatus('1')->pluck('name', 'id');
 								<p class="cntent_txt">Enter your zip code and it will populate your city and state</p>
 							</div>
 							</div>
-							{!! Form::text('zip_code', null, ['class' => ($errors->has('zip_code') ? ' is-invalid' : '')]) !!}
+							{!! Form::number('zip_code', null, ['class' => ($errors->has('zip_code') ? ' is-invalid' : '')]) !!}
 							{!! $errors->first('zip_code', '<span class="help-block">:message</span>') !!}
 						</div>
 						<div class="form-grouph input-design{!! ($errors->has('city') ? ' has-error' : '') !!}">
 							{!! Form::label('city','City*', ['class' => 'form-label']) !!}
-							{!! Form::text('city', null, ['class' => ($errors->has('city') ? ' is-invalid' : '')]) !!}
+							{!! Form::text('city', null, ['class' => ($errors->has('city') ? ' is-invalid' : ''), 'readonly']) !!}
 							{!! $errors->first('city', '<span class="help-block">:message</span>') !!}
 						</div>
-						<div class="form-grouph select-design{!! ($errors->has('state') ? ' has-error' : '') !!}">
-							{!! Form::label('state','State*', ['class' => 'form-label']) !!}
-							{!! Form::select('state', $states, null, ['class' => ($errors->has('state') ? ' is-invalid' : ''), 'placeholder'=>'Select State']) !!}
-							{!! $errors->first('state', '<span class="help-block">:message</span>') !!}
+						<div class="form-grouph select-design{!! ($errors->has('states_id') ? ' has-error' : '') !!}">
+							{!! Form::label('states_id','State*', ['class' => 'form-label']) !!}
+							{!! Form::select('state', $states, null, ['class' => ($errors->has('states_id') ? ' is-invalid' : ''), 'id'=>'states_id', 'placeholder'=>'Select State', 'disabled']) !!}
+                            {!! Form::hidden('states_id', null, ['id'=>'states_ids']) !!}
+							{!! $errors->first('states_id', '<span class="help-block">:message</span>') !!}
 						</div>
 						<div class="form-grouph input-design{!! ($errors->has('password') ? ' has-error' : '') !!}">
 							{!! Form::label('password','Password*', ['class' => 'form-label']) !!}
@@ -63,7 +64,8 @@ $states = \App\Models\State::whereStatus('1')->pluck('name', 'id');
 					</div>
 					<div class="form-flex box_checkbox">
 						<div class="form-grouph input-design{!! ($errors->has('term') ? ' has-error' : '') !!}">
-							<input type="checkbox" id="term" name="term" class="{!! ($errors->has('term') ? ' is-invalid' : '') !!}" /><p>Accept the privacy policy and Terms & Conditions.</p>
+							<input type="checkbox" id="term" name="term" class="{!! ($errors->has('term') ? ' is-invalid' : '') !!}" />
+							<p>Accept the <a href="{{ route('privacyPolicy') }}">Privacy Policy</a> and <a href="{{ route('termsService') }}">Terms & Conditions</a>.</p>
 							{!! $errors->first('term', '<div class="help-block">:message</div>') !!}
 						</div>
 					</div>
@@ -122,7 +124,13 @@ $states = \App\Models\State::whereStatus('1')->pluck('name', 'id');
                 }
                  
                 if (stateName.length) {
-					$("#state option:contains("+stateName+")").attr('selected', 'selected');
+					$("#states_id option:contains("+stateName+")").attr('selected', 'selected');
+					
+					var selectedState = $('#states_id').find(":selected").val();
+					if(selectedState){
+					    $('#states_ids').val(selectedState);
+					}
+					
 				}
                 //console.log('stateName', stateName)
                 //console.log('cityName', cityName)

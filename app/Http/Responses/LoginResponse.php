@@ -3,9 +3,13 @@
 namespace App\Http\Responses;
 
 use Laravel\Fortify\Contracts\LoginResponse as LoginResponseContract;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class LoginResponse implements LoginResponseContract {
 
+
+    use LivewireAlert;
+    
     public function toResponse($request) {		
 	
 		$redirectUrl = session('link');
@@ -16,12 +20,20 @@ class LoginResponse implements LoginResponseContract {
 		}
 		
 		if (auth()->check()){
-			$route = auth()->user()->role;
-
-		
-			return redirect()->route($route);
+		    
+		    if(auth()->user()->status != '1'){
+		        
+		        $request->session()->flash('dangerLogin', 'Your account is not active, please contact support');
+		        auth()->logout();
+		        return redirect()->route('login');
+		    }
+		    else {
+		    
+    			$route = auth()->user()->role;
+    			return redirect()->route($route);
+		    }
 		}
 		
-		return redirect()->route('account.index');
+		return redirect()->route('login');
     }
 }

@@ -53,7 +53,11 @@
                                 @endforeach
                             </ul>
                             @else
+                            @if($clicked=='1')
+                            <h5>No time slots are available for the selected date.</h5>
+                            @else
                             <h5>Please select the date to show the availability.</h5>
+                            @endif
                             @endif
 
                             {!! $errors->first('selectDateTimeSlot', '<span class="help-block">:message</span>')  !!}

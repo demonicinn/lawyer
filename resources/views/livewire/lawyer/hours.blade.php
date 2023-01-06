@@ -92,7 +92,7 @@
                         @foreach($hours as $hour)
                         <li>
                             <p>
-                                {{ $hour->day ? $hour->days : $hour->date }} from {{ date('h:i A', strtotime($hour->from_time)) }} - {{ date('h:i A', strtotime($hour->to_time)) }}
+                                {{ $hour->day ? $hour->days : date('m/d/Y', strtotime($hour->date)) }} from {{ date('h:i A', strtotime($hour->from_time)) }} - {{ date('h:i A', strtotime($hour->to_time)) }}
                             </p>
                             {{--
                             <p><span class="bold week-day">Tuesdays</span> and <span class="bold week-day">Thursdays</span> every <span class="bold week-type">week</span> from <span class="bold time_rule">4:00 pm - 6:30 pm</span></p>

@@ -84,7 +84,7 @@ class CommonController extends Controller
         );
 
         $contact = new Supports;
-        $contact->user_id = auth()->user()->id;
+        $contact->user_id = auth()->check() ? auth()->user()->id : null;
         $contact->first_name = $request->first_name;
         $contact->last_name = $request->first_name;
         $contact->email = $request->email;
@@ -100,6 +100,8 @@ class CommonController extends Controller
         $this->flash('success', 'Ticket Raised Successfully.');
         return back();
     }
+    
+
 
     public function viewlawyerDetails($id)
     {

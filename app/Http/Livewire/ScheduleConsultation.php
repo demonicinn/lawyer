@@ -33,6 +33,7 @@ class ScheduleConsultation extends Component
     //....
 
     public $currentTab = 'tab1';
+    public $clicked = '0';
     public $prevUrl;
 
     public $lawyerID, $lawyer;

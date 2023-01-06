@@ -22,9 +22,9 @@ class UserMailForCaseStatus extends Notification
         $this->status = $status;
 
         if ($this->status == 'accepted') {
-            $this->message = 'Congratulations your case accepted by lawyer';
+            $this->message = 'Congratulations, your case has been accepted. We will be in touch shortly with further details.';
         } else {
-            $this->message = 'Your case declined by lawyer';
+            $this->message = 'We regret to inform you that your case has been declined. Thank you for contacting Prickly Pear.';
         }
     }
 
@@ -48,7 +48,7 @@ class UserMailForCaseStatus extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('Prickly Pear Consultation '.ucfirst($this->status))
+            //->subject('Prickly Pear Consultation '.ucfirst($this->status))
             ->subject('Your Case ' . $this->status)
             ->greeting('Hello ' . $this->bookingInfo->first_name.',')
             ->line($this->message);

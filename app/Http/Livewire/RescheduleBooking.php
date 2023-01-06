@@ -18,6 +18,7 @@ class RescheduleBooking extends Component
 
     use LivewireAlert;
 
+    public $clicked = '0';
     public $bookingId, $lawyerId, $userId, $todayDate, $authUser,
         $workingDates, $bookDate, $selectDate, $selectDateTimeSlot;
     public $workingDatesTimeSlot = [];
