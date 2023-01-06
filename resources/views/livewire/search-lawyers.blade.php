@@ -6,7 +6,7 @@
                     <h4>Filter by:</h4>
 
 
-                    <div class="hourly-range-design range-design mb-5">
+                    <div class="hourly-range-design range-design">
                         <h5 class="h5-design">Hourly Rate</h5>
                         <div class="slider-area" wire:ignore>
                             <div class="slider-area-wrapper">
@@ -44,7 +44,7 @@
                     </div>
 
 
-                    <div class="hourly-range-design range-design mb-5">
+                    <div class="hourly-range-design yearsRange range-design mb-5">
                         <h5 class="h5-design">Years Experience</h5>
                         <div class="slider-area" wire:ignore>
                             <div class="slider-area-wrapper">
@@ -83,7 +83,7 @@
                             <div class="slider-area-wrapper">
 							{{--<p class="min-value">{{$distance_min}}mi</p>--}}
                                 <div id="distanceRange" class="slider"></div>
-								<p class="min-value-fix">{{$distance_min}}mi</p>
+								<p class="min-value-fix">{{$distance_min}} mi</p>
                                 {{--<p class="max-value">{{$distance}}+mi</p>--}}
                             </div>
                         </div>
@@ -111,7 +111,7 @@
                         @endif
                         <div class="lawyers-service-cntnt-block">
                             <div class="lawyers-heading_service d-flex justify-content-spacebw align-items-center">
-                                <h4 class="lawyer-name">{{ @$lawyer['rating'] }}</h4>
+                                {{--<h4 class="lawyer-name">{{ @$lawyer['rating'] }}</h4>--}}
                                 <h4 class="lawyer-name">{{ @$lawyer['name'] }}</h4>
                                 <button class="hire-price-btn">${{ @$lawyer['details']->hourly_fee }}/hr.</button>
                             </div>
@@ -411,10 +411,10 @@
                             var to = parseInt(value);
 							
 							if(to=='100'){
-								return type=='litigations' ? to+"mi" : to+"+mi";
+								return type=='litigations' ? to+" mi" : to+"+ mi";
 							}
 							else {
-								return to+"mi";
+								return to+" mi";
 							}
 							
                         }
@@ -423,8 +423,8 @@
                 
                 
                 distanceRange.noUiSlider.on('change', function (values){
-                        var from = parseInt(values[0].replace("mi", ""));
-                        var to = parseInt(values[1].replace("mi", ""));
+                        var from = parseInt(values[0].replace(" mi", ""));
+                        var to = parseInt(values[1].replace(" mi", ""));
 						
 						from = parseInt(from.replace("+", ""));
                         to = parseInt(to.replace("+", ""));

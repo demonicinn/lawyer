@@ -15,6 +15,7 @@ use App\Models\Payment;
 use App\Models\LawyerSubscription;
 use App\Models\User;
 use App\Models\UserCard;
+use Auth;
 
 class Subscriptions extends Component
 {
@@ -43,6 +44,9 @@ class Subscriptions extends Component
         
 
         $this->user = auth()->user();
+        
+        
+        
 
         $subscriptionMonthly = Subscription::where('type', 'monthly')->pluck('price')->first();
 
@@ -229,7 +233,7 @@ class Subscriptions extends Component
             //send Lawyer Subscription Notification
             Notification::route('mail', $user->email)->notify(new LawyerSubscriptionNotification($user, $plan));
 
-            $this->flash('success', 'Payment Success');
+            $this->flash('success', 'Payment Successful');
             return redirect()->route('lawyer.profile');
         } catch (\Stripe\Exception\CardException $e) {
             $error = $e->getMessage();

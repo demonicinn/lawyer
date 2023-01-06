@@ -151,6 +151,21 @@ Route::get('/schedule/consultation/{id}', [ScheduleConsultationController::class
 
 Route::get('/how-to-add-lawyer-link', [PagesController::class, 'lawyerLink'])->name('lawyer.link');
 
+
+
+//support
+
+    Route::get('/support', function () {
+        $title = array(
+            'title' => 'Support',
+            'active' => 'support',
+        );
+
+        return view('common.support', compact('title'));
+    })->name('support');
+    Route::post('/support/store', [CommonController::class, 'SupportStore'])->name('support.store');
+    
+    
 //------------------------------------------------------
 //------------------------After Login-------------------
 //------------------------------------------------------
@@ -203,18 +218,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
 
-    //support
+    
 
-    Route::get('/support', function () {
-        $title = array(
-            'title' => 'Support',
-            'active' => 'support',
-        );
-
-        return view('common.support', compact('title'));
-    })->name('support');
-
-    Route::post('/support/store', [CommonController::class, 'SupportStore'])->name('support.store');
+    
 
 
     
@@ -356,12 +362,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         //...subscription
         Route::get('/subscription', function () {
+            
             $title = array(
                 'title' => 'Billing',
                 'active' => 'billing',
             );
             return view('lawyer.subscription.index', compact('title'));
         })->name('lawyer.subscription');
+        
+        
+        
 
         //...leaves
 

@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class WelcomeNotification extends Notification
+class WelcomeNotTexasNotification extends Notification
 {
     use Queueable;
     public $user;
@@ -40,13 +40,12 @@ class WelcomeNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        $lawyerProfile = route('lawyer.profile');
+        //$lawyerProfile = route('lawyer.profile');
         return (new MailMessage)
             ->subject('Welcome to Prickly Pear')
             ->greeting('Hello '.$this->user->first_name.',')
-            ->line('Thank you for using our application!')
-            ->line('Your account has been successfully created. Please click the link below to complete your profile.')
-            ->action('Create profile',  $lawyerProfile);
+            ->line('Thank you for signing up with Prickly Pear. Right now we are not accepting sign up outside the Texas area, we will inform you as soon as we will start accepting lawyers from outside of Texas.');
+            //->action('Create profile',  $lawyerProfile);
     }
 
     /**

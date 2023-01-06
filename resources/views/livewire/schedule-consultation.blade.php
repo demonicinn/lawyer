@@ -85,11 +85,14 @@
                 },
 
                 onDateSelect: function(date, events) {
-
+                    
                     var dateF = new Date(date);
                     let newDate = (dateF.getMonth() + 1) + '/' + dateF.getDate() + '/' + dateF.getFullYear();
 
                     @this.set('selectDate', newDate);
+                    @this.set('clicked', '1');
+                    
+                    
                     @this.set('selectDateTimeSlot', '');
                 },
 
@@ -141,6 +144,13 @@
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
+        }
+        
+        #celender .day.active {
+            background: #A4CAA5 !important;
+            border-radius: 4px;
+            color: #fff !important;
+            border: none;
         }
     </style>
     @endpush

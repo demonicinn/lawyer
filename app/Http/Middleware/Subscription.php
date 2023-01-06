@@ -4,9 +4,11 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Subscription
 {
+    use LivewireAlert;
     /**
      * Handle an incoming request.
      *
@@ -19,6 +21,8 @@ class Subscription
        
         $date = date('Y-m-d');
         $user = auth()->user();
+        
+        
         
         $subscription = $user->lawyerSubscription()
                         ->where('from_date', '<=', $date)

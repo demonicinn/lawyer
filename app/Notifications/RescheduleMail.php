@@ -59,8 +59,7 @@ class RescheduleMail extends Notification
         return (new MailMessage)
             ->subject('Prickly Pear Consultation Reschedule')
             ->greeting('Hello ' . @$this->info->first_name.',')
-            ->line('Your Booking has been rescheduled.')
-            ->line('Please see below your consultation schedule.')
+            ->line('Your booking has been rescheduled. Please see your consultation schedule below.')
             ->line('Booking time :'. date('l, F d Y', strtotime($this->booking->booking_date)) .' | '. date('h:i a', strtotime($this->booking->booking_time)))
             ->line('
                 <a href="'.$zoomUrl.'" class="button button-primary" target="_blank" rel="noopener" style="margin-right: 20px;">Meeting link</a>

@@ -60,9 +60,9 @@
 			</ul>
 			<ul class="typo-inner-heading favicon-listing">
 				<h4>Favicon</h4>
-				<img src="{{ asset('assets/favicon.ico') }}" alt="Favicon version 1">
-				<img src="{{ asset('assets/favicon.ico') }}" alt="Favicon version 1">
-				<img src="{{ asset('assets/favicon.ico') }}" alt="Favicon version 1">
+				<img src="{{ asset('assets/favi_icon3.png') }}" alt="Favicon version 1">
+				<img src="{{ asset('assets/favi_icon3.png') }}" alt="Favicon version 1">
+				<img src="{{ asset('assets/favi_icon3.png') }}" alt="Favicon version 1">
 			</ul>
 		</section>
 

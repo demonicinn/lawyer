@@ -46,7 +46,7 @@ class CaseAcceptReviewNotification extends Notification
         return (new MailMessage)
                     ->subject('Rate your consultation')
                     ->greeting('Hello ' . $this->bookingInfo->first_name.',')
-                    ->line('Rate your lawyer')
+                    ->line('Your opinion is important to us. Please click below to rate your lawyer.')
                     ->action('Review now', $url)
                     ->line('Thank you');
     }

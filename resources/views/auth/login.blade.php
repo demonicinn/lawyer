@@ -9,7 +9,20 @@
 			<div class="lawyer-login">
 				{!! Form::open(['route' => 'login', 'class'=>'form-design']) !!}
 				<div class="white-shadow-box">
-
+                    
+                    @if ($message = Session::get('dangerLogin'))
+                    <div class="container alert-message">
+                    	<div class="row">
+                    		<div class="col-md-12">
+                    			<div class="alert alert-danger alert-dismissible fade show">
+                    				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    				<strong>Your account is not active, please contact <a href="{{ route('support') }}">support</a></strong>
+                    			</div>
+                    		</div>
+                    	</div>
+                    </div>
+                    @endif
+                    
 					<div class="form-grouph input-design{!! ($errors->has('email') ? ' has-error' : '') !!}">
 						{!! Form::label('email','Email', ['class' => 'form-label']) !!}
 						{!! Form::email('email', request()->email ?? null, ['class' => ($errors->has('email') ? ' is-invalid' : '')]) !!}

@@ -3,12 +3,19 @@
 <section class="content-heading_description-wrapper term-conditions-page">
 <div class="container">
   <div class="content-heading_description">
-    <h2>How to add lawyer link</h2>
-    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-  </div>
+    <h2>Your Custom Lawyer Profile Link</h2>
+    <div class="download_links">
+        <div class="favi_icon">
+          <p><b>1.</b> Download the Prickly Pear icon by clicking the image below. </p>
+          <a href="{{ asset('assets/favi_icon3.png') }}" class="favi_img" download >	<img src="{{ asset('assets/favi_icon3.png') }}" > </a>
+        </div>
+        
+        <div class="profile_screenshot">
+            <p><b>2.</b> Login to your lawyer account and copy the url from your profile. Use this link to connect it to the Prickly Pear icon on your website. It can also be used to share with your potential clients. </p>
+            <img src="{{ asset('assets/images/profile3.png') }}">
+        </div>
+    </div>
+ </div>
 </div>
 </section>
 @endsection

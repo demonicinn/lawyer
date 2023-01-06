@@ -174,12 +174,17 @@
       //Binding day event
       $(plugin.element).on('click', '.day', function (e) {
         var date = new Date($(this).data('date'));
-        var events = plugin.getDateEvents(date);
-        if (!$(this).hasClass('disabled')) {
-          plugin.fillUp(e.pageX, e.pageY);
-          plugin.displayEvents(events);
-        }
-        plugin.settings.onDateSelect(date, events);
+        $('.day').removeClass('active');
+        $(this).addClass('active');
+        
+        //if ($(this).hasClass('has-event')) {
+            var events = plugin.getDateEvents(date);
+            if (!$(this).hasClass('disabled')) {
+              plugin.fillUp(e.pageX, e.pageY);
+              plugin.displayEvents(events);
+            }
+            plugin.settings.onDateSelect(date, events);
+        //}
       });
     },
     displayEvents: function (events) {

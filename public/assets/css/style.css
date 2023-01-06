@@ -3433,6 +3433,20 @@ button.swal2-confirm.swal2-styled {
     background-color: #a4caa5;
 }
 .swal2-actions {}
+a.favi_img,.profile_screenshot img {
+    box-shadow: 1px 2px 25px -10px grey;
+    display: inline-block;
+    padding: 10px;
+    border-radius: 10px;
+}
+.download_links {
+    margin: auto;
+    max-width: 943px;
+    padding-top: 50px;
+}
+.profile_screenshot {
+    margin-top: 50px;
+}
 /* responsive */
 /* responsive */
 /* responsive */
@@ -3554,7 +3568,7 @@ button.swal2-confirm.swal2-styled {
         left: 12px;
     }
     .check-price-btn {
-        font-size: 16px;
+        font-size: 14px;
         padding: 10px 15px;
     }
     .works-container .step-main-sec .step.third-step {
@@ -3579,10 +3593,20 @@ button.swal2-confirm.swal2-styled {
     width:auto;
 }
 .portal-cntnt-wrapper a{
-    font-size:20px;
+    font-size:20px; 
 }
 section.body-banner.dashboard_profile-sec.min-height-100vh{
     height:auto;
+}
+.header-wrapper .logo-left-column img {
+    max-width: 250px;
+    height: auto;
+}
+.service_block-cntnt h4 {
+    font-size: 17px;
+    font-weight: 500;
+    color: #3E3E3E;
+    min-height: 53px;
 }
 }
 @media (max-width: 767px){
@@ -3861,6 +3885,17 @@ section.body-banner.dashboard_profile-sec.min-height-100vh{
 .row .data-white-box.no-hover-box .heading-design-flex.d-flex.justify-content-spacebw.align-items-center {
     flex-wrap: wrap;
 }
+.header-wrapper .logo-left-column img {
+    max-width: 150px;
+}
+.modal-dialog-centered {
+    display: flex;
+    align-items: center;
+    min-height: calc(100% - 34%);
+}
+footer#footer .footer-logo img {
+    max-width: 230px;
+}
     /* css 767 end here */
 }
 @media (max-width: 1200px){
@@ -3977,7 +4012,9 @@ section.body-banner.dashboard_profile-sec.min-height-100vh{
     margin-top: -3px;
     background-color: #f8f8f8;
     border: 1px solid red;
+    right: 0;
 }
+
 .range-design .noUi-origin .noUi-handle::before,.slider-area-wrapper .noUi-origin .noUi-handle::after{
  display: none;   
 }
@@ -4002,7 +4039,7 @@ section.body-banner.dashboard_profile-sec.min-height-100vh{
     width: 100%;
 }
 .slider-area-wrapper .noUi-origin {
-    max-width: 93%;
+    max-width: 100%;
     left: 0;
 }
 .range-design .slider-area-wrapper .max-value {
@@ -4056,4 +4093,84 @@ section.body-banner.dashboard_profile-sec.min-height-100vh{
     margin-top: 5px;
     margin-bottom: 5px;
 }
+
+.hourly-range-design.yearsRange.range-design .noUi-handle.noUi-handle-lower {
+    right: -17px;
+}
+.hourly-range-design.yearsRange.range-design .noUi-handle.noUi-handle-lower .noUi-tooltip {
+    left: 16px;
+}
+.range-design .noUi-origin .noUi-handle.noUi-handle-lower .noUi-tooltip {
+    left: -1px;
+}
+.hourly-range-design.yearsRange.range-design .noUi-handle.noUi-handle-upper .noUi-tooltip {
+    left: -1px;
+}
+
+/*table css here*/
+/*
+	Max width before this PARTICULAR table gets nasty. This query will take effect for any screen smaller than 760px and also iPads specifically.
+	*/
+	@media
+	  only screen 
+    and (max-width: 760px), (min-device-width: 768px) 
+    and (max-device-width: 1024px)  {
+
+		/* Force table to not be like tables anymore */
+	.table-responsive	table,.table-responsive thead, .table-responsive tbody,.table-responsive th,.table-responsive  td,.table-responsive  tr {
+			display: block;
+			min-width:auto !important;
+		}
+
+		/* Hide table headers (but not display: none;, for accessibility) */
+	.table-responsive	thead tr {
+			position: absolute;
+			top: -9999px;
+			left: -9999px;
+		}
+
+  .table-responsive  tr {
+      margin: 0 0 1rem 0;
+    }
+      
+  .table-responsive  tr:nth-child(odd) {
+      background: #ccc;
+    }
+    
+	.table-responsive	td {
+			/* Behave  like a "row" */
+			border: none;
+			border-bottom: 1px solid #eee;
+			position: relative;
+			padding-left: 40% !important;
+			text-align:left !important;
+		}
+
+	.table-responsive	td:before {
+			/* Now like a table header */
+			position: absolute;
+			/* Top/left values mimic padding */
+			top: 0;
+			left: 6px;
+			width: 45%;
+			padding-right: 10px;
+			white-space: nowrap;
+		}
+
+		/*
+		Label the data
+    You could also use a data-* attribute and content for this. That way "bloats" the HTML, this way means you need to keep HTML and CSS in sync. Lea Verou has a clever way to handle with text-shadow.
+		*/
+		/*div#Upcoming*/
+		/*div#Complete*/
+
+		div#Cases td:nth-of-type(1):before { content: "Client Name"; }
+	    div#Cases td:nth-of-type(2):before { content: "Email"; }
+	    div#Cases td:nth-of-type(3):before { content: "Practice Area"; }
+		div#Cases td:nth-of-type(4):before { content: "Date Accepted"; }
+		div#Cases td:nth-of-type(5):before { content: "Details"; }
+		div#Cases td:nth-of-type(6):before { content: "Phone"; }
+		div#Cases td:nth-of-type(7):before { content: "Cost"; }
+
+	}
 

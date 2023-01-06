@@ -68,13 +68,13 @@
             <li><a href="{{route('joinTeam')}}">Join the Team</a></li>
             <li><a href="{{ route('privacyPolicy') }}">Privacy Policy</a></li>
             <li><a href="{{ route('termsService') }}">Terms of Service</a></li>
-            <li><a href="{{ route('lawyer.link') }}">How to add lawyer link</a></li>
+            <li><a href="{{ route('lawyer.link') }}">Your Lawyer Profile Link</a></li>
           </ul>
         </div>
       </div>
     </div>
     <div class="copy-right text-center">
-      <p>Copyright © 2022 Prickly Pear, all rights reserved.</p>
+      <p>Copyright © {{date('Y')}} Prickly Pear, all rights reserved.</p>
     </div>
   </div>
 </footer>

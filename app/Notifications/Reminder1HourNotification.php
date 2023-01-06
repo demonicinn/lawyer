@@ -46,7 +46,7 @@ class Reminder1HourNotification extends Notification
         return (new MailMessage)
                     ->subject('Reminder for your call in 1 hour')
                     ->greeting('Hello '. $this->user->first_name.',')
-                    ->line('You have a Upcoming call within 1 hour')
+                    ->line('You have an upcoming call in 1 hour.')
                     ->action('Meeting Url', $this->url);
     }
 

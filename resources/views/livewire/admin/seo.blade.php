@@ -20,7 +20,7 @@
             <tbody>
                 @foreach($data as $seo)
                 <tr>
-                    <td>{{ $seo->page }}</td>
+                    <td>{{ $seo->page_name }}</td>
                     <td>{{ $seo->title }}</td>
                     <td>
                         <a class="edit-icons" href="javascript::void(0)" wire:click="edit('{{$seo->id}}')"><i class="fas fa-pen"></i></a>
@@ -53,18 +53,18 @@
                                 <select class="form-control" wire:model="page_name">
 									<option value="">Select Page</option>
 									<option value="home">Home</option>
-									<option value="faq">FAQ</option>
+									<option value="faq">Faq</option>
 									<option value="support">Support</option>
 									<option value="about">About us</option>
-									<option value="join-the-team">Join the Team</option>
-									<option value="privacy-policy">Privacy Policy</option>
-									<option value="terms-of-service">Term And Conditions</option>
+									<option value="join-the-team">Join the team</option>
+									<option value="privacy-policy">Privacy policy</option>
+									<option value="terms-of-service">Term and conditions</option>
 									<option value="how-to-add-lawyer-link">How to add lawyer link</option>
 									<option value="narrow-down-candidates">Find my lawyer</option>
 									<option value="narrow-down-litigations">Litigation</option>
 									<option value="narrow-down-contracts">Contracts</option>
-									<option value="lawyers">Search Page</option>
-									<option value="style-guide">Style Guide</option>
+									<option value="lawyers">Search page</option>
+									<option value="style-guide">Style guide</option>
 								</select>
                                 {!! $errors->first('page_name', '<span class="help-block">:message</span>') !!}
                             </div>

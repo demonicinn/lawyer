@@ -57,8 +57,8 @@ class BookingMail extends Notification
         return (new MailMessage)
             ->subject('Prickly Pear Consultation Confirmed')
             ->greeting('Hello ' . @$this->user->first_name.',')
-            ->line('Your Booking has been placed.')
-            ->line('Please see below your consultation schedule.')
+            ->line('Your booking has been confirmed. Please view your consultation schedule below.')
+            //->line('Please see below your consultation schedule.')
             ->line('Booking time :'. date('l, F d Y', strtotime($this->booking->booking_date)) .' | '. date('h:i a', strtotime($this->booking->booking_time)))
             ->line('
                 <a href="'.$zoomUrl.'" class="button button-primary" target="_blank" rel="noopener" style="margin-right: 20px;">Meeting link</a>
