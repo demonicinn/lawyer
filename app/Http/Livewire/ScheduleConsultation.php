@@ -155,8 +155,8 @@ class ScheduleConsultation extends Component
         $fromDate = $today->copy()->firstOfMonth()->startOfDay();
         $toDate = $today->copy()->endOfMonth()->startOfDay();
 
-        $Month = date('m', strtotime($fromDate));
-        $Year = date('Y', strtotime($fromDate));
+        $Month = $fromDate->format('m');
+        $Year = $fromDate->format('Y');
 
         $dates = [];
         $period = CarbonPeriod::create($fromDate, $toDate);
@@ -166,10 +166,17 @@ class ScheduleConsultation extends Component
         
         
         $lawyerHoursDates = $this->lawyer->lawyerHours()->where('day', null)
-                                ->where(function($query) use ($fromDate, $toDate) {
-                                    $query->where('date', '>=', $fromDate);
-                                    $query->where('date', '<=', $toDate);
-                                })->get()->pluck('date')->toArray();
+                                ->where(function($query) use ($Month, $Year) {
+                                    //$query->where('date', '>=', $Month);
+                                    //$query->where('date', '<=', $Year);
+                                    
+                                    $query->whereMonth('date', $Month);
+                                    $query->whereYear('date', $Year);
+                                    
+                                    
+                                })
+                                ->where('date', '>', date('Y-m-d'))
+                                ->get()->pluck('date')->toArray();
         
         
 
@@ -193,8 +200,8 @@ class ScheduleConsultation extends Component
             // dd($ndate );
 
             ///,.....available current date
-            //if ($ndate >= date('Y-m-d') && in_array($day, $lawyerHoursDay)) {
-            if ($ndate > date('Y-m-d') && in_array($day, $lawyerHoursDay)) {
+            if ($ndate >= date('Y-m-d') && in_array($day, $lawyerHoursDay)) {
+            //if ($ndate > date('Y-m-d') && in_array($day, $lawyerHoursDay)) {
                 array_push($dates, $ndate);
             }
         }
@@ -207,8 +214,9 @@ class ScheduleConsultation extends Component
         $result = array_diff($nDates, $getLeaves);
         
         $result = array_unique($result);
+        
         $this->workingDates = $result;
-
+        
 
         $this->emit('fireCalender', $this->workingDates);
     }
@@ -276,8 +284,17 @@ class ScheduleConsultation extends Component
 
 
                         $timeSlot['time'] = date("H:i", $startTime);
-                        $time_slots[] = $timeSlot;
-
+                        
+                        
+                        if($date == date('Y-m-d')){
+                            
+                            if($timeSlot['time'] > date('H:i', strtotime('+2hour'))){
+                                $time_slots[] = $timeSlot;
+                            }
+                        }
+                        else {
+                            $time_slots[] = $timeSlot;
+                        }
                         $startTime += $add_mins;
 
                     }
@@ -594,7 +611,7 @@ class ScheduleConsultation extends Component
                         //send notification to lawyer
                         Notification::route('mail', $this->lawyer->email)->notify(new BookingMail($booking, $this->lawyer));
 
-                        $this->flash('success', 'Appointment scheduled successfully');
+                        $this->flash('success', 'Appointment Scheduled Successfully');
 
                         return redirect()->route('thankYou', encrypt($booking->id));
                         //return redirect()->route('consultations.upcoming');

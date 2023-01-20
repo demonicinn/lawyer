@@ -56,12 +56,12 @@ class BookingMail extends Notification
         
         return (new MailMessage)
             ->subject('Prickly Pear Consultation Confirmed')
-            ->greeting('Hello ' . @$this->user->first_name.',')
+            ->greeting('Hello ' . ucwords(@$this->user->first_name) . ',')
             ->line('Your booking has been confirmed. Please view your consultation schedule below.')
             //->line('Please see below your consultation schedule.')
-            ->line('Booking time :'. date('l, F d Y', strtotime($this->booking->booking_date)) .' | '. date('h:i a', strtotime($this->booking->booking_time)))
+            ->line('Booking time: '. date('F l j, Y', strtotime($this->booking->booking_date)) .' | '. date('h:i a', strtotime($this->booking->booking_time)))
             ->line('
-                <a href="'.$zoomUrl.'" class="button button-primary" target="_blank" rel="noopener" style="margin-right: 20px;">Meeting link</a>
+                <a href="'.$zoomUrl.'" class="button button-primary" target="_blank" rel="noopener" style="margin-right: 20px;">Meeting Link</a>
                 <a href="'.$reschedule.'" class="button button-primary" target="_blank" rel="noopener" style="margin-right: 20px;">Reschedule Booking</a>
                 <a href="'.$upcoming.'" class="button button-primary" target="_blank" rel="noopener" style="margin-right: 20px;">Cancel Booking</a>
                 <a href="'.$link->google().'" class="button button-primary" target="_blank" rel="noopener" style="margin-right: 20px;">Add to Google Calendar</a>

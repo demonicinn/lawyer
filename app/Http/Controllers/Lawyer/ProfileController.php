@@ -309,9 +309,11 @@ class ProfileController extends Controller
                     $info->id = $record->id;
                     $info->exists = true;
                 }
+                else {
+                    $info->status = "pending";
+                }
                 $info->user_id = $user->id;
                 $info->account_id = $accountId;
-                $info->status = "pending";
                 $info->payouts_enabled = "pending";
                 $info->save();
                 // create link for account update and send

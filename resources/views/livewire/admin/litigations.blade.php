@@ -38,7 +38,7 @@
             </tbody>
         </table>
     </div>
-    <div id="pagination-container" class="pagination-container-saved">{{$litigations->links()}}</div>
+    <div id="pagination-container" class="pagination-container-saved">{{$litigations->onEachSide(1)->links()}}</div>
 
 
     <!-- Accept Modal Start Here-->

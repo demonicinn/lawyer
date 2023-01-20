@@ -553,9 +553,9 @@ class CommonController extends Controller
             'active' => 'transactions',
         );
 
-        $transactions = Payment::paginate(10);
+        //$transactions = Payment::paginate(10);
 
-        return view('admin.transactions.index', compact('title', 'transactions'));
+        return view('admin.transactions.index', compact('title'));
     }
 
 

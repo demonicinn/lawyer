@@ -50,8 +50,8 @@ class MailToLawyerForStatus extends Notification
 
         return (new MailMessage)
             ->subject('Your request has been ' . $act)
-            ->greeting('Hello '. $this->lawyer->first_name.',')
-            ->line('Your request has been ' . $act . ' by the admin');
+            ->greeting('Hello '.ucwords($this->lawyer->first_name).',')
+            ->line('Your request has been ' . $act . ' by the admin.');
     }
 
     /**

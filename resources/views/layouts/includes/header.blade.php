@@ -34,7 +34,9 @@ $user = auth()->user();
           <button type="button" class="dropdown-toggle login-header-btn" data-bs-toggle="dropdown">
             <span class="drop-icon"><i class="fa-solid fa-angle-down"></i></span>
             <span class="user-span">{{ $user->name }}</span>
+            @if(Auth::user()->role!="user")
             <span class="user-icon"><img class="header-pic" src="{{ $user->profile_pic}}"></span>
+            @endif
           </button>
           <ul class="dropdown-menu">
             @if(Auth::user()->role=="admin")

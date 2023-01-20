@@ -165,6 +165,8 @@
     
 
     @push('scripts')
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>   
     <script>
         initCalender()
     
@@ -182,13 +184,11 @@
                 },
 
                 onDateSelect: function(date, events) {
-
-                    var dateF = new Date(date);
-                    let newDate = dateF.getFullYear() +'-'+ (dateF.getMonth() + 1) + '-' + dateF.getDate();
-                    
-                    @this.set('newDate', newDate);
-                    
-                    $('#availabilityForm').modal('show');
+                    let newDate =moment(date).format('YYYY-MM-DD')
+                    if(newDate >= moment().format('YYYY-MM-DD')){
+                        @this.set('newDate', newDate);
+                        $('#availabilityForm').modal('show');
+                    }
                 },
 
             });

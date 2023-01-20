@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<section class="dashboard_profile-sec min-height-100vh">
+<section class="dashboard_profile-sec min-height-100vh admin_join_team_table">
     <div class="container">
         <div class="heading-paragraph-design text-center position-relative go-back-wrap mb-5">
             <h2>{{ @$title['title'] }}</h2>
@@ -23,7 +23,7 @@
                     <tr>
                         <td>{{ @$item->name }}</td>
                         <td>{{ @$item->email }}</td>
-                        <td>{{ @$item->created_at->format('Y-m-d') }}</td>
+                        <td>{{ @$item->created_at->format('m-d-Y') }}</td>
                         <td><a target="_blank" class="btn btn-primary" href="{{ @$item->resume_path }}">Resume</a></td>
                     </tr>
                     @endforeach

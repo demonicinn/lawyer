@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<section class="min-height-100vh">
+<section class="min-height-100vh admin_categories_table">
     <div class="container">
         <div class="heading-paragraph-design text-center position-relative go-back-wrap mb-5">
             <h2>{{ @$title['title'] }}</h2>

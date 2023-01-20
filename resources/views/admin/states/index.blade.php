@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<section class="dashboard_profile-sec min-height-100vh">
+<section class="dashboard_profile-sec min-height-100vh admin_state_table">
     <div class="container">
         <div class="heading-paragraph-design text-center position-relative go-back-wrap mb-5">
             <h2>{{ @$title['title'] }}</h2>

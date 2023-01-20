@@ -24,7 +24,7 @@
 </div>
 @endif
 
-@if ($message = Session::get('danger'))
+@if ($message = Session::get('dangerReg'))
 <div class="container alert-message">
 	<div class="row">
 		<div class="col-md-12">

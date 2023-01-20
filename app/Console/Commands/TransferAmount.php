@@ -29,7 +29,14 @@ class TransferAmount extends Command
      */
     public function handle()
     {
-        $bookingsL = Booking::where('is_call','completed')
+        $bookingsL = Booking::with('lawyer', 'lawyer.bankInfo')
+                    ->whereHas('lawyer', function($query){
+                        $query->whereHas('bankInfo', function($q){
+                            $q->where('status', 'active');
+                            $q->where('account_number', '!=', null);
+                        });
+                    })
+                    ->where('is_call','completed')
                     ->where('is_accepted', '1')
                     ->where('is_canceled', '0')
                     //->where('payment_process', '0')
@@ -37,7 +44,6 @@ class TransferAmount extends Command
                     ->get();
 
         self::transferAmount($bookingsL);
-
 
 
 

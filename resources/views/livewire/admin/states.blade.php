@@ -39,8 +39,7 @@
             </tbody>
         </table>
     </div>
-
-    <div id="pagination-container" class="pagination-container-saved">{{$states->links()}}</div>
+    <div id="pagination-container" class="pagination-container-saved">{{$states->onEachSide(1)->links()}}</div>
 
     <!-- Accept Modal Start Here-->
     <div wire:ignore.self class="modal fade common_modal modal-design" id="stateForm" tabindex="-1" aria-labelledby="stateForm" aria-hidden="true">

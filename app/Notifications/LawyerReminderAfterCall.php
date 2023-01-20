@@ -56,15 +56,15 @@ class LawyerReminderAfterCall extends Notification
         
         $bdate = $this->booking->booking_date ? date('m-d-Y', strtotime($this->booking->booking_date)) : '';
         
-        $message = 'Please Confirm if '. $this->user->name .' appeared in the zoom call for booking on '. $bdate .' at '.$time.' ?';
+        $message = 'Please confirm if '. $this->user->name .' appeared in the zoom call for booking on '. $bdate .' at '.$time.' ?';
         
         
         $yesAction = route('lawyer.booking.data', [$this->booking->id, '1']);
         $noAction = route('lawyer.booking.data', [$this->booking->id, '2']);
         
         return (new MailMessage)
-            ->subject('Prickly Pear Client Appearance Confirmation')
-            ->greeting('Hello ' . @$this->lawyer->first_name.',')
+            ->subject('Prickly Pear client appearance confirmation')
+            ->greeting('Hello ' . ucwords(@$this->lawyer->first_name).',')
             ->line($message)
             ->line('
                 <a href="'.$yesAction.'" class="button button-primary" target="_blank" rel="noopener" style="margin-right: 20px;">Yes</a>

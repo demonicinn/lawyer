@@ -128,10 +128,23 @@
                            <h3 class="pt-2"><b class="h4-design m-0 d-block  pt-3">Deposit Information</b></h3>
                         @if(@$record->status=='active')
 
-                            @if(!$record->account_number)
-                                <p class=" pb-3">Please fill the bank account to complete your bank account verification.</p>
+                            @if($record->payouts_enabled!='active')
+                                <div class="alert alert-warning" role="alert">
+                                Payouts are not enabled for your account. Please check all the details are verified or not.
+                                </div>
+                                <a class="btn-design-first btn_bank" href="{{route('lawyer.banking.update')}}">Update Bank Account Details</a>
+                                {{--
+                                {!! Form::open(['route' => 'lawyer.bank.connect', 'class'=>'form-design row justify-content-center']) !!}
+                    			<button type="submit" class="btn-design-first btn_bank">Update Bank Account Details</button>
+                    			{!! Form::close() !!}
+                    			--}}
                             @endif
-
+                            
+                            <div class="mt-2"></div>
+                            @if(!$record->account_number)
+                                <p class="pb-3">Please fill in your bank account information to complete your bank account verification.</p>
+                            @endif
+                            
                             <form class="form-design row justify-content-center" method="post" action="{{route('lawyer.banking.store')}}">
                                 @csrf
                 
@@ -140,27 +153,24 @@
                                     <div class="form">
                                         <div class="form-grouph input-design">
                                             <label>Account Holder Name*</label>
-                                            <input class="@error('account_holder_name') is-invalid @enderror" type="text" name="account_holder_name" value="{{ @$record->account_holder_name }}">
+                                            {!! Form::text('account_holder_name', @$record->account_holder_name ?? null, ['class' => ($errors->has('account_holder_name') ? ' is-invalid' : '')]) !!}
                                             @error('account_holder_name')<div class="help-block">{{ $message }}</div>@enderror
                                         </div>
                                         <div class="form-grouph input-design">
                                             <label>Account Number*</label>
-                                            <input class="@error('account_number') is-invalid @enderror" type="text" name="account_number" value="{{ @$record->account_number }}">
+                                            {!! Form::text('account_number', @$record->account_number ?? null, ['class' => ($errors->has('account_number') ? ' is-invalid' : '')]) !!}
                                             @error('account_number')<div class="help-block">{{ $message }}</div>@enderror
                                         </div>
                                         <div class="form-grouph input-design">
                                             <label>Routing Number*</label>
-                                            <input class="@error('routing_number') is-invalid @enderror" type="text" name="routing_number" value="{{ @$record->routing_number }}">
+                                            {!! Form::text('routing_number', @$record->routing_number ?? null, ['class' => ($errors->has('routing_number') ? ' is-invalid' : '')]) !!}
                                             @error('routing_number')<div class="help-block">{{ $message }}</div>@enderror
                                         </div>
                 
                                     </div>
                                 </div>
                                 
-                                @if($record->account_number && $record->payouts_enabled!='active')
-                                    <p>You have to update your bank account details <a class="btn btn-primary" href="{{route('lawyer.banking.update')}}">Update Now</a></p>
                                 
-                                @endif
                                 
                                 
                                 </div>
@@ -174,6 +184,8 @@
                                     </div>
                                 </div>
                             </form>
+                            </div>
+                            
                         @else
                             {!! Form::open(['route' => 'lawyer.bank.connect', 'class'=>'form-design row justify-content-center']) !!}
                 			<button type="submit" class="btn-design-first btn_bank">Connect Bank Account</button>

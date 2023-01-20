@@ -12,6 +12,7 @@
                     <th>Practice Area</th>
                     <th>Date</th>
                     <th>Time</th>
+                    <th>Cost</th>
                 </tr>
             </thead>
             <tbody>
@@ -40,13 +41,14 @@
                     </td>
                     <td>{{date('m/d/Y', strtotime($complete->booking_date)) }}</td>
                     <td>{{date('g:i A', strtotime($complete->booking_time))}} - {{date('g:i A', strtotime($complete->booking_time. ' +30 minutes'))}} </td>
+                    <td>${{$complete->total_amount}}</td>
 
 
                 </tr>
                 @empty
 
             <tfoot>
-                <tr>
+                <tr class="empty_td">
                     <td colspan="6" class="text-center pt-3">
                         <h4>No consultations found</h4>
                     </td>

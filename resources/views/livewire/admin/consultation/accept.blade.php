@@ -13,6 +13,7 @@
                     <th>Date Accepted</th>
                     <th>Phone</th>
                     <th>Practice Area</th>
+                    <th>Cost</th>
                 </tr>
             </thead>
             <tbody>
@@ -43,10 +44,11 @@
                             @endforeach
                         @endif
                     </td>
+                    <td>${{$accepted->total_amount}}</td>
                 </tr>
                 @empty
             <tfoot>
-                <tr>
+                <tr class="empty_td">
                     <td colspan="7" class="text-center pt-3">
                         <h4>No consultations found</h4>
                     </td>

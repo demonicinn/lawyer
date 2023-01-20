@@ -44,9 +44,9 @@ class LawyerSubscription extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject('Thank you for Purchasing Subscription')
-                    ->greeting('Hello ' . $this->user->first_name.',')
-                    ->line('You have Purchased the '.$this->plan->subscription->name)
+                    ->subject('Prickly Pear Subscription')
+                    ->greeting('Hello ' . ucwords($this->user->first_name).',')
+                    ->line('You have purchased the '. $this->plan->subscription->name.'.')
                     ->line('Your Membership Expires on '. date('m-d-Y', strtotime($this->plan->to_date)));
     }
 

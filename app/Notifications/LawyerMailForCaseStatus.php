@@ -48,7 +48,7 @@ class LawyerMailForCaseStatus extends Notification
     {
         return (new MailMessage)
             ->subject('Case ' . $this->status . ' by You')
-            ->greeting('Hello ' . auth()->user()->first_name.',')
+            ->greeting('Hello ' . ucwords(auth()->user()->first_name).',')
             ->line($this->message);
     }
 

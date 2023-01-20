@@ -1004,7 +1004,7 @@ input:focus, select:focus, textarea:focus{
     width: 100%;
     max-width: 100%;
     box-shadow: 1px 2px 38px -27px #979797;
-    height: 523px;
+    height: 589px;
     overflow: auto;
 }
 #events-data ul li {
@@ -2863,7 +2863,7 @@ ul.list_dat li:last-child::after{
     color: #fff !important;
 }
 div#bookingChart g text {
-    font-size: 13px;
+    font-size: 11px;
     font-family: 'Lato-Medium';
     font-style: inherit;
     color: #3E3E3E ;
@@ -3195,7 +3195,7 @@ input[type="checkbox"]#term:before{
     width: 15%;
 }
 .scheduled_right div#events-data {
-    height: 735px;
+    height: 803px;
 }
 .biling_btn_wrapr button.btn-design-first {
     max-width: 250px;
@@ -3447,6 +3447,26 @@ a.favi_img,.profile_screenshot img {
 .profile_screenshot {
     margin-top: 50px;
 }
+.form-grouph.textarea-design.school_attended textarea#school_attendent,.form-grouph.textarea-design.school_attended textarea#address {
+    height: 50px;
+}
+.label_fee .d-flex.align-items-center.justify-content-spacebw label.form-label {
+    white-space: break-spaces;
+}
+.admin_categories_table .dataTables_wrapper.no-footer {
+    padding-bottom: 73px;
+}
+section.min-height-100vh.admin_categories_table .add-search-box {
+    padding-bottom: 30px;
+}
+.date_filter {
+    display: flex;
+    justify-content: end;
+}
+.date_filter .form-group {
+    display: flex;
+    gap: 15px;
+}
 /* responsive */
 /* responsive */
 /* responsive */
@@ -3612,6 +3632,18 @@ section.body-banner.dashboard_profile-sec.min-height-100vh{
 @media (max-width: 767px){
     .why-choose-img {
         text-align: center;
+    }
+    .data-white-box {
+        padding: 15px !important;
+    }
+    .data-white-box .heading-design-flex form {
+        width: 100%;
+    }
+    .data-white-box .heading-design-flex form .form-char-flext .form-group.submit-design {
+        width: 75px;
+    }
+    .data-white-box .heading-design-flex form .form-char-flext .form-group.input-design {
+        width: calc(100% - 75px);
     }
     .content-heading_description h2 {
         font-size: 30px;
@@ -3896,6 +3928,95 @@ section.body-banner.dashboard_profile-sec.min-height-100vh{
 footer#footer .footer-logo img {
     max-width: 230px;
 }
+#footer{
+    padding:43px 0px 20px 0px;
+}
+.footer-column.footer-column-4{
+    margin-bottom:0px;
+}
+.fedral_court_modal button.nav-link {
+    font-weight: bold;
+    font-size: 13px !important;
+}
+.court_modal ul#myTab {
+    width: 100%;
+}
+.court_modal.fedral_court_modal .mb-4.courts_data,
+.court_modal .mb-4.courts_data {
+    max-width: 93%;
+    width:93%;
+}
+.booking-info-right_column .booking_date-time {
+    margin-bottom: 0px;
+    font-size: 15px;
+}
+.rating_block{
+    justify-content:center;
+}
+.tabs_design-wrap.three_tabs-layout .lawyer-tabs_contents .tab-content>.active {
+    display: block;
+    padding: 0px;
+}
+.table-design tbody tr td {
+    padding: 20px 5px;
+    font-size: 13px;
+}
+.table-design thead{
+    height:auto;
+}
+.common_modal .modal-content .modal-header.modal_h
+{
+    padding-bottom:0px;
+}
+.modal-dialog{
+      margin: 0.5rem auto;
+}
+.container.lwyer_dashbord .portal-cntnt-wrapper a {
+    min-height: auto;
+}
+.data-content-box .number-value, .container.lwyer_dashbord p.number-value{
+    font-size:30px;
+}
+.container.lwyer_dashbord .row .portal-div-design{
+    padding: 10px 30.2px;
+}
+.page-link {
+    padding: 2px 9px;
+}
+.pagination{
+    justify-content:center;
+}
+section.rating-section.position-relative.about-page-rating.about_rf {
+    padding-top: 50px;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button{
+    padding:5px !important;
+    font-size:15px;
+}
+section.min-height-100vh.admin_categories_table h4 {
+    font-size: 18px;
+    padding-bottom: 5px;
+}
+.admin_categories_table .dataTables_wrapper.no-footer {
+    padding-bottom: 35px;
+}
+.login-header-btn .user-icon {
+    width: 25px;
+    height: 25px;
+    font-size: 12px;
+    top: 5px;
+}
+.date_filter{
+    justify-content:inherit;
+}
+.date_filter .form-group{
+    padding-top:15px;
+    justify-content:space-between;
+    width:100%;
+}
+.date_filter .form-group .form-control{
+    width:49%;
+}
     /* css 767 end here */
 }
 @media (max-width: 1200px){
@@ -4108,6 +4229,12 @@ footer#footer .footer-logo img {
 }
 
 /*table css here*/
+.admin_categories_table table.dataTable thead th{
+    text-align: center;
+}
+.admin_catgories_table2 th {
+    text-transform: capitalize;
+}
 /*
 	Max width before this PARTICULAR table gets nasty. This query will take effect for any screen smaller than 760px and also iPads specifically.
 	*/
@@ -4115,8 +4242,141 @@ footer#footer .footer-logo img {
 	  only screen 
     and (max-width: 760px), (min-device-width: 768px) 
     and (max-device-width: 1024px)  {
+        table.dataTable td, table.dataTable th{
+            box-sizing:border-box !important;
+        }
+        .lawyer-directory-profile-sec,
+        .dashboard_profile-sec,
+        .lawyer_conultation-wrapper-sec{
+            padding-bottom:50px;
+        }
+        .go-back-wrap {
+            padding: 0px;
+            margin: 15px 0px 15px 0px !important;
+        }
+        .header-wrapper .logo-left-column img {
+                max-width: 130px;
+            }
+        .add-search-box {
+            padding-bottom: 15px;
+        }
+        div#clients-table_length {
+            padding-bottom: 10px;
+        }
+        div.dataTables_wrapper div.dataTables_length,div.dataTables_wrapper div.dataTables_filter{
+            text-align: left !important;
+        }
+        tr.empty_td td.text-center.pt-3 {
+            width: 100%;
+            padding: 10px 0px !important;
+        }
 
-		/* Force table to not be like tables anymore */
+        tr.empty_td td.text-center.pt-3 h4 {
+            background: #ccc;
+            padding: 10px;
+            position: relative;
+        }
+        .lawyer_status.btn_all_type {
+            padding-top: 15px;
+        }
+        .form-grouph.input-design.icon-input-design.right-icn-design.mt a.btn.clear-btn{
+            margin-left: 0px;
+        }
+        .practice_area_div.px-3 {
+                padding: 0px !important;
+            }
+            .add-litigations.mt-2.location_profile-divs.d-flex.justify-content-spacebw.align-items-center.border-bottom.pb-2.px-0.mx-3 {
+                margin: 0px !important;
+            }
+            .footer-widget-first .footer-logo {
+                margin-bottom: 0px;
+            }
+            .admin_catgories_table2.dataTable tbody td {
+                padding: 20px 5px;
+                background: border-box !important;
+                box-sizing: border-box;
+            }
+            .heading-paragraph-design h2,.homepbanner-content h2 {
+                font-size: 25px;
+            }
+
+            .how-prickly-pear-works{
+                padding-top: 30px;
+            }
+            footer#footer .footer-container .footer-column.footer-column-1 {
+                width: 100%;
+                text-align: center;
+            }
+            footer#footer .footer-container .footer-column {
+                width: 50%;
+            }
+            .reshedule_wrap-box{
+                right: 25px;
+            }
+            .lawyer_conultation-wrapper .lawyer-tabs_contents .tab-content{
+                overflow: inherit;
+            }
+            .table-responsive {
+                overflow-x: inherit;
+            }
+            .form-design .checkbox-design label{
+                margin-left: 10px;
+            }
+           section.body-banner.narrow-down-cand-sec.min-height-100vh  .narrow-icon-box{
+                width: 73px;
+                height: 73px;
+                top: -43px;
+            }
+             section.body-banner.narrow-down-cand-sec.min-height-100vh  .narrow-icon-box img{
+                width: 35px;
+             }
+            section.body-banner.narrow-down-cand-sec.min-height-100vh .narrow-down-rows .narrow-box{
+                padding: 43px 30px;
+            }
+            .scheduled_right div#events-data{
+                height: auto;
+            }
+            section.schdule-consultation-page-sec .booking-info_profile-flex .booking-info-left_column ,
+            .white-shadow-scnd-box.booking-info_profile .booking-info_profile-flex .booking-info-left_column,
+            .lawyer_view .lawyers-img-block img{
+            width: 75px;
+            height: 75px;
+        }
+
+        /*list here*/
+            section.schdule-consultation-page-sec div#events-data button.time-selection-btn {
+                padding: 10px 15px;
+                font-size: 15px;
+            }
+            section.schdule-consultation-page-sec div#events-data svg {
+                top: 15px !important;
+                left: 7px !important;
+            }
+            section.schdule-consultation-page-sec div#events-data ul.list-unstyled {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+            }
+            section.schdule-consultation-page-sec div#events-data ul li {
+                width: 48%;
+            }
+
+            .booking_card p b{
+                min-width: 130px;
+            }
+            .white-shadow-scnd-box.booking-info_profile.mt-4 .booking_card p {
+                    font-size: 13px;
+                }
+                .list-item.list-service-item .lawyer-hire-block .lawyers-img-block img {
+                        width: 100%;
+                        object-fit: cover;
+                        height: 100%;
+                    }
+                    section.lawyer-directory-profile-sec.min-height-100vh.lawyer_view .white-shadow-third-box.lawyer-directory_about-block h4 {
+                    padding-top: 10px;
+                    font-size: 18px;
+                }
+                    		/* Force table to not be like tables anymore */
 	.table-responsive	table,.table-responsive thead, .table-responsive tbody,.table-responsive th,.table-responsive  td,.table-responsive  tr {
 			display: block;
 			min-width:auto !important;
@@ -4132,9 +4392,11 @@ footer#footer .footer-logo img {
   .table-responsive  tr {
       margin: 0 0 1rem 0;
     }
-      
+.table-responsive tr{
+    margin:0px;
+}
   .table-responsive  tr:nth-child(odd) {
-      background: #ccc;
+      background: rgba(0, 0, 0, 0.05);
     }
     
 	.table-responsive	td {
@@ -4144,19 +4406,25 @@ footer#footer .footer-logo img {
 			position: relative;
 			padding-left: 40% !important;
 			text-align:left !important;
+                padding: 20px 5px;
+                min-height: 70px;
 		}
 
 	.table-responsive	td:before {
 			/* Now like a table header */
 			position: absolute;
 			/* Top/left values mimic padding */
-			top: 0;
+			top: 23px;
+			font-size:13px;
+			font-weight:bold;
 			left: 6px;
-			width: 45%;
+			width: auto;
 			padding-right: 10px;
 			white-space: nowrap;
 		}
-
+      .table-design tbody:nth-child(even) tr td:first-child{
+       border-radius:0px !important;
+    }
 		/*
 		Label the data
     You could also use a data-* attribute and content for this. That way "bloats" the HTML, this way means you need to keep HTML and CSS in sync. Lea Verou has a clever way to handle with text-shadow.
@@ -4172,5 +4440,92 @@ footer#footer .footer-logo img {
 		div#Cases td:nth-of-type(6):before { content: "Phone"; }
 		div#Cases td:nth-of-type(7):before { content: "Cost"; }
 
+        div#Complete td:nth-of-type(1):before { content: "Client Name"; }
+	    div#Complete td:nth-of-type(2):before { content: "Practice Area"; }
+	    div#Complete td:nth-of-type(3):before { content: "Date"; }
+		div#Complete td:nth-of-type(4):before { content: "Details"; }
+		div#Complete td:nth-of-type(5):before { content: "Cost"; }
+		div#Complete td:nth-of-type(6):before { content: "Action"; }
+		
+		div#Upcoming td:nth-of-type(1):before { content: "Client Name"; }
+	    div#Upcoming td:nth-of-type(2):before { content: "Practice Area"; }
+	    div#Upcoming td:nth-of-type(3):before { content: "Date"; }
+		div#Upcoming td:nth-of-type(4):before { content: "Time"; }
+		div#Upcoming td:nth-of-type(5):before { content: "Cost"; }
+		div#Upcoming td:nth-of-type(6):before { content: "Action"; }
+
+
+        .admin_lwyer_table td:nth-of-type(1):before { content: "Name "; }
+        .admin_lwyer_table td:nth-of-type(2):before { content: "Email "; }
+        .admin_lwyer_table td:nth-of-type(3):before { content: "Contact Number "; }
+        .admin_lwyer_table td:nth-of-type(4):before { content: "Rating"; }
+        .admin_lwyer_table td:nth-of-type(5):before { content: "Status"; }
+        .admin_lwyer_table td:nth-of-type(6):before { content: "Action"; }
+
+        
+        .admin_user_table td:nth-of-type(1):before { content: "Name "; }
+        .admin_user_table td:nth-of-type(2):before { content: "Email "; }
+        .admin_user_table td:nth-of-type(3):before { content: "Contact Number "; }
+        .admin_user_table td:nth-of-type(4):before { content: "Action"; }
+
+        
+        .admin_litigation_table td:nth-of-type(1):before { content: "Name "; }
+        .admin_litigation_table td:nth-of-type(2):before { content: "Status "; }
+        .admin_litigation_table td:nth-of-type(3):before { content: "Action "; }
+
+        
+        .admin_contact_table td:nth-of-type(1):before { content: "Name "; }
+        .admin_contact_table td:nth-of-type(2):before { content: "Status "; }
+        .admin_contact_table td:nth-of-type(3):before { content: "Action "; }
+
+        .admin_state_table td:nth-of-type(1):before { content: "Name "; }
+        .admin_state_table td:nth-of-type(2):before { content: "Code "; }
+        .admin_state_table td:nth-of-type(3):before { content: "Status "; }
+        .admin_state_table td:nth-of-type(4):before { content: "Action "; }
+   
+         .admin_subscriptions_table td:nth-of-type(1):before { content: "Name "; }
+         .admin_subscriptions_table td:nth-of-type(2):before { content: "Type "; }
+         .admin_subscriptions_table td:nth-of-type(3):before { content: "Price"; }
+         .admin_subscriptions_table td:nth-of-type(4):before { content: "Status "; }
+         .admin_subscriptions_table td:nth-of-type(5):before { content: "Action "; }
+
+          table.admin_catgories_table1 td:nth-of-type(1):before { content: "Name "; }
+        table.admin_catgories_table1 td:nth-of-type(2):before { content: "Status "; }
+        table.admin_catgories_table1 td:nth-of-type(3):before { content: "Action "; }
+        
+         table.admin_catgories_table2 td:nth-of-type(1):before { content: "Sno. "; }
+        table.admin_catgories_table2 td:nth-of-type(2):before { content: "Item "; }
+        table.admin_catgories_table2 td:nth-of-type(3):before { content: "Status "; }
+        table.admin_catgories_table2 td:nth-of-type(4):before { content: "Action "; }
+
+       .admin_transactions_table td:nth-of-type(1):before { content: "Name "; }
+       .admin_transactions_table td:nth-of-type(2):before { content: "Amount "; }
+       .admin_transactions_table td:nth-of-type(3):before { content: "Type "; }
+       .admin_transactions_table td:nth-of-type(4):before { content: "Date "; }
+
+       .admin_join_team_table td:nth-of-type(1):before { content: "Name "; }
+       .admin_join_team_table td:nth-of-type(2):before { content: "Email "; }
+       .admin_join_team_table td:nth-of-type(3):before { content: "Date"; }
+       .admin_join_team_table td:nth-of-type(4):before { content: "Resume "; }
+
+        .admin_state_bar_table td:nth-of-type(1):before { content: "Name "; }
+        .admin_state_bar_table td:nth-of-type(2):before { content: "Status "; }
+        .admin_state_bar_table td:nth-of-type(3):before { content: "Action "; }
+
+         .admin_seo_table td:nth-of-type(1):before { content: "Page "; }
+        .admin_seo_table td:nth-of-type(2):before { content: "Title "; }
+        .admin_seo_table td:nth-of-type(3):before { content: "Action "; }
+
+        .r_consulation_table td:nth-of-type(1):before { content: "Client Name "; }
+        .r_consulation_table td:nth-of-type(2):before { content: "Email "; }
+        .r_consulation_table td:nth-of-type(3):before { content: "Date "; }
+        .r_consulation_table td:nth-of-type(4):before { content: "Practice Area "; }
+        
+        
+        
+        .admin_canceled_consulations td:nth-of-type(1):before { content: "Client Name "; }
+        .admin_canceled_consulations td:nth-of-type(2):before { content: "Email "; }
+        .admin_canceled_consulations td:nth-of-type(3):before { content: "Date "; }
+        .admin_canceled_consulations td:nth-of-type(4):before { content: "Practice Area "; }
 	}
 

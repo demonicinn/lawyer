@@ -44,7 +44,7 @@ class MailToAdminForLawyerStatus extends Notification
         ->from($this->user->email)
         ->subject('Update Lawyer status')
         ->greeting('Hello Admin,')
-        ->line('Profile has been updated by :'.$this->user->first_name);
+        ->line('Profile has been updated by :'.ucwords($this->user->first_name).'.');
             
     }
 

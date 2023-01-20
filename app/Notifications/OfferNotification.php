@@ -46,15 +46,15 @@ class OfferNotification extends Notification
         $message = '';
         
         if($this->user->payment_plan=='monthly'){
-            $message = 'Your monthly subscription prices is modified from $'.$this->subscription->price.' to $'.$this->user->offer_price;
+            $message = 'Your monthly subscription price is modified from $'.$this->subscription->price.' to $'.$this->user->offer_price.".";
         }
         if($this->user->payment_plan=='yearly'){
-            $message = 'Your yearly subscription prices is modified from $'.$this->subscription->price.' to $'.$this->user->offer_price_yearly;
+            $message = 'Your yearly subscription price is modified from $'.$this->subscription->price.' to $'.$this->user->offer_price_yearly.'.';
         }
         
         return (new MailMessage)
             ->subject('Prickly Pear Subscription Offer')
-            ->greeting('Hello ' . @$this->user->first_name.',')
+            ->greeting('Hello ' .ucwords(@$this->user->first_name).',')
             ->line($message);
     }
 

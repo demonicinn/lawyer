@@ -45,7 +45,7 @@ class Rating6MonthsNotification extends Notification
     {
         return (new MailMessage)
                     ->subject('Rating question on how the process is going')
-                    ->greeting('Hello '. $this->user->name.',')
+                    ->greeting('Hello '.ucwords($this->user->name).',')
                     ->line('Rating question on how the process is going, Rate on your lawyer.')
                     ->action('Rate now', $this->url);
     }

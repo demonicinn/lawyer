@@ -39,7 +39,7 @@
             </tbody>
         </table>
     </div>
-    <div id="pagination-container" class="pagination-container-saved">{{$contracts->links()}}</div>
+    <div id="pagination-container" class="pagination-container-saved">{{$contracts->onEachSide(1)->links()}}</div>
 
 
     <!-- Accept Modal Start Here-->

@@ -30,6 +30,7 @@
     this._defaults = defaults;
     this._name = pluginName;
     this.currentDate = new Date();
+    
     this.init();
   }
 
@@ -82,6 +83,10 @@
       var lastDay = new Date(y, m + 1, 0);
       // Start day of weeks
       var startDayOfWeek = firstDay.getDay();
+      
+      
+      
+      
 
       if (this.settings.fixedStartDay !== false) {
         // Backward compatibility
@@ -104,6 +109,9 @@
 
       //For firstDay to lastDay
       for (var day = firstDay; day <= lastDay; day.setDate(day.getDate())) {
+          
+          
+          
         var tr = $('<tr></tr>');
         //For each row
         for (var i = 0; i < 7; i++) {
@@ -124,7 +132,7 @@
           // filter today's events
           var todayEvents = plugin.getDateEvents(day);
 
-          if (todayEvents.length && plugin.settings.displayEvent) {
+          if (todayEvents.length > 0 && plugin.settings.displayEvent) {
             $day.addClass(plugin.settings.disableEventDetails ? "has-event disabled" : "has-event");
           } else {
             $day.addClass(plugin.settings.disableEmptyDetails ? "disabled" : "");
@@ -135,6 +143,8 @@
 
           // simplify further customization
           this.settings.onDayCreate( $day, day.getDate(), m, y );
+
+
 
           tr.append(td);
           day.setDate(day.getDate() + 1);

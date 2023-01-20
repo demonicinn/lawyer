@@ -6,7 +6,7 @@
     </div> -->
 
     <div >
-        <table id="clients-table" class="table table-striped" style="width:100%">
+        <table id="clients-table" class="table table-responsive table-striped" style="width:100%">
             <thead>
                 <tr>
                     <th>Name</th>

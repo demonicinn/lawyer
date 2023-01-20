@@ -47,10 +47,17 @@ class UserMailForCaseStatus extends Notification
      */
     public function toMail($notifiable)
     {
+        if ( $this->status == 'accepted'){
+            $subject = "Your case has been accepted";
+        } elseif ( $this->status == 'declined' ) {
+            $subject = "Your case was declined";
+        } else {
+            $subject = "Your case $this->status";
+        }
+        
         return (new MailMessage)
-            //->subject('Prickly Pear Consultation '.ucfirst($this->status))
-            ->subject('Your Case ' . $this->status)
-            ->greeting('Hello ' . $this->bookingInfo->first_name.',')
+            ->subject($subject)
+            ->greeting('Hello ' . ucwords($this->bookingInfo->first_name).',')
             ->line($this->message);
     }
 

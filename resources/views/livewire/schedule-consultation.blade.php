@@ -12,6 +12,8 @@
     @push('scripts')
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/jquery.inputmask.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>   
+    
     <script>
 
 
@@ -35,6 +37,7 @@
             getDates(workingDates);
 
             window.livewire.on('fireCalender', (dates) => {
+                console.log('dates', dates)
                 getDates(dates);
             });
             window.livewire.on('loginFormClose', () => {
@@ -58,9 +61,13 @@
 
             $.each(workingDates, function(i, date) {
                 var map = [];
+                date = moment(date);
+                
+                ///console.log('sss', date)
                 map['startDate'] = date;
                 map['endDate'] = date;
-
+                
+                
                 //...
                 newEvents.push(map);
             });
@@ -106,7 +113,7 @@
             $calendar.setEvents(eventArray)
 
 
-            //console.log('fcdfcdx', $calendar)
+           // console.log('fcdfcdx', eventArray)
         }
 
     </script>

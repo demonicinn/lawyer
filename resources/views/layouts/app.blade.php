@@ -154,6 +154,20 @@ if(@$seo){
         slidesToShow: 1,
         slidesToScroll: 1
       });
+      
+      
+      
+      $("input[type=date]").datepicker({
+  dateFormat: 'mm-dd-yy',
+  onSelect: function(dateText, inst) {
+    $(inst).val(dateText); // Write the value in the input
+  }
+});
+
+// Code below to avoid the classic date-picker
+$("input[type=date]").on('click', function() {
+  return false;
+});
 </script>
 
 </body>

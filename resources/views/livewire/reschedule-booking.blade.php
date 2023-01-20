@@ -2,7 +2,7 @@
     <section class="schdule-consultation-page-sec">
         <div class="container">
             <div class="heading-paragraph-design text-center position-relative go-back-wrap mb-4">
-                <h2>Schedule a Consultation</h2>
+                <h2>Reschedule a Consultation</h2>
             </div>
 
             <div class="schedule_consultation-wrapper">
@@ -72,6 +72,7 @@
 
 
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>   
 
     <script>
         let workingDates = @json(@$workingDates);
@@ -91,6 +92,8 @@
 
             $.each(workingDates, function(i, date) {
                 var map = [];
+                date = moment(date);
+                
                 map['startDate'] = date;
                 map['endDate'] = date;
 

@@ -53,7 +53,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/jquery.inputmask.bundle.min.js"></script>
 
 <script>
-$('.phone').inputmask('(99)-9999-9999');
+$('.phone').inputmask('(999)-999-9999');
 
 </script>
 @endsection

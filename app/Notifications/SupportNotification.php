@@ -46,7 +46,7 @@ class SupportNotification extends Notification
             ->subject('Support Notification')
             ->greeting('Hello Admin,')
             //->from($this->contact->email)
-            ->line('You have new message from : ' . $this->contact->first_name)
+            ->line('You have new message from : ' . ucwords($this->contact->first_name))
             ->line('Email : ' . $this->contact->email)
             ->line('Reason : ' . $this->contact->reason)
             ->line('Message : ' . $this->contact->message);

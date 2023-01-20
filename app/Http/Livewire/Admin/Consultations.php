@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 class Consultations extends Component
 {
-    public $lawyerId, $upcomingConsul, $completeConsul, $acceptConsul, $tab, $search;
+    public $lawyerId, $field, $upcomingConsul, $completeConsul, $acceptConsul, $tab, $search;
 
     public $upcomingTab = true;
     public $completeTab = false;
@@ -18,9 +18,9 @@ class Consultations extends Component
     public $user;
 
 
-    public function mount($lawyerId)
+    public function mount()
     {
-        $this->lawyerId = $lawyerId;
+        //$this->lawyerId = $lawyerId;
 		$this->user = User::findOrFail($this->lawyerId);
 		
         if ($this->tab == null) {
@@ -55,7 +55,7 @@ class Consultations extends Component
             'active' => 'upcoming',
         );
 
-        $upcoming = Booking::where('lawyer_id', $this->lawyerId)
+        $upcoming = Booking::where($this->field, $this->lawyerId)
             ->where('booking_Date', '>=', date('Y-m-d'))
             ->where('is_call', 'pending')
             ->where('reschedule', '0')
@@ -70,7 +70,9 @@ class Consultations extends Component
             $upcoming->with('user');
         }
 
-        $upcoming = $upcoming->latest('id')->get();
+        $upcoming = $upcoming->orderBy('id', 'desc')->get();
+        
+        //dd($upcoming);
         $this->upcomingConsul = $upcoming;
         $this->upcomingTab = true;
         $this->completeTab = false;
@@ -84,7 +86,7 @@ class Consultations extends Component
             'title' => 'Complete',
             'active' => 'complete',
         );
-        $complete = Booking::where('lawyer_id', $this->lawyerId)
+        $complete = Booking::where($this->field, $this->lawyerId)
             ->where('is_call', 'completed')
             ->where('is_accepted', '0');
 
@@ -113,7 +115,7 @@ class Consultations extends Component
             'active' => 'accepted',
         );
 
-        $accept = Booking::where('lawyer_id', $this->lawyerId)
+        $accept = Booking::where($this->field, $this->lawyerId)
             ->where('is_call', 'completed')
             ->where('is_accepted', '1')
             ->where('is_canceled', '0');

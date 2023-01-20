@@ -50,7 +50,98 @@ class RescheduleBooking extends Component
         }
     }
 
+
     public function slotAvailability()
+    {
+        $selectDate = Carbon::parse($this->selectDate);
+        $date = $selectDate->format('Y-m-d');
+        $this->dateDay = $selectDate->format("l");
+        $this->dateFormat = $selectDate->format("l, F j");
+
+
+        $fromDate =  $selectDate->copy()->firstOfMonth()->startOfDay();
+        $toDate = $selectDate->copy()->endOfMonth()->startOfDay();
+        $fDateMonth = date('Y-m-d', strtotime($fromDate));
+        $lDateMonth = date('Y-m-d', strtotime($toDate));
+
+
+
+        $lawyerHoursDay = $this->lawyer->lawyerHours()->where('day', 'like', '%'.$this->dateDay.'%')
+                        ->where('date', null)
+                        ->get();
+                        
+                        
+                        
+        $lawyerHoursDate = $this->lawyer->lawyerHours()->where('day', null)
+                        ->where('date', $date)
+                        ->get();
+        
+        $lawyerHours = $lawyerHoursDate->push(...$lawyerHoursDay);
+
+        $getLeaves = $this->lawyer->booking()->whereDate('booking_date', $date)->where('is_canceled', '0')->pluck('booking_time')->toArray();
+
+
+        $checkLeave = $this->lawyer->leave()->where('date', $date)->first();
+        
+        
+        //$checkDate = $this->lawyer->lawyerHours()->where('date', $date)->first();
+
+
+
+        ///,.....available current date
+        if(!$checkLeave){
+            if (@$lawyerHours && $date >= date('Y-m-d')) {
+            //if (@$lawyerHours && $date > date('Y-m-d')) {
+
+                
+                $duration = '30';
+
+                //...
+                $time_slots = array();
+                $add_mins  = $duration * 60;
+
+                foreach($lawyerHours as $lawyerHour){
+                    $startTime = strtotime($lawyerHour->from_time);
+                    $endTime = strtotime($lawyerHour->to_time);
+                    while ($startTime <= $endTime) {
+                        $timeSlot = [];
+                        if(in_array(date("H:i:s", $startTime), $getLeaves)) {
+                            $timeSlot['is_free'] = 'no';
+                        }
+                        else {
+                            $timeSlot['is_free'] = 'yes';
+                        }
+
+
+                        $timeSlot['time'] = date("H:i", $startTime);
+                        
+                        
+                        if($date == date('Y-m-d')){
+                            
+                            if($timeSlot['time'] > date('H:i', strtotime('+2hour'))){
+                                $time_slots[] = $timeSlot;
+                            }
+                        }
+                        else {
+                            $time_slots[] = $timeSlot;
+                        }
+                        $startTime += $add_mins;
+
+                    }
+                }
+                
+                
+                
+                $temp = array_unique(array_column($time_slots, 'time'));
+                $unique_arr = array_intersect_key($time_slots, $temp);
+
+
+                $this->workingDatesTimeSlot = $unique_arr;
+            }
+        }
+    }
+    
+    public function slotAvailability1()
     {
         $selectDate = Carbon::parse($this->selectDate);
         $date = $selectDate->format('Y-m-d');
@@ -60,6 +151,7 @@ class RescheduleBooking extends Component
 
         $fromDate =  $selectDate->copy()->firstOfMonth()->startOfDay();
         $toDate = $selectDate->copy()->endOfMonth()->startOfDay();
+        
         $fDateMonth = date('Y-m-d', strtotime($fromDate));
         $lDateMonth = date('Y-m-d', strtotime($toDate));
 
@@ -137,8 +229,8 @@ class RescheduleBooking extends Component
         $fromDate = $today->copy()->firstOfMonth()->startOfDay();
         $toDate = $today->copy()->endOfMonth()->startOfDay();
 
-        $Month = date('m', strtotime($fromDate));
-        $Year = date('Y', strtotime($fromDate));
+        $Month = $fromDate->format('m');
+        $Year = $fromDate->format('Y');
 
         $dates = [];
         $period = CarbonPeriod::create($fromDate, $toDate);
@@ -148,10 +240,17 @@ class RescheduleBooking extends Component
         $lawyerHoursDayAll = $this->lawyer->lawyerHours()->where('day', '!=', '')->get()->pluck('days_array')->toArray();
 
         $lawyerHoursDates = $this->lawyer->lawyerHours()->where('day', null)
-                                ->where(function($query) use ($fromDate, $toDate) {
-                                    $query->where('date', '>=', $fromDate);
-                                    $query->where('date', '<=', $toDate);
-                                })->get()->pluck('date')->toArray();
+                                ->where(function($query) use ($Month, $Year) {
+                                    //$query->where('date', '>=', $Month);
+                                    //$query->where('date', '<=', $Year);
+                                    
+                                    $query->whereMonth('date', $Month);
+                                    $query->whereYear('date', $Year);
+                                    
+                                    
+                                })
+                                ->where('date', '>', date('Y-m-d'))
+                                ->get()->pluck('date')->toArray();
                                 
                                 
         $lawyerHoursDayArray = [];
@@ -174,7 +273,7 @@ class RescheduleBooking extends Component
 
             //  dd($ndate );
 
-            if ($ndate > date('Y-m-d') && in_array($day, $lawyerHoursDay)) {
+            if ($ndate >= date('Y-m-d') && in_array($day, $lawyerHoursDay)) {
                 array_push($dates, $ndate);
             }
         }
@@ -255,7 +354,7 @@ class RescheduleBooking extends Component
             Notification::route('mail', $rescheduleBooking->lawyer->email)->notify(new RescheduleMail($rescheduleBooking, $lawyer));
 
             //...
-            $this->flash('success', 'Booking reschedule successfully.');
+            $this->flash('success', 'Booking Rescheduled Successfully.');
             return redirect()->route('consultations.upcoming');
         }
     }

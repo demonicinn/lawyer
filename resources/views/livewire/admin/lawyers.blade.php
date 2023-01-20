@@ -6,7 +6,7 @@
         </div>
     </div>
     <div  >
-        <table class="table table-striped" style="width:100%">
+        <table class="table table-responsive table-striped" style="width:100%">
             <thead>
                 <tr>
                     <th>
@@ -103,7 +103,7 @@
             </tbody>
         </table>
     </div>
-    {{ $lawyers->links() }}
+    <div id="pagination-container" class="pagination-container-saved">{{$lawyers->onEachSide(1)->links()}}</div>
     
     <style>
         th a {

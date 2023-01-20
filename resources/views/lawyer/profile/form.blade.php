@@ -40,9 +40,9 @@ $lawyer_state_bar = $user->lawyerStateBar;
                 </div>
                 
                 
-                <div class="form-grouph input-design{!! ($errors->has('school_attendent') ? ' has-error' : '') !!}">
+                <div class="form-grouph textarea-design school_attended{!! ($errors->has('school_attendent') ? ' has-error' : '') !!}">
                     {!! Form::label('school_attendent','School Attended*', ['class' => 'form-label']) !!}
-                    {!! Form::text('school_attendent', $details->school_attendent ?? null, ['class' => ($errors->has('bio') ? ' is-invalid' : '')]) !!}
+                    {!! Form::textarea('school_attendent', $details->school_attendent ?? null, ['class' => ($errors->has('bio') ? ' is-invalid' : '')]) !!}
                     {!! $errors->first('school_attendent', '<span class="help-block">:message</span>') !!}
                 </div>
                 
@@ -87,7 +87,7 @@ $lawyer_state_bar = $user->lawyerStateBar;
                         </div>
                     </div>
                 </div>
-                <div class="form-grouph checkbox-label-block">
+                <div class="form-grouph checkbox-label-block label_fee">
                     <div class="d-flex align-items-center justify-content-spacebw">
                         {!! Form::label('is_consultation_fee','Do you want to charge a consultation fee?*', ['class' => 'form-label']) !!}
                         <div class="d-flex align-items-center">
@@ -165,9 +165,9 @@ $lawyer_state_bar = $user->lawyerStateBar;
                     </div>
                 </div>
 
-                <div class="form-grouph input-design{!! ($errors->has('address') ? ' has-error' : '') !!}">
+                <div class="form-grouph textarea-design school_attended{!! ($errors->has('address') ? ' has-error' : '') !!}">
                     {!! Form::label('address','Address*', ['class' => 'form-label']) !!}
-                    {!! Form::text('address', $details->address ?? null, ['class' => ($errors->has('address') ? ' is-invalid' : '')]) !!}
+                    {!! Form::textarea('address', $details->address ?? null, ['class' => ($errors->has('address') ? ' is-invalid' : '')]) !!}
                     {!! $errors->first('address', '<span class="help-block">:message</span>') !!}
                 </div>
 

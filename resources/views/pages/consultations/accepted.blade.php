@@ -127,7 +127,7 @@
                                             @empty
 
                                         <tfoot>
-                                            <tr>
+                                            <tr class="empty_td">
                                                 <td colspan="7" class="text-center pt-3" >
                                                     <h4>No consultations found</h4>
                                                 </td>
@@ -175,7 +175,7 @@ $('.cloaseModal').on('click', function (){
 });
 
 
-$('.phone').inputmask('(99)-9999-9999');
+$('.phone').inputmask('(999)-999-9999');
 
 </script>
 @endsection

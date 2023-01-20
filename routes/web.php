@@ -29,6 +29,8 @@ use App\Http\Controllers\ZoomController;
 
 
 
+
+
 //flush cache
 Route::get('/cache-clear', function () {
     Artisan::call('optimize:clear');
@@ -46,7 +48,9 @@ Route::get('/storage-link', function () {
 });
 
 Route::get('/time', function () {
-    dd(date('Y-m-d h:ma'));
+    //dd(date('j', strtotime('2020-10-10')));
+    return date('Y-m-d i h:m a', time());
+    echo time();
 });
 
 //cronjobs
@@ -123,6 +127,13 @@ Route::group(['prefix' => 'cron'], function () {
 //home
 Route::get('/', [PagesController::class, 'home'])->name('home');
 Route::get('/home', [PagesController::class, 'home']);
+
+Route::get('/logout', function () {
+	if(auth()->check()){
+	    auth()->logout();
+	}
+    return redirect()->route('home');
+});
 
 Route::get('/narrow-down-candidates', [PagesController::class, 'narrowDown'])->name('narrow.down');
 Route::get('/narrow-down-litigations', [PagesController::class, 'litigations'])->name('narrow.litigations');

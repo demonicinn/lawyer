@@ -1,8 +1,10 @@
 <div>
     <div class="add-search-box">
+        {{--    
         <div class="add-litigations py-3">
             <button type="button" class="accept_btn showModal">Add</button>
         </div>
+        --}}
         <div class="form-group">
             <input wire:model="search" class="form-control search-box" type="text" placeholder="Search">
         </div>
@@ -31,8 +33,7 @@
             </tbody>
         </table>
     </div>
-
-    <div id="pagination-container" class="pagination-container-saved">{{$data->links()}}</div>
+    <div id="pagination-container" class="pagination-container-saved">{{$data->onEachSide(1)->links()}}</div>
 
     <!-- Accept Modal Start Here-->
     <div wire:ignore.self class="modal fade common_modal modal-design" id="seoForm" tabindex="-1" aria-labelledby="stateForm" aria-hidden="true">

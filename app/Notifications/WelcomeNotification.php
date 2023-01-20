@@ -43,7 +43,7 @@ class WelcomeNotification extends Notification
         $lawyerProfile = route('lawyer.profile');
         return (new MailMessage)
             ->subject('Welcome to Prickly Pear')
-            ->greeting('Hello '.$this->user->first_name.',')
+            ->greeting('Hello '. ucwords($this->user->first_name).',')
             ->line('Thank you for using our application!')
             ->line('Your account has been successfully created. Please click the link below to complete your profile.')
             ->action('Create profile',  $lawyerProfile);

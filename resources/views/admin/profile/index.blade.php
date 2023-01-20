@@ -39,13 +39,13 @@
 
                         <div class="form-grouph input-design">
                             <label>Email*</label>
-                            <input class="@error('email') is-invalid @enderror" disabled type="email" name="email" value="{{$user->email}}" placeholder="Email">
+                            <input class="@error('email') is-invalid @enderror" type="email" name="email" value="{{$user->email}}" placeholder="Email">
                             @error('email')<div class="help-block">{{ $message }}</div>@enderror
                         </div>
 
                         <div class="form-grouph input-design">
                             <label>Phone</label>
-                            <input class="@error('contact_number') is-invalid @enderror" type="number" name="contact_number" value="{{$user->contact_number}}" placeholder="Phone">
+                            <input class="phone @error('contact_number') is-invalid @enderror" type="text" name="contact_number" value="{{$user->contact_number}}" placeholder="Phone">
                             @error('contact_number')<div class="help-block">{{ $message }}</div>@enderror
                         </div>
 
@@ -69,6 +69,14 @@
 </section>
 
 @endsection
+
 @section('script')
 @include('common.crop_image')
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.3.4/jquery.inputmask.bundle.min.js"></script>
+
+<script>
+$('.phone').inputmask('(999)-999-9999');
+
+</script>
 @endsection

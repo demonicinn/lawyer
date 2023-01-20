@@ -45,7 +45,7 @@ class MailToAdminNewRegistration extends Notification
         return (new MailMessage)
             ->subject('New lawyer Registerd')
             ->greeting('Hello Admin,')
-            ->line('New lawyer registered name :' . $this->user->first_name);
+            ->line('New lawyer registered name :' . ucwords($this->user->first_name));
     }
 
     /**

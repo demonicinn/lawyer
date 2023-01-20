@@ -3,15 +3,18 @@
         <div class="add-litigations py-3">
             <button type="button" class="accept_btn showModal">Add Category</button>
         </div>
+        {{--
         <div class="form-group">
             <input wire:model="search" class="form-control search-box" type="text" placeholder="Search">
         </div>
+        --}}
     </div>
 
-    <div class="table-responsive table-design">
+    <div class="table-responsive table-design ">
 
         @foreach($categories as $category)
-        <table style="width:100%">
+        {{--
+        <table style="width:100%" class="admin_catgories_table1">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -27,7 +30,7 @@
                         <a class="btn_add mr-2" wire:click="addItemTypes('{{$category->id}}')">
                             <i class="fas fa-plus-circle showItemModal"></i> Add Item
                         </a>
-                    <td>
+                    </td>
                     <td>
                         @if($category->status=='1')
                         <button type="button" class="accept_btn">Active</button>
@@ -42,9 +45,10 @@
                 </tr>
             </tbody>
         </table>
-
+        --}}
+        <h4>{{ $category->name }}</h4>
         @if($category->items && count($category->items)>0)
-        <table style="width:100%" class="setTable">
+        <table style="width:100%" class="setTable admin_catgories_table2">
             <thead>
                 <tr>
                     <th>sno</th>
@@ -210,9 +214,9 @@
             });
             
             window.livewire.on('callDatatable', () => {
-                $('.setTable').DataTable();
+                $('.setTable').DataTable({searching: false, lengthChange: false});
             });
-             $('.setTable').DataTable();
+             $('.setTable').DataTable({searching: false, lengthChange: false});
             
         });
         $(document).on('click', '.showItemModal', function(e) {

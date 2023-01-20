@@ -41,14 +41,14 @@
     
 	
 	
-		<div class="row justify-content-center">
-			@livewire('admin.consultations', ['lawyerId' => $user->id])
+		<div class="row justify-content-center r_tabel_canceled_consulations">
+			@livewire('admin.consultations', ['lawyerId' => $user->id, 'field'=>'user_id'])
 			
 			
 			<div class="col-md-12 col-sm-12 mt-3">
 				<div class="white-shadow-third-box">
 					<h2 class="text-center">Canceled Consultations</h2>
-					<div class="lawyer_conultation-wrapper">
+					<div class="lawyer_conultation-wrapper r_consulation_table">
 						<div class="table-responsive table-design">
 							<table style="width:100%" id="laravel_datatable">
 								<thead>

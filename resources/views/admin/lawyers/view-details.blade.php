@@ -102,7 +102,7 @@ $lawyer_state_bar = $user->lawyerStateBar;
 										<h4>{{ @$user->details->is_consultation_fee=='yes' ? '$'.$user->details->consultation_fee : 'Free' }}</h4>
 									</div>
 								</div>
-								<p class="school_name"><i class="fa-solid fa-school-flag"></i> Harvard Law School</p>
+								<p class="school_name"><i class="fa-solid fa-school-flag"></i> {{ @$user->details->school_attendent }}</p>
 								<div class="location_profile-divs">
 									<address><i class="fa-solid fa-location-dot"></i> {{ @$user->details->city }}, {{ @$user->details->states->code }}</address>
 								</div>
@@ -369,15 +369,15 @@ $lawyer_state_bar = $user->lawyerStateBar;
 					@endif
 				</div>
 				
-				@livewire('admin.consultations', ['lawyerId' => $user->id])
+				@livewire('admin.consultations', ['lawyerId' => $user->id, 'field'=>'lawyer_id'])
 				
 				
-				<div class="col-md-12 col-sm-12 mt-3">
+				<div class="col-md-12  mt-3 col-sm-12 ">
 					<div class="white-shadow-third-box">
 						<h2 class="text-center">Canceled Consultations</h2>
 						<div class="lawyer_conultation-wrapper">
 							<div class="table-responsive table-design">
-								<table style="width:100%" id="laravel_datatable">
+								<table style="width:100%" class="admin_canceled_consulations" id="laravel_datatable">
 									<thead>
 										<tr>
 											<th>Client Name</th>

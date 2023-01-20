@@ -45,7 +45,7 @@ class Reminder1DayNotification extends Notification
     {
         return (new MailMessage)
                     ->subject('Reminder for case accept/declined')
-                    ->greeting('Hello '. $this->user->name.',')
+                    ->greeting('Hello '. ucwords($this->user->name).',')
                     ->line('Reminder for case accept/declined')
                     ->action('Check Case', $this->url);
     }

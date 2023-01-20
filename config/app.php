@@ -69,7 +69,12 @@ return [
     |
     */
 
-    'timezone' => 'America/Chicago',
+    //'timezone' => 'Asia/Kolkata',
+    //'timezone' => 'America/Chicago',
+    'timezone' => 'UTC',
+    
+    
+    
     
     
     

@@ -24,19 +24,18 @@ class ProfileControlller extends Controller
     
     public function update(Request $request)
     {
-
+        $user = auth()->user();
+        
         $request->validate([
 
             'first_name' => 'required|max:50',
             'last_name' => 'required|max:50',
-            'contact_number' => 'required|numeric|digits_between:10,12',
-
-        ], [
-            'contact_number.required' => 'The phone field is required.',
+            'contact_number' => 'required',
+            'email' => 'required|email|unique:users,email,'.$user->id,
 
         ]);
 
-        $user = auth()->user();
+        
 
         if ($request->image && strpos($request->image, "data:") !== false) {
             $image = $request->image;
@@ -60,6 +59,7 @@ class ProfileControlller extends Controller
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
         $user->contact_number = $request->contact_number;
+        $user->email = $request->email;
         $user->save();
 
       

@@ -83,7 +83,7 @@ class Hours extends Component
 
         $store = new LawyerHours;
         $store->users_id = $this->user->id;
-        $store->date = $this->newDate;
+        $store->date = date('Y-m-d', strtotime($this->newDate));
         $store->from_time = $this->from_time;
         $store->to_time = $this->to_time;
         $store->save();
